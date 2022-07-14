@@ -15,11 +15,10 @@ import java.util.ArrayList;
 public class OrderDeliveryViewServiceImpl implements OrderDeliveryViewService{
     @Autowired
     MemberDao memberDao;
+    HttpSession session = null;
     @Override
     public void OrderDelivertyView(HttpServletRequest request, Model model) {
-        //임시로 파라미터로 받아서 테스트함 나중에 세션으로 바꿀 것
-        int bcm_num= Integer.parseInt(request.getParameter("bcm_num"));
-
+        int bcm_num = (int) session.getAttribute("num");
         int nPage= 1;
         try {
             String sPage = request.getParameter("page");
@@ -85,32 +84,28 @@ public class OrderDeliveryViewServiceImpl implements OrderDeliveryViewService{
 
     @Override
     public int cancellationRequest(HttpServletRequest request, Model model) {
-        //일단 파라미터인데 session에서 받아와야됨
-        int bcm_num = Integer.parseInt(request.getParameter("bcm_num"));
+        int bcm_num = (int) session.getAttribute("num");
         int updateCount = memberDao.cancellationRequest(bcm_num);
         return updateCount;
     }
 
     @Override
     public int exchangeRequest(HttpServletRequest request, Model model) {
-        //일단 파라미터인데 session에서 받아와야됨
-        int bcm_num = Integer.parseInt(request.getParameter("bcm_num"));
+        int bcm_num = (int) session.getAttribute("num");
         int updateCount = memberDao.exchangeRequest(bcm_num);
         return updateCount;
     }
 
     @Override
     public int refundRequest(HttpServletRequest request, Model model) {
-        //일단 파라미터인데 session에서 받아와야됨
-        int bcm_num = Integer.parseInt(request.getParameter("bcm_num"));
+        int bcm_num = (int) session.getAttribute("num");
         int updateCount = memberDao.refundRequest(bcm_num);
         return updateCount;
     }
 
     @Override
     public int purchaseConfirmation(HttpServletRequest request, Model model) {
-        //일단 파라미터인데 session에서 받아와야됨
-        int bcm_num = Integer.parseInt(request.getParameter("bcm_num"));
+        int bcm_num = (int) session.getAttribute("num");
         int updateCount = memberDao.purchaseConfirmation(bcm_num);
         return updateCount;
     }

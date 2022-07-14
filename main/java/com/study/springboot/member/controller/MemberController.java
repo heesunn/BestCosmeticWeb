@@ -25,10 +25,6 @@ public class MemberController
 	@Autowired
 	OrderDeliveryViewService orderDeliveryViewService;
 
-	@RequestMapping("/")
-	public @ResponseBody String main() {
-		return "BestCosmetics";	
-	}
 	@RequestMapping("/join")
 	public String join() {
 		return "member/joinView";
