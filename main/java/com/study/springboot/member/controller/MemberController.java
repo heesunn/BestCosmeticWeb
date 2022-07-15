@@ -31,15 +31,15 @@ public class MemberController
 	@Autowired
 	ModifyMemberViewService modifyMemberViewService;
 
-	@RequestMapping("/join")
+	@RequestMapping("/guest/join")
 	public String join() {
 		return "guest/log/joinView";
 	}
-	@RequestMapping("/naverCaptcha")
+	@RequestMapping("/guest/naverCaptcha")
 	public String naverCaptcha(){
 		return "guest/log/naverCaptcha";
 	}
-	@RequestMapping("/joinProcess")
+	@RequestMapping("/guest/joinProcess")
 	public @ResponseBody JSONObject joinProcess(@ModelAttribute("dto") @Valid ValidationMember validationMember,
 												BindingResult bindingResult,
 												HttpServletRequest request,
@@ -72,7 +72,7 @@ public class MemberController
 		obj.put("desc",insertCount);
 		return obj;
 	}
-	@RequestMapping("/idCheck")
+	@RequestMapping("/guest/idCheck")
 	public @ResponseBody JSONObject userCheck(HttpServletRequest request,Model model) {
 		JSONObject obj = new JSONObject();
 		MemberDto memberDto = joinService.userCheck(request, model);

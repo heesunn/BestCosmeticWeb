@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	if(session.getAttribute("num") != null) {
+		response.sendRedirect("/");
+	}
+%>
 <html>
 <head>
     <title>Title</title>
@@ -7,7 +12,7 @@
         //처음 시작시 네이버캡챠 생성
         $(document).ready(function() {
             $.ajax({
-                url : "/naverCaptcha",
+                url : "/guest/naverCaptcha",
                 dataType:"json",
                 success : function(data) {
                     $("#key").val(data.key);
@@ -20,7 +25,7 @@
         //시작후 캡챠 리셋
         function codeReset() {
             $.ajax({
-                url : "/naverCaptcha",
+                url : "/guest/naverCaptcha",
                 dataType:"json",
                 success : function(data) {
                     $("#key").val(data.key);
@@ -56,7 +61,7 @@
             }
             var queryString=$("#id").serialize();
             $.ajax({
-                url : '/idCheck',
+                url : '/guest/idCheck',
                 type : 'POST',
                 data : queryString,
                 dataType: 'json',
@@ -161,7 +166,7 @@
             //네이버캡챠 result check
             var form01Data = $("#JoinForm").serialize();
             $.ajax({
-                url : "/naverCaptcha",
+                url : "/guest/naverCaptcha",
                 data : form01Data,
                 success : function(data) {
                     console.log(data);
@@ -179,7 +184,7 @@
         function submit_ajax() {
             var queryString=$("#JoinForm").serialize();
             $.ajax({
-                url : '/joinProcess',
+                url : '/guest/joinProcess',
                 type : 'POST',
                 data : queryString,
                 dataType: 'json',
@@ -188,7 +193,7 @@
                     if(json.desc == "1"){
                         alert("회원가입되었습니다.")
                         $("#secondEmail").attr("disabled",true);
-                        window.location.replace('/login');
+                        window.location.replace('/guest/loginView');
                     } else if (json.desc == "0") {
                         $("#p1").html("데이터베이스입력에러");
                         $("#secondEmail").attr("disabled",true);

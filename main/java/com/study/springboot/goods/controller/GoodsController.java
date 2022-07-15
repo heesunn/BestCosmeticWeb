@@ -23,12 +23,12 @@ public class GoodsController
 	@Autowired
 	IListService listService;
 	
-	@RequestMapping("/goodsAdd")         
+	@RequestMapping("/admin/goodsAdd")         
 	public String goodsAdd() {
 		return "admin/goodsAdd";	
 	}
 	
-	@RequestMapping("/upload")
+	@RequestMapping("/admin/upload")
 	public String goodsAdd(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		goodsDao.upload(request.getParameter("BCG_IMG"), 
 				     request.getParameter("BCG_IMGDETAIL"),
@@ -39,18 +39,18 @@ public class GoodsController
 		return "admin/goodsAddDetail";
 	}
 	
-	@RequestMapping("/goodsAddDetail")
+	@RequestMapping("/admin/goodsAddDetail")
 	public String goodsAddDetail() {
 		return "admin/goodsAddDetail";	
 	}
 	
-	@RequestMapping("/categoryPoint")
+	@RequestMapping("/guest/categoryPoint")
 	public String pointList(HttpServletRequest request, Model model) {
 		listService.pointList(request, model);
         return "guest/goods/categoryPoint"; 
 	}
 	
-	@RequestMapping("/menuLeft")
+	@RequestMapping("/guest/menuLeft")
 	   public String menuLeft(HttpServletRequest request, Model model) {
 	      listService.pointList(request, model);
 	        return "guest/goods/menuLeft"; 

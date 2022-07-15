@@ -26,8 +26,8 @@
             <li>
                 주문
                 <ul style="list-style-type: circle">
-                    <li class="list" onclick="javascript:window.location='orderDelivery'">주문/배송조회</li>
-                    <li class="list" onclick="javascript:window.location='cancelExchangeRefund'">취소/교환/반품</li>
+                    <li class="list" onclick="javascript:window.location='/member/orderDelivery'">주문/배송조회</li>
+                    <li class="list" onclick="javascript:window.location='/member/cancelExchangeRefund'">취소/교환/반품</li>
                 </ul>
             </li>
             <li>

@@ -9,7 +9,7 @@
 </head>
 <body>
 <div style="float: left">
-    <c:import url="/mypageView"></c:import>
+    <c:import url="/member/mypageView"></c:import>
 </div>
 <div style="float: left">
     <h1>주문/배송</h1>
@@ -50,7 +50,7 @@
         console.log(queryString);
 
         $.ajax({
-            url : '/cancellationRequest',
+            url : '/member/cancellationRequest',
             type : 'POST',
             data : queryString,
             dataType: 'json',
@@ -58,7 +58,7 @@
                 console.log(json);
                 if(json.desc == 1){
                     alert();
-                    window.location='/cancelExchangeRefund';
+                    window.location='/member/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
@@ -72,7 +72,7 @@
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
         $.ajax({
-            url : '/exchangeRequest',
+            url : '/member/exchangeRequest',
             type : 'POST',
             data : queryString,
             dataType: 'json',
@@ -80,7 +80,7 @@
                 console.log(json);
                 if(json.desc == 1){
                     alert();
-                    window.location='/cancelExchangeRefund';
+                    window.location='/member/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
@@ -92,7 +92,7 @@
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
         $.ajax({
-            url : '/refundRequest',
+            url : '/member/refundRequest',
             type : 'POST',
             data : queryString,
             dataType: 'json',
@@ -100,7 +100,7 @@
                 console.log(json);
                 if(json.desc == 1){
                     alert();
-                    window.location='/cancelExchangeRefund';
+                    window.location='/member/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
@@ -112,7 +112,7 @@
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
         $.ajax({
-            url : '/purchaseConfirmation',
+            url : '/member/purchaseConfirmation',
             type : 'POST',
             data : queryString,
             dataType: 'json',
@@ -120,7 +120,7 @@
                 console.log(json);
                 if(json.desc == 1){
                     alert();
-                    window.location='/cancelExchangeRefund';
+                    window.location='/member/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }

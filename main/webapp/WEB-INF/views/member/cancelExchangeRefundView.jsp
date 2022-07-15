@@ -8,7 +8,7 @@
 </head>
 <body>
 <div style="float: left">
-    <c:import url="/mypageView"></c:import>
+    <c:import url="/member/mypageView"></c:import>
 </div>
 <div style="float: left">
 <h1>취소/교환/반품</h1>
