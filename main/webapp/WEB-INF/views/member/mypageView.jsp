@@ -26,8 +26,8 @@
             <li>
                 주문
                 <ul style="list-style-type: circle">
-                    <li class="list" onclick="javascript:window.location='orderDelivery'">주문/배송조회</li>
-                    <li class="list" onclick="javascript:window.location='cancelExchangeRefund'">취소/교환/반품</li>
+                    <li class="list" onclick="javascript:window.location='/member/orderDelivery'">주문/배송조회</li>
+                    <li class="list" onclick="javascript:window.location='/member/cancelExchangeRefund'">취소/교환/반품</li>
                 </ul>
             </li>
             <li>
@@ -36,7 +36,7 @@
                     <li class="list" >찜 목록</li>
                     <li class="list" >문의 내역</li>
                     <li class="list" >리뷰 내역</li>
-                    <li class="list" >회원 정보 수정</li>
+                    <li class="list" onclick="javascript:window.location='/member/modifyMember'">회원 정보 수정</li>
                     <li class="list" >비밀번호 변경</li>
                     <li class="list" >회원 탈퇴</li>
                 </ul>

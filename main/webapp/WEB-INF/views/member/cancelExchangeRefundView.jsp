@@ -7,6 +7,9 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
+<div>
+    <c:import url="/menuTop"></c:import>
+</div>
 <div style="float: left">
     <c:import url="/mypageView"></c:import>
 </div>

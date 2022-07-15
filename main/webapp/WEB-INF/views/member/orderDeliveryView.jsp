@@ -8,6 +8,9 @@
 
 </head>
 <body>
+<div>
+    <c:import url="/menuTop"></c:import>
+</div>
 <div style="float: left">
     <c:import url="/mypageView"></c:import>
 </div>
