@@ -17,8 +17,8 @@ function snsLogin(sns) {
 <h1>로그인 화면</h1>
 <form action="loginDo" method="post">
 	ID : <input type="text" name="j_username" value="${username }"><br>
-	PW : <input type="text" name="j_password"><br>
-	<h4>${message }</h4><br>
+	PW : <input type="password" name="j_password"><br>
+<!--<h4>${message }</h4><br>  -->
 	<input type="submit" value="LOGIN"><br>
 </form>
 <button onclick="snsLogin('google')">Google Login</button><br>

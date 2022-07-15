@@ -10,15 +10,16 @@ public class KMemberController
 {
 	@RequestMapping("/")
 	public String main() {
-		return "member/main";	
+		return "guest/log/main";	
 	}
-	@RequestMapping("/loginView")
+	@RequestMapping("/guest/log/loginView")
 	public String loginView(HttpServletRequest request) {
-		String uri = request.getHeader("Referer");
-		System.out.println(uri);
-	    if (uri != null && !uri.contains("/login")) {
-	        request.getSession().setAttribute("prevPage", uri);
-	    }
-		return "member/loginView";	
+		if(request.getHeader("Referer") != null) {
+			String uri = request.getHeader("Referer");
+		    if (uri != null && !uri.contains("/login")) {
+		        request.getSession().setAttribute("prevPage", uri);
+		    }
+		}
+		return "guest/log/loginView";	
 	}
 }

@@ -30,11 +30,11 @@ public class MemberController
 
 	@RequestMapping("/join")
 	public String join() {
-		return "member/joinView";
+		return "guest/log/joinView";
 	}
 	@RequestMapping("/naverCaptcha")
 	public String naverCaptcha(){
-		return "member/naverCaptcha";
+		return "guest/log/naverCaptcha";
 	}
 	@RequestMapping("/joinProcess")
 	public @ResponseBody JSONObject joinProcess(@ModelAttribute("dto") @Valid ValidationMember validationMember,
