@@ -11,7 +11,7 @@
                 dataType:"json",
                 success : function(data) {
                     $("#key").val(data.key);
-                    $("#div01").html("<img src="+data.captchaImageName+"'/captchaImage'>");
+                    $("#div01").html("<img src='/captchaImage/"+data.captchaImageName+"'>");
                 }
             });
         });
@@ -24,7 +24,7 @@
                 dataType:"json",
                 success : function(data) {
                     $("#key").val(data.key);
-                    $("#div01").html("<img src="+data.captchaImageName+"'/captchaImage'>");
+                    $("#div01").html("<img src='/captchaImage/"+data.captchaImageName+"'>");
                 }
             });
         }

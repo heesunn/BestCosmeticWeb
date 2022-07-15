@@ -80,49 +80,49 @@ public class MemberController
 		System.out.println("obj : " + obj);
 		return obj;
 	}
-	@RequestMapping("/orderDelivery")
+	@RequestMapping("/member/orderDelivery")
 	public String orderDelivery(HttpServletRequest request, Model model) {
 		orderDeliveryViewService.OrderDelivertyView(request, model);
 		return "member/orderDeliveryView";
 	}
-	@RequestMapping("/cancellationRequest")
+	@RequestMapping("/member/cancellationRequest")
 	public @ResponseBody JSONObject cancellationRequest(HttpServletRequest request, Model model) {
 		JSONObject obj = new JSONObject();
 		int updateCount = orderDeliveryViewService.cancellationRequest(request, model);
 		obj.put("desc",updateCount);
 		return obj;
 	}
-	@RequestMapping("/exchangeRequest")
+	@RequestMapping("/member/exchangeRequest")
 	public @ResponseBody JSONObject exchangeRequest(HttpServletRequest request, Model model) {
 		JSONObject obj = new JSONObject();
 		int updateCount = orderDeliveryViewService.exchangeRequest(request, model);
 		obj.put("desc",updateCount);
 		return obj;
 	}
-	@RequestMapping("/refundRequest")
+	@RequestMapping("/member/refundRequest")
 	public @ResponseBody JSONObject refundRequest(HttpServletRequest request, Model model) {
 		JSONObject obj = new JSONObject();
 		int updateCount = orderDeliveryViewService.refundRequest(request, model);
 		obj.put("desc",updateCount);
 		return obj;
 	}
-	@RequestMapping("/purchaseConfirmation")
+	@RequestMapping("/member/purchaseConfirmation")
 	public @ResponseBody JSONObject purchaseConfirmation(HttpServletRequest request, Model model) {
 		JSONObject obj = new JSONObject();
 		int updateCount = orderDeliveryViewService.purchaseConfirmation(request, model);
 		obj.put("desc",updateCount);
 		return obj;
 	}
-	@RequestMapping("/cancelExchangeRefund")
+	@RequestMapping("/member/cancelExchangeRefund")
 	public String cancelExchangeRefund(HttpServletRequest request, Model model) {
 		cancelExchangeRefundViewService.cancelExchangeRefundView(request, model);
 		return "member/cancelExchangeRefundView";
 	}
-	@RequestMapping("/mypageView")
+	@RequestMapping("/member/mypageView")
 	public String mypageView() {
 		return "member/mypageView";
 	}
-	@RequestMapping("/modifyMember")
+	@RequestMapping("/member/modifyMember")
 	public String modifyMember(HttpServletRequest request, Model model) {
 		modifyMemberViewService.modifyMemberView(request, model);
 		return "member/modifyMember";

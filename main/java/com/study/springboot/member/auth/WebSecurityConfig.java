@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 			.anyRequest().authenticated();
 		
 		http.formLogin()
-			.loginPage("/security/loginView")
+			.loginPage("/guest/log/loginView")
 			.loginProcessingUrl("/loginDo")
 			.usernameParameter("j_username")
 			.passwordParameter("j_password")
