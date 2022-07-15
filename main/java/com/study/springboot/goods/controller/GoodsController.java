@@ -17,13 +17,6 @@ import com.study.springboot.goods.service.IListService;
 @Controller
 public class GoodsController
 {
-	public void sendJson(HttpServletResponse response, String json_data) throws IOException 
-	{
-		response.setContentType("application/json; charset=UTF-8");
-		PrintWriter writer = response.getWriter();
-		writer.println(json_data);
-		writer.close();	
-	}
 	
 	@Autowired
 	private GoodsDao goodsDao;
@@ -42,9 +35,7 @@ public class GoodsController
 				     request.getParameter("BCG_NAME"),
 				     request.getParameter("BCG_CATEGORY"),
 				     Integer.parseInt(request.getParameter("BCG_PRICE")),
-				     request.getParameter("BCG_INFO"));
-		String json_data = "{\"code\":\"success\", \"desc\":\"등록 완료\"}";
-		sendJson(response, json_data);
+				     request.getParameter("BCG_INFO"));		
 		return "admin/goodsAddDetail";
 	}
 	
@@ -63,6 +54,11 @@ public class GoodsController
 	   public String menuLeft(HttpServletRequest request, Model model) {
 	      listService.pointList(request, model);
 	        return "guest/goods/menuLeft"; 
-	   }
+    }
 	
+	@RequestMapping("/menuTop")
+	   public String menuTop(HttpServletRequest request, Model model) {
+	      listService.pointList(request, model);
+	        return "guest/goods/menuTop"; 
+	}
 }

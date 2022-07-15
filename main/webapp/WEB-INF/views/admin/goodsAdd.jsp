@@ -58,20 +58,14 @@
         }
 
         function submit_ajax() {     //BC_GOODS oracle DB에 저장
-            var queryString=$("#AddForm").serialize();
+        	var queryString=$("#AddForm").serialize();
             $.ajax({
             	url: '/upload',  
                 type: 'POST',
                 data: queryString,
                 dataType: 'text',
                 success: function(json) {  
-                    var result = JSON.parse(json);
-                	if(result.code == "success") {
-                		//alert(result.desc);     //알림창 안씀      		
-                		window.location.replace("/goodsAdd2");           		
-                	} else {
-                		alert(result.desc);
-                	}            	
+                	window.location.replace("/goodsAddDetail");           		               	           	
                 }
             });
         }
