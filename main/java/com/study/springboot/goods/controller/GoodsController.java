@@ -59,4 +59,10 @@ public class GoodsController
         return "guest/goods/categoryPoint"; 
 	}
 	
+	@RequestMapping("/menuLeft")
+	   public String menuLeft(HttpServletRequest request, Model model) {
+	      listService.pointList(request, model);
+	        return "guest/goods/menuLeft"; 
+	   }
+	
 }
