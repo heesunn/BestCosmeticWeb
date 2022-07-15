@@ -10,7 +10,7 @@ public class KMemberController
 {
 	@RequestMapping("/")
 	public String main() {
-		return "member/main";	
+		return "guest/log/main";
 	}
 	@RequestMapping("/loginView")
 	public String loginView(HttpServletRequest request) {
@@ -19,6 +19,6 @@ public class KMemberController
 	    if (uri != null && !uri.contains("/login")) {
 	        request.getSession().setAttribute("prevPage", uri);
 	    }
-		return "member/loginView";	
+		return "guest/log/loginView";
 	}
 }

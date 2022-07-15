@@ -53,7 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 			.antMatchers("/css/**", "/js/**", "/img/**").permitAll()
 			.antMatchers("/naver-editor/**").permitAll()
 			.antMatchers("/captchaImage/**").permitAll()
-			.antMatchers("/member/**").permitAll()
+			.antMatchers("/guest/**").permitAll()
+			.antMatchers("/member/**").hasAnyRole("USER","ADMIN")
 //			.antMatchers("/member/**").hasAnyRole("USER","ADMIN")
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.anyRequest().permitAll();

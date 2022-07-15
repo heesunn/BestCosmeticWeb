@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 public class JoinServiceImpl implements JoinService{
     @Autowired
     MemberDao memberDao;
-
-
     @Override
     public String join(HttpServletRequest request, Model model) {
         String bcm_id = request.getParameter("id");

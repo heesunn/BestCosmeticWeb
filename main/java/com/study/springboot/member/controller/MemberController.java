@@ -4,6 +4,7 @@ import com.study.springboot.member.dto.MemberDto;
 import com.study.springboot.member.dto.ValidationMember;
 import com.study.springboot.member.service.CancelExchangeRefundViewService;
 import com.study.springboot.member.service.JoinService;
+import com.study.springboot.member.service.ModifyMemberViewService;
 import com.study.springboot.member.service.OrderDeliveryViewService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,16 @@ public class MemberController
 	OrderDeliveryViewService orderDeliveryViewService;
 	@Autowired
 	CancelExchangeRefundViewService cancelExchangeRefundViewService;
+	@Autowired
+	ModifyMemberViewService modifyMemberViewService;
 
 	@RequestMapping("/join")
 	public String join() {
-		return "member/joinView";
+		return "guest/log/joinView";
 	}
 	@RequestMapping("/naverCaptcha")
 	public String naverCaptcha(){
-		return "member/naverCaptcha";
+		return "guest/log/naverCaptcha";
 	}
 	@RequestMapping("/joinProcess")
 	public @ResponseBody JSONObject joinProcess(@ModelAttribute("dto") @Valid ValidationMember validationMember,
@@ -119,4 +122,10 @@ public class MemberController
 	public String mypageView() {
 		return "member/mypageView";
 	}
+	@RequestMapping("/modifyMember")
+	public String modifyMember(HttpServletRequest request, Model model) {
+		modifyMemberViewService.modifyMemberView(request, model);
+		return "member/modifyMember";
+	}
+
 }
