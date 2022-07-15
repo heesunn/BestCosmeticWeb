@@ -19,5 +19,6 @@ public interface MemberDao {
     public int purchaseConfirmation(int bcm_num, String bco_ordernum);
     public ArrayList<OrderDeliveryDto> cancelExchangeRefund(int bcm_num, int nEnd, int nStart);
     public int articlePage2(int curPage);
+    public MemberDto selectUser(int bcm_num);
 
 }

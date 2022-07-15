@@ -150,7 +150,7 @@
                         [ &lt;&lt; ]
                     </c:when>
                     <c:otherwise>
-                        <a href="orderDelivery?page=1&bcm_num=1">[ &lt;&lt; ]</a>
+                        <a href="orderDelivery?page=1">[ &lt;&lt; ]</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -160,7 +160,7 @@
                         [ &lt; ]
                     </c:when>
                     <c:otherwise>
-                        <a href="orderDelivery?page=${page.curPage-1}&bcm_num=1">[&lt;]</a>
+                        <a href="orderDelivery?page=${page.curPage-1}">[&lt;]</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -172,7 +172,7 @@
                         </c:when>
 
                         <c:otherwise>
-                            <a href="orderDelivery?page=${fEach}&bcm_num=1">[${fEach}]</a>&nbsp;
+                            <a href="orderDelivery?page=${fEach}">[${fEach}]</a>&nbsp;
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
@@ -183,7 +183,7 @@
                         [&gt;]
                     </c:when>
                     <c:otherwise>
-                        <a href="orderDelivery?page=${page.curPage+1}&bcm_num=1">[&gt;]</a>
+                        <a href="orderDelivery?page=${page.curPage+1}">[&gt;]</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -193,7 +193,7 @@
                         [&gt;&gt;]
                     </c:when>
                     <c:otherwise>
-                        <a href="orderDelivery?page=${page.totalPage}&bcm_num=1">[&gt;&gt;]</a>
+                        <a href="orderDelivery?page=${page.totalPage}">[&gt;&gt;]</a>
                     </c:otherwise>
                 </c:choose>
             </td>

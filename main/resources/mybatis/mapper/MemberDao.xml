@@ -15,6 +15,9 @@
     <select id="userCheck" resultType="com.study.springboot.member.dto.MemberDto">
         select * from bc_member where bcm_id = #{param1}
     </select>
+    <select id="selectUser" resultType="com.study.springboot.member.dto.MemberDto">
+        select * from bc_member where bcm_num = #{param1}
+    </select>
     <select id="orderDeliveryView" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
         <!--select * from bc_order_history where bcm_num = #{param1}-->
         <!--order by는 현재 주문번호로 해놨는데 원래는 주문시간으로 order by 해야함 시간순으로 하면 스크립트실행 때 같은 시간으로 들어가서 페이징 문제생김-->
