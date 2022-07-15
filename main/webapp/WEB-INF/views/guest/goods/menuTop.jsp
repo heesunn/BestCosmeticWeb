@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>상단바</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+		  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 </head>
 <body>
 	<br>
@@ -26,14 +30,14 @@
 					</li>
 				</ul>
 			</div>
-			<div>		
-				<form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0">					
-					<input class="form-control mr-sm-2" id="srch" name="srch" type="search"
-						placeholder="전체 상품 검색" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" onclick="">Search</button>
-				</form>
-			</div>
 		</nav>
+		<div>		
+			<form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0">					
+				<input class="form-control mr-sm-2" id="srch" name="srch" type="search"
+					placeholder="전체 상품 검색" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" onclick="">Search</button>
+			</form>
+		</div>
 	 
 		<hr/>
 </body>
