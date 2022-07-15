@@ -10,11 +10,11 @@
 </head>
 <body>
 	<div style="float: top">
-    	<c:import url="/menuTop"></c:import>
+    	<c:import url="/guest/menuTop"></c:import>
 	</div>
 	
 	<div style="float: left">
-    	<c:import url="/menuLeft"></c:import>
+    	<c:import url="/guest/menuLeft"></c:import>
 	</div>
 	
 	<table border="1">

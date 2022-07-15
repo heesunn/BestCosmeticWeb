@@ -56,7 +56,7 @@ public class GoodsController
 	        return "guest/goods/menuLeft"; 
     }
 	
-	@RequestMapping("/menuTop")
+	@RequestMapping("/guest/menuTop")
 	   public String menuTop(HttpServletRequest request, Model model) {
 	      listService.pointList(request, model);
 	        return "guest/goods/menuTop"; 
