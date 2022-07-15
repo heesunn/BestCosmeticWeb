@@ -6,204 +6,124 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+function 상세페이지() {
+	
+}
+function 찜목록삭제() {
+    var queryString = $('#deleteForm${dto.bcg_key}').serialize();
+    console.log(queryString);
+
+    $.ajax({
+        url : '/member/likeDelete',
+        type : 'POST',
+        data : queryString,
+        dataType: 'json',
+        success : function(json) {
+            console.log(json);
+            if(json.desc == 1){
+                alert();
+                window.location.reload();
+            }else if (json.desc == 0) {
+                alert("데이터베이스입력오류입니다.")
+            }
+        }
+    });
+}
+</script>
 <body>
+<div>
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div style="float: left">
     <c:import url="/member/mypageView"></c:import>
 </div>
 <div style="float: left">
-    <h1>찜 목록</h1>&nbsp;&nbsp;<p>총 n개</p>
-    <table width="500" cellpadding="0" cellspacing="0" border="1">
-        <tr>
-            <td>상품정보</td>
-            <td>판매가</td>
-            <td>주문상태</td>
-            <td>주문변경</td>
-        </tr>
-        <c:forEach items="${list}" var="dto">
-        <tr>
-            <input type="hidden" id="ordernum${dto.bco_ordernum}"
-                   name="bco_ordernum" value="${dto.bco_ordernum}">
-            <td>${dto.bco_ordernum}</td>
-            <td id="money${dto.bco_ordernum}">${dto.bco_totalprice}</td>
-            <input id="realmoney${dto.bco_ordernum}" type="hidden" value="${dto.bco_totalprice}"/>
-            <td>${dto.bco_order_name}</td>
-            <td>${dto.bco_order_status}</td>
-            <td>
-                <c:if test="${dto.bco_order_status == '배송준비중'}">
-                    <input type="button" value="취소신청" onclick="취소신청${dto.bco_ordernum}()"><br>
-                    <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()">
-                </c:if>
-                <c:if test="${dto.bco_order_status == '배송완료'}">
-                    <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()"><br>
-                    <input type="button" value="반품신청" onclick="반품신청${dto.bco_ordernum}()"><br>
-                    <input type="button" value="구매확정" onclick="구매확정${dto.bco_ordernum}()">
-                </c:if>
-            </td>
-        </tr>
-
-<script>
-	function if_checked() {
-	    var checkbox = document.getElementById('checkAll');
-	    if(checkbox.checked) {
-	        document.getElementsByClassName('values').checked;
-	    }
-	}
-    function 취소신청${dto.bco_ordernum}() {
-        console.log('취소신청');
-        var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
-        console.log(queryString);
-
-        $.ajax({
-            url : '/cancellationRequest',
-            type : 'POST',
-            data : queryString,
-            dataType: 'json',
-            success : function(json) {
-                console.log(json);
-                if(json.desc == 1){
-                    alert();
-                    window.location='/cancelExchangeRefund';
-                }else if (json.desc == 0) {
-                    alert("데이터베이스입력오류입니다.")
-                }
-            }
-        });
-
-
-    }
-    function 교환신청${dto.bco_ordernum}() {
-        console.log('교환신청');
-        var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
-        console.log(queryString);
-        $.ajax({
-            url : '/exchangeRequest',
-            type : 'POST',
-            data : queryString,
-            dataType: 'json',
-            success : function(json) {
-                console.log(json);
-                if(json.desc == 1){
-                    alert();
-                    window.location='/cancelExchangeRefund';
-                }else if (json.desc == 0) {
-                    alert("데이터베이스입력오류입니다.")
-                }
-            }
-        });
-    }
-    function 반품신청${dto.bco_ordernum}() {
-        console.log('반품신청')
-        var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
-        console.log(queryString);
-        $.ajax({
-            url : '/refundRequest',
-            type : 'POST',
-            data : queryString,
-            dataType: 'json',
-            success : function(json) {
-                console.log(json);
-                if(json.desc == 1){
-                    alert();
-                    window.location='/cancelExchangeRefund';
-                }else if (json.desc == 0) {
-                    alert("데이터베이스입력오류입니다.")
-                }
-            }
-        });
-    }
-    function 구매확정${dto.bco_ordernum}() {
-        console.log("구매확정")
-        var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
-        console.log(queryString);
-        $.ajax({
-            url : '/purchaseConfirmation',
-            type : 'POST',
-            data : queryString,
-            dataType: 'json',
-            success : function(json) {
-                console.log(json);
-                if(json.desc == 1){
-                    alert();
-                    window.location='/cancelExchangeRefund';
-                }else if (json.desc == 0) {
-                    alert("데이터베이스입력오류입니다.")
-                }
-            }
-        });
-    }
-</script>
-<script>
-    var money = $('#money${dto.bco_ordernum}').text();
-    var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    $('#money${dto.bco_ordernum}').text(money2);
-    //머니값체크 , 넣은거
-    var moneyValCheck =  $('#money${dto.bco_ordernum}').text();
-    console.log(moneyValCheck);
-    //진짜 머니 , 없는거
-    var realmoneyValCheck = $('#realmoney${dto.bco_ordernum}').val();
-    console.log(realmoneyValCheck);
-
-</script>
-        </c:forEach>
-
-        <tr>
-            <td colspan="5">
-                <!--처음-->
-                <c:choose>
-                    <c:when test="${(page.curPage-1)<1}">
-                        [ &lt;&lt; ]
-                    </c:when>
-                    <c:otherwise>
-                        <a href="orderDelivery?page=1&bcm_num=1">[ &lt;&lt; ]</a>
-                    </c:otherwise>
-                </c:choose>
-
-                <!--이전-->
-                <c:choose>
-                    <c:when test="${(page.curPage-1) < 1}">
-                        [ &lt; ]
-                    </c:when>
-                    <c:otherwise>
-                        <a href="orderDelivery?page=${page.curPage-1}&bcm_num=1">[&lt;]</a>
-                    </c:otherwise>
-                </c:choose>
-
-                <!--개별 페이지-->
-                <c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
-                    <c:choose>
-                        <c:when test="${page.curPage == fEach}">
-                            [${fEach} ]&nbsp;
-                        </c:when>
-
-                        <c:otherwise>
-                            <a href="orderDelivery?page=${fEach}&bcm_num=1">[${fEach}]</a>&nbsp;
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-
-                <!--다음-->
-                <c:choose>
-                    <c:when test="${(page.curPage +1) > page.totalPage}">
-                        [&gt;]
-                    </c:when>
-                    <c:otherwise>
-                        <a href="orderDelivery?page=${page.curPage+1}&bcm_num=1">[&gt;]</a>
-                    </c:otherwise>
-                </c:choose>
-
-                <!--끝-->
-                <c:choose>
-                    <c:when test="${page.curPage == page.totalPage}">
-                        [&gt;&gt;]
-                    </c:when>
-                    <c:otherwise>
-                        <a href="orderDelivery?page=${page.totalPage}&bcm_num=1">[&gt;&gt;]</a>
-                    </c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-    </table>
-
+    <table border="1">
+		<tr>
+			<td colspan="4">찜 목록</td>
+		</tr>
+		<tr>
+			<td colspan="4">총 ${page.totalCount}개</td>
+		</tr>
+		
+		<c:set var="i" value="0" />
+		<c:set var="j" value="4" />
+		<c:forEach items="${pointList}" var="dto">
+		<c:if test="${i%j == 0 }">		
+		<tr>
+		</c:if>
+			<td> 
+				<img src="${dto.bcg_img}" onclick="상세페이지()" height="200" width="200">&nbsp;
+				<form id="deleteForm${dto.bcg_key}">
+					<input type="hidden" name="bcm_num" value="${dto.bcg_name}">
+					<input type="hidden" name="bcg_key" value="${dto.bcg_name}">
+					<button onclick="찜목록삭제()">x</button><br/><!-- 포지션 앱솔루트 탑 0px 레프트 200px -->
+				</form>
+			</td>
+		<c:if test="${i%j == j-1 }">	
+		</tr>	
+		</c:if>
+		<c:set var="i" value="${i+1 }" />
+		</c:forEach>
+			
+		<tr>
+			<td colspan="3">
+				<!-- 처음 -->
+				<c:choose>
+				<c:when test="${(page.curPage - 1) < 1}">
+					[ &lt;&lt; ]
+				</c:when>
+				<c:otherwise>
+					<a href="categoryPoint?page=1">[ &lt;&lt; ]</a>
+				</c:otherwise>
+				</c:choose>
+				
+				<!-- 이전 -->
+				<c:choose>
+				<c:when test="${(page.curPage - 1) < 1}">
+					[ &lt; ]
+				</c:when>
+				<c:otherwise>
+					<a href="categoryPoint?page=${page.curPage - 1}">[ &lt; ]</a>
+				</c:otherwise>
+				</c:choose>
+				
+				<!-- 개별 페이지 -->
+				<c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
+					<c:choose>
+					<c:when test="${page.curPage == fEach}">
+						[ ${fEach} ] &nbsp;
+					</c:when>
+					<c:otherwise>
+						<a href="categoryPoint?page=${fEach}">[ ${fEach} ]</a> &nbsp;
+					</c:otherwise>
+					</c:choose>
+				</c:forEach>	
+				
+				<!-- 다음 -->
+				<c:choose>
+				<c:when test="${(page.curPage + 1) > page.totalPage}">
+					[ &gt; ]
+				</c:when>
+				<c:otherwise>
+					<a href="categoryPoint?page=${page.curPage + 1}">[ &gt; ]</a>
+				</c:otherwise>
+				</c:choose>
+				
+				<!-- 끝 -->
+				<c:choose>
+				<c:when test="${page.curPage == page.totalPage}">
+					[ &gt;&gt; ]
+				</c:when>
+				<c:otherwise>
+					<a href="categoryPoint?page=${page.totalPage}">[ &gt;&gt; ]</a>
+				</c:otherwise>
+				</c:choose>
+			</td>
+		</tr>
+	</table>
 </div>
 </body>
 </html>
