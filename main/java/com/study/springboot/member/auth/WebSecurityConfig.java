@@ -1,27 +1,25 @@
 package com.study.springboot.member.auth;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -51,14 +49,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	{
 		
 		http.authorizeRequests()
-			.antMatchers("/").permitAll()
+			.antMatchers("/admin/**").hasAuthority("role_admin")
+			.antMatchers("/member/**").hasAnyAuthority("role_user", "role_admin")
 			.antMatchers("/guest/**").permitAll()
-			.antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
-			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/**").permitAll()
 			.anyRequest().authenticated();
 		
 		http.formLogin()
-			.loginPage("/guest/log/loginView")
+			.loginPage("/guest/loginView")
 			.loginProcessingUrl("/loginDo")
 			.usernameParameter("j_username")
 			.passwordParameter("j_password")
@@ -67,8 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 					@Override
 					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 							AuthenticationException exception) throws IOException, ServletException {
+						System.out.println("fail");
 						request.setAttribute("message", "아이디나 비밀번호가 일치하지 않습니다.");
-						RequestDispatcher dispatcher = request.getRequestDispatcher("guest/log/loginView");
+						RequestDispatcher dispatcher = request.getRequestDispatcher("guest/loginView");
 						dispatcher.forward(request, response);
 					}
 				})
@@ -77,10 +76,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 					@Override
 					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 							Authentication authentication) throws IOException, ServletException {
+						Collection<? extends GrantedAuthority> auth = authentication.getAuthorities();
+						System.out.println(auth);
+						System.out.println("success");
 						String name = request.getParameter("j_username");
-						String uri = (String) request.getSession().getAttribute("prevPage");
 						loginSession.memberLogin(name);
-						response.sendRedirect(uri);
+						response.sendRedirect("/");
 					}	
 			})
 			.permitAll();
@@ -105,7 +106,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 			.dataSource(datasource)
-			.rolePrefix("ROLE_")
 			.usersByUsernameQuery("select bcm_id as j_username, bcm_pw as j_password, bcm_enable as enabled from bc_member where bcm_id = ?")
 			.authoritiesByUsernameQuery("select bcm_id as j_username, bcm_authority as authority from bc_member where bcm_id = ?")
 			.passwordEncoder(passwordEncoder());

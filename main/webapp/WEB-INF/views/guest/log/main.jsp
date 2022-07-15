@@ -29,7 +29,11 @@ welcome : Member
 회원 이름 : <%= sName %><br>
 회원 이메일 : <%= sEmail %><br>
 
-<a href="/logout">Log out</a><br>
-<a href="/loginView">Login</a>
+<sec:authorize access="isAuthenticated()">
+	<a href="/logout">Log out</a>
+</sec:authorize>
+<sec:authorize access="isAnonymous()">
+	<a href="/guest/loginView">Login</a>
+</sec:authorize>
 </body>
 </html>

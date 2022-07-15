@@ -29,7 +29,7 @@
     <c:import url="/menuTop"></c:import>
 </div>
 <div style="float: left">
-    <c:import url="/mypageView"></c:import>
+    <c:import url="/member/mypageView"></c:import>
 </div>
 <div style="float: left">
     <h1>회원 정보 수정</h1>
