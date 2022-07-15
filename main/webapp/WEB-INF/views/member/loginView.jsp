@@ -12,27 +12,14 @@
 function snsLogin(sns) {
 	window.location = "/oauth2/authorization/"+sns;
 }
-function goLogin() {
-	var queryString=$("#loginForm").serialize();
-	$.ajax({
-		type : 'post',
-		url : 'j_spring_security_check',
-		data : queryString,
-		success : function(result) {
-			console.log(result);
-		},
-		error : function(request, status, error) {
-			console.log(error)
-		}
-	})
-}
 </script>
 <body>
 <h1>로그인 화면</h1>
-<form id="loginForm">
+<form action="loginDo" method="post">
 	ID : <input type="text" name="j_username" value="${username }"><br>
 	PW : <input type="text" name="j_password"><br>
-	<input type="button" onclick="goLogin()" value="LOGIN"><br>
+	<h4>${message }</h4><br>
+	<input type="submit" value="LOGIN"><br>
 </form>
 <button onclick="snsLogin('google')">Google Login</button><br>
 <button onclick="snsLogin('facebook')">Facebook Login</button><br>

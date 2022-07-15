@@ -30,5 +30,6 @@ welcome : Member
 회원 이메일 : <%= sEmail %><br>
 
 <a href="/logout">Log out</a><br>
+<a href="/loginView">Login</a>
 </body>
 </html>

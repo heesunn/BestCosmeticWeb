@@ -49,6 +49,9 @@
             values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', #{param1},'','','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
+    <select id="memberSession" resultType="com.study.springboot.member.dto.MemberDto">
+    	select * from bc_member where bcm_id = #{param1}
+    </select>
 </mapper>
 
 <!--

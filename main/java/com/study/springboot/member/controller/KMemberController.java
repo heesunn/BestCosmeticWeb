@@ -1,5 +1,7 @@
 package com.study.springboot.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,7 +13,12 @@ public class KMemberController
 		return "member/main";	
 	}
 	@RequestMapping("/loginView")
-	public String loginView() {
+	public String loginView(HttpServletRequest request) {
+		String uri = request.getHeader("Referer");
+		System.out.println(uri);
+	    if (uri != null && !uri.contains("/login")) {
+	        request.getSession().setAttribute("prevPage", uri);
+	    }
 		return "member/loginView";	
 	}
 }

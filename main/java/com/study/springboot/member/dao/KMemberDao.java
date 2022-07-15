@@ -14,4 +14,5 @@ public interface KMemberDao {
     public MemberDto facebookCheck(String bcm_snsId);
     public MemberDto kakaoCheck(String bcm_snsId);
     public MemberDto naverCheck(String bcm_snsId);
+    public MemberDto memberSession(String bcm_id);
 }
