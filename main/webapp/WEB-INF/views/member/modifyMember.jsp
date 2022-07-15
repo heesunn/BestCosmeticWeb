@@ -85,12 +85,14 @@
             <td>휴대폰</td>
             <td>
                 <select id="bcm_phonenum1" name="bcm_phonenum1">
-                    <c:when test="${user.bcm_phonenum1 == null}">
-                        <option value="">::선택::</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="${user.bcm_phonenum1}">${user.bcm_phonenum1}</option>
-                    </c:otherwise>
+                    <c:choose>
+                        <c:when test="${user.bcm_phonenum1 == null}">
+                            <option value="">::선택::</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${user.bcm_phonenum1}">${user.bcm_phonenum1}</option>
+                        </c:otherwise>
+                    </c:choose>
                     <option value="011">011</option>
                     <option value="016">016</option>
                     <option value="017">017</option>
