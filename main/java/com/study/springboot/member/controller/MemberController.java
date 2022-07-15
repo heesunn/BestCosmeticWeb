@@ -2,6 +2,7 @@ package com.study.springboot.member.controller;
 
 import com.study.springboot.member.dto.MemberDto;
 import com.study.springboot.member.dto.ValidationMember;
+import com.study.springboot.member.service.CancelExchangeRefundViewService;
 import com.study.springboot.member.service.JoinService;
 import com.study.springboot.member.service.OrderDeliveryViewService;
 import org.json.simple.JSONObject;
@@ -24,6 +25,8 @@ public class MemberController
 	JoinService joinService;
 	@Autowired
 	OrderDeliveryViewService orderDeliveryViewService;
+	@Autowired
+	CancelExchangeRefundViewService cancelExchangeRefundViewService;
 
 	@RequestMapping("/join")
 	public String join() {
@@ -71,7 +74,6 @@ public class MemberController
 		JSONObject obj = new JSONObject();
 		MemberDto memberDto = joinService.userCheck(request, model);
 		obj.put("userjson", memberDto);
-
 		System.out.println("obj : " + obj);
 		return obj;
 	}
@@ -108,5 +110,13 @@ public class MemberController
 		obj.put("desc",updateCount);
 		return obj;
 	}
-
+	@RequestMapping("/cancelExchangeRefund")
+	public String cancelExchangeRefund(HttpServletRequest request, Model model) {
+		cancelExchangeRefundViewService.cancelExchangeRefundView(request, model);
+		return "member/cancelExchangeRefundView";
+	}
+	@RequestMapping("/mypageView")
+	public String mypageView() {
+		return "member/mypageView";
+	}
 }

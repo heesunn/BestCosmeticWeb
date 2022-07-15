@@ -12,12 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @Service
-public class OrderDeliveryViewServiceImpl implements OrderDeliveryViewService{
+public class CancelExchangeRefundViewServiceImpl implements CancelExchangeRefundViewService{
     @Autowired
     MemberDao memberDao;
     HttpSession session;
     @Override
-    public void OrderDelivertyView(HttpServletRequest request, Model model) {
+    public void cancelExchangeRefundView(HttpServletRequest request, Model model) {
         session = request.getSession();
         int bcm_num = (int) session.getAttribute("num");
         System.out.println(bcm_num);
@@ -28,7 +28,7 @@ public class OrderDeliveryViewServiceImpl implements OrderDeliveryViewService{
         }catch(Exception e) {
         }
 
-        int totalCount = memberDao.articlePage(nPage);
+        int totalCount = memberDao.articlePage2(nPage);
 
         int listCount = 5; //한 페이지당 보여줄 게시물의 갯수
         int pageCount = 5; //하단에 보여줄 페이지 리스트의 갯수.
@@ -78,48 +78,8 @@ public class OrderDeliveryViewServiceImpl implements OrderDeliveryViewService{
         int nStart= (nPage-1)*listCount+1;
         int nEnd = (nPage-1)*listCount+listCount;
 
-        ArrayList<OrderDeliveryDto> dtos = memberDao.orderDeliveryView(bcm_num,nEnd,nStart);
+        ArrayList<OrderDeliveryDto> dtos = memberDao.cancelExchangeRefund(bcm_num,nEnd,nStart);
         model.addAttribute("list",dtos);
         System.out.println(dtos);
-    }
-
-    @Override
-    public int cancellationRequest(HttpServletRequest request, Model model) {
-        session = request.getSession();
-        int bcm_num = (int) session.getAttribute("num");
-        String bco_ordernum = request.getParameter("bco_ordernum");
-        System.out.println(bco_ordernum);
-        int updateCount = memberDao.cancellationRequest(bcm_num,bco_ordernum);
-        return updateCount;
-    }
-
-    @Override
-    public int exchangeRequest(HttpServletRequest request, Model model) {
-        session = request.getSession();
-        int bcm_num = (int) session.getAttribute("num");
-        String bco_ordernum = request.getParameter("bco_ordernum");
-        System.out.println(bco_ordernum);
-        int updateCount = memberDao.exchangeRequest(bcm_num,bco_ordernum);
-        return updateCount;
-    }
-
-    @Override
-    public int refundRequest(HttpServletRequest request, Model model) {
-        session = request.getSession();
-        int bcm_num = (int) session.getAttribute("num");
-        String bco_ordernum = request.getParameter("bco_ordernum");
-        System.out.println(bco_ordernum);
-        int updateCount = memberDao.refundRequest(bcm_num,bco_ordernum);
-        return updateCount;
-    }
-
-    @Override
-    public int purchaseConfirmation(HttpServletRequest request, Model model) {
-        session = request.getSession();
-        int bcm_num = (int) session.getAttribute("num");
-        String bco_ordernum = request.getParameter("bco_ordernum");
-        System.out.println(bco_ordernum);
-        int updateCount = memberDao.purchaseConfirmation(bcm_num,bco_ordernum);
-        return updateCount;
     }
 }

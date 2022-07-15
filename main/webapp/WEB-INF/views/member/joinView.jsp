@@ -143,7 +143,7 @@
                 return;
             }
             if (!firstEmailCheck.test($('#firstEmail').val())) {
-                $("#p1").html("비밀번호는 숫자,영문,특수문자를 포함한 8~16자리여야합니다.");
+                $("#p1").html("이메일 형식에 맞지 않습니다");
                 $('#firstEmail').focus();
                 return;
             }
@@ -153,7 +153,7 @@
                 return;
             }
             if (!secondEmailCheck.test($('#secondEmail').val())) {
-                $("#p1").html("비밀번호는 숫자,영문,특수문자를 포함한 8~16자리여야합니다.");
+                $("#p1").html("이메일 형식에 맞지 않습니다");
                 $('#secondEmail').focus();
                 return;
             }
@@ -187,8 +187,8 @@
                     console.log(json);
                     if(json.desc == "1"){
                         alert("회원가입되었습니다.")
-                        window.location.replace('/');
                         $("#secondEmail").attr("disabled",true);
+                        window.location.replace('/login');
                     } else if (json.desc == "0") {
                         $("#p1").html("데이터베이스입력에러");
                         $("#secondEmail").attr("disabled",true);

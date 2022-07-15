@@ -18,14 +18,14 @@
     <select id="orderDeliveryView" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
         <!--select * from bc_order_history where bcm_num = #{param1}-->
         <!--order by는 현재 주문번호로 해놨는데 원래는 주문시간으로 order by 해야함 시간순으로 하면 스크립트실행 때 같은 시간으로 들어가서 페이징 문제생김-->
-        <![CDATA[ select * from (select rownum num, A.* from
-                              (select * from bc_order_history where bcm_num = #{param1}
-                                            and bco_order_status = '배송준비중'
-                                            or bco_order_status = '배송중'
-                                            or bco_order_status = '배송완료'
-                                            or bco_order_status = '구매확정'
-                                            order by bco_ordernum desc ) A
-                                            where rownum <= #{param2} ) B where B.num >= #{param3} ]]>
+        select * from (select rownum num, A.* from
+                      (select * from bc_order_history where bcm_num = #{param1}
+                                and bco_order_status = '배송준비중'
+                                or bco_order_status = '배송중'
+                                or bco_order_status = '배송완료'
+                                or bco_order_status = '구매확정'
+                                order by bco_ordernum desc ) A
+                                where rownum &lt;= #{param2} ) B where B.num &gt;= #{param3}
     </select>
     <select id="articlePage" resultType="_int">
         select count(*) as total from bc_order_history where bco_order_status = '배송준비중'
@@ -34,17 +34,46 @@
                                                        or bco_order_status = '구매확정'
     </select>
     <update id="cancellationRequest">
-        update bc_order_history set bco_order_status = '취소신청' where bcm_num = #{param1}
+        update bc_order_history set bco_order_status = '취소신청', bco_statusdate = sysdate
+                                where bcm_num = #{param1} and bco_ordernum = #{param2}
     </update>
     <update id="exchangeRequest">
-        update bc_order_history set bco_order_status = '교환신청' where bcm_num = #{param1}
+        update bc_order_history set bco_order_status = '교환신청', bco_statusdate = sysdate
+                                where bcm_num = #{param1} and bco_ordernum = #{param2}
     </update>
     <update id="refundRequest">
-        update bc_order_history set bco_order_status = '반품신청' where bcm_num = #{param1}
+        update bc_order_history set bco_order_status = '반품신청', bco_statusdate = sysdate
+                                where bcm_num = #{param1} and bco_ordernum = #{param2}
     </update>
     <update id="purchaseConfirmation">
-        update bc_order_history set bco_order_status = '구매확정' where bcm_num = #{param1}
+        update bc_order_history set bco_order_status = '구매확정', bco_statusdate = sysdate
+                                where bcm_num = #{param1} and bco_ordernum = #{param2}
     </update>
+    <select id="cancelExchangeRefund" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+        <!--현재 order by 주문번호인데 나중에 상태변화날짜로 바꿔줄것-->
+        select * from (select rownum num, A.* from
+        (select * from bc_order_history where bcm_num = #{param1}
+                    and bco_order_status = '취소신청'
+                    or bco_order_status = '취소완료'
+                    or bco_order_status = '교환신청'
+                    or bco_order_status = '교환상품회수중'
+                    or bco_order_status = '교환완료'
+                    or bco_order_status = '반품신청'
+                    or bco_order_status = '반품회수중'
+                    or bco_order_status = '반품완료'
+                    order by bco_ordernum desc ) A
+                    where rownum &lt;= #{param2} ) B where B.num &gt;= #{param3}
+    </select>
+    <select id="articlePage2" resultType="_int">
+        select count(*) as total from bc_order_history where bco_order_status = '취소신청'
+                                                          or bco_order_status = '취소완료'
+                                                          or bco_order_status = '교환신청'
+                                                          or bco_order_status = '교환상품회수중'
+                                                          or bco_order_status = '교환완료'
+                                                          or bco_order_status = '반품신청'
+                                                          or bco_order_status = '반품회수중'
+                                                          or bco_order_status = '반품완료'
+    </select>
 </mapper>
 
 <!--

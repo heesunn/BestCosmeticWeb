@@ -8,6 +8,10 @@
 
 </head>
 <body>
+<div style="float: left">
+    <c:import url="/mypageView"></c:import>
+</div>
+<div style="float: left">
     <h1>주문/배송</h1>
     <table width="500" cellpadding="0" cellspacing="0" border="1">
         <tr>
@@ -28,22 +32,23 @@
             <td>${dto.bco_order_status}</td>
             <td>
                 <c:if test="${dto.bco_order_status == '배송준비중'}">
-                    <input type="button" value="취소신청" onclick="취소신청()"><br>
-                    <input type="button" value="교환신청" onclick="교환신청()">
+                    <input type="button" value="취소신청" onclick="취소신청${dto.bco_ordernum}()"><br>
+                    <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()">
                 </c:if>
                 <c:if test="${dto.bco_order_status == '배송완료'}">
-                    <input type="button" value="교환신청" onclick="교환신청()"><br>
-                    <input type="button" value="반품신청" onclick="반품신청()"><br>
-                    <input type="button" value="구매확정" onclick="구매확정()">
+                    <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()"><br>
+                    <input type="button" value="반품신청" onclick="반품신청${dto.bco_ordernum}()"><br>
+                    <input type="button" value="구매확정" onclick="구매확정${dto.bco_ordernum}()">
                 </c:if>
             </td>
         </tr>
 
 <script>
-    function 취소신청() {
+    function 취소신청${dto.bco_ordernum}() {
         console.log('취소신청');
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
+
         $.ajax({
             url : '/cancellationRequest',
             type : 'POST',
@@ -52,7 +57,8 @@
             success : function(json) {
                 console.log(json);
                 if(json.desc == 1){
-                    alert("취소/교환/반품으로 이동")
+                    alert();
+                    window.location='/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
@@ -61,7 +67,7 @@
 
 
     }
-    function 교환신청() {
+    function 교환신청${dto.bco_ordernum}() {
         console.log('교환신청');
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
@@ -73,14 +79,15 @@
             success : function(json) {
                 console.log(json);
                 if(json.desc == 1){
-                    alert("취소/교환/반품으로 이동")
+                    alert();
+                    window.location='/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
             }
         });
     }
-    function 반품신청() {
+    function 반품신청${dto.bco_ordernum}() {
         console.log('반품신청')
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
@@ -92,14 +99,15 @@
             success : function(json) {
                 console.log(json);
                 if(json.desc == 1){
-                    alert("취소/교환/반품으로 이동")
+                    alert();
+                    window.location='/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
             }
         });
     }
-    function 구매확정() {
+    function 구매확정${dto.bco_ordernum}() {
         console.log("구매확정")
         var queryString = $('#ordernum${dto.bco_ordernum}').serialize();
         console.log(queryString);
@@ -111,7 +119,8 @@
             success : function(json) {
                 console.log(json);
                 if(json.desc == 1){
-                    alert("취소/교환/반품으로 이동")
+                    alert();
+                    window.location='/cancelExchangeRefund';
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
@@ -131,8 +140,8 @@
     console.log(realmoneyValCheck);
 
 </script>
-
         </c:forEach>
+
         <tr>
             <td colspan="5">
                 <!--처음-->
@@ -191,6 +200,6 @@
         </tr>
     </table>
 
-
+</div>
 </body>
 </html>

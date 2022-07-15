@@ -13,9 +13,11 @@ public interface MemberDao {
     public MemberDto userCheck(String bcm_id);
     public ArrayList<OrderDeliveryDto> orderDeliveryView(int bcm_num,int nEnd, int nStart);
     public int articlePage(int curPage);
-    public int cancellationRequest(int bcm_num);
-    public int exchangeRequest(int bcm_num);
-    public int refundRequest(int bcm_num);
-    public int purchaseConfirmation(int bcm_num);
+    public int cancellationRequest(int bcm_num, String bco_ordernum);
+    public int exchangeRequest(int bcm_num, String bco_ordernum);
+    public int refundRequest(int bcm_num, String bco_ordernum);
+    public int purchaseConfirmation(int bcm_num, String bco_ordernum);
+    public ArrayList<OrderDeliveryDto> cancelExchangeRefund(int bcm_num, int nEnd, int nStart);
+    public int articlePage2(int curPage);
 
 }
