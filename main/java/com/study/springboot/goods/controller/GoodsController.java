@@ -58,7 +58,7 @@ public class GoodsController
 	
 	@RequestMapping("/guest/menuTop")
 	   public String menuTop(HttpServletRequest request, Model model) {
-	      listService.pointList(request, model);
+
 	        return "guest/goods/menuTop"; 
 	}
 }

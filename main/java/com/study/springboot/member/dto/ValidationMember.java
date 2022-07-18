@@ -26,4 +26,16 @@ public class ValidationMember {
     @NotEmpty(message = "이메일은 비워둘 수 없습니다.")
     @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$", message = "이메일 형식에 맞지않습니다.")
     private String secondEmail;
+    @Pattern(regexp = "^[0-9]*$", message = "전화번호는 숫자만 가능합니다.")
+    private String bcm_phonenum1;
+    @Pattern(regexp = "^[0-9]*$", message = "전화번호는 숫자만 가능합니다.")
+    private String bcm_phonenum2;
+    @Pattern(regexp = "^[0-9]*$", message = "전화번호는 숫자만 가능합니다.")
+    private String bcm_phonenum3;
+    @Pattern(regexp = "^[0-9]*$", message = "우편번호는 숫자만 가능합니다")
+    private String bcm_zipcode;
+    private String bcm_address1;
+    private String bcm_address2;
+    private String bcm_address3;
+
 }

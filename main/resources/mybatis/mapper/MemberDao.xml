@@ -7,9 +7,9 @@
     <insert id="join">
         insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , #{param1} , #{param2} , #{param3} , #{param4} , '', '','','','','','','','','','',
+            values ( bcm_num_seq.nextval , #{param1} , #{param2} , #{param3} , #{param4} , '', '','','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <select id="userCheck" resultType="com.study.springboot.member.dto.MemberDto">
@@ -27,7 +27,7 @@
                                 or bco_order_status = '배송중'
                                 or bco_order_status = '배송완료'
                                 or bco_order_status = '구매확정'
-                                order by bco_ordernum desc ) A
+                                order by bco_orderdate desc ) A
                                 where rownum &lt;= #{param2} ) B where B.num &gt;= #{param3}
     </select>
     <select id="articlePage" resultType="_int">
@@ -54,7 +54,7 @@
     </update>
     <select id="cancelExchangeRefund" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
         <!--현재 order by 주문번호인데 나중에 상태변화날짜로 바꿔줄것-->
-        select * from (select rownum num, A.* from
+        select * from (select rownum num, a.* from
         (select * from bc_order_history where bcm_num = #{param1}
                     and bco_order_status = '취소신청'
                     or bco_order_status = '취소완료'
@@ -64,19 +64,99 @@
                     or bco_order_status = '반품신청'
                     or bco_order_status = '반품회수중'
                     or bco_order_status = '반품완료'
-                    order by bco_ordernum desc ) A
+                    order by bco_orderdate desc ) A
                     where rownum &lt;= #{param2} ) B where B.num &gt;= #{param3}
     </select>
     <select id="articlePage2" resultType="_int">
-        select count(*) as total from bc_order_history where bco_order_status = '취소신청'
-                                                          or bco_order_status = '취소완료'
-                                                          or bco_order_status = '교환신청'
-                                                          or bco_order_status = '교환상품회수중'
-                                                          or bco_order_status = '교환완료'
-                                                          or bco_order_status = '반품신청'
-                                                          or bco_order_status = '반품회수중'
-                                                          or bco_order_status = '반품완료'
+        SELECT COUNT(*) AS TOTAL FROM BC_ORDER_HISTORY WHERE BCO_ORDER_STATUS = '취소신청'
+                                                          OR BCO_ORDER_STATUS = '취소완료'
+                                                          OR BCO_ORDER_STATUS = '교환신청'
+                                                          OR BCO_ORDER_STATUS = '교환상품회수중'
+                                                          OR BCO_ORDER_STATUS = '교환완료'
+                                                          OR BCO_ORDER_STATUS = '반품신청'
+                                                          OR BCO_ORDER_STATUS = '반품회수중'
+                                                          OR BCO_ORDER_STATUS = '반품완료'
     </select>
+    <update id="modifyMember">
+        UPDATE BC_MEMBER SET BCM_EMAIL = #{param1},
+                             BCM_PHONENUM1 = #{param2},
+                             BCM_PHONENUM2 = #{param3},
+                             BCM_PHONENUM3 = #{param4},
+                             BCM_ZIPCODE = #{param5},
+                             BCM_ADDRESS1 = #{param6},
+                             BCM_ADDRESS2 = #{param7},
+                             BCM_ADDRESS3 = #{param8}
+                    WHERE BCM_NUM= #{param9}
+    </update>
+    <select id="basketListView" resultType="com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto" >
+        SELECT
+            A.BCG_KEY as bcg_key,
+            A.BCG_CATEGORY as bcg_category,
+            A.BCG_NAME as bcg_name,
+            A.BCG_PRICE as bcg_price,
+            A.BCG_DATE as bcg_date,
+            A.BCG_STOCK as bcg_stock,
+            A.BCG_SALE as bcg_sale,
+            A.BCG_LIKE as bcg_like,
+            A.BCG_IMG as bcg_img,
+            A.BCG_IMGDETAIL as bcg_imgdetail,
+            A.BCG_INFO as bcg_info,
+            A.BCG_DISCOUNT as bcg_discount,
+            A.BCG_MDPICK as bcg_mdpick,
+            B.BCM_NUM as bcm_num,
+            B.BCD_DETAILKEY as bcd_detailkey,
+            B.BCB_DATE as bcb_date,
+            B.BCB_COUNT as bcb_count,
+            C.BCD_OPTION as bcd_option,
+            C.BCD_STOCK as bcd_stock
+        FROM BC_GOODS A, BC_BASKET B , BC_DETAILGOODS C
+        WHERE B.BCM_NUM = #{param1}
+          AND A.BCG_KEY = B.BCG_KEY
+          AND B.BCD_DETAILKEY=C.BCD_DETAILKEY
+          AND A.BCG_KEY = C.BCG_KEY
+        ORDER BY B.BCB_DATE DESC
+    </select>
+    <delete id="deleteBasket">
+        DELETE FROM BC_BASKET
+               WHERE BCM_NUM = #{param1}
+                 AND BCG_KEY = #{param2}
+                 AND BCD_DETAILKEY = #{param3}
+    </delete>
+    <select id="orderCheck" resultType="com.study.springboot.member.dto.GoodsJoinDetailGoodsDto">
+        SELECT
+            A.BCG_KEY as bcg_key,
+            A.BCG_CATEGORY as bcg_category,
+            A.BCG_NAME as bcg_name,
+            A.BCG_PRICE as bcg_price,
+            A.BCG_DATE as bcg_date,
+            A.BCG_STOCK as bcg_stock,
+            A.BCG_SALE as bcg_sale,
+            A.BCG_LIKE as bcg_like,
+            A.BCG_INFO as bcg_info,
+            A.BCG_DISCOUNT as bcg_discount,
+            A.BCG_MDPICK as bcg_mdpick,
+            B.BCD_DETAILKEY as bcg_detailkey,
+            B.BCD_OPTION as bcd_option,
+            B.BCD_STOCK as bcd_stock
+        FROM BC_GOODS A, BC_DETAILGOODS B
+        WHERE A.BCG_KEY = B.BCG_KEY
+          AND A.BCG_KEY = #{param1}
+          AND B.BCD_DETAILKEY = #{param2}
+    </select>
+    <update id="basketUpCount">
+        UPDATE BC_BASKET
+        SET BCB_COUNT = BCB_COUNT+1
+        WHERE BCM_NUM = #{param1}
+          AND BCG_KEY = #{param2}
+          AND BCD_DETAILKEY = #{param3}
+    </update>
+    <update id="basketDownCount">
+        UPDATE BC_BASKET
+        SET BCB_COUNT = BCB_COUNT-1
+        WHERE BCM_NUM = #{param1}
+          AND BCG_KEY = #{param2}
+          AND BCD_DETAILKEY = #{param3}
+    </update>
 </mapper>
 
 <!--

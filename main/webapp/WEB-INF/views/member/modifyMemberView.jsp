@@ -22,16 +22,53 @@
 <head>
     <title>Title</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        function form_check() {
+            //이메일 잠시 활성화
+            $("#secondEmail").attr("disabled",false);
+            $("#sample2_postcode").attr("disabled",false);
+            $("#sample2_address").attr("disabled",false);
+            $("#sample2_extraAddress").attr("disabled",false);
 
+            submit_ajax();
+        }
+
+        function submit_ajax() {
+            var queryString=$("#modifyForm").serialize();
+            console.log(queryString)
+
+            $.ajax({
+                url : '/member/modifyMember',
+                type : 'POST',
+                data : queryString,
+                dataType: 'json',
+                success : function(json) {
+                    console.log(json);
+                    $("#secondEmail").attr("disabled",true);
+                    $("#sample2_postcode").attr("disabled",true);
+                    $("#sample2_address").attr("disabled",true);
+                    $("#sample2_extraAddress").attr("disabled",true);
+                    if(json.desc == "1"){
+                        alert("수정되었습니다.")
+                    } else if (json.desc == "0") {
+                        alert("데이터베이스입력에러")
+                    } else if (json.desc == "-1") {
+                        alert("이상현상")
+                    } else {
+                        alert(json.desc);
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-<div>
-    <c:import url="/guest/menuTop"></c:import>
-</div>
+
 <div style="float: left">
     <c:import url="/member/mypageView"></c:import>
 </div>
-<div style="float: left">
+<div style="float: left" >
+    <form id="modifyForm">
     <h1>회원 정보 수정</h1>
     <h5>필수 입력사항</h5>
     <table cellpadding="0" cellspacing="0" border="1">
@@ -47,7 +84,7 @@
             <td>이메일</td>
             <td>
                 <input type="text" id="firstEmail" name="firstEmail" value="<%=firstEmail%>">@
-                <input type="text" id="secondEmail" name="secondEmail" value="<%=secondEmail%>">
+                <input type="text" id="secondEmail" name="secondEmail" disabled value="<%=secondEmail%>">
                 <select id="selectEmail" name="selectEmail">
                     <option value="1" selected>직접입력</option>
                     <option value="naver.com">naver.com</option>
@@ -104,39 +141,28 @@
                     <option value="010">010</option>
                 </select>
                 &nbsp;-&nbsp;
-                <input type="text" id="bcm_phonenum2" size="4" name="bcm_phonenum2" value="${user.bcm_phonenum2}">
+                <input type="text" id="bcm_phonenum2" size="4" maxlength="4" name="bcm_phonenum2" value="${user.bcm_phonenum2}">
                 &nbsp;-&nbsp;
-                <input type="text" id="bcm_phonenum3" size="4" name="bcm_phonenum3" value="${user.bcm_phonenum3}">
+                <input type="text" id="bcm_phonenum3" size="4" maxlength="4" name="bcm_phonenum3" value="${user.bcm_phonenum3}">
             </td>
         </tr>
         <tr>
             <td>주소</td>
             <td>
-                <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_address1}">
+                <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_zipcode}">
                 <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-                <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address2}"><br>
-                <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address3}">
-                <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address4}">
+                <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address1}"><br>
+                <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address2}">
+                <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address3}">
             </td>
         </tr>
     </table>
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
     </div>
-<%--    <div>--%>
-<%--        <p>${user.bcm_num}</p>--%>
-<%--        <p>${user.bcm_id}</p>--%>
-<%--        <p>${user.bcm_pw}</p>--%>
-<%--        <p>${user.bcm_name}</p>--%>
-<%--        <p>${user.bcm_phonenum1}</p>--%>
-<%--        <p>${user.bcm_phonenum2}</p>--%>
-<%--        <p>${user.bcm_phonenum3}</p>--%>
-<%--        <p>${user.bcm_address1}</p>--%>
-<%--        <p>${user.bcm_address2}</p>--%>
-<%--        <p>${user.bcm_address3}</p>--%>
-<%--        <p>${user.bcm_address4}</p>--%>
-<%--    </div>--%>
-    <input type="button" value="수정" onclick="">
+
+    <input type="button" value="수정" onclick="form_check()">
+    </form>
 </div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -213,9 +239,9 @@
     // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
     // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
     // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
-    function initLayerPosition(){
-        var width = 600; //우편번호서비스가 들어갈 element의 width
-        var height = 800; //우편번호서비스가 들어갈 element의 height
+    function initLayerPosition() {
+        var width = 300; //우편번호서비스가 들어갈 element의 width
+        var height = 400; //우편번호서비스가 들어갈 element의 height
         var borderWidth = 5; //샘플에서 사용하는 border의 두께
 
         // 위에서 선언한 값들을 실제 element에 넣는다.

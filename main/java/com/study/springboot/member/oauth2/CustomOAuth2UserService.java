@@ -37,7 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		service.snsLogin(registrationId, attributes.getId(), attributes.getName(), attributes.getEmail());
 //		System.out.println("Picture:"+attributes.getPicture());
 
-		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
+		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("role_user")),
 				                     attributes.getAttributes(),
 				                     attributes.getNameAttributeKey());
 	}

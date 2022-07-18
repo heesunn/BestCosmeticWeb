@@ -17,13 +17,13 @@
 	<div class="top">	
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href=""> 
-				<img src="./img/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+				<img src="" width="30" height="30" class="d-inline-block align-top" alt="">
 				BestCosmetic
 			</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">					
 					<li class="nav-item active">
-						<a class="nav-link" href="/mypageView">마이페이지</a>
+						<a class="nav-link" href="/member/modifyMember">마이페이지</a>
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link" onclick="">로그아웃</a>

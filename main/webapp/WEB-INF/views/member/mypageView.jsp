@@ -9,6 +9,7 @@
             background-color: black;
             width: 210px;
             color: white;
+            height: 100%;
 
         }
         .list:hover{
@@ -36,7 +37,7 @@
                     <li class="list" >찜 목록</li>
                     <li class="list" >문의 내역</li>
                     <li class="list" >리뷰 내역</li>
-                    <li class="list" onclick="javascript:window.location='/member/modifyMember'">회원 정보 수정</li>
+                    <li class="list" onclick="javascript:window.location='/member/modifyMemberView'">회원 정보 수정</li>
                     <li class="list" >비밀번호 변경</li>
                     <li class="list" >회원 탈퇴</li>
                 </ul>

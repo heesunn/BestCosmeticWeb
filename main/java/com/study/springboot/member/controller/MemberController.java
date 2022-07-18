@@ -2,10 +2,7 @@ package com.study.springboot.member.controller;
 
 import com.study.springboot.member.dto.MemberDto;
 import com.study.springboot.member.dto.ValidationMember;
-import com.study.springboot.member.service.CancelExchangeRefundViewService;
-import com.study.springboot.member.service.JoinService;
-import com.study.springboot.member.service.ModifyMemberViewService;
-import com.study.springboot.member.service.OrderDeliveryViewService;
+import com.study.springboot.member.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +27,14 @@ public class MemberController
 	CancelExchangeRefundViewService cancelExchangeRefundViewService;
 	@Autowired
 	ModifyMemberViewService modifyMemberViewService;
-
+	@Autowired
+	ModifyMemberService modifyMemberService;
+	@Autowired
+	BasketViewService basketViewService;
+	@Autowired
+	BasketService basketService;
+	@Autowired
+	OrderCheckService orderCheckService;
 	@RequestMapping("/guest/join")
 	public String join() {
 		return "guest/log/joinView";
@@ -43,33 +47,20 @@ public class MemberController
 	public @ResponseBody JSONObject joinProcess(@ModelAttribute("dto") @Valid ValidationMember validationMember,
 												BindingResult bindingResult,
 												HttpServletRequest request,
-												Model model
-												)
-	{
+												Model model) {
 		JSONObject obj = new JSONObject();
-
-		if(bindingResult.hasErrors()) {
-			if (bindingResult.getFieldError("id") != null){
-				System.out.println(bindingResult.getFieldError("id").getDefaultMessage());
-				obj.put("desc", bindingResult.getFieldError("id").getDefaultMessage());
-				return obj;
-			} else if (bindingResult.getFieldError("pw") != null) {
-				System.out.println(bindingResult.getFieldError("pw").getDefaultMessage());
-				obj.put("desc", bindingResult.getFieldError("pw").getDefaultMessage());
-				return obj;
-			} else if (bindingResult.getFieldError("name") != null) {
-				obj.put("desc", bindingResult.getFieldError("name").getDefaultMessage());
-				return obj;
-			} else if (bindingResult.getFieldError("firstEmail") != null) {
-				obj.put("desc", bindingResult.getFieldError("firstEmail").getDefaultMessage());
-				return obj;
-			} else if (bindingResult.getFieldError("secondEmail") != null) {
-				obj.put("desc", bindingResult.getFieldError("secondEmail").getDefaultMessage());
-				return obj;
-			}
+		String errorMessage = joinService.joinValidation(validationMember, bindingResult);
+		if (errorMessage != null) {
+			obj.put("desc", errorMessage);
+			return obj;
 		}
-		String insertCount = joinService.join(request,model);
-		obj.put("desc",insertCount);
+		MemberDto memberDto = joinService.userCheck(request, model);
+		if(memberDto==null) {
+			String insertCount = joinService.join(request,model);
+			obj.put("desc",insertCount);
+		}else {
+			obj.put("desc","-1");
+		}
 		return obj;
 	}
 	@RequestMapping("/guest/idCheck")
@@ -118,14 +109,70 @@ public class MemberController
 		cancelExchangeRefundViewService.cancelExchangeRefundView(request, model);
 		return "member/cancelExchangeRefundView";
 	}
-	@RequestMapping("/mypageView")
+	@RequestMapping("/member/mypageView")
 	public String mypageView() {
 		return "member/mypageView";
 	}
-	@RequestMapping("/member/modifyMember")
+	@RequestMapping("/member")
+	public String mypage() {
+		return "redirect:/member/mypageView";
+	}
+	@RequestMapping("/member/modifyMemberView")
 	public String modifyMember(HttpServletRequest request, Model model) {
 		modifyMemberViewService.modifyMemberView(request, model);
-		return "member/modifyMember";
+		return "/member/modifyMemberView";
+	}
+	@RequestMapping("/member/modifyMember")
+	public @ResponseBody JSONObject modifyMember(@ModelAttribute("dto") @Valid ValidationMember validationMember,
+												 BindingResult bindingResult,
+												 HttpServletRequest request,
+												 Model model) {
+		JSONObject obj = new JSONObject();
+		String errorMessage = modifyMemberService.modifyValidation(validationMember, bindingResult);
+		if (errorMessage != null) {
+			obj.put("desc", errorMessage);
+			return obj;
+		}
+
+		int updateCount = modifyMemberService.modify(request,model);
+		obj.put("desc",updateCount);
+
+		return obj;
+	}
+	@RequestMapping("/member/basketView")
+	public String basketView(HttpServletRequest request,Model model) {
+		basketViewService.basketView(request,model);
+		return "member/basketView";
+	}
+	@RequestMapping("/member/deleteBasket")
+	public @ResponseBody JSONObject deleteBasket(HttpServletRequest request, Model model) {
+		JSONObject obj = new JSONObject();
+		int deleteCount = basketService.deleteBasket(request,model);
+		obj.put("desc", deleteCount);
+		return obj;
+	}
+
+	@RequestMapping("/member/orderList")
+	public @ResponseBody JSONObject orderList(HttpServletRequest request,Model model) {
+		JSONObject obj = orderCheckService.orderCheck(request,model);
+		return obj;
+	}
+
+	@RequestMapping("/member/paymentView")
+	public String paymentView (HttpServletRequest request,Model model) {
+		modifyMemberViewService.modifyMemberView(request, model);
+		return "member/paymentView";
+	}
+	@RequestMapping("/member/basketUpCount")
+	public @ResponseBody String basketUpCount(HttpServletRequest request,Model model) {
+		int updateCount = basketService.basketUpCount(request,model);
+
+		return String.valueOf(updateCount);
+	}
+	@RequestMapping("/member/basketDownCount")
+	public @ResponseBody String basketDownCount(HttpServletRequest request, Model model) {
+		int updateCount = basketService.basketDownCount(request,model);
+		return String.valueOf(updateCount);
 	}
 
 }

@@ -20,33 +20,33 @@
     <insert id="googleJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , #{param1}, '','','','','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , #{param1}, '','','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <insert id="facebookJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '','',#{param1},'','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '','',#{param1},'','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <insert id="kakaoJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '',#{param1},'','','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '',#{param1},'','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <insert id="naverJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', #{param1},'','','','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', #{param1},'','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <select id="memberSession" resultType="com.study.springboot.member.dto.MemberDto">
