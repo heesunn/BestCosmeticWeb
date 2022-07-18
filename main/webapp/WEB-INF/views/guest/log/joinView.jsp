@@ -179,6 +179,7 @@
                     }
                 }
             });
+
         }
 
         function submit_ajax() {
@@ -190,18 +191,16 @@
                 dataType: 'json',
                 success : function(json) {
                     console.log(json);
+                    //이메일비활성화
+                    $("#secondEmail").attr("disabled",true);
                     if(json.desc == "1"){
                         alert("회원가입되었습니다.")
-                        $("#secondEmail").attr("disabled",true);
                         window.location.replace('/guest/loginView');
                     } else if (json.desc == "0") {
                         $("#p1").html("데이터베이스입력에러");
-                        $("#secondEmail").attr("disabled",true);
                     } else if (json.desc == "-1") {
-                        $("#p1").html("회원가입 에러가 발생하면 문의부탁드립니다.");
-                        $("#secondEmail").attr("disabled",true);
+                        $("#p1").html("중복된 아이디입니다.");
                     } else {
-                        $("#secondEmail").attr("disabled",true);
                         $("#p1").html(json.desc);
                     }
                 }
@@ -212,10 +211,10 @@
 <body>
     <h1>회원가입</h1>
     <form id="JoinForm">
-        아이디 : <input type="text" id="id" name="id" placeholder="id" >
+        아이디 : <input type="text" id="id" name="id" maxlength="10" placeholder="id" >
                 <input type="button" value="중복확인" onclick="idCheck()"><br/>
-        비밀번호 : <input type="password" id="pw" name="pw" placeholder="password" > <br/>
-        비밀번호 확인 : <input type="password" id="pwConfirm" name="pwConfirm" placeholder="confirm password"> <br/>
+        비밀번호 : <input type="password" id="pw" name="pw" maxlength="16" placeholder="password" > <br/>
+        비밀번호 확인 : <input type="password" id="pwConfirm" name="pwConfirm" maxlength="16" placeholder="password확인"> <br/>
         이름 : <input type="text" id="name" name="name" placeholder="name" > <br>
         이메일 : <input type="text" id="firstEmail" name="firstEmail" placeholder="email">@ <br>
                 <input type="text" id="secondEmail" name="secondEmail" disabled value="naver.com">

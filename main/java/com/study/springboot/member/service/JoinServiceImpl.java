@@ -2,9 +2,11 @@ package com.study.springboot.member.service;
 
 import com.study.springboot.member.dao.MemberDao;
 import com.study.springboot.member.dto.MemberDto;
+import com.study.springboot.member.dto.ValidationMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
@@ -45,10 +47,27 @@ public class JoinServiceImpl implements JoinService{
     @Override
     public MemberDto userCheck(HttpServletRequest request, Model model) {
         String bcm_id = request.getParameter("id");
-        String url = request.getParameter("url");
         MemberDto memberDto = memberDao.userCheck(bcm_id);
         System.out.println(memberDto);
         model.addAttribute("user",memberDto);
         return memberDto;
+    }
+
+    @Override
+    public String joinValidation(ValidationMember validationMember, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            if (bindingResult.getFieldError("id") != null){
+                return bindingResult.getFieldError("id").getDefaultMessage();
+            } else if (bindingResult.getFieldError("pw") != null) {
+                return bindingResult.getFieldError("pw").getDefaultMessage();
+            } else if (bindingResult.getFieldError("name") != null) {
+                return bindingResult.getFieldError("name").getDefaultMessage();
+            } else if (bindingResult.getFieldError("firstEmail") != null) {
+                return bindingResult.getFieldError("firstEmail").getDefaultMessage();
+            } else if (bindingResult.getFieldError("secondEmail") != null) {
+                return bindingResult.getFieldError("secondEmail").getDefaultMessage();
+            }
+        }
+        return null;
     }
 }

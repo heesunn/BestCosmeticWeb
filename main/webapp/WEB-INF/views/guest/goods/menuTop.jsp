@@ -18,7 +18,7 @@
 	<div class="top">	
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<a class="navbar-brand" href=""> 
-				<img src="./img/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+				<img src="" width="30" height="30" class="d-inline-block align-top" alt="">
 				BestCosmetic
 			</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">

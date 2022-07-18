@@ -21,7 +21,6 @@ public class MemberDto {
     private String bcm_address1;
     private String bcm_address2;
     private String bcm_address3;
-    private String bcm_address4;
     private String bcm_phonenum1;
     private String bcm_phonenum2;
     private String bcm_phonenum3;
