@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script>
+        //총금액
         var allPrice=0;
         var allCount=0;
-        var prePrice=2500;
+        //배송비
+        var prePrice=0;
     </script>
     <script>
         function orderCheckBoxList() {
@@ -299,7 +301,7 @@
                 </tr>
                 <tr>
                     <td id="allPrice" name="allPrice"></td>
-                    <td>2,500 원</td>
+                    <td>0원</td>
                     <td id="prePrice" name="prePrice" style="color: red"></td>
                 </tr>
             </table>

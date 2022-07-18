@@ -19,45 +19,229 @@
 <head>
     <title>Title</title>
     <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://js.bootpay.co.kr/bootpay-4.1.5.min.js"
+            type="application/javascript"></script>
     <script>
-        $(document).ready(function() {
-            var orderList = JSON.parse(sessionStorage.getItem("orderList"));
-            //console.log(orderList);
+        var orderList = JSON.parse(sessionStorage.getItem("orderList"));
+        console.log(orderList);
 
-            var totalPrice = 0;
-            var goodsPrice = 0;
-            var goodsCount = 0;
-            for(key in orderList) {
-                // console.log(key)
-                // console.log(orderList[key]);
-                var list = orderList[key][0];
-                console.log(list)
+        var totalPrice = 0;
+        var goodsPrice = 0;
+        var goodsCount = 0;
+        // 상품종류 수
+        var length = 0;
+        // 상품명 1개만
+        var bcgName= "";
 
-                for(k in list){
-                    // console.log(k);
-                    // console.log(list[k]);
-                    if (k=="bcg_price"){
-                        goodsPrice = list[k];
-                        console.log(goodsPrice);
-                    }
-                    if(k=="count"){
-                        goodsCount = list[k];
-                        console.log(goodsCount);
-                        totalPrice += goodsPrice * goodsCount;
-                        console.log(totalPrice);
-                    }
+        var aJsonArray = new Array();
+        for(key in orderList) {
+            // console.log(key)
+            // console.log(orderList[key]);
+            var list = orderList[key][0];
+            // console.log(list)
+            for(k in list){
+                if(k=="bcg_price"){
+                    goodsPrice = list[k];
+                }
+                if(k=="count"){
+                    goodsCount = list[k];
+                    totalPrice += goodsPrice * goodsCount;
                 }
             }
-            console.log(totalPrice);
-            // 배송비 더해주기
-            var totalPrice2= totalPrice+2500;
-            //결제금액 toString
-            totalPriceStr = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            totalPrice2Str = totalPrice2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            aJsonArray.push(list);
+        }
+        console.log(aJsonArray);
 
-            $('#totalPrice').text(totalPriceStr+"원");
-            $('#totalPrice2').text(totalPrice2Str+"원");
+        var JsonArr = new Array();
+
+        length = aJsonArray.length-1;
+
+        for(var i=0; i<aJsonArray.length; i++){
+            var aJson = new Object();
+            aJson.id = aJsonArray[i]["bcg_key"];
+            aJson.name = aJsonArray[i]["bcg_name"];
+            aJson.qty = aJsonArray[i]["count"];
+            aJson.price = aJsonArray[i]["bcg_price"];
+            //console.log(aJson);
+            JsonArr.push(aJson);
+            bcgName = aJsonArray[i]["bcg_name"];
+        }
+        //console.log(JsonArr);
+        var Items = JSON.stringify(JsonArr);
+
+        var orderName=""
+        if(length > 0){
+            orderName = bcgName + " 외 " + length+ " 건";
+        }else{
+            orderName = bcgName;
+        }
+
+        var orderId="";
+
+        var id ="";
+        var username="";
+        var phone = "";
+        var email= "";
+
+        //배송비
+        var deliveryPrice= 0;
+        // 배송비 더해주기
+        var totalPrice2= totalPrice+deliveryPrice;
+
+        $(document).ready(function() {
+            //결제금액 toString
+            var totalPriceStr = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            var totalPrice2Str = totalPrice2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            $('#idTotalPrice').text(totalPriceStr+"원");
+            $('#idTotalPrice2').text(totalPrice2Str+"원");
+
+            id =$('#sId').val();
+            username = $('#sName').text();
+            email = $('#sEmail').text();
+            orderId = $('#orderNum').val();
+
         });
+    </script>
+    <script>
+        function infomation() {
+            $.ajax({
+                url : '/member/orderList',
+                type : 'POST',
+                data : queryString,
+                dataType: 'json',
+                success : function(json) {
+                }
+            });
+        }
+    </script>
+    <script>
+        async function payment(){
+            try {
+
+                const response = await Bootpay.requestPayment({
+                    "application_id": "62c95b83e38c3000235af573",
+                    "price": totalPrice2,
+                    "order_name": orderName,
+                    "order_id": orderId,
+                    "pg": "",
+                    "method": ["휴대폰","카드"],
+                    "tax_free": 0,
+                    "user": {
+                        "id": id,
+                        "username": username,
+                        "phone": phone,
+                        "email": email
+                    },
+                    "items": JsonArr,
+                    "extra": {
+                        "open_type": "iframe",
+                        "card_quota": "0,2,3",
+                        "escrow": false,
+                        "separately_confirmed": true
+                    }
+                })
+                switch (response.event) {
+                    case 'issued':
+                        // 가상계좌 입금 완료 처리
+                        break
+                    case 'done':
+                        console.log(response);
+                        // 결제 완료 처리
+                        break
+                    case 'confirm':
+                        console.log(response.receipt_id);
+                        // { extra: { separately_confirmed: true } } 인 경우 승인전 이벤트 발생
+                        // -- 승인 전 로직 처리 -- //
+                        /**
+                         * 1. 클라이언트 승인을 하고자 할때
+                         * // validationQuantityFromServer(); //예시) 재고확인과 같은 내부 로직을 처리하기 한다.
+                         */
+                        const confirmedData = await Bootpay.confirm() //결제를 승인한다
+                        if(confirmedData.event === 'done') {
+                            //결제 성공
+                            // alert("확인 콘솔보자");
+                            // window.location="/member/completePayment";
+                        } else if(confirmedData.event === 'error') {
+                            alert("결제 승인 실패")
+                            //결제 승인 실패
+                        }
+                        /**
+                         * 2. 서버 승인을 하고자 할때
+                         * // requestServerConfirm(); //예시) 서버 승인을 할 수 있도록  API를 호출한다. 서버에서는 재고확인과 로직 검증 후 서버승인을 요청한다.
+                         * Bootpay.destroy(); //결제창을 닫는다.
+                         */
+                        break
+                }
+            } catch (e) {
+                // 결제 진행중 오류 발생
+                // e.error_code - 부트페이 오류 코드
+                // e.pg_error_code - PG 오류 코드
+                // e.message - 오류 내용
+                console.log(e.message)
+                switch (e.event) {
+                    case 'cancel':
+                        // 사용자가 결제창을 닫을때 호출
+                        console.log(e.message);
+                        break
+                    case 'error':
+                        // 결제 승인 중 오류 발생시 호출
+                        console.log(e.error_code);
+                        break
+                }
+            }
+        }
+
+        function formCheck() {
+
+            if ($('#reciName').val().length === 0){
+                alert("수령인 정보를 입력하세요.")
+                $('#reciName').focus();
+                return;
+            }
+            if ($('#reciName').val().length < 2) {
+                alert("수령인 글자수는 2자리 이상 이어야 합니다. ")
+                $('#reciName').focus();
+                return;
+            }
+            if ($('#bcm_phonenum1').val().length ===0){
+                alert("휴대폰 번호를 입력 해주세요.")
+                $('#bcm_phonenum1').focus();
+                return;
+            }
+            if ($('#bcm_phonenum2').val().length ===0){
+                alert("휴대폰 번호를 입력 해주세요.")
+                $('#bcm_phonenum2').focus();
+                return;
+            }
+            if ($('#bcm_phonenum3').val().length ===0){
+                alert("휴대폰 번호를 입력 해주세요.")
+                $('#bcm_phonenum3').focus();
+                return;
+            }
+            $("#sample2_postcode").attr("disabled",false);
+            $("#sample2_address").attr("disabled",false);
+            $("#sample2_extraAddress").attr("disabled",false);
+            if($("#sample2_postcode").val.length ===0){
+                alert("우편번호를 입력해주세요");
+                return;
+            }
+            if($("#sample2_address").val.length ===0){
+                alert("주소를 입력해주세요");
+                return;
+            }
+            $("#sample2_postcode").attr("disabled",true);
+            $("#sample2_address").attr("disabled",true);
+            $("#sample2_extraAddress").attr("disabled",true);
+
+            phone= $('#bcm_phonenum1').val()+$('#bcm_phonenum2').val()+$('#bcm_phonenum3').val();
+            if($('#checkbox').is(':checked')){
+                payment();
+            }else {
+                alert("주문내역확인 동의가 필요합니다.")
+                return;
+            }
+        }
     </script>
 </head>
 <body>
@@ -84,9 +268,13 @@
     <div>
         <table cellpadding="0" cellspacing="0" border="1">
             <tr>
-                <td>주문자</td>
-                <td><%=sName %></td>
-                <td><%=sEmail %></td>
+                <td>주문자
+
+                    <input type="hidden" id="sId" value="<%= sId %>">
+                    <input type="hidden" id="orderNum" value="${orderNum}">
+                </td>
+                <td id="sName"><%=sName %></td>
+                <td id="sEmail"><%=sEmail %></td>
             </tr>
         </table>
     </div>
@@ -98,7 +286,7 @@
                 <tr>
                     <td>수령인 *</td>
                     <td>
-                        <input type="text" name="bcm_name" value="<%= sName %>">
+                        <input type="text" id="reciName" name="bcm_name" value="<%= sName %>">
                     </td>
                 </tr>
                 <tr>
@@ -150,13 +338,13 @@
                     <td colspan="2">상품금액</td>
                 </tr>
                 <tr>
-                    <td colspan="2" id="totalPrice">45,000원</td>
+                    <td colspan="2" id="idTotalPrice">45,000원</td>
                 </tr>
                 <tr>
                     <td colspan="2" id="deliveryPrice">배송비</td>
                 </tr>
                 <tr>
-                    <td colspan="2">2,500원</td>
+                    <td colspan="2">0원</td>
                 </tr>
                 <tr>
                     <td colspan="2">할인금액</td>
@@ -166,18 +354,17 @@
                 </tr>
                 <tr>
                     <td><h3 style="color: red">최종결제금액</h3></td>
-                    <td id="totalPrice2">47,500원</td>
+                    <td id="idTotalPrice2">47,500원</td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <input type="checkbox" id="checkbox" name="checkbox">
                         주문내역확인 동의(필수)
                     </td>
-
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="button" value="결제하기" onclick="">
+                        <input type="button" value="결제하기" onclick="formCheck();">
                     </td>
                 </tr>
                 <tr>

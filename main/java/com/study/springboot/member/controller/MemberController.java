@@ -35,6 +35,8 @@ public class MemberController
 	BasketService basketService;
 	@Autowired
 	OrderCheckService orderCheckService;
+	@Autowired
+	UtilService utilService;
 	@RequestMapping("/guest/join")
 	public String join() {
 		return "guest/log/joinView";
@@ -161,6 +163,7 @@ public class MemberController
 	@RequestMapping("/member/paymentView")
 	public String paymentView (HttpServletRequest request,Model model) {
 		modifyMemberViewService.modifyMemberView(request, model);
+		utilService.createOrderNum(model);
 		return "member/paymentView";
 	}
 	@RequestMapping("/member/basketUpCount")
@@ -173,6 +176,11 @@ public class MemberController
 	public @ResponseBody String basketDownCount(HttpServletRequest request, Model model) {
 		int updateCount = basketService.basketDownCount(request,model);
 		return String.valueOf(updateCount);
+	}
+	@RequestMapping("/member/completePayment")
+	public String completePayment(Model model) {
+
+		return "member/completePayment";
 	}
 
 }

@@ -12,7 +12,7 @@ public class ValidationMember {
     @NotNull(message = "아이디는 비워둘 수 없습니다")
     private String id;
     @NotBlank(message = "비밀번호는 비워둘 수 없습니다.")
-    @Pattern(regexp = "^.*(?=^.{8,16}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", message = "비밀번호는 숫자,영문,특수문자를 포함한 8~16자리여야합니다. ")
+    @Pattern(regexp = "^.*(?=^.{8,16}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", message = "비밀번호는 숫자,영문,특수문자(!@#$%^&+=)를 포함한 8~16자리여야합니다. ")
     private String pw;
     @Size(min=2,message = "이름은 최소 2자리여야 합니다.")
     @Pattern(regexp = "^[가-힣]*$", message = "이름은 한글만 사용가능합니다.")
