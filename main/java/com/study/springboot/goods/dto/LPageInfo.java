@@ -1,4 +1,4 @@
-package com.study.springboot.goods.service;
+package com.study.springboot.goods.dto;
 
 import lombok.Data;
 

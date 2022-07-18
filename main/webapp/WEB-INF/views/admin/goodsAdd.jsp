@@ -5,7 +5,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- firebase sdk -->
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-    <script src="script.js">
+    <script src="/script.js">
     	//api key 소스보기로 볼 수 없도록 js파일로 옮겨둠
     </script> 
     <script type="text/javascript">
@@ -58,14 +58,14 @@
         }
 
         function submit_ajax() {     //BC_GOODS oracle DB에 저장
-        	var queryString=$("#AddForm").serialize();
+            var queryString=$("#AddForm").serialize();
             $.ajax({
-            	url: '/upload',  
+            	url: '/admin/upload',  
                 type: 'POST',
                 data: queryString,
                 dataType: 'text',
                 success: function(json) {  
-                	window.location.replace("/goodsAddDetail");           		               	           	
+                	window.location.replace("/admin/goodsAddDetail");           		               	           	
                 }
             });
         }

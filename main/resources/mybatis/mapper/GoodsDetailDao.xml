@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.study.springboot.goods.dao.GoodsDetailDao">
+	<insert id="uploadDetail">
+    	insert into BC_DETAILGOODS (BCG_KEY, BCD_DETAILKEY, BCD_OPTION, BCD_STOCK) 
+        	values ((select bcg_key from bc_goods where bcg_name =  #{param1}), #{param2}, #{param3}, #{param4})
+    </insert>
+    <delete id="deleteDetail">
+		delete from BC_DETAILGOODS where bcg_key = #{param1}
+	</delete>
+	<insert id="AddStock">
+        update bc_goods set bcg_stock = #{param1} 
+        	where bcg_key = (select distinct (select bcg_key from bc_goods where bcg_name = #{param2}) 
+       			from BC_DETAILGOODS group by bcg_key)
+   </insert>
+</mapper>

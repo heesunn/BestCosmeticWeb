@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>카테고리 - 포인트메이크업</title>
+<title>전체보기</title>
 </head>
 <body>
 	<div style="float: top">
@@ -19,7 +19,7 @@
 	
 	<table border="1">
 		<tr>
-			<td colspan="4">포인트 메이크업</td>
+			<td colspan="4">전체보기</td>
 		</tr>
 		<tr>
 			<td>총 ${page.totalCount}개</td>
@@ -27,7 +27,7 @@
 		
 		<c:set var="i" value="0" />
 		<c:set var="j" value="4" />
-		<c:forEach items="${pointList}" var="dto">
+		<c:forEach items="${list}" var="dto">
 		<c:if test="${i%j == 0 }">		
 		<tr>
 		</c:if>
@@ -50,7 +50,7 @@
 					[ &lt;&lt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=1">[ &lt;&lt; ]</a>
+					<a href="categoryAll?page=1">[ &lt;&lt; ]</a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -60,7 +60,7 @@
 					[ &lt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=${page.curPage - 1}">[ &lt; ]</a>
+					<a href="categoryAll?page=${page.curPage - 1}">[ &lt; ]</a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -71,7 +71,7 @@
 						[ ${fEach} ] &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="categoryPoint?page=${fEach}">[ ${fEach} ]</a> &nbsp;
+						<a href="categoryAll?page=${fEach}">[ ${fEach} ]</a> &nbsp;
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -82,7 +82,7 @@
 					[ &gt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=${page.curPage + 1}">[ &gt; ]</a>
+					<a href="categoryAll?page=${page.curPage + 1}">[ &gt; ]</a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -92,11 +92,11 @@
 					[ &gt;&gt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=${page.totalPage}">[ &gt;&gt; ]</a>
+					<a href="categoryAll?page=${page.totalPage}">[ &gt;&gt; ]</a>
 				</c:otherwise>
 				</c:choose>
 			</td>
 		</tr>
-	</table>
+	</table>	
 </body>
 </html>

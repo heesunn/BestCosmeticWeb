@@ -24,13 +24,13 @@
         <hr>
 
 			<ul>
-					<li class="list" >전체보기</li>
+					<li class="list" onclick="javascript:window.location='categoryAll'">전체보기</li>
 					<hr>
                     <li class="list" >스킨케어</li>
                     <li class="list" >클렌징</li>
                     <li class="list" >선케어</li>
                     <li class="list" >베이스 메이크업</li>
-                    <li class="list" onclick="javascript:window.location='/guest/categoryPoint'">포인트 메이크업</li>
+                    <li class="list" onclick="javascript:window.location='categoryPoint'">포인트 메이크업</li>
                     <li class="list" >향수</li>
            </ul>
 
