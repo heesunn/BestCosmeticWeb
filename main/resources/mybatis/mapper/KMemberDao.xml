@@ -68,6 +68,15 @@
 		select a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price as total_price
 		from bc_order_detail A, bc_goods B , bc_detailgoods C where A.bcg_key = B.bcg_key and A.bcd_detailkey = C.bcd_detailkey and a.bco_ordernum = #{param1}
 	</select>
+	<select id="pwCheck" resultType="com.study.springboot.member.dto.MemberDto">
+		select bcm_pw from bc_member where bcm_num = #{param1}
+	</select>
+	<update id="pwChange">
+		update bc_member set bcm_pw = #{param2} where bcm_num = #{param1}
+	</update>
+	<delete id="memberDelete">
+		delete from bc_member where bcm_num = #{param1}
+	</delete>
 </mapper>
 <!--
 1.sql 문 뒤에 세미콜론 절대 들어가면 안된다.

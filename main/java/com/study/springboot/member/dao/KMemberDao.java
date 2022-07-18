@@ -26,4 +26,7 @@ public interface KMemberDao {
     public ArrayList<Like> likeList(int start, int end, int bcm_num);
     public void likeDelete(int bcm_num, int bcg_key);
     public List<OrderDetail> orderDetail(String bco_ordernum);
+    public MemberDto pwCheck(String bcm_num);
+    public int pwChange(String bcm_num, String bcm_pw);
+    public int memberDelete(String bcm_num);
 }

@@ -1,16 +1,24 @@
 package com.study.springboot.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.springboot.member.dto.ValidationMember;
+import com.study.springboot.member.service.JoinService;
 import com.study.springboot.member.service.LikeServiceImpl;
+import com.study.springboot.member.service.MemberWithdrawalServiceImpl;
 import com.study.springboot.member.service.OrderDetailServiceImpl;
+import com.study.springboot.member.service.PwChangeServiceImpl;
+import com.study.springboot.member.service.PwCheckServiceImpl;
 
 @Controller
 public class KMemberController
@@ -19,6 +27,14 @@ public class KMemberController
 	LikeServiceImpl likeService;
 	@Autowired
 	OrderDetailServiceImpl orderDetail; 
+	@Autowired
+	PwChangeServiceImpl pwChange;
+	@Autowired
+	PwCheckServiceImpl pwCheck;
+	@Autowired
+	MemberWithdrawalServiceImpl withdrawal;
+	@Autowired
+	JoinService joinService;
 	
 	@RequestMapping("/")
 	public String main() {
@@ -44,5 +60,56 @@ public class KMemberController
 		request.setAttribute("bco_ordernum", ordernum);
 		orderDetail.orderDetail(request, model);
 		return "member/orderDetail";
+	}
+	@RequestMapping("/member/passwordChange")
+	public String pwChangeView(HttpServletRequest request, Model model) {
+		return "/member/passwordChange";
+	}
+	@RequestMapping("/member/pwCheck")
+	public @ResponseBody String pwCheck(HttpServletRequest request, Model model) {
+		String result = "";
+		if(pwCheck.pwCheck(request, model)) {
+			result = "일치";
+		}
+		else {
+			result = "불일치";
+		}
+		System.out.println(result);
+		return result;
+	}
+	@RequestMapping("/member/pwChange")
+	public @ResponseBody String pwChange(@ModelAttribute("dto") @Valid ValidationMember validationMember,
+											BindingResult bindingResult,
+											HttpServletRequest request,
+											Model model) {
+		String result = "";
+		String errorMessage = pwChange.joinValidation(validationMember, bindingResult);
+		if (errorMessage != null) {
+			result = errorMessage;
+			return result;
+		}
+		result = pwChange.pwChange(request, model);
+		return result;
+	}
+	@RequestMapping("/member/out")
+	public String memberWithdrawal(HttpServletRequest request, Model model) {
+		return "/member/memberWithdrawal";
+	}
+	@RequestMapping("/member/memberDelete")
+	public @ResponseBody String memberDelete(HttpServletRequest request, Model model) {
+		String result = withdrawal.withdrawal(request, model);
+		
+		return result;
+	}
+	@RequestMapping("/admin/adminTop")
+	public String adminTop(HttpServletRequest request, Model model) {
+		return "/admin/adminTop";
+	}
+	@RequestMapping("/admin/adminPageView")
+	public String adminPageView(HttpServletRequest request, Model model) {
+		return "/admin/adminPageView";
+	}@RequestMapping("/admin/adminMain")
+	public String adminMain(HttpServletRequest request, Model model) {
+		return "/admin/adminMain";
 	}
 }

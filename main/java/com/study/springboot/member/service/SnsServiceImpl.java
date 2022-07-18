@@ -22,7 +22,6 @@ public class SnsServiceImpl implements SnsService{
 
     @Override
     public void snsLogin(String snsName, String id, String name, String email) {
-    	
 		
     	if(snsName.equals("google")) {
     		memberDto = memberDao.googleCheck(id);
