@@ -7,31 +7,6 @@
 <title>Insert title here</title>
 </head>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script>
-function 상세페이지() {
-	
-}
-function 찜목록삭제() {
-    var queryString = $('#deleteForm${dto.bcg_key}').serialize();
-    console.log(queryString);
-
-    $.ajax({
-        url : '/member/likeDelete',
-        type : 'POST',
-        data : queryString,
-        dataType: 'json',
-        success : function(json) {
-            console.log(json);
-            if(json.desc == 1){
-                alert();
-                window.location.reload();
-            }else if (json.desc == 0) {
-                alert("데이터베이스입력오류입니다.")
-            }
-        }
-    });
-}
-</script>
 <body>
 <div>
     <c:import url="/guest/menuTop"></c:import>
@@ -50,22 +25,45 @@ function 찜목록삭제() {
 		
 		<c:set var="i" value="0" />
 		<c:set var="j" value="4" />
-		<c:forEach items="${pointList}" var="dto">
+		<c:forEach items="${likeList}" var="like">
 		<c:if test="${i%j == 0 }">		
 		<tr>
 		</c:if>
 			<td> 
-				<img src="${dto.bcg_img}" onclick="상세페이지()" height="200" width="200">&nbsp;
-				<form id="deleteForm${dto.bcg_key}">
-					<input type="hidden" name="bcm_num" value="${dto.bcg_name}">
-					<input type="hidden" name="bcg_key" value="${dto.bcg_name}">
-					<button onclick="찜목록삭제()">x</button><br/><!-- 포지션 앱솔루트 탑 0px 레프트 200px -->
+				<form id="deleteForm${like.bcg_key}">
+					<input type="hidden" name="bcm_num" value="${like.bcm_num}">
+					<input type="hidden" name="bcg_key" value="${like.bcg_key}">
+					<button style="float: right" onclick="찜목록삭제${like.bcg_key}()">x</button><br/><!-- 포지션 앱솔루트 탑 0px 레프트 200px -->
 				</form>
+				<img src="${like.bcg_img}" onclick="상세페이지()" height="200" width="200">&nbsp;
 			</td>
-		<c:if test="${i%j == j-1 }">	
+		<c:if test="${i%j == j-1 }">
 		</tr>	
 		</c:if>
 		<c:set var="i" value="${i+1 }" />
+			<script>
+				function 상세페이지() {
+	
+				}
+				function 찜목록삭제${like.bcg_key}() {
+	
+    				var queryString = $('#deleteForm${like.bcg_key}').serialize();
+
+    				$.ajax({
+        				url : '/member/likeDelete',
+        				type : 'POST',
+        				data : queryString,
+        				success : function(data) {
+            				if(data == 'success'){
+                				window.location.reload();
+            				}
+            				else {
+            					alert("에러가 발생했습니다.");
+            				}
+        				}
+    				});
+				}
+			</script>
 		</c:forEach>
 			
 		<tr>
@@ -76,7 +74,7 @@ function 찜목록삭제() {
 					[ &lt;&lt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=1">[ &lt;&lt; ]</a>
+					<a href="like?page=1">[ &lt;&lt; ]</a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -86,7 +84,7 @@ function 찜목록삭제() {
 					[ &lt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=${page.curPage - 1}">[ &lt; ]</a>
+					<a href="like?page=${page.curPage - 1}">[ &lt; ]</a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -97,7 +95,7 @@ function 찜목록삭제() {
 						[ ${fEach} ] &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="categoryPoint?page=${fEach}">[ ${fEach} ]</a> &nbsp;
+						<a href="like?page=${fEach}">[ ${fEach} ]</a> &nbsp;
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -108,7 +106,7 @@ function 찜목록삭제() {
 					[ &gt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=${page.curPage + 1}">[ &gt; ]</a>
+					<a href="like?page=${page.curPage + 1}">[ &gt; ]</a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -118,7 +116,7 @@ function 찜목록삭제() {
 					[ &gt;&gt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="categoryPoint?page=${page.totalPage}">[ &gt;&gt; ]</a>
+					<a href="like?page=${page.totalPage}">[ &gt;&gt; ]</a>
 				</c:otherwise>
 				</c:choose>
 			</td>

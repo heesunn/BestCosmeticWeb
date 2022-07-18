@@ -31,7 +31,7 @@
             <td>${dto.bco_ordernum}</td>
             <td id="money${dto.bco_ordernum}">${dto.bco_totalprice}</td>
             <input id="realmoney${dto.bco_ordernum}" type="hidden" value="${dto.bco_totalprice}"/>
-            <td>${dto.bco_order_name}</td>
+            <td><a href="#" onclick="javascript:window.open('http://localhost:8081/member/orderDetail?bco_ordernum=${dto.bco_ordernum}', '주문내역 상세', 'width=400, height=300')">${dto.bco_order_name}</a></td>
             <td>${dto.bco_order_status}</td>
             <td>
                 <c:if test="${dto.bco_order_status == '배송준비중'}">

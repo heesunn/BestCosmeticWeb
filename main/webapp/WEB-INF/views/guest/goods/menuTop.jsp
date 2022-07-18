@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
@@ -23,11 +24,16 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">					
 					<li class="nav-item active">
-						<a class="nav-link" href="/mypageView">마이페이지</a>
+						<a class="nav-link" href="/member/orderDelivery">마이페이지</a>
 					</li>
+					<sec:authorize access="isAuthenticated()">
 					<li class="nav-item active">
-						<a class="nav-link" onclick="">로그아웃</a>
+						<a class="nav-link" onclick="javascript:window.location='/logout'">로그아웃</a>
 					</li>
+					</sec:authorize>
+					<sec:authorize access="isAnonymous()">
+						<a class="nav-link" onclick="javascript:window.location='/guest/loginView'">로그인</a>
+					</sec:authorize>
 				</ul>
 			</div>
 		</nav>

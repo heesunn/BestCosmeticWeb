@@ -33,7 +33,7 @@
             <li>
                 회원
                 <ul style="list-style-type: circle">
-                    <li class="list" >찜 목록</li>
+                    <li class="list" onclick="javascript:window.location='/member/like'">찜 목록</li>
                     <li class="list" >문의 내역</li>
                     <li class="list" >리뷰 내역</li>
                     <li class="list" onclick="javascript:window.location='/member/modifyMember'">회원 정보 수정</li>

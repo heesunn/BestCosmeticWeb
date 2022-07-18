@@ -118,7 +118,7 @@ public class MemberController
 		cancelExchangeRefundViewService.cancelExchangeRefundView(request, model);
 		return "member/cancelExchangeRefundView";
 	}
-	@RequestMapping("/mypageView")
+	@RequestMapping("member/mypageView")
 	public String mypageView() {
 		return "member/mypageView";
 	}

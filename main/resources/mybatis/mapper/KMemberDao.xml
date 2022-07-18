@@ -20,40 +20,55 @@
     <insert id="googleJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , #{param1}, '','','','','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , #{param1},'','','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <insert id="facebookJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '','',#{param1},'','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '','',#{param1},'','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <insert id="kakaoJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '',#{param1},'','','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', '',#{param1},'','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <insert id="naverJoin">
     	insert into bc_member
             (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_address4,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
              bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', #{param1},'','','','','','','','','',
+            values ( bcm_num_seq.nextval , '' , '' , #{param2} , #{param3} , '', #{param1},'','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <select id="memberSession" resultType="com.study.springboot.member.dto.MemberDto">
     	select * from bc_member where bcm_id = #{param1}
     </select>
+    <select id="likeCount" resultType="_int">
+		select count(*) as total from bc_like where bcm_num = #{param1}
+	</select>
+	<select id="likeList" resultType="com.study.springboot.member.dto.Like">
+		select * from ( select rownum num, A.* from (
+			select c.bcm_num, c.bcg_key, d.bcg_img ,c.bcl_date from bc_like C, bc_goods D where c.bcg_key = d.bcg_key and c.bcm_num = #{param3} order by c.bcl_date desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param1}
+	</select>
+	<delete id="likeDelete">
+		delete from bc_like where bcm_num = #{param1} and bcg_key = #{param2}
+	</delete>
+	<select id="orderDetail" resultType="com.study.springboot.member.dto.OrderDetail">
+		select a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price as total_price
+		from bc_order_detail A, bc_goods B , bc_detailgoods C where A.bcg_key = B.bcg_key and A.bcd_detailkey = C.bcd_detailkey and a.bco_ordernum = #{param1}
+	</select>
 </mapper>
-
 <!--
 1.sql 문 뒤에 세미콜론 절대 들어가면 안된다.
 2.여기서 사용한 컬럼명으로 DTO(Value Object)의 필드명을 만들어야 한다.
