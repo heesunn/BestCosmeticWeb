@@ -20,6 +20,25 @@
 			<![CDATA[where rownum <= #{param2}]]> ) B 
 			where B.num >= #{param1}
 	</select>
+	<!-- 검색 -->
+	<select id="selectCountSearch" resultType="_int">
+		select count(*) as total from BC_GOODS where
+		<choose>
+			<when test="param1.equals('bcg_key')"> bcg_key = #{param2} </when>
+			<when test="param1.equals('bcg_name')"> bcg_name like '%${param2}%' </when>
+		</choose>
+	</select>
+	<select id="searchList" resultType="com.study.springboot.goods.dto.GoodsDto">
+		select * from ( select rownum num, A.* from (
+			select * from bc_goods where
+			<choose>
+				<when test="param3.equals('bcg_key')"> bcg_key = #{param4} </when>
+				<when test="param3.equals('bcg_name')"> bcg_name like '%${param4}%' </when>
+			</choose>
+			order by bcg_date desc, bcg_key desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param1}
+	</select>
 	<!-- 포인트메이크업 -->
 	<select id="selectCountPoint" resultType="_int">
 		select count(*) as total from BC_GOODS where BCG_CATEGORY = 'point'

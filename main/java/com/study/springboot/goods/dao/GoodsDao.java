@@ -22,6 +22,10 @@ public interface GoodsDao
 	ArrayList<GoodsDto> list(int start, int end);
 	LPageInfo articlePage(int curPage);
 	public int selectCount();
+	//검색 : 상품명
+	ArrayList<GoodsDto> searchList(int start, int end, String type, String srchText);
+	LPageInfo articlePageSearch(int curPage, String type, String srchText);
+	public int selectCountSearch(String type, String srchText);
 	//포인트리스트
 	ArrayList<GoodsDto> pointList(int start, int end);
 	LPageInfo articlePagePoint(int curPage);

@@ -38,6 +38,8 @@ public class GoodsController
 	String BCG_INFO = "";
 	int BCG_DISCOUNT = 0;
 	int BCG_MDPICK = 0;
+	String type = "";
+	String srchText = "";
 	
 	@RequestMapping("/admin/goodsAdd")        //신규상품 등록 뷰 (관리자)
 	public String goodsAdd() {
@@ -58,7 +60,6 @@ public class GoodsController
 	
 	@RequestMapping("/admin/goodsModify")     //상품 수정 뷰 (관리자)
 	public String goodsModify(HttpServletRequest request, Model model) {
-		System.out.println("dddd : "+BCG_NAME);		
 		model.addAttribute("BCG_KEY", BCG_KEY);
 		model.addAttribute("BCG_IMG", BCG_IMG);
 		model.addAttribute("BCG_NAME", BCG_NAME);
@@ -113,7 +114,7 @@ public class GoodsController
         return obj;
     }
 	
-	@RequestMapping("/admin/deleteDetail")    //상품 옵션 삭제 (관리자)
+	@RequestMapping("/admin/deleteDetail")    //상품 삭제 시 옵션 같이 삭제 (관리자)
     public @ResponseBody JSONObject deleteDetail(HttpServletRequest request, Model model){
         JSONObject obj = new JSONObject();
         int insertCount = deleteService.deleteDetail(request, model);
@@ -129,6 +130,19 @@ public class GoodsController
 				        Integer.parseInt(request.getParameter("BCG_DISCOUNT")),
 		        		Integer.parseInt(request.getParameter("BCG_MDPICK")));
 		return "admin/goodsList";
+	}
+	
+	@RequestMapping("/admin/adminSearch")       //상품 검색 (관리자)
+	public String adminSearch(HttpServletRequest request, Model model) {    
+		type = request.getParameter("type");
+		srchText = request.getParameter("srchText");
+		return "admin/goodsList"; 
+	}
+	
+	@RequestMapping("/admin/searchRs")          //상품 검색 결과(관리자)
+	public String searchRs(HttpServletRequest request, Model model) {    
+		listService.searchList(request, model, type, srchText);
+		return "admin/goodsList"; 
 	}
 	
 	@RequestMapping("/guest/categoryAll")     //전체보기 카테고리

@@ -8,10 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 - 상품리스트</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	
-	function del() {     //삭제 : 여러개 한번에 삭제 가능
+	function del() {     //상품 삭제 : 여러개 한번에 삭제 가능
         var queryString=$("#ModifyDelete").serialize();
         $.ajax({
         	url: '/admin/delete',  
@@ -23,7 +23,7 @@
         del2();
     }
 	
-	function del2() {     //옵션까지 삭제
+	function del2() {     //상품 삭제 시 옵션까지 삭제
         var queryString=$("#ModifyDelete").serialize();       
         $.ajax({
         	url: '/admin/deleteDetail',  
@@ -49,7 +49,7 @@
         });
     }
 	
-	function mod() {     //옵션추가 : 1개만 선택 가능
+	function mod() {     //상품 수정 : 1개만 선택 가능
         var queryString=$("#ModifyDelete").serialize();
         $.ajax({
         	url: '/admin/opSelect',  
@@ -61,26 +61,39 @@
             }
         });
     }
+	
+	function sch() {     //검색기능
+        var queryString=$("#adminSch").serialize();
+        $.ajax({
+        	url: '/admin/adminSearch',  
+            type: 'POST',
+            data: queryString,
+            dataType: 'text',
+            success: function(json) {  
+            	window.location.replace("/admin/searchRs");
+            }       	
+        });
+    }
 </script>
 </head>
 <body>	
 	<table border="1">
 		<tr>
-			<td colspan="11">관리자 - 상품리스트</td>
+			<td colspan="10">관리자 - 상품리스트</td>
+			<td><button onclick="location.href='/admin/goodsList'">전체보기</button></td>
 		</tr>
-		<tr>
-			<td colspan="11">							
-				<form id="search_ck" name="search_ck" action="">					
-					<select id="searchchoice" name="searchchoice">
-						<option value="품번">품번</option>
-						<option value="상품명">상품명</option>
+		<form id="adminSch" name="adminSch">		
+			<tr>
+				<td colspan="11">							
+					<select id="type" name="type">
+						<option value="bcg_key">품번</option>
+						<option value="bcg_name">품명</option>						
 					</select>
-					<input id="srch" name="srch" type="search"
-						placeholder="검색어를 입력해주세요." aria-label="Search">
-					<button onclick="">Search</button>
-				</form>						
-			</td>
-		</tr>	
+					<input type="text" id="srchText" name="srchText">
+					<input type="button" value="검색" onclick="sch()">
+				</td>
+			</tr>
+		</form>		
 		<form id="ModifyDelete" method="post">
 			<tr>
 				<td colspan="9">총 ${page.totalCount}개</td>
@@ -90,6 +103,7 @@
 					<input type="button" value="삭제" onclick="del()">
 				</td>
 			</tr>
+			<c:if test="${page.totalCount>0}"> 
 			<tr>
 				<td></td>
 				<td>대분류</td>
@@ -103,6 +117,10 @@
 				<td>할인율</td>
 				<td>MD's Pick</td>			
 			</tr>
+			</c:if>
+			<c:if test="${page.totalCount==0}"> 
+				<tr><td colspan="11">검색어와 일치하는 상품이 없습니다.</td></tr>
+			</c:if> 
 			<c:forEach items="${list}" var="dto">
 			<tr>
 				<td> 
@@ -131,6 +149,7 @@
 			</tr>
 			</c:forEach>	
 		</form>	
+		<c:if test="${page.totalCount>0}"> 
 		<tr>
 			<td colspan="11">
 				<!-- 처음 -->
@@ -186,6 +205,7 @@
 				</c:choose>
 			</td>
 		</tr>
+		</c:if>
 	</table>				
 </body>
 </html>

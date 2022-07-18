@@ -16,7 +16,7 @@
 	            	window.location.replace("/admin/goodsList");           		               	           	
 	            }
 	        });
-	    }
+	    }	   	    
     </script>
 </head>
 <body>
@@ -35,6 +35,7 @@
         MD's Pick : <input type="text" id="BCG_MDPICK" name="BCG_MDPICK" value="${BCG_MDPICK}"><br>  
         메인화면 노출 순서 : 1->2->3->4<br>           	
         <input type="button" value="수정" onclick="mod()">
+        <input type="button" value="목록" onclick="javascript:window.location='/admin/goodsList'">
     </form>
 </body>
 </html>

@@ -20,4 +20,7 @@ public class GoodsDto
 	private String bcg_info;
 	private int bcg_discount;
 	private int bcg_mdpick;
+	
+	private String type;
+	private String srchText;
 }
