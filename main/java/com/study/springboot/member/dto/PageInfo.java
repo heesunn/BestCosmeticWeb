@@ -11,4 +11,6 @@ public class PageInfo {
     int pageCount;		//하단에 보여줄 페이지 리스트의 갯수
     int startPage;		//시작 페이지
     int endPage; 		// 끝 페이지
+    String searchType;  // 검색 종류
+    String searchWord;	// 검색어
 }

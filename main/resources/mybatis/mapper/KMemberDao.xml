@@ -78,6 +78,57 @@
 	<delete id="memberDelete">
 		delete from bc_member where bcm_num = #{param1}
 	</delete>
+	<select id="orderManagement" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bco_ordernum, bco_orderdate, bcm_name, bco_recipient, bco_totalprice, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status = #{param1} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	<select id="orderManagementCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status = #{param1}
+	</select>
+	<select id="orderManagementTotalPrice" resultType="_int">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status = #{param1}
+	</select>
+	<select id="nameOrderManagementCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status = #{param1} and bcm_name = #{param2}
+	</select>
+	<select id="nameOrderManagementTotalPrice" resultType="_int">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status = #{param1} and bcm_name = #{param2}
+	</select>
+	<select id="nameOrderManagement" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bco_ordernum, bco_orderdate, bcm_name, bco_recipient, bco_totalprice, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status = #{param1} and bcm_name = #{param4} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	<select id="recipientOrderManagementCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status = #{param1} and bco_recipient = #{param2}
+	</select>
+	<select id="recipientOrderManagementTotalPrice" resultType="_int">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status = #{param1} and bco_recipient = #{param2}
+	</select>
+	<select id="recipientOrderManagement" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bco_ordernum, bco_orderdate, bcm_name, bco_recipient, bco_totalprice, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status = #{param1} and bco_recipient = #{param4} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	<select id="ordernumOrderManagementCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status = #{param1} and bco_ordernum = #{param2}
+	</select>
+	<select id="ordernumOrderManagementTotalPrice" resultType="_int">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status = #{param1} and bco_ordernum = #{param2}
+	</select>
+	<select id="ordernumOrderManagement" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bco_ordernum, bco_orderdate, bcm_name, bco_recipient, bco_totalprice, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status = #{param1} and bco_ordernum = #{param4} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	<update id="stateInTransitChange">
+		update bc_order_history set bco_order_status = '배송중' where bco_ordernum = #{param1}
+	</update>
 </mapper>
 <!--
 1.sql 문 뒤에 세미콜론 절대 들어가면 안된다.

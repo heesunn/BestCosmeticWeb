@@ -73,13 +73,6 @@
     </script>
 </head>
 <body>
-	<div style="float: top">
-    	<c:import url="/admin/adminTop"></c:import>
-	</div>
-	
-	<div style="float: left">
-    	<c:import url="/admin/adminPageView"></c:import>
-	</div>
     <h1>상품등록</h1>
     <form id="AddForm" method="post">
 	    대표사진 : <input type="file" class="hidden-upload-btn" onchange="javascript:getRealPath(this);">

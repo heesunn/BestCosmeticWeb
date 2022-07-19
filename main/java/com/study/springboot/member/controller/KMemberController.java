@@ -17,6 +17,7 @@ import com.study.springboot.member.service.JoinService;
 import com.study.springboot.member.service.LikeServiceImpl;
 import com.study.springboot.member.service.MemberWithdrawalServiceImpl;
 import com.study.springboot.member.service.OrderDetailServiceImpl;
+import com.study.springboot.member.service.OrderManagement;
 import com.study.springboot.member.service.PwChangeServiceImpl;
 import com.study.springboot.member.service.PwCheckServiceImpl;
 
@@ -35,6 +36,8 @@ public class KMemberController
 	MemberWithdrawalServiceImpl withdrawal;
 	@Autowired
 	JoinService joinService;
+	@Autowired
+	OrderManagement OrderManagement;
 	
 	@RequestMapping("/")
 	public String main() {
@@ -108,8 +111,58 @@ public class KMemberController
 	@RequestMapping("/admin/adminPageView")
 	public String adminPageView(HttpServletRequest request, Model model) {
 		return "/admin/adminPageView";
-	}@RequestMapping("/admin/adminMain")
+	}
+	@RequestMapping("/admin/adminMain")
 	public String adminMain(HttpServletRequest request, Model model) {
 		return "/admin/adminMain";
+	}
+	
+	
+	
+	@RequestMapping("/admin/deliveryReady")
+	public String deliveryReady(HttpServletRequest request, Model model) {
+		OrderManagement.deliveryReady(request, model);
+		return "/admin/deliveryReady";
+	}
+	@RequestMapping("/admin/inTransit")
+	public String inTransit(HttpServletRequest request, Model model) {
+		OrderManagement.inTransit(request, model);
+		return "/admin/inTransit";
+	}
+	@RequestMapping("/admin/deliveryCompleted")
+	public String deliveryCompleted(HttpServletRequest request, Model model) {
+		OrderManagement.deliveryCompleted(request, model);
+		return "/admin/deliveryCompleted";
+	}
+	@RequestMapping("/admin/purchaseConfirmation")
+	public String purchaseConfirmation(HttpServletRequest request, Model model) {
+		OrderManagement.purchaseConfirmation(request, model);
+		return "/admin/purchaseConfirmation";
+	}
+	@RequestMapping("/admin/stateInTransit")
+	public @ResponseBody String stateInTransit(HttpServletRequest request, Model model) {
+		String result = OrderManagement.stateInTransit(request, model);
+		
+		return result;
+	}
+	@RequestMapping("/admin/drSearch")
+	public String drSearch(HttpServletRequest request, Model model) {
+		OrderManagement.drSearch(request, model);
+		return "/admin/deliveryReady";
+	}
+	@RequestMapping("/admin/itSearch")
+	public String itSearch(HttpServletRequest request, Model model) {
+		
+		return "/admin/inTransit";
+	}
+	@RequestMapping("/admin/dcSearch")
+	public String dcSearch(HttpServletRequest request, Model model) {
+		
+		return "/admin/deliveryCompleted";
+	}
+	@RequestMapping("/admin/pcSearch")
+	public String pcSearch(HttpServletRequest request, Model model) {
+		
+		return "/admin/purchaseConfirmation";
 	}
 }
