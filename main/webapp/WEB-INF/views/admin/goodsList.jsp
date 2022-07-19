@@ -77,6 +77,15 @@
 </script>
 </head>
 <body>	
+	
+	<div style="float: top">
+    	<c:import url="/admin/adminTop"></c:import>
+	</div>
+	
+	<div style="float: left">
+    	<c:import url="/admin/adminPageView"></c:import>
+	</div>
+	
 	<table border="1">
 		<tr>
 			<td colspan="10">관리자 - 상품리스트</td>
@@ -135,17 +144,21 @@
 				</td>
 				<td> ${dto.bcg_category} </td>
 				<td> ${dto.bcg_key} </td>
-				<td> <a href="">${dto.bcg_name}</a> </td>							
+				<td> 
+					<a href="opDelete?BCG_KEY=${dto.bcg_key}">
+                  		<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${dto.bcg_key}"> ${dto.bcg_name}
+                 	</a> 
+ 				</td>							
 				<td> ${dto.bcg_price}원 </td>							
 				<td> <fmt:formatDate value="${dto.bcg_date}" pattern="yyyy-MM-dd" var="bcg_date" /> ${bcg_date} </td>							
 				<td> ${dto.bcg_stock} </td>							
 				<td> ${dto.bcg_sale} </td>							
 				<td> ${dto.bcg_like} </td>							
 				<td> ${dto.bcg_discount}% </td>							
-				<td> 
+				<td>
 					<c:if test="${dto.bcg_mdpick != 0}"> ${dto.bcg_mdpick} </c:if> 
 					<c:if test="${dto.bcg_mdpick == 0}"> - </c:if> 
-				</td>	
+				</td>
 			</tr>
 			</c:forEach>	
 		</form>	

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -20,6 +21,15 @@
     </script>
 </head>
 <body>
+
+	<div style="float: top">
+    	<c:import url="/admin/adminTop"></c:import>
+	</div>
+	
+	<div style="float: left">
+    	<c:import url="/admin/adminPageView"></c:import>
+	</div>
+	
     <h1>상품수정</h1>
     <form id="ModifyForm" method="post">
     	<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">

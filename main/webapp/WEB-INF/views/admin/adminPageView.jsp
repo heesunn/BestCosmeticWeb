@@ -44,11 +44,9 @@
             <li>
                 상품관리
                 <ul style="list-style-type: circle">
-                    <li class="list" >상품리스트</li>
-                    <li class="list" >상품등록</li>
-                    <li class="list" >상품 재고관리</li>
-                    <li class="list" >메인상품진열</li>
-                    <li class="list" >분류별 상품진열</li>
+                    <li class="list" ><a href="javascript:window.location='/admin/goodsList'">상품리스트</a></li>
+                    <li class="list" ><a href="javascript:window.location='/admin/goodsAdd'">상품등록</a></li>
+                    <li class="list" ><a href="javascript:window.location='/admin/stockManager'">재고관리</a></li>
                 </ul>
             </li>
             <li>
