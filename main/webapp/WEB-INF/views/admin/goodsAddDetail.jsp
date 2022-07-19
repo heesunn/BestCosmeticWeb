@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -68,7 +69,16 @@
    </script>
 </head>
 <body>
-    <h1>등록완료_상품서브테이블 insert</h1><br/>
+	
+	<div style="float: top">
+    	<c:import url="/admin/adminTop"></c:import>
+	</div>
+	
+	<div style="float: left">
+    	<c:import url="/admin/adminPageView"></c:import>
+	</div>
+	
+    <h1>상품서브테이블 insert</h1><br/>
 
 	상품명 : ${BCG_NAME}
 	<form id="AddDetailForm">	      
