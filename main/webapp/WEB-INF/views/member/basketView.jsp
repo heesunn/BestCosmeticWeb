@@ -118,7 +118,10 @@
                             </td>
                             <td>
                                 ${dto.bcg_name} <br>
-                                ( ${dto.bcd_option} )
+                                    <c:if test="${dto.bcd_option != '-'}">
+                                        ( ${dto.bcd_option} )
+                                    </c:if>
+
                             </td>
                             <td name="price${dto.bcg_key}" id="price${dto.bcg_key}">
                                 ${dto.bcg_price}

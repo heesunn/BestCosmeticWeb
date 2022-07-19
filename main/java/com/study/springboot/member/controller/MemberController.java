@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Map;
 
 
 @Controller
@@ -37,6 +36,11 @@ public class MemberController
 	OrderCheckService orderCheckService;
 	@Autowired
 	UtilService utilService;
+	@Autowired
+	AfterPaymentService afterPaymentService;
+	@Autowired
+	Make1000MemberService make1000MemberService;
+
 	@RequestMapping("/guest/join")
 	public String join() {
 		return "guest/log/joinView";
@@ -179,8 +183,18 @@ public class MemberController
 	}
 	@RequestMapping("/member/completePayment")
 	public String completePayment(Model model) {
-
 		return "member/completePayment";
+	}
+
+	@RequestMapping("/member/afterPayment")
+	public @ResponseBody String afterPayment(HttpServletRequest request) {
+		int updateCount = afterPaymentService.afterPayment(request);
+		return String.valueOf(updateCount);
+	}
+	@RequestMapping("/makeMemberService")
+	public @ResponseBody String makeMemberService() {
+		make1000MemberService.makeMember();
+		return "1000명 생성완료";
 	}
 
 }

@@ -5,11 +5,11 @@
 
 <mapper namespace="com.study.springboot.member.dao.MemberDao">
     <insert id="join">
-        insert into bc_member
-            (bcm_num , bcm_id , bcm_pw , bcm_name , bcm_email, bcm_googleid, bcm_naverid, bcm_kakaoid, bcm_facebookid,
-             bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
-             bcm_authority,bcm_enable,bcm_joined_on,bcm_stopdate)
-            values ( bcm_num_seq.nextval , #{param1} , #{param2} , #{param3} , #{param4} , '','','','','','','','','','',
+        INSERT INTO BC_MEMBER
+            (BCM_NUM , BCM_ID , BCM_PW , BCM_NAME , BCM_EMAIL, BCM_GOOGLEID, BCM_NAVERID, BCM_KAKAOID, BCM_FACEBOOKID,
+             BCM_ZIPCODE,BCM_ADDRESS1,BCM_ADDRESS2,BCM_ADDRESS3,BCM_PHONENUM1,BCM_PHONENUM2,BCM_PHONENUM3,
+             BCM_AUTHORITY,BCM_ENABLE,BCM_JOINED_ON,BCM_STOPDATE)
+            VALUES ( bcm_num_seq.nextval , #{param1} , #{param2} , #{param3} , #{param4} , '','','','','','','','','','',
                     '','role_user','true',sysdate,sysdate)
     </insert>
     <select id="userCheck" resultType="com.study.springboot.member.dto.MemberDto">
@@ -157,6 +157,43 @@
           AND BCG_KEY = #{param2}
           AND BCD_DETAILKEY = #{param3}
     </update>
+    <insert id="insertOrderDetail">
+        INSERT INTO BC_ORDER_DETAIL
+            (BCO_ORDERNUM,BCG_KEY,BCD_DETAILKEY,BCO_COUNT)
+        VALUES
+            (#{param1}, #{param2}, #{param3}, #{param4})
+    </insert>
+    <insert id="insertOrderHistory">
+        INSERT INTO BC_ORDER_HISTORY
+        (BCM_NUM, BCO_PHONENUM1, BCO_PHONENUM2, BCO_PHONENUM3 ,BCO_ORDERNUM, BCM_NAME, BCO_RECIPIENT,
+         BCO_TOTALPRICE,BCO_ORDER_STATUS,BCO_ORDERDATE,BCO_DELIVERYDATE,BCO_STATUSDATE,BCO_ORDER_NAME)
+        VALUES
+        ( #{param1}, #{param2} , #{param3}, #{param4} , #{param5} ,#{param6},#{param7},
+          #{param8} , '배송준비중' , SYSDATE, '' , SYSDATE , #{param9} )
+    </insert>
+    <insert id="insertDeliveryInfo">
+        INSERT INTO BC_DELIVERY_INFO
+        (BCM_NUM,BCO_ORDERNUM,BCD_ZIPCODE,BCD_ADDRESS1,BCD_ADDRESS2,BCD_ADDRESS3,BCD_DATE,BCD_REQUEST)
+        VALUES
+        ( #{param1}, #{param2}, #{param3}, #{param4}, #{param5},#{param6}, SYSDATE, #{param7} )
+    </insert>
+    <update id="updateGoodsStock">
+        UPDATE BC_GOODS
+        SET BCG_STOCK = BCG_STOCK-1
+        WHERE BCG_KEY = #{param1}
+    </update>
+    <update id="updateDetailGoodsStock">
+        UPDATE BC_DETAILGOODS
+        SET BCD_STOCK = BCD_STOCK-1
+        WHERE BCG_KEY = #{param1}
+        AND BCD_DETAILKEY = #{param2}
+    </update>
+    <delete id="deleteBasketAfterPayment">
+        delete from bc_basket
+        where bcm_num = #{param1}
+        and bcg_key = #{param2}
+        and bcd_detailkey = #{param3}
+    </delete>
 </mapper>
 
 <!--

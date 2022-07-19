@@ -23,7 +23,7 @@
             type="application/javascript"></script>
     <script>
         var orderList = JSON.parse(sessionStorage.getItem("orderList"));
-        console.log(orderList);
+        //console.log(orderList);
 
         var totalPrice = 0;
         var goodsPrice = 0;
@@ -53,7 +53,6 @@
         console.log(aJsonArray);
 
         var JsonArr = new Array();
-
         length = aJsonArray.length-1;
 
         for(var i=0; i<aJsonArray.length; i++){
@@ -67,7 +66,6 @@
             bcgName = aJsonArray[i]["bcg_name"];
         }
         //console.log(JsonArr);
-        var Items = JSON.stringify(JsonArr);
 
         var orderName=""
         if(length > 0){
@@ -75,6 +73,7 @@
         }else{
             orderName = bcgName;
         }
+        console.log(orderName);
 
         var orderId="";
 
@@ -100,25 +99,49 @@
             username = $('#sName').text();
             email = $('#sEmail').text();
             orderId = $('#orderNum').val();
+            $('#sorderName').val(orderName);
 
         });
     </script>
     <script>
-        function infomation() {
+        function afterPayment() {
+            var jsonStr = JSON.stringify(aJsonArray);
+            //var encodejsonStr = btoa(encodeURIComponent(jsonStr));
+            //console.log(encodejsonStr);
+            $('#orderListJson').val(jsonStr);
+            //console.log($('#orderListJson').val());
+            $('#realTotalPrice').val(totalPrice2);
+
+            $("#sample2_postcode").attr("disabled",false);
+            $("#sample2_address").attr("disabled",false);
+            $("#sample2_extraAddress").attr("disabled",false);
+
+            var queryString = $('#paymentForm').serialize();
+            //console.log(queryString);
+            $("#sample2_postcode").attr("disabled",true);
+            $("#sample2_address").attr("disabled",true);
+            $("#sample2_extraAddress").attr("disabled",true);
+
             $.ajax({
-                url : '/member/orderList',
+                url : '/member/afterPayment',
                 type : 'POST',
                 data : queryString,
-                dataType: 'json',
-                success : function(json) {
+                dataType: 'test',
+                success : function(test) {
+                    if(test==="1"){
+                        console.log("결제성공");
+                    }else if(test ==="0"){
+                        console.log("결제실패")
+                        return;
+                    }
                 }
             });
+
         }
     </script>
     <script>
         async function payment(){
             try {
-
                 const response = await Bootpay.requestPayment({
                     "application_id": "62c95b83e38c3000235af573",
                     "price": totalPrice2,
@@ -160,8 +183,8 @@
                         const confirmedData = await Bootpay.confirm() //결제를 승인한다
                         if(confirmedData.event === 'done') {
                             //결제 성공
-                            // alert("확인 콘솔보자");
-                            // window.location="/member/completePayment";
+                            afterPayment();
+                            window.location="/member/completePayment";
                         } else if(confirmedData.event === 'error') {
                             alert("결제 승인 실패")
                             //결제 승인 실패
@@ -265,13 +288,13 @@
         </div>
     </div>
     <hr/>
+    <form id="paymentForm">
     <div>
         <table cellpadding="0" cellspacing="0" border="1">
             <tr>
                 <td>주문자
-
-                    <input type="hidden" id="sId" value="<%= sId %>">
-                    <input type="hidden" id="orderNum" value="${orderNum}">
+                    <input type="hidden" id="sId" name="sId" value="<%= sName %>">
+                    <input type="hidden" id="orderNum" name="orderNum" value="${orderNum}">
                 </td>
                 <td id="sName"><%=sName %></td>
                 <td id="sEmail"><%=sEmail %></td>
@@ -282,11 +305,15 @@
     <div>
         <div style="float: left ;">
             <h2>배송정보</h2>
+
             <table cellpadding="0" cellspacing="0" border="1">
                 <tr>
                     <td>수령인 *</td>
                     <td>
-                        <input type="text" id="reciName" name="bcm_name" value="<%= sName %>">
+                        <input type="text" id="reciName" name="reciName" value="<%= sName %>">
+                        <input type="hidden" id="orderListJson" name="orderListJson" value="">
+                        <input type="hidden" id="realTotalPrice" name="realTotalPrice" value="">
+                        <input type="hidden" id="sorderName" name="orderName" value="">
                     </td>
                 </tr>
                 <tr>
@@ -330,6 +357,7 @@
                     </td>
                 </tr>
             </table>
+
         </div>
 
         <div style="float: left ;margin-top: 50px; margin-left: 100px;">
@@ -375,6 +403,7 @@
             </table>
         </div>
     </div>
+    </form>
 </div>
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">

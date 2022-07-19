@@ -31,5 +31,14 @@ public interface MemberDao {
     public GoodsJoinDetailGoodsDto orderCheck(String bcg_key, String bcd_detailkey);
     public int basketUpCount(int bcm_num,String bcg_key,String bcd_detailkey);
     public int basketDownCount(int bcm_num,String bcg_key,String bcd_detailkey);
-
+    public int insertOrderDetail(String bco_ordernum, int bcg_key, int bcd_detailkey, String bco_count);
+    public int insertOrderHistory(int bcm_num,String bco_phonenum1,String bco_phonenum2,
+                                  String bco_phonenum3,String bco_ordernum,String bcm_name,
+                                  String bco_recipient,String bco_totalprice,String bco_order_name);
+    public int insertDeliveryInfo(int bcm_num,String bco_ordernum,String bcd_zipcode,
+                                  String bcd_address1,String bcd_address2,String bcd_address3,
+                                  String bcd_request );
+    public int updateGoodsStock(int bcg_key);
+    public int updateDetailGoodsStock(int bcg_key,int bcd_detailkey);
+    public int deleteBasketAfterPayment(int bcm_num,int bcg_key,int bcd_detailkey);
 }
