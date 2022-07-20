@@ -7,7 +7,6 @@ const firebaseConfig = {
   messagingSenderId: "925032279772",
   appId: "1:925032279772:web:92bc96a0e161013ff88e19"
 };		  
-firebase.initializeApp(firebaseConfig);
 
 // also store files path in localstorage or in database for further use
 if(!localStorage.getItem("uploaded-metadata")){

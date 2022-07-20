@@ -180,7 +180,7 @@ public class ListServiceImpl implements ListService {
 		int nEnd = (nPage - 1) * listCount + listCount;
 
 		List<GoodsDto> dtos = goodsDao.pointList(nStart, nEnd);
-		model.addAttribute("pointList", dtos);
+		model.addAttribute("list", dtos);
 	}
 
 	public LPageInfo articlePagePoint(int curPage) {

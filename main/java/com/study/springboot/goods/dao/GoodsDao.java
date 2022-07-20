@@ -30,4 +30,8 @@ public interface GoodsDao
 	ArrayList<GoodsDto> pointList(int start, int end);
 	LPageInfo articlePagePoint(int curPage);
 	public int selectCountPoint();
+	//포인트리스트 찜(찜테이블추가)
+	public int likeTableUpdate(int bcm_num, int bcg_key);
+	//포인트리스트 찜(굿즈테이블업데이트)
+	public int goodsTableUpdate(int bcg_key);
 }

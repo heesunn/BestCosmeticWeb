@@ -63,4 +63,18 @@
 	<select id="opSelect" resultType="com.study.springboot.goods.dto.GoodsDto">
 		select * from bc_goods where bcg_key = #{param1}
 	</select>
+	
+	<!-- best뱃지 
+	<select id="best" resultType="com.study.springboot.goods.dto.GoodsDto">
+		select * from bc_goods <![CDATA[where rownum <=5 order by bcg_sale desc]]>
+	</select>
+	-->
+	
+	<insert id="likeTableUpdate">
+		Insert into BC_LIKE (bcm_num, bcg_key, bcl_date) values(#{param1}, #{param2}, sysdate)
+	</insert>
+	
+	<update id="goodsTableUpdate">
+		update bc_goods set bcg_like = bcg_like+1 where bcg_key = #{param1}
+	</update>
 </mapper>

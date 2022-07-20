@@ -8,4 +8,5 @@ public interface ListService {
 	public void list(HttpServletRequest request, Model model);
 	public void searchList(HttpServletRequest request, Model model, String type, String srchText);
 	public void pointList(HttpServletRequest request, Model model);
+	
 }

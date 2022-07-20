@@ -3,6 +3,7 @@ package com.study.springboot.goods.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.service.DeleteService;
 import com.study.springboot.goods.service.DetailAddService;
+import com.study.springboot.goods.service.GLikeService;
 import com.study.springboot.goods.service.ListOptionService;
 import com.study.springboot.goods.service.ListService;
 
@@ -32,6 +34,8 @@ public class GoodsController
 	DeleteService deleteService;
 	@Autowired
 	ListOptionService listOptionService;
+	@Autowired
+	GLikeService likeService;
 
 	int BCG_KEY = 0;
 	String BCG_NAME = "";
@@ -204,6 +208,21 @@ public class GoodsController
 		return "admin/goodsList"; 
 	}
 	
+	//게스트 : 카테고리 상품검색
+	@RequestMapping("/guest/categorySearch")
+	public String categorySearch(HttpServletRequest request, Model model) {    
+		type = request.getParameter("type");
+		srchText = request.getParameter("srchText");
+		return "guest/goods/categoryPoint"; 
+	}
+		
+	//게스트 : 카테고리 상품검색결과
+	@RequestMapping("/guest/searchCRs") 
+	public String searchCRs(HttpServletRequest request, Model model) {    
+		listService.searchList(request, model, type, srchText);
+		return "guest/goods/categoryPoint"; 
+	}
+	
 	//카테고리 - 전체보기
 	@RequestMapping("/guest/categoryAll")
 	public String list(HttpServletRequest request, Model model) {
@@ -215,6 +234,17 @@ public class GoodsController
 	@RequestMapping("/guest/categoryPoint")   //포인트메이크업 카테고리
 	public String pointList(HttpServletRequest request, Model model) {
 		listService.pointList(request, model);
+        return "guest/goods/categoryPoint"; 
+	}
+	
+	//카테고리 - 찜
+	@RequestMapping("/member/glike")   
+	public String like(HttpServletRequest request, Model model) {
+		String bcm_num = request.getParameter("BCM_NUM");		
+		int bcg_key = Integer.parseInt(request.getParameter("BCG_KEY"));
+		System.out.println(bcm_num);
+		System.out.println(bcg_key);
+		likeService.likeTableUpdate(request, model);
         return "guest/goods/categoryPoint"; 
 	}
 	

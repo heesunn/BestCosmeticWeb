@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +25,7 @@
 			<td colspan="4">전체보기</td>
 		</tr>
 		<tr>
-			<td>총 ${page.totalCount}개</td>
+			<td colspan="4">총 ${page.totalCount}개</td>
 		</tr>
 		
 		<c:set var="i" value="0" />
@@ -32,6 +35,19 @@
 		<tr>
 		</c:if>
 			<td> 
+				<!-- NEW 뱃지 -->
+				<c:set var="now" value="<%=new java.util.Date()%>" /><!-- 현재시간 -->
+	         	<fmt:formatDate value="${now}" pattern="yyMMdd" var="today" /><!-- 현재시간을 숫자로 -->
+	         	<fmt:formatDate  value="${dto.bcg_date}" pattern="yyMMdd" var="dtoDate" /><!-- 게시글 작성날짜를 숫자로 -->
+	         		<c:if test="${today - dtoDate le 30}"><!-- 30일동안은 new 표시 -->
+	            		<span>new</span>
+	         		</c:if>
+	         	
+	         	<!-- BEST 뱃지 -->	
+	         	<fmt:formatNumber value="${dto.bcg_sale }" var="sale"/>
+		         	<c:if test="${sale >= 10}">
+		         		<span>best</span>
+		         	</c:if>
 				<img src="${dto.bcg_img}" height="200" width="200"><br/>
 				${dto.bcg_name}<br/>
 				${dto.bcg_price}원 
@@ -43,7 +59,7 @@
 		</c:forEach>
 			
 		<tr>
-			<td colspan="3">
+			<td colspan="4">
 				<!-- 처음 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
