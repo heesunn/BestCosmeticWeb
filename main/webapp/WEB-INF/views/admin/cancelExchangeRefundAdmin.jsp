@@ -5,35 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>배송준비</title>
-<style>
-	.orderInfo {
-		display : none;
-	}
-	.text {
-		font-size : 10px;
-		margin : 0px;
-		float : left;
-	}
-	/*popup*/
-	.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
-	/*팝업 박스*/
-	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:375px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
-	/*컨텐츠 영역*/
-	.popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px; }
-	.popup_box .popup_cont h2 {padding:15px 0;color:#333;margin:0;}
-	.popup_box .popup_cont p{ border-top: 1px solid #666;padding-top: 30px;}
-	/*버튼영역*/
-	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
-	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
-	.popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
-	.popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
-	.popup_box .popup_btn a.close_day {background:#5d5d5d;}
-	.popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after{display:none;}
-	/*오버레이 뒷배경*/
-	.popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
-	/*popup*/
-</style>
+<title>취소/교환/반품</title> <!-- 만들다 말았음 리뷰만들고 진행해야함 -->
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 
@@ -263,10 +235,10 @@ function submit_state() {
 	</div>
 	<h1>배송준비</h1>
 	<div>
-		<form action="/admin/drSearch">
+		<form action="/admin/cerSearch">
 			<select name="searchType" id='serch'>
 				<option value='bcm_name'>주문인</option>
-				<option value='bco_recipient'>수령인</option>
+				<option value='bco_order_status'>상태</option>
 				<option value='bco_ordernum'>주문번호</option>
 			</select>
 			<input type="text" name="searchWord">
@@ -286,23 +258,15 @@ function submit_state() {
 	        	<tr>
 		        	<th><input type='checkbox' name='selectall' value='selectall' onclick='selectAll(this)'/></th>
 		            <th>주문번호</th>
-		            <th>주문일<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
+		            <th>신청일시<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
 		            <th>주문인<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
-		            <th>수령인<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
-		            <th>결제총액<button onclick="sortTD(5)">▲</button><button onclick="reverseTD(5)">▼</button></th>
+		            <th>결제총액<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
 		            <th>주문내역</th>
+		            <th>상태</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	    <c:forEach items="${deliveryReady}" var="ready">
-	    <script>
-		    function openPop${ready.bco_ordernum}() {
-		        document.getElementById("popup_layer${ready.bco_ordernum}").style.display = "block";
-		    }
-		    function closePop${ready.bco_ordernum}() {
-		        document.getElementById("popup_layer${ready.bco_ordernum}").style.display = "none";
-		    }
-	    </script>
 		        <tr>
 		        	<td><input type='checkbox' name='bco_ordernum' value='${ready.bco_ordernum}' onclick='checkSelectAll(event)'/></td>
 		            <td>${ready.bco_ordernum}</td>
@@ -311,39 +275,10 @@ function submit_state() {
 		            <td>${ready.bco_recipient}</td>
 		            <td id="price${ready.bco_ordernum}">${ready.bco_totalprice}</td>
 		            <td><a href="#" 
-		            	onclick="javascript:openPop${ready.bco_ordernum}()">${ready.bco_order_name}</a>
+		            	onclick="javascript:window.open('http://localhost:8081/member/orderDetail?bco_ordernum=${ready.bco_ordernum}', 
+		            	'주문내역 상세', 'width=400, height=300')">${ready.bco_order_name}</a>
 		            </td>
 		        </tr>
-				<div class="popup_layer" id="popup_layer${ready.bco_ordernum}" style="display: none;">
-				  <div class="popup_box">
-				      <!--팝업 컨텐츠 영역-->
-				      <div class="popup_cont">
-				          <c:forEach items="${orderDetail}" var="order">
-							<img style="float : left" src="${order.bcg_img}" width="50" height="100">
-							<p class="text">상품명 : ${order.bcg_name }</p><br>
-							<p class="text">금액 : ${order.bcg_price }</p><br>
-							<p class="text">옵션 : ${order.bcd_option }</p><br>
-							<p class="text">수량 : ${order.bco_count }</p><br>
-							<p class="text">결제 금액 : ${order.total_price }</p><br>
-							<c:if test="${order.bco_order_status == '구매확정'}">
-								<form action="/member/">
-									<input type="hidden" name="bcg_key" value="${order.bcg_key }">
-									<input type="hidden" name="bcd_detailkey" value="${order.bcd_detailkey }">
-									<input type="submit" value="리뷰쓰기">
-								</form>
-							</c:if>
-							<c:if test="${order.bco_order_status == '배송완료'}">
-								<button>구매확정 하러가기</button>
-							</c:if>
-							<hr>
-						</c:forEach>
-				      </div>
-				      <!--팝업 버튼 영역-->
-				      <div class="popup_btn" style="float: bottom; margin-top: 200px;">
-				          <a href="javascript:closePop${ready.bco_ordernum}();">닫기</a>
-				      </div>
-				  </div>
-				</div>
 		        <script>
 				    var money = $('#price${ready.bco_ordernum}').text();
 				    var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

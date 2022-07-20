@@ -49,4 +49,8 @@ public interface KMemberDao {
     
     public int stateInTransitChange(String bco_ordernum);
     public int stateDeliveryCompletedChange(String bco_ordernum);
+    
+
+    public List<OrderDeliveryDto> orderManagementCER(int nEnd, int nStart); // 쿼리문만 썻음
+    public int stateCERChange(); // 쿼리문 안씀 선언만했음
 }

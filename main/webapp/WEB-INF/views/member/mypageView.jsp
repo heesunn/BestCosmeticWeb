@@ -38,8 +38,8 @@
                     <li class="list" >문의 내역</li>
                     <li class="list" >리뷰 내역</li>
                     <li class="list" onclick="javascript:window.location='/member/modifyMemberView'">회원 정보 수정</li>
-                    <li class="list" >비밀번호 변경</li>
-                    <li class="list" >회원 탈퇴</li>
+                    <li class="list" onclick="javascript:window.location='/member/passwordChange'">비밀번호 변경</li>
+                    <li class="list" onclick="javascript:window.location='/member/out'">회원 탈퇴</li>
                 </ul>
             </li>
         </ul>

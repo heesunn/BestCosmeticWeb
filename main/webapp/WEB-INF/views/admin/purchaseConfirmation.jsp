@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>배송중</title>
+<title>구매확정</title>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 

@@ -17,6 +17,8 @@ public class OrderManagementImpl implements OrderManagement {
 
 	@Autowired
 	KMemberDao dao;
+	@Autowired
+	OrderDetailService orderDetail; 
 	
 	int listCount = 20;		// 한 페이지당 보여줄 게시물의 갯수
 	int pageCount = 10;		// 하단에 보여줄 페이지 리스트의 갯수
@@ -44,6 +46,9 @@ public class OrderManagementImpl implements OrderManagement {
 		
 
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
+		for(int i=0; i<dto.size(); i++) {
+			orderDetail.orderDetail(dto.get(i).getBco_ordernum(), model);
+		}
 		model.addAttribute("deliveryReady",dto);
 	}
 	@Override
@@ -125,34 +130,12 @@ public class OrderManagementImpl implements OrderManagement {
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("purchaseConfirmation",dto);
 	}
-	
 	@Override
-	public String stateDeliveryCompleted(HttpServletRequest request, Model model) {
-		String result = "";
-		int updateCount = 0;
-		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
-		for(int i=0; i<bco_ordernumList.length; i++) {
-			updateCount += dao.stateDeliveryCompletedChange(bco_ordernumList[i]);
-		}
-		if(updateCount == bco_ordernumList.length) {
-			result = "success";
-		}
-		return result;
+	public void cancelExchangeRefundAdmin(HttpServletRequest request, Model model) {
+		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public String stateInTransit(HttpServletRequest request, Model model) {
-		String result = "";
-		int updateCount = 0;
-		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
-		for(int i=0; i<bco_ordernumList.length; i++) {
-			updateCount += dao.stateInTransitChange(bco_ordernumList[i]);
-		}
-		if(updateCount == bco_ordernumList.length) {
-			result = "success";
-		}
-		return result;
-	}
+	
 	
 	
 	@Override
@@ -287,9 +270,85 @@ public class OrderManagementImpl implements OrderManagement {
 		
 	}
 	@Override
-	public void pcSearch(HttpServletRequest request, Model model) {
+	public void cerSearch(HttpServletRequest request, Model model) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void pcSearch(HttpServletRequest request, Model model) {
+		String orderStatus = "구매확정";
+		int nPage = 1;
+		try {
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {}
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
+		
+		String searchType = request.getParameter("searchType");
+		String word  = request.getParameter("searchWord");
+		String searchWord = "%"+word+"%";
+		
+		int count = 0;
+		if(searchType.equals("bcm_name")) {
+			count = dao.nameOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.nameOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("purchaseConfirmation",dto);
+			String totalPrice = dao.nameOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		else if(searchType.equals("bco_recipient")) {
+			count = dao.recipientOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.recipientOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("purchaseConfirmation",dto);
+			String totalPrice = dao.recipientOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		else if(searchType.equals("bco_ordernum")) {
+			count = dao.ordernumOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.ordernumOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("purchaseConfirmation",dto);
+			String totalPrice = dao.ordernumOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		PageInfo pinfo = articlePage(nPage, count, searchType, searchWord);
+		model.addAttribute("page", pinfo);
+		nPage = pinfo.getCurPage();
+	   	model.addAttribute("cpage", nPage);
+		
+	}
+	@Override
+	public String stateDeliveryCompleted(HttpServletRequest request, Model model) {
+		String result = "";
+		int updateCount = 0;
+		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
+		for(int i=0; i<bco_ordernumList.length; i++) {
+			updateCount += dao.stateDeliveryCompletedChange(bco_ordernumList[i]);
+		}
+		if(updateCount == bco_ordernumList.length) {
+			result = "success";
+		}
+		return result;
+		
+	}
+	@Override
+	public String stateInTransit(HttpServletRequest request, Model model) {
+		String result = "";
+		int updateCount = 0;
+		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
+		for(int i=0; i<bco_ordernumList.length; i++) {
+			updateCount += dao.stateInTransitChange(bco_ordernumList[i]);
+		}
+		if(updateCount == bco_ordernumList.length) {
+			result = "success";
+		}
+		return result;
+	}
+	@Override
+	public String stateChangeCER(HttpServletRequest request, Model model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	public PageInfo articlePage(int curPage, int count, String type, String word) {
 		String searchType = type;

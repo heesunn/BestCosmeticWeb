@@ -3,6 +3,7 @@ package com.study.springboot.member.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,12 +62,13 @@ public class KMemberController
 		String result = likeService.likeDelete(request);
 		return result;
 	}
-	@RequestMapping("/member/orderDetail")
-	public String orderDetailView(@RequestParam("bco_ordernum") String ordernum ,HttpServletRequest request, Model model) {
-		request.setAttribute("bco_ordernum", ordernum);
-		orderDetail.orderDetail(request, model);
-		return "member/orderDetail";
-	}
+//	@RequestMapping("/member/orderDetail")
+//	public String orderDetailView(@RequestParam("bco_ordernum") String ordernum ,HttpServletRequest request, Model model) {
+//		request.setAttribute("bco_ordernum", ordernum);
+//		
+//		orderDetail.orderDetail(request, model);
+//		return "";
+//	}
 	@RequestMapping("/member/passwordChange")
 	public String pwChangeView() {
 		return "/member/passwordChange";
@@ -103,7 +105,7 @@ public class KMemberController
 	@RequestMapping("/member/memberDelete")
 	public @ResponseBody String memberDelete(HttpServletRequest request, Model model) {
 		String result = withdrawal.withdrawal(request, model);
-		
+		//다른 테이블에서도 지워야함
 		return result;
 	}
 	@RequestMapping("/admin/adminTop")
@@ -141,6 +143,11 @@ public class KMemberController
 		OrderManagement.purchaseConfirmation(request, model);
 		return "/admin/purchaseConfirmation";
 	}
+	@RequestMapping("/admin/adminCER")
+	public String cancelExchangeRefundAdmin(HttpServletRequest request, Model model) {
+		OrderManagement.cancelExchangeRefundAdmin(request, model);
+		return "/admin/cancelExchangeRefundAdmin";
+	}
 	
 	
 	@RequestMapping("/admin/drSearch")
@@ -160,8 +167,13 @@ public class KMemberController
 	}
 	@RequestMapping("/admin/pcSearch")
 	public String pcSearch(HttpServletRequest request, Model model) {
-		
+		OrderManagement.pcSearch(request, model);
 		return "/admin/purchaseConfirmation";
+	}
+	@RequestMapping("/admin/cerSearch")
+	public String cerSearch(HttpServletRequest request, Model model) {
+		OrderManagement.cerSearch(request, model);
+		return "/admin/cancelExchangeRefundAdmin";
 	}
 	
 	
@@ -174,6 +186,12 @@ public class KMemberController
 	@RequestMapping("/admin/stateDeliveryCompleted")
 	public @ResponseBody String stateDeliveryCompleted(HttpServletRequest request, Model model) {
 		String result = OrderManagement.stateDeliveryCompleted(request, model);
+		
+		return result;
+	}
+	@RequestMapping("/admin/stateChangeCER")
+	public @ResponseBody String stateChangeCER(HttpServletRequest request, Model model) {
+		String result = OrderManagement.stateChangeCER(request, model);
 		
 		return result;
 	}

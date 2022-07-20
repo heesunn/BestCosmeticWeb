@@ -9,10 +9,13 @@ public interface OrderManagement {
 	public void inTransit(HttpServletRequest request, Model model); // <주문관리> 배송중
 	public void deliveryCompleted(HttpServletRequest request, Model model); // <주문관리> 배송완료
 	public void purchaseConfirmation(HttpServletRequest request, Model model); // <주문관리> 구매확정
-	public void drSearch(HttpServletRequest request, Model model);
-	public void itSearch(HttpServletRequest request, Model model);
-	public void dcSearch(HttpServletRequest request, Model model);
-	public void pcSearch(HttpServletRequest request, Model model);
+	public void cancelExchangeRefundAdmin(HttpServletRequest request, Model model); // <주문관리> 취소/교환/반품
+	public void drSearch(HttpServletRequest request, Model model); // 배송준비 화면에서 검색
+	public void itSearch(HttpServletRequest request, Model model); // 배송중 화면에서 검색
+	public void dcSearch(HttpServletRequest request, Model model); // 배송완료 화면에서 검색
+	public void pcSearch(HttpServletRequest request, Model model); // 구매확정 화면에서 검색
+	public void cerSearch(HttpServletRequest request, Model model); // 취소/교환/반품 화면에서 검색
 	public String stateInTransit(HttpServletRequest request, Model model); // <주문관리> 배송중으로 상태변경
 	public String stateDeliveryCompleted(HttpServletRequest request, Model model); // <주문관리> 배송중으로 상태변경
+	public String stateChangeCER(HttpServletRequest request, Model model); // <주문관리> 배송중으로 상태변경
 }

@@ -65,9 +65,9 @@
 		delete from bc_like where bcm_num = #{param1} and bcg_key = #{param2}
 	</delete>
 	<select id="orderDetail" resultType="com.study.springboot.member.dto.OrderDetail">
-		select a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price as total_price
-		from bc_order_detail A, bc_goods B , bc_detailgoods C where A.bcg_key = B.bcg_key and A.bcd_detailkey = C.bcd_detailkey and a.bcg_key = c.bcg_key and a.bco_ordernum = #{param1} 
-		group by a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price
+		select a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price as total_price, d.bco_order_status 
+		from bc_order_detail A, bc_goods B , bc_detailgoods C, bc_order_history D where A.bcg_key = B.bcg_key and A.bcd_detailkey = C.bcd_detailkey and a.bcg_key = c.bcg_key and a.bco_ordernum = d.bco_ordernum and a.bco_ordernum = #{param1} 
+		group by a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price, d.bco_order_status
 	</select>
 	<select id="pwCheck" resultType="com.study.springboot.member.dto.MemberDto">
 		select bcm_pw from bc_member where bcm_num = #{param1}
@@ -132,6 +132,13 @@
 	<update id="stateDeliveryCompletedChange">
 		update bc_order_history set bco_order_status = '배송완료' where bco_ordernum = #{param1}
 	</update>
+	
+	<select id="orderManagementCER" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bco_ordernum, bco_orderdate, bcm_name, bco_recipient, bco_totalprice, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param1}]]> ) B 
+			where B.num >= #{param2}
+	</select>
 </mapper>
 <!--
 1.sql 문 뒤에 세미콜론 절대 들어가면 안된다.
