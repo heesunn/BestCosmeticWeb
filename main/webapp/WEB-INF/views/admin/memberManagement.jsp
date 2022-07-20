@@ -8,6 +8,15 @@
 </head>
 <body>
     <h1>회원관리</h1>
+    <form id="searchForm">
+        <select id="searchType" name="searchType">
+            <option id="" value="sTitlecontent" selected>이름</option>
+            <option id="sTitle" value="sTitle" >아이디</option>
+            <option id="sContent" value="sContent">회원번호</option>
+        </select>
+        <input type="text" id="searchWord" name="searchType">
+        <input type="button" value="검색" onclick="search_form();">
+    </form>
     <p>
         검색결과 : <span style="color: red">${page.totalCount}</span>명,
         총 회원수 : <span style="color: red">${page.totalCount}</span>명
