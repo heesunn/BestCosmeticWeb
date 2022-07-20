@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.springboot.goods.dao.GoodsDao;
+import com.study.springboot.goods.dao.InBagDao;
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.service.DeleteService;
 import com.study.springboot.goods.service.DetailAddService;
 import com.study.springboot.goods.service.GLikeService;
 import com.study.springboot.goods.service.ListOptionService;
 import com.study.springboot.goods.service.ListService;
+import com.study.springboot.goods.service.PageDetailService;
 
 @Controller
 public class GoodsController
@@ -26,6 +28,8 @@ public class GoodsController
 	
 	@Autowired
 	private GoodsDao goodsDao;
+	@Autowired
+	private InBagDao inBagDao;
 	@Autowired
 	ListService listService;
 	@Autowired
@@ -36,6 +40,8 @@ public class GoodsController
 	ListOptionService listOptionService;
 	@Autowired
 	GLikeService likeService;
+	@Autowired
+	PageDetailService pageDetailService;
 
 	int BCG_KEY = 0;
 	String BCG_NAME = "";
@@ -179,7 +185,6 @@ public class GoodsController
 	public String stockManager(HttpServletRequest request, Model model) {
 		if(request.getParameter("BCG_KEY") != null) {
 			BCG_KEY = Integer.parseInt(request.getParameter("BCG_KEY"));
-			System.out.println(BCG_KEY);
 		}
 		return "admin/goodsStockManager"; 
 	}	      
@@ -208,7 +213,7 @@ public class GoodsController
 		return "admin/goodsList"; 
 	}
 	
-	//게스트 : 카테고리 상품검색
+	//게스트 : 포인트카테고리 상품검색
 	@RequestMapping("/guest/categorySearch")
 	public String categorySearch(HttpServletRequest request, Model model) {    
 		type = request.getParameter("type");
@@ -216,7 +221,7 @@ public class GoodsController
 		return "guest/goods/categoryPoint"; 
 	}
 		
-	//게스트 : 카테고리 상품검색결과
+	//게스트 : 포인트카테고리 상품검색결과
 	@RequestMapping("/guest/searchCRs") 
 	public String searchCRs(HttpServletRequest request, Model model) {    
 		listService.searchList(request, model, type, srchText);
@@ -246,6 +251,24 @@ public class GoodsController
 		System.out.println(bcg_key);
 		likeService.likeTableUpdate(request, model);
         return "guest/goods/categoryPoint"; 
+	}
+	
+	//상세페이지 뷰
+	@RequestMapping("/guest/detailPage")   
+	public String detailPage(HttpServletRequest request, Model model) {
+		BCG_KEY = Integer.parseInt(request.getParameter("BCG_KEY"));
+		pageDetailService.getGoodsInfo(request, model);
+        return "guest/goods/detailPage"; 
+	}
+	
+	//상세페이지 : 장바구니 추가
+	@RequestMapping("/member/addBag")
+	public String addBag(HttpServletRequest request, Model model) throws IOException {
+		inBagDao.addBag(Integer.parseInt(request.getParameter("BCM_NUM")), 
+						Integer.parseInt(request.getParameter("BCG_KEY")),
+						Integer.parseInt(request.getParameter("BCD_DETAILKEY")),
+						Integer.parseInt(request.getParameter("BCB_COUNT")));				
+		return "guest/goods/detailPage";
 	}
 	
 	//상단, 좌측 메뉴 조각들**********************************************************************************************

@@ -10,6 +10,8 @@
 	int num = 0;
 	if(session.getAttribute("num")!= null) {
 		num = (int)session.getAttribute("num");
+	} else {
+		num = 0;
 	}
 %>
 <!DOCTYPE html>
@@ -32,10 +34,14 @@ function sch() {     //검색기능
     });
 }
 
-
-
-
-
+function logCk() {        //로그인 여부체크 아직 안됨.
+	console.log(<%=num %>);
+	if(<%=num %>==0) {
+		window.location.replace("/guest/loginView");
+	} else { 
+		likeUpdate${dto.bcg_key}();
+	}
+}
 </script>
 </head>
 <body>
@@ -91,37 +97,30 @@ function sch() {     //검색기능
             <img src="${dto.bcg_img}" height="200" width="200"><br/>
             ${dto.bcg_name}<br/>
             ${dto.bcg_price}원 
-            <sec:authorize access="isAuthenticated()">
-         	<form id="list${dto.bcg_key }" name="list${dto.bcg_key }">
-         		<input type="hidden" name="BCM_NUM" value="<%= num %>">
+         	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
+         		<input type="hidden" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">   
-         		<input type="button" onclick ="likeUpdate${dto.bcg_key }()">
-         			<img src="/image/heart.png" height="20" width="20"/>
+         		<input type="image" src="/image/heart.png" height="20" width="20" onclick ="logCk()">        			
          	</form>
-         	</sec:authorize>
          </td>
       <c:if test="${i%j == j-1 }">   
       </tr>   
       </c:if>
       <c:set var="i" value="${i+1 }" />
       <script>
-      function likeUpdate${dto.bcg_key }() {     //찜 업데이트
-		   	var queryString=$("#list${dto.bcg_key }").serialize();
-      		//var queryString = "BCM_NUM=" + $("#BCM_NUM").val();
-      		//queryString = queryString + "&BCG_KEY=" + $("#key${dto.bcg_key }").val();
-
-		    console.log(queryString);
-		    $.ajax({
-		    	url: '/member/glike',  
-		        type: 'POST',
-		        data: queryString,
-		        dataType: 'text',
-		        success: function(json) {  
-		        	alert();
-		        	window.location.replace("/guest/categoryPoint");
-		        }       	
-		    });
-		}
+      function likeUpdate${dto.bcg_key}() {     //찜 업데이트
+    	  var queryString=$("#list${dto.bcg_key}").serialize();     		
+	      $.ajax({
+		      url: '/member/glike',  
+	          type: 'POST',
+	          data: queryString,
+	          dataType: 'text',
+	          success: function(json) {  
+	        	  //alert("찜했습니다");
+	        	  //window.location.replace("/guest/categoryPoint");
+	          }       	
+	      });		  
+      }
       </script>
       </c:forEach>
       
@@ -182,15 +181,5 @@ function sch() {     //검색기능
          </td>
       </tr>
    </table>
-   
-   <br>[참고]<br>
-   전체 게시글 수 / totalCount : ${page.totalCount}<br>
-   페이지당 게시글 수 / listCount : ${page.listCount}<br>
-   전체 페이지 수 / totalPage : ${page.totalPage}<br>
-   현재 페이지 번호 / curPage : ${page.curPage}<br>
-   하단 페이지 리스트 수 / pageCount : ${page.pageCount}<br>
-   리스트 첫 페이지 / startPage : ${page.startPage}<br>
-   리스트 마지막 페이지 / endPage : ${page.endPage}<br>
-         
 </body>
 </html>

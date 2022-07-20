@@ -25,7 +25,7 @@
 			<td colspan="4">전체보기</td>
 		</tr>
 		<tr>
-			<td colspan="4">총 ${page.totalCount}개</td>
+			<td>총 ${page.totalCount}개</td>
 		</tr>
 		
 		<c:set var="i" value="0" />
@@ -48,7 +48,10 @@
 		         	<c:if test="${sale >= 10}">
 		         		<span>best</span>
 		         	</c:if>
-				<img src="${dto.bcg_img}" height="200" width="200"><br/>
+				<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
+					<img src="${dto.bcg_img}" height="200" width="200">
+					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
+				</a><br/>
 				${dto.bcg_name}<br/>
 				${dto.bcg_price}원 
 			</td>

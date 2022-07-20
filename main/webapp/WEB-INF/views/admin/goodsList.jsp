@@ -44,7 +44,7 @@
             data: queryString,
             dataType: 'text',
             success: function(json) {
-            	window.location.replace("/admin/goodsAddDetail");   
+            	window.location="/admin/goodsAddDetail";   
             }
         });
     }
@@ -146,7 +146,7 @@
 				<td> ${dto.bcg_key} </td>
 				<td> 
 					<a href="opDelete?BCG_KEY=${dto.bcg_key}">
-                  		<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${dto.bcg_key}"> ${dto.bcg_name}
+                  		${dto.bcg_name}
                  	</a> 
  				</td>							
 				<td> ${dto.bcg_price}원 </td>							
