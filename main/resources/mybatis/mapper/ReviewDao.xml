@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.springboot.goods.dao.ReviewDao">
+    <select id="reviewList" resultType="com.study.springboot.goods.dto.ReviewDto">
+        SELECT *
+        FROM ( SELECT ROWNUM NUM, A.*
+               FROM (SELECT *
+                     FROM BC_REVIEW
+                     WHERE BCG_KEY = #{param1}
+                     ORDER BY BCR_DATE DESC ) A
+               WHERE ROWNUM &lt;= #{param2} ) B
+        WHERE B.NUM &gt;= #{param3}
+    </select>
+    <select id="reviewListArticlePage" resultType="_int">
+        SELECT COUNT(*) AS TOTAL FROM BC_REVIEW WHERE BCG_KEY = #{param1}
+    </select>
+</mapper>

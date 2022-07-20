@@ -207,7 +207,7 @@
     </form>
     <p>
         검색결과 : <span style="color: red">${page.totalCount}</span>명,
-        총 회원수 : <span style="color: red">${page.totalCount}</span>명
+        총 회원수 : <span style="color: red">${allMemberCount}</span>명
     </p>
     <table id="myList" border="1">
         <thead>
@@ -236,7 +236,7 @@
                     </c:choose>
                     <td><fmt:formatDate value="${dto.bcm_joined_on}" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td>${dto.order_count}</td>
-                    <td>${dto.total_price}</td>
+                    <td id="price${dto.bcm_num}">${dto.total_price}</td>
                     <td><input type="button" value="보기" onclick="crm${dto.bcm_num}()"></td>
                 </tr>
                 <div id="popupDiv${dto.bcm_num}" style="background-color:black; display: none; position: absolute;top: 100px;left: 300px;z-index: 999999;">
@@ -283,12 +283,18 @@
                             success : function(json) {
                                 if (json.desc == 1){
                                     alert("승격성공")
+                                    window.location.reload();
                                 }else {
                                     alert("승격실패")
                                 }
                             }
                         });
                     }
+                </script>
+                <script>
+                    var money = $('#price${dto.bcm_num}').text();
+                    var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    $('#price${dto.bcm_num}').text(money2+"원");
                 </script>
             </c:forEach>
         </tbody>

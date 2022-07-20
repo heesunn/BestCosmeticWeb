@@ -43,6 +43,8 @@ public class MemberController
 	MemberManagementViewService memberManagementViewService;
 	@Autowired
 	UpgradeAdminService upgradeAdminService;
+	@Autowired
+	UpdatePurchaseConfirmationService updatePurchaseConfirmationService;
 
 
 	@RequestMapping("/guest/join")
@@ -203,14 +205,20 @@ public class MemberController
 	@RequestMapping("/admin/memberManagement")
 	public String memberManagement(HttpServletRequest request, Model model) {
 		memberManagementViewService.memberManagementView(request,model);
+		memberManagementViewService.allMemberCount(model);
 		return "admin/memberManagement";
 	}
 
 	@RequestMapping("/admin/upgradeAdmin")
 	public @ResponseBody JSONObject upgradeAdmin(HttpServletRequest request) {
 		JSONObject obj = new JSONObject();
-		upgradeAdminService.upgradeAdmin(request);
+		int updateCount = upgradeAdminService.upgradeAdmin(request);
+		obj.put("desc", updateCount);
 		return obj;
 	}
-
+	@RequestMapping("/admin")
+	public String adminMainPageReset(){
+		updatePurchaseConfirmationService.updatePurchaseConfirmation();
+		return "redirect:/admin/memberManagement";
+	}
 }

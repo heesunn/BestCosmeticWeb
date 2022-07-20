@@ -113,15 +113,14 @@
                                 <input type="hidden" name="realprice${dto.bcg_key}" id="realprice${dto.bcg_key}" class="" value="${dto.bcg_price}">
 
                             </td>
-                            <td>
+                            <td onclick="javascript:window.location='/guest/detailPage?BCG_KEY=${dto.bcg_key}'">
                                 <img src="${dto.bcg_img}" width="150" height="150">
                             </td>
-                            <td>
+                            <td onclick="javascript:window.location='/guest/detailPage?BCG_KEY=${dto.bcg_key}'">
                                 ${dto.bcg_name} <br>
                                     <c:if test="${dto.bcd_option != '-'}">
                                         ( ${dto.bcd_option} )
                                     </c:if>
-
                             </td>
                             <td name="price${dto.bcg_key}" id="price${dto.bcg_key}">
                                 ${dto.bcg_price}

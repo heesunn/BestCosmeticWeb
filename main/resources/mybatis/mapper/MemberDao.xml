@@ -284,6 +284,16 @@
         WHERE BCM_AUTHORITY = 'role_user'
           AND BCM_NUM = #{param1}
     </select>
+    <update id="upgradeAdmin">
+        UPDATE BC_MEMBER
+        SET BCM_AUTHORITY = 'role_admin'
+        WHERE BCM_NUM = #{param1}
+    </update>
+    <update id="updatePurchaseConfirmation">
+        UPDATE BC_ORDER_HISTORY
+        SET BCO_ORDER_STATUS = '구매확정'
+        WHERE 14 &lt;= (SYSDATE - BCO_ORDERDATE)
+    </update>
 </mapper>
 
 <!--

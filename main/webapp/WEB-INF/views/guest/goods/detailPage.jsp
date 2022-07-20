@@ -29,10 +29,7 @@
 	    var tCount = Number($input.val());
 	    var result = $input.val(Number(tCount)-1);
 	}
-	
-	function detail() {
-			
-	}
+
 	
 	function inBag() {                 //장바구니
 		if(<%=bcm_num%> == 0) {
@@ -77,13 +74,7 @@
 		}
 	}
 	
-	function review() {
-		$('#activePage').empty();
-	}
-	
-	function qna() {
-		$('#activePage').empty();
-	}
+
 	
 </script>
 </head>
@@ -177,14 +168,41 @@
 		</tr>
 		<tr><td colspan="3"><hr><td></tr>
 	</table>
-	<table class="activePage" id="activePage">
-		<tr>
-			<td><img src="${BCG_IMGDETAIL}"></td>
-		</tr>	
-		<tr>	
-			<!-- <a href="https://www.flaticon.com/kr/free-icons/-" title="- 아이콘">- 아이콘  제작자: Smauj - Flaticon</a> -->
-			<td><input type="image" src="/image/goTop.png" width="30" height="30" alt="맨위로" onClick="javascript:window.scrollTo(0,0)" /></td>
-		</tr>		
-	</table>
+	<div id="goodsDetailView" style="display: block">
+		<table class="activePage" id="activePage">
+			<tr>
+				<td><img src="${BCG_IMGDETAIL}"></td>
+			</tr>
+			<tr>
+				<!-- <a href="https://www.flaticon.com/kr/free-icons/-" title="- 아이콘">- 아이콘  제작자: Smauj - Flaticon</a> -->
+				<td><input type="image" src="/image/goTop.png" width="30" height="30" alt="맨위로" onClick="javascript:window.scrollTo(0,0)" /></td>
+			</tr>
+		</table>
+	</div>
+	<div id="reViewView" style="display: none">
+		<h1>리뷰창</h1>
+	</div>
+	<div id="qnaView" style="display: none">
+		<h1>문의</h1>
+	</div>
+<script>
+	function review() {
+		$("#reViewView").css({ 'display' : 'block' });
+		$("#qnaView").css({ 'display' : 'none' });
+		$("#goodsDetailView").css({ 'display' : 'none' });
+	}
+
+	function qna() {
+		$("#qnaView").css({ 'display' : 'block' });
+		$("#reViewView").css({ 'display' : 'none' });
+		$("#goodsDetailView").css({ 'display' : 'none' });
+	}
+
+	function detail() {
+		$("#goodsDetailView").css({ 'display' : 'block' });
+		$("#qnaView").css({ 'display' : 'none' });
+		$("#reViewView").css({ 'display' : 'none' });
+	}
+</script>
 </body>
 </html>

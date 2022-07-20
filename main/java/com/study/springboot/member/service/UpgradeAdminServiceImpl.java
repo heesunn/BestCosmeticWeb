@@ -11,7 +11,8 @@ public class UpgradeAdminServiceImpl implements UpgradeAdminService {
     MemberDao memberDao;
     @Override
     public int upgradeAdmin(HttpServletRequest request) {
-
-        return 0;
+        String bcm_num = request.getParameter("bcm_num");
+        int updateCount = memberDao.upgradeAdmin(bcm_num);
+        return updateCount;
     }
 }

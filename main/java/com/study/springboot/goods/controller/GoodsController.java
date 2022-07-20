@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.study.springboot.goods.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dao.InBagDao;
 import com.study.springboot.goods.dto.GoodsDto;
-import com.study.springboot.goods.service.DeleteService;
-import com.study.springboot.goods.service.DetailAddService;
-import com.study.springboot.goods.service.GLikeService;
-import com.study.springboot.goods.service.ListOptionService;
-import com.study.springboot.goods.service.ListService;
-import com.study.springboot.goods.service.PageDetailService;
 
 @Controller
 public class GoodsController
@@ -42,6 +37,10 @@ public class GoodsController
 	GLikeService likeService;
 	@Autowired
 	PageDetailService pageDetailService;
+	@Autowired
+	QuestionListViewService questionListViewService;
+	@Autowired
+	ReviewListViewService reviewListViewService;
 
 	int BCG_KEY = 0;
 	String BCG_NAME = "";
@@ -268,6 +267,8 @@ public class GoodsController
 	public String detailPage(HttpServletRequest request, Model model) {
 		BCG_KEY = Integer.parseInt(request.getParameter("BCG_KEY"));
 		pageDetailService.getGoodsInfo(request, model);
+		questionListViewService.questionListView(request,model);
+		reviewListViewService.reviewListView(request,model);
         return "guest/goods/detailPage"; 
 	}
 	

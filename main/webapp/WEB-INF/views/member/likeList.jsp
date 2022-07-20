@@ -35,16 +35,13 @@
 					<input type="hidden" name="bcg_key" value="${like.bcg_key}">
 					<button style="float: right" onclick="찜목록삭제${like.bcg_key}()">x</button><br/><!-- 포지션 앱솔루트 탑 0px 레프트 200px -->
 				</form>
-				<img src="${like.bcg_img}" onclick="상세페이지()" height="200" width="200">&nbsp;
+				<img src="${like.bcg_img}" onclick="javascript:window.location='/guest/detailPage?BCG_KEY=${like.bcg_key}'" height="200" width="200">&nbsp;
 			</td>
 		<c:if test="${i%j == j-1 }">
 		</tr>	
 		</c:if>
 		<c:set var="i" value="${i+1 }" />
 			<script>
-				function 상세페이지() {
-	
-				}
 				function 찜목록삭제${like.bcg_key}() {
 	
     				var queryString = $('#deleteForm${like.bcg_key}').serialize();

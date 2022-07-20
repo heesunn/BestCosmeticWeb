@@ -107,7 +107,11 @@ public class MemberManagementViewServiceImpl implements MemberManagementViewServ
             model.addAttribute("list",dtos);
             System.out.println(dtos);
         }
+    }
 
-
+    @Override
+    public void allMemberCount(Model model) {
+        int totalCount = memberDao.memberManagementArticlePage();
+        model.addAttribute("allMemberCount", totalCount);
     }
 }

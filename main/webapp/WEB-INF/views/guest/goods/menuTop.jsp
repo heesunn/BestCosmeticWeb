@@ -20,7 +20,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">					
 					<li class="nav-item active">
-						<a class="nav-link" href="/mypageView">마이페이지</a>
+						<a class="nav-link" href="/member/mypageView">마이페이지</a>
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link" onclick="">로그아웃</a>
