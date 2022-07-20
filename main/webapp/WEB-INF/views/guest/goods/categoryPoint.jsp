@@ -35,9 +35,10 @@ function sch() {     //검색기능
 }
 
 function logCk() {        //로그인 여부체크 아직 안됨.
-	console.log(<%=num %>);
-	if(<%=num %>==0) {
-		window.location.replace("/guest/loginView");
+	var loginCk = '<%=num%>';
+	console.log(loginCk);
+	if(loginCk==0) {
+		window.location='/guest/loginView';
 	} else { 
 		likeUpdate${dto.bcg_key}();
 	}
@@ -98,7 +99,7 @@ function logCk() {        //로그인 여부체크 아직 안됨.
             ${dto.bcg_name}<br/>
             ${dto.bcg_price}원 
          	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
-         		<input type="hidden" name="BCM_NUM" value="<%=num %>">
+         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">   
          		<input type="image" src="/image/heart.png" height="20" width="20" onclick ="logCk()">        			
          	</form>

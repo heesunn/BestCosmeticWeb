@@ -53,7 +53,19 @@
 					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 				</a><br/>
 				${dto.bcg_name}<br/>
-				${dto.bcg_price}원 
+				<c:choose>
+					<c:when test="${dto.bcg_discount == 0}">
+						${dto.bcg_price}원 
+					</c:when>
+					<c:otherwise>
+						<p style="text-decoration:line-through">
+							<fmt:formatNumber type="number" maxFractionDigits="0"  value="${dto.bcg_price/(100-dto.bcg_discount)*100}" />
+						</p> 
+						-> ${dto.bcg_price}
+					</c:otherwise>
+				</c:choose>
+				
+				
 			</td>
 		<c:if test="${i%j == j-1 }">	
 		</tr>	

@@ -42,6 +42,7 @@
         전성분 : <br/>
         <textarea id="BCG_INFO" name="BCG_INFO" cols="50" rows="15">${BCG_INFO}</textarea><br> 
         할인율 : <input type="text" id="BCG_DISCOUNT" name="BCG_DISCOUNT" value="${BCG_DISCOUNT}">%<br>
+        *기준가격에 할인율을 곱한 값이 최종가격이 되므로 유의해주세요.<br>
         MD's Pick : <input type="text" id="BCG_MDPICK" name="BCG_MDPICK" value="${BCG_MDPICK}"><br>  
         메인화면 노출 순서 : 1->2->3->4<br>           	
         <input type="button" value="수정" onclick="mod()">
