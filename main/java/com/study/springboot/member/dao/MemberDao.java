@@ -46,6 +46,7 @@ public interface MemberDao {
     public int serchByIdMemberManagementArticlePage(String searchWord);
     public ArrayList<MemberJoinOrderHistoryDto> serchByNumMemberManagement(String searchWord,int nEnd, int nStart);
     public int serchByNumMemberManagementArticlePage(String searchWord);
+    public int upgradeAdmin(String bcm_num);
 
 
 

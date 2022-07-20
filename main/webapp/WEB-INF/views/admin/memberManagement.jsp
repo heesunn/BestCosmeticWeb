@@ -276,12 +276,16 @@
                     var queryString = 'bcm_num='+'${dto.bcm_num}';
                     function upgradeAdmin${dto.bcm_num}() {
                         $.ajax({
-                            url : '/admin/orderList',
+                            url : '/admin/upgradeAdmin',
                             type : 'POST',
                             data : queryString,
                             dataType: 'json',
                             success : function(json) {
-
+                                if (json.desc == 1){
+                                    alert("승격성공")
+                                }else {
+                                    alert("승격실패")
+                                }
                             }
                         });
                     }

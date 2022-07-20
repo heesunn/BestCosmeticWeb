@@ -41,6 +41,9 @@ public class MemberController
 	Make1000MemberService make1000MemberService;
 	@Autowired
 	MemberManagementViewService memberManagementViewService;
+	@Autowired
+	UpgradeAdminService upgradeAdminService;
+
 
 	@RequestMapping("/guest/join")
 	public String join() {
@@ -206,6 +209,7 @@ public class MemberController
 	@RequestMapping("/admin/upgradeAdmin")
 	public @ResponseBody JSONObject upgradeAdmin(HttpServletRequest request) {
 		JSONObject obj = new JSONObject();
+		upgradeAdminService.upgradeAdmin(request);
 		return obj;
 	}
 
