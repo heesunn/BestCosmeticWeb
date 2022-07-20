@@ -228,6 +228,13 @@ public class GoodsController
 		return "guest/goods/categoryPoint"; 
 	}
 	
+	//메인화면
+	@RequestMapping("/guest/mainHome")
+	public String mainHome(HttpServletRequest request, Model model) {
+		listService.list(request, model);
+        return "guest/goods/mainHome"; 
+	}
+	
 	//카테고리 - 전체보기
 	@RequestMapping("/guest/categoryAll")
 	public String list(HttpServletRequest request, Model model) {
