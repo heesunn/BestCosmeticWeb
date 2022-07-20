@@ -62,7 +62,18 @@
 		if(<%=bcm_num%> == 0) {
 			window.location='/guest/loginView';
 		} else {
-			//바로 결제하기
+			var queryString = "keyList="+$('#BCG_KEY').val()+"&detailkeyList="+$('#BCD_DETAILKEY').val()+"&countList="+$('#BCB_COUNT').val();
+			console.log(queryString);
+			$.ajax({
+				url : '/member/orderList',
+				type : 'POST',
+				data : queryString,
+				dataType: 'json',
+				success : function(json) {
+					sessionStorage.setItem("orderList",JSON.stringify(json));
+					window.location='/member/paymentView';
+				}
+			});
 		}
 	}
 	
