@@ -65,7 +65,8 @@ public class QuestionListViewServiceImpl implements QuestionListViewService{
         pinfo.setEndPage(endPage);
 
         System.out.println(pinfo.toString());
-
+        
+        //문의페이징
         model.addAttribute("questionPage" , pinfo);
 
         nPage = pinfo.getCurPage();
@@ -78,6 +79,7 @@ public class QuestionListViewServiceImpl implements QuestionListViewService{
         int nEnd = (nPage-1)*listCount+listCount;
 
         ArrayList<QuestionDto> dtos = questionDao.questionListView(bcg_key,nEnd,nStart);
+        //문의 리스트
         model.addAttribute("questionList",dtos);
 
     }

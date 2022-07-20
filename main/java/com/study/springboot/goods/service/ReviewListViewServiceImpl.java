@@ -64,7 +64,7 @@ public class ReviewListViewServiceImpl implements ReviewListViewService {
         pinfo.setEndPage(endPage);
 
         System.out.println(pinfo.toString());
-
+        //리뷰페이지
         model.addAttribute("reviewPage" , pinfo);
 
         nPage = pinfo.getCurPage();
@@ -77,6 +77,7 @@ public class ReviewListViewServiceImpl implements ReviewListViewService {
         int nEnd = (nPage-1)*listCount+listCount;
 
         ArrayList<ReviewDto> dtos = reviewDao.reviewList(bcg_key,nEnd,nStart);
+        //리뷰 리스트
         model.addAttribute("reviewList",dtos);
 
 
