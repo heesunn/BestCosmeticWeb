@@ -148,6 +148,7 @@
 					<a href="opDelete?BCG_KEY=${dto.bcg_key}">
                   		${dto.bcg_name}
                  	</a> 
+
  				</td>							
 				<td> ${dto.bcg_price}원 </td>							
 				<td> <fmt:formatDate value="${dto.bcg_date}" pattern="yyyy-MM-dd" var="bcg_date" /> ${bcg_date} </td>							

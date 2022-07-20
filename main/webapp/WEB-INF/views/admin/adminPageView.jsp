@@ -28,7 +28,7 @@
             <li>
                 회원
                 <ul style="list-style-type: circle">
-                    <li class="list" >회원관리</li>
+                    <li class="list" onclick="javascript:window.location='/admin/memberManagement'">회원관리</li>
                 </ul>
             </li>
             <li>

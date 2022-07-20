@@ -24,7 +24,20 @@ public class MemberManagementViewServiceImpl implements MemberManagementViewServ
             nPage = Integer.parseInt(sPage);
         }catch(Exception e) {
         }
-        int totalCount = memberDao.memberManagementArticlePage(nPage);
+        String searchType = request.getParameter("searchType");
+        String searchWord = request.getParameter("searchWord");
+
+        int totalCount=0;
+        if(searchType == null){
+            totalCount = memberDao.memberManagementArticlePage();
+        }else if(searchType.equals("sName")){
+            totalCount = memberDao.serchByNameMemberManagementArticlePage("%"+searchWord+"%");
+        }else if(searchType.equals("sId")){
+            totalCount = memberDao.serchByIdMemberManagementArticlePage("%"+searchWord+"%");
+        }else if(searchType.equals("sNum")){
+            totalCount = memberDao.serchByNumMemberManagementArticlePage(searchWord);
+        }
+
 
         int listCount = 20; //한 페이지당 보여줄 게시물의 갯수
         int pageCount = 10; //하단에 보여줄 페이지 리스트의 갯수.
@@ -60,6 +73,8 @@ public class MemberManagementViewServiceImpl implements MemberManagementViewServ
         pinfo.setPageCount(pageCount);
         pinfo.setStartPage(startPage);
         pinfo.setEndPage(endPage);
+        pinfo.setSearchType(searchType);
+        pinfo.setSearchWord(searchWord);
 
         System.out.println(pinfo.toString());
 
@@ -74,8 +89,25 @@ public class MemberManagementViewServiceImpl implements MemberManagementViewServ
         int nStart= (nPage-1)*listCount+1;
         int nEnd = (nPage-1)*listCount+listCount;
 
-        ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.memberManagement(nEnd,nStart);
-        model.addAttribute("list",dtos);
-        System.out.println(dtos);
+
+        if(searchType == null){
+            ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.memberManagement(nEnd,nStart);
+            model.addAttribute("list",dtos);
+            System.out.println(dtos);
+        }else if(searchType.equals("sName")){
+            ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.serchByNameMemberManagement("%"+searchWord+"%",nEnd,nStart);
+            model.addAttribute("list",dtos);
+            System.out.println(dtos);
+        }else if(searchType.equals("sId")){
+            ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.serchByIdMemberManagement("%"+searchWord+"%",nEnd,nStart);
+            model.addAttribute("list",dtos);
+            System.out.println(dtos);
+        }else if(searchType.equals("sNum")){
+            ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.serchByNumMemberManagement(searchWord,nEnd,nStart);
+            model.addAttribute("list",dtos);
+            System.out.println(dtos);
+        }
+
+
     }
 }

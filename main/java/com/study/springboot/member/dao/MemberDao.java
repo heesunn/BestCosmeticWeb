@@ -12,13 +12,13 @@ public interface MemberDao {
     public int join(String bcm_id,String bcm_pw,String bcm_name,String bcm_email);
     public MemberDto userCheck(String bcm_id);
     public ArrayList<OrderDeliveryDto> orderDeliveryView(int bcm_num,int nEnd, int nStart);
-    public int articlePage(int curPage);
+    public int articlePage();
     public int cancellationRequest(int bcm_num, String bco_ordernum);
     public int exchangeRequest(int bcm_num, String bco_ordernum);
     public int refundRequest(int bcm_num, String bco_ordernum);
     public int purchaseConfirmation(int bcm_num, String bco_ordernum);
     public ArrayList<OrderDeliveryDto> cancelExchangeRefund(int bcm_num, int nEnd, int nStart);
-    public int articlePage2(int curPage);
+    public int articlePage2();
     public MemberDto selectUser(int bcm_num);
     public int modifyMember(String bcm_email,String bcm_phonenum1,String bcm_phonenum2,String bcm_phonenum3,
                             String bcm_zipcode,String bcm_address1,String bcm_address2,String bcm_address3,
@@ -39,6 +39,14 @@ public interface MemberDao {
     public int updateDetailGoodsStock(int bcg_key,int bcd_detailkey);
     public int deleteBasketAfterPayment(int bcm_num,int bcg_key,int bcd_detailkey);
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(int nEnd, int nStart);
-    public int memberManagementArticlePage(int curPage);
+    public int memberManagementArticlePage();
+    public ArrayList<MemberJoinOrderHistoryDto> serchByNameMemberManagement(String searchWord,int nEnd, int nStart);
+    public int serchByNameMemberManagementArticlePage(String searchWord);
+    public ArrayList<MemberJoinOrderHistoryDto> serchByIdMemberManagement(String searchWord,int nEnd, int nStart);
+    public int serchByIdMemberManagementArticlePage(String searchWord);
+    public ArrayList<MemberJoinOrderHistoryDto> serchByNumMemberManagement(String searchWord,int nEnd, int nStart);
+    public int serchByNumMemberManagementArticlePage(String searchWord);
+
+
 
 }
