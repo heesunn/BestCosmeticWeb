@@ -5,48 +5,241 @@
 <head>
     <title>Title</title>
     <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+
+        // 출처 : http://tonks.tistory.com/79
+        // 에러가 나온다면, 여기에 댓글을 남겨주세요.
+
+
+        /* sortingNumber() : 숫자인 실수만으로 되어있을 때, 적용될 함수 */
+
+        function sortingNumber( a , b ){
+
+            if ( typeof a == "number" && typeof b == "number" ) return a - b;
+
+            // 천단위 쉼표와 공백문자만 삭제하기.
+            var a = ( a + "" ).replace( /[,\s\xA0]+/g , "" );
+            var b = ( b + "" ).replace( /[,\s\xA0]+/g , "" );
+
+            var numA = parseFloat( a ) + "";
+            var numB = parseFloat( b ) + "";
+
+            if ( numA == "NaN" || numB == "NaN" || a != numA || b != numB ) return false;
+
+            return parseFloat( a ) - parseFloat( b );
+        }
+
+
+        /* changeForSorting() : 문자열 바꾸기. */
+
+        function changeForSorting( first , second ){
+
+            // 문자열의 복사본 만들기.
+            var a = first.toString().replace( /[\s\xA0]+/g , " " );
+            var b = second.toString().replace( /[\s\xA0]+/g , " " );
+
+            var change = { first : a, second : b };
+
+            if ( a.search( /\d/ ) < 0 || b.search( /\d/ ) < 0 || a.length == 0 || b.length == 0 ) return change;
+
+            var regExp = /(\d),(\d)/g; // 천단위 쉼표를 찾기 위한 정규식.
+
+            a = a.replace( regExp , "$1" + "$2" );
+            b = b.replace( regExp , "$1" + "$2" );
+
+            var unit = 0;
+            var aNb = a + " " + b;
+            var numbers = aNb.match( /\d+/g ); // 문자열에 들어있는 숫자 찾기
+
+            for ( var x = 0; x < numbers.length; x++ ){
+
+                var length = numbers[ x ].length;
+                if ( unit < length ) unit = length;
+            }
+
+            var addZero = function( string ){ // 숫자들의 단위 맞추기
+
+                var match = string.match( /^0+/ );
+
+                if ( string.length == unit ) return ( match == null ) ? string : match + string;
+
+                var zero = "0";
+
+                for ( var x = string.length; x < unit; x++ ) string = zero + string;
+
+                return ( match == null ) ? string : match + string;
+            };
+
+            change.first = a.replace( /\d+/g, addZero );
+            change.second = b.replace( /\d+/g, addZero );
+
+            return change;
+        }
+
+
+        /* byLocale() */
+
+        function byLocale(){
+
+            var compare = function( a , b ){
+
+                var sorting = sortingNumber( a , b );
+
+                if ( typeof sorting == "number" ) return sorting;
+
+                var change = changeForSorting( a , b );
+
+                var a = change.first;
+                var b = change.second;
+
+                return a.localeCompare( b );
+            };
+
+            var ascendingOrder = function( a , b ){  return compare( a , b );  };
+            var descendingOrder = function( a , b ){  return compare( b , a );  };
+
+            return { ascending : ascendingOrder, descending : descendingOrder };
+        }
+
+
+        /* replacement() */
+
+        function replacement( parent ){
+            var tagName = parent.tagName.toLowerCase();
+            if ( tagName == "table" ) parent = parent.tBodies[ 0 ];
+            tagName = parent.tagName.toLowerCase();
+            if ( tagName == "tbody" ) var children = parent.rows;
+            else var children = parent.getElementsByTagName( "li" );
+
+            var replace = {
+                order : byLocale(),
+                index : false,
+                array : function(){
+                    var array = [ ];
+                    for ( var x = 0; x < children.length; x++ ) array[ x ] = children[ x ];
+                    return array;
+                }(),
+                checkIndex : function( index ){
+                    if ( index ) this.index = parseInt( index, 10 );
+                    var tagName = parent.tagName.toLowerCase();
+                    if ( tagName == "tbody" && ! index ) this.index = 0;
+                },
+                getText : function( child ){
+                    if ( this.index ) child = child.cells[ this.index ];
+                    return getTextByClone( child );
+                },
+                setChildren : function(){
+                    var array = this.array;
+                    while ( parent.hasChildNodes() ) parent.removeChild( parent.firstChild );
+                    for ( var x = 0; x < array.length; x++ ) parent.appendChild( array[ x ] );
+                },
+                ascending : function( index ){ // 오름차순
+                    this.checkIndex( index );
+                    var _self = this;
+                    var order = this.order;
+                    var ascending = function( a, b ){
+                        var a = _self.getText( a );
+                        var b = _self.getText( b );
+                        return order.ascending( a, b );
+                    };
+                    this.array.sort( ascending );
+                    this.setChildren();
+                },
+                descending : function( index ){ // 내림차순
+                    this.checkIndex( index );
+                    var _self = this;
+                    var order = this.order;
+                    var descending = function( a, b ){
+                        var a = _self.getText( a );
+                        var b = _self.getText( b );
+                        return order.descending( a, b );
+                    };
+                    this.array.sort( descending );
+                    this.setChildren();
+                }
+            };
+            return replace;
+        }
+
+        function getTextByClone( tag ){
+            var clone = tag.cloneNode( true ); // 태그의 복사본 만들기.
+            var br = clone.getElementsByTagName( "br" );
+            while ( br[0] ){
+                var blank = document.createTextNode( " " );
+                clone.insertBefore( blank , br[0] );
+                clone.removeChild( br[0] );
+            }
+            var isBlock = function( tag ){
+                var display = "";
+                if ( window.getComputedStyle ) display = window.getComputedStyle ( tag, "" )[ "display" ];
+                else display = tag.currentStyle[ "display" ];
+                return ( display == "block" ) ? true : false;
+            };
+            var children = clone.getElementsByTagName( "*" );
+            for ( var x = 0; x < children.length; x++){
+                var child = children[ x ];
+                if ( ! ("value" in child) && isBlock(child) ) child.innerHTML = child.innerHTML + " ";
+            }
+            var textContent = ( "textContent" in clone ) ? clone.textContent : clone.innerText;
+            return textContent;
+        }
+    </script>
 </head>
 <body>
+<div style="float: top">
+    <c:import url="/admin/adminTop"></c:import>
+</div>
+<div style="float: left">
+    <c:import url="/admin/adminPageView"></c:import>
+</div>
     <h1>회원관리</h1>
-    <form id="searchForm">
+<div>
+    <form action="/admin/memberManagement">
         <select id="searchType" name="searchType">
-            <option id="" value="sTitlecontent" selected>이름</option>
-            <option id="sTitle" value="sTitle" >아이디</option>
-            <option id="sContent" value="sContent">회원번호</option>
+            <option id="sName" value="sName" selected>이름</option>
+            <option id="sId" value="sId" >아이디</option>
+            <option id="sNum" value="sNum">회원번호</option>
         </select>
-        <input type="text" id="searchWord" name="searchType">
-        <input type="button" value="검색" onclick="search_form();">
+        <input type="text" id="searchWord" name="searchWord">
+        <input type="submit" value="검색">
+        <input type="button" value="검색초기화" onclick="javascript:window.location='/admin/memberManagement'">
     </form>
     <p>
         검색결과 : <span style="color: red">${page.totalCount}</span>명,
         총 회원수 : <span style="color: red">${page.totalCount}</span>명
     </p>
-    <table cellpadding="0" cellspacing="0" border="1">
-        <tr>
-            <td>번호</td>
-            <td>이름</td>
-            <td>아이디</td>
-            <td>가입일</td>
-            <td>주문수</td>
-            <td>주문총액</td>
-            <td>CRM</td>
-        </tr>
-        <c:forEach items="${list}" var="dto">
+    <table id="myList" cellpadding="0" cellspacing="0" border="1">
+        <thead>
             <tr>
-                <td>${dto.bcm_num}</td>
-                <td>${dto.bcm_name}</td>
-                <c:if test="${dto.bcm_id == null}">
-                    <td>sns회원</td>
-                </c:if>
-                <c:if test="${dto.bcm_id != null}">
-                    <td>${dto.bcm_id}</td>
-                </c:if>
-                <td>${dto.bcm_joined_on}</td>
-                <td>${dto.order_count}</td>
-                <td>${dto.total_price}</td>
-                <td><input type="button" value="보기" onclick=""></td>
+                <th>번호<button onclick="sortTD(0)">▲</button><button onclick="reverseTD(0)">▼</button></th>
+                <th>이름<button onclick="sortTD(1)">▲</button><button onclick="reverseTD(1)">▼</button></th>
+                <th>아이디<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
+                <th>가입일<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
+                <th>주문수<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
+                <th>주문총액<button onclick="sortTD(5)">▲</button><button onclick="reverseTD(5)">▼</button></th>
+                <th>CRM</th>
             </tr>
-        </c:forEach>
+        </thead>
+        <tbody>
+            <c:forEach items="${list}" var="dto">
+                <tr>
+                    <td>${dto.bcm_num}</td>
+                    <td>${dto.bcm_name}</td>
+                    <c:choose>
+                        <c:when test="${dto.bcm_id != null}">
+                            <td>${dto.bcm_id}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>sns이용자(아이디 없음)</td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td>${dto.bcm_joined_on}</td>
+                    <td>${dto.order_count}</td>
+                    <td>${dto.total_price}</td>
+                    <td><input type="button" value="보기" onclick=""></td>
+                </tr>
+            </c:forEach>
+        </tbody>
             <tr>
                 <td colspan="7">
                     <!--처음-->
@@ -55,7 +248,14 @@
                             [ &lt;&lt; ]
                         </c:when>
                         <c:otherwise>
-                            <a href="/admin/memberManagement?page=1">[ &lt;&lt; ]</a>
+                            <c:choose>
+                                <c:when test="${page.searchType == null}">
+                                    <a href="/admin/memberManagement?page=1">[ &lt;&lt; ]</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/admin/memberManagement?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+                                </c:otherwise>
+                            </c:choose>
                         </c:otherwise>
                     </c:choose>
 
@@ -65,7 +265,14 @@
                             [ &lt; ]
                         </c:when>
                         <c:otherwise>
-                            <a href="/admin/memberManagement?page=${page.curPage-1}">[&lt;]</a>
+                            <c:choose>
+                                <c:when test="${page.searchType == null}">
+                                    <a href="/admin/memberManagement?page=${page.curPage-1}">[&lt;]</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/admin/memberManagement?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+                                </c:otherwise>
+                            </c:choose>
                         </c:otherwise>
                     </c:choose>
 
@@ -75,9 +282,15 @@
                             <c:when test="${page.curPage == fEach}">
                                 [${fEach} ]&nbsp;
                             </c:when>
-
                             <c:otherwise>
-                                <a href="/admin/memberManagement?page=${fEach}">[${fEach}]</a>&nbsp;
+                                <c:choose>
+                                    <c:when test="${page.searchType == null}">
+                                        <a href="/admin/memberManagement?page=${fEach}">[${fEach}]</a>&nbsp;
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="/admin/memberManagement?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -88,7 +301,14 @@
                             [&gt;]
                         </c:when>
                         <c:otherwise>
-                            <a href="/admin/memberManagement?page=${page.curPage+1}">[&gt;]</a>
+                            <c:choose>
+                                <c:when test="${page.searchType == null}">
+                                    <a href="/admin/memberManagement?page=${page.curPage+1}">[&gt;]</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/admin/memberManagement?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+                                </c:otherwise>
+                            </c:choose>
                         </c:otherwise>
                     </c:choose>
 
@@ -98,11 +318,26 @@
                             [&gt;&gt;]
                         </c:when>
                         <c:otherwise>
-                            <a href="/admin/memberManagement?page=${page.totalPage}">[&gt;&gt;]</a>
+                            <c:choose>
+                                <c:when test="${page.searchType == null}">
+                                    <a href="/admin/memberManagement?page=${page.totalPage}">[&gt;&gt;]</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/admin/memberManagement?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+                                </c:otherwise>
+                            </c:choose>
                         </c:otherwise>
                     </c:choose>
                 </td>
             </tr>
     </table>
+    <script type="text/javascript">
+        var myTable = document.getElementById( "myList" );
+        var replace = replacement( myTable );
+        function sortTD( index ){    replace.ascending( index );    }
+        function reverseTD( index ){    replace.descending( index );    }
+    </script>
+</div>
+
 </body>
 </html>

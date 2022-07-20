@@ -40,5 +40,6 @@ welcome : Member
 	<a href="/guest/loginView">로그인</a>
 	<a href="/guest/categoryPoint">카테고리포인트</a>
 </sec:authorize>
+
 </body>
 </html>

@@ -218,6 +218,72 @@
         FROM BC_MEMBER
         WHERE BCM_AUTHORITY = 'role_user'
     </select>
+    <select id="serchByNameMemberManagement" resultType="com.study.springboot.member.dto.MemberJoinOrderHistoryDto">
+        SELECT *
+        FROM (SELECT ROWNUM NUM, A.*
+              FROM (SELECT C.*, ORDER_COUNT, TOTAL_PRICE
+                    FROM (SELECT BCM_NUM,COUNT(BCM_NUM) ORDER_COUNT ,SUM(BCO_TOTALPRICE) TOTAL_PRICE
+                          FROM BC_ORDER_HISTORY
+                          GROUP BY BCM_NUM
+                          ORDER BY BCM_NUM) D,
+                         BC_MEMBER C
+                    WHERE C.BCM_NUM = D.BCM_NUM(+)
+                      AND C.BCM_AUTHORITY = 'role_user'
+                      AND C.BCM_NAME LIKE #{param1}
+                    ORDER BY C.BCM_NUM ASC) A
+              WHERE ROWNUM &lt;= #{param2} ) B
+        WHERE B.NUM &gt;= #{param3}
+    </select>
+    <select id="serchByNameMemberManagementArticlePage" resultType="_int">
+        SELECT COUNT(*) AS TOTAL
+        FROM BC_MEMBER
+        WHERE BCM_AUTHORITY = 'role_user'
+        AND BCM_NAME LIKE #{param1}
+    </select>
+    <select id="serchByIdMemberManagement" resultType="com.study.springboot.member.dto.MemberJoinOrderHistoryDto">
+        SELECT *
+        FROM (SELECT ROWNUM NUM, A.*
+              FROM (SELECT C.*, ORDER_COUNT, TOTAL_PRICE
+                    FROM (SELECT BCM_NUM,COUNT(BCM_NUM) ORDER_COUNT ,SUM(BCO_TOTALPRICE) TOTAL_PRICE
+                          FROM BC_ORDER_HISTORY
+                          GROUP BY BCM_NUM
+                          ORDER BY BCM_NUM) D,
+                         BC_MEMBER C
+                    WHERE C.BCM_NUM = D.BCM_NUM(+)
+                      AND C.BCM_AUTHORITY = 'role_user'
+                      AND C.BCM_ID LIKE #{param1}
+                    ORDER BY C.BCM_NUM ASC) A
+              WHERE ROWNUM &lt;= #{param2} ) B
+        WHERE B.NUM &gt;= #{param3}
+    </select>
+    <select id="serchByIdMemberManagementArticlePage" resultType="_int">
+        SELECT COUNT(*) AS TOTAL
+        FROM BC_MEMBER
+        WHERE BCM_AUTHORITY = 'role_user'
+          AND BCM_ID LIKE #{param1}
+    </select>
+    <select id="serchByNumMemberManagement" resultType="com.study.springboot.member.dto.MemberJoinOrderHistoryDto">
+        SELECT *
+        FROM (SELECT ROWNUM NUM, A.*
+              FROM (SELECT C.*, ORDER_COUNT, TOTAL_PRICE
+                    FROM (SELECT BCM_NUM,COUNT(BCM_NUM) ORDER_COUNT ,SUM(BCO_TOTALPRICE) TOTAL_PRICE
+                          FROM BC_ORDER_HISTORY
+                          GROUP BY BCM_NUM
+                          ORDER BY BCM_NUM) D,
+                         BC_MEMBER C
+                    WHERE C.BCM_NUM = D.BCM_NUM(+)
+                      AND C.BCM_AUTHORITY = 'role_user'
+                      AND C.BCM_NUM= #{param1}
+                    ORDER BY C.BCM_NUM ASC) A
+              WHERE ROWNUM &lt;= #{param2} ) B
+        WHERE B.NUM &gt;= #{param3}
+    </select>
+    <select id="serchByNumMemberManagementArticlePage" resultType="_int">
+        SELECT COUNT(*) AS TOTAL
+        FROM BC_MEMBER
+        WHERE BCM_AUTHORITY = 'role_user'
+          AND BCM_NUM = #{param1}
+    </select>
 </mapper>
 
 <!--
