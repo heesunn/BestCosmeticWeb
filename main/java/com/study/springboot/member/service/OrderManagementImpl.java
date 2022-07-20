@@ -1,5 +1,6 @@
 package com.study.springboot.member.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,11 +45,8 @@ public class OrderManagementImpl implements OrderManagement {
 		int nStart = (nPage - 1) * listCount + 1;
 		int nEnd = (nPage - 1) * listCount + listCount;
 		
-
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
-		for(int i=0; i<dto.size(); i++) {
-			orderDetail.orderDetail(dto.get(i).getBco_ordernum(), model);
-		}
+		
 		model.addAttribute("deliveryReady",dto);
 	}
 	@Override

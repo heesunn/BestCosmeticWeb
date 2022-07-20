@@ -11,18 +11,19 @@
 		display : none;
 	}
 	.text {
-		font-size : 10px;
+		font-size : 16px;
 		margin : 0px;
+		float : left;
+		padding-top : 0px;
+		border : 0;
+	}
+	#pimg {
 		float : left;
 	}
 	/*popup*/
 	.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
 	/*팝업 박스*/
-	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:375px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
-	/*컨텐츠 영역*/
-	.popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px; }
-	.popup_box .popup_cont h2 {padding:15px 0;color:#333;margin:0;}
-	.popup_box .popup_cont p{ border-top: 1px solid #666;padding-top: 30px;}
+	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
 	/*버튼영역*/
 	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
 	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
@@ -281,7 +282,7 @@ function submit_state() {
 		</script>
 	</div>
 	<div>
-		<table id="myList" cellpadding="0" cellspacing="0" border="1">
+		<table id="myList" border="1">
 	        <thead>
 	        	<tr>
 		        	<th><input type='checkbox' name='selectall' value='selectall' onclick='selectAll(this)'/></th>
@@ -294,15 +295,7 @@ function submit_state() {
 	            </tr>
 	        </thead>
 	        <tbody>
-	    <c:forEach items="${deliveryReady}" var="ready">
-	    <script>
-		    function openPop${ready.bco_ordernum}() {
-		        document.getElementById("popup_layer${ready.bco_ordernum}").style.display = "block";
-		    }
-		    function closePop${ready.bco_ordernum}() {
-		        document.getElementById("popup_layer${ready.bco_ordernum}").style.display = "none";
-		    }
-	    </script>
+	    	<c:forEach items="${deliveryReady}" var="ready">
 		        <tr>
 		        	<td><input type='checkbox' name='bco_ordernum' value='${ready.bco_ordernum}' onclick='checkSelectAll(event)'/></td>
 		            <td>${ready.bco_ordernum}</td>
@@ -314,42 +307,57 @@ function submit_state() {
 		            	onclick="javascript:openPop${ready.bco_ordernum}()">${ready.bco_order_name}</a>
 		            </td>
 		        </tr>
-				<div class="popup_layer" id="popup_layer${ready.bco_ordernum}" style="display: none;">
-				  <div class="popup_box">
-				      <!--팝업 컨텐츠 영역-->
-				      <div class="popup_cont">
-				          <c:forEach items="${orderDetail}" var="order">
-							<img style="float : left" src="${order.bcg_img}" width="50" height="100">
-							<p class="text">상품명 : ${order.bcg_name }</p><br>
-							<p class="text">금액 : ${order.bcg_price }</p><br>
-							<p class="text">옵션 : ${order.bcd_option }</p><br>
-							<p class="text">수량 : ${order.bco_count }</p><br>
-							<p class="text">결제 금액 : ${order.total_price }</p><br>
-							<c:if test="${order.bco_order_status == '구매확정'}">
-								<form action="/member/">
-									<input type="hidden" name="bcg_key" value="${order.bcg_key }">
-									<input type="hidden" name="bcd_detailkey" value="${order.bcd_detailkey }">
-									<input type="submit" value="리뷰쓰기">
-								</form>
-							</c:if>
-							<c:if test="${order.bco_order_status == '배송완료'}">
-								<button>구매확정 하러가기</button>
-							</c:if>
-							<hr>
-						</c:forEach>
-				      </div>
-				      <!--팝업 버튼 영역-->
-				      <div class="popup_btn" style="float: bottom; margin-top: 200px;">
-				          <a href="javascript:closePop${ready.bco_ordernum}();">닫기</a>
-				      </div>
-				  </div>
-				</div>
 		        <script>
 				    var money = $('#price${ready.bco_ordernum}').text();
 				    var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				    $('#price${ready.bco_ordernum}').text(money2+"원");
 				</script>
-	    </c:forEach>
+				<script>
+					function openPop${ready.bco_ordernum}() {
+		    	
+						var queryString = 'bco_ordernum=${ready.bco_ordernum}';
+	
+						$.ajax({
+		    				url : '/member/orderDetail',
+		    				type : 'POST',
+		    				data : queryString,
+		    				success : function(data) {
+		    					console.log(data.length);
+		    					var text = "";
+		    					for(var i=0; i<data.length; i++) {
+		    						text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
+		    						text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
+		    						text += '<p class="text">금액 : <span id="iprice">'+data[i].bcg_price+'</span>원</p><br>';
+		    						text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
+		    						text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
+		    						text += '<p class="text">결제 금액 : <span id="itotalprice">'+data[i].total_price+'</span>원</p><br>';
+		    						text += '<c:if test="'+data[i].bco_order_status+' == '+구매확정+'}">';
+		    						text += '<form action="/member/">';
+		    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
+		    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
+		    						text += '<input type="submit" value="리뷰쓰기">';
+		    						text += '</form>';
+		    						text += '</c:if>';
+		    						text += '<c:if test="'+data[i].bco_order_status+' == '+배송완료+'}">';
+		    						text += '<button>구매확정 하러가기</button>';
+		    						text += '</c:if>';
+		    						text += '<hr>';
+		    						console.log(text);
+		    						$('#infoDiv').empty().append(text);
+		    					}
+		    					var moneys = $('#iprice').text();
+		    				    var moneys2 = moneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    				    $('#iprice').text(moneys2);
+		    				    
+		    				    var totalMoneys = $('#itotalprice').text();
+		    				    var totalMoneys2 = totalMoneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    				    $('#itotalprice').text(totalMoneys2);
+		    					document.getElementById("popup_layer").style.display = "block";
+		    				}
+						});
+					}
+	    		</script>
+			</c:forEach>
 	    	</tbody>
 	        <tr>
 	            <td colspan="7">
@@ -433,6 +441,24 @@ function submit_state() {
 	            </td>
 	        </tr>
     	</table>
+    	<script>
+	    	function closePop() {
+		        document.getElementById("popup_layer").style.display = "none";
+		        $('#infoDiv').empty();
+		    }
+    	</script>
+    	<div class="popup_layer" id="popup_layer" style="display: none;">
+			<div class="popup_box">
+			<!--팝업 컨텐츠 영역-->
+				<div id="infoDiv">
+				
+				</div>
+				<!--팝업 버튼 영역-->
+				<div class="popup_btn" style="float: bottom; margin-top: 50px;">
+					<a href="javascript:closePop();">닫기</a>
+				</div>
+			</div>
+		</div>
     	<script type="text/javascript">
 			var myTable = document.getElementById( "myList" ); 
 			var replace = replacement( myTable ); 

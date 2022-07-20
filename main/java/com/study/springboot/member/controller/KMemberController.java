@@ -1,9 +1,10 @@
 package com.study.springboot.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.springboot.member.dto.OrderDetail;
 import com.study.springboot.member.dto.ValidationMember;
 import com.study.springboot.member.service.JoinService;
 import com.study.springboot.member.service.LikeService;
@@ -62,13 +64,12 @@ public class KMemberController
 		String result = likeService.likeDelete(request);
 		return result;
 	}
-//	@RequestMapping("/member/orderDetail")
-//	public String orderDetailView(@RequestParam("bco_ordernum") String ordernum ,HttpServletRequest request, Model model) {
-//		request.setAttribute("bco_ordernum", ordernum);
-//		
-//		orderDetail.orderDetail(request, model);
-//		return "";
-//	}
+	@RequestMapping("/member/orderDetail")
+	public @ResponseBody List<OrderDetail> orderDetailView(@RequestParam("bco_ordernum") String ordernum ,HttpServletRequest request, Model model) {
+		System.out.println(ordernum);
+		List<OrderDetail> detail = orderDetail.orderDetail(ordernum, model);
+		return detail;
+	}
 	@RequestMapping("/member/passwordChange")
 	public String pwChangeView() {
 		return "/member/passwordChange";
