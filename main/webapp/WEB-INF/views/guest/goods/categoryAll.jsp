@@ -40,14 +40,20 @@
 	         	<fmt:formatDate value="${now}" pattern="yyMMdd" var="today" /><!-- 현재시간을 숫자로 -->
 	         	<fmt:formatDate  value="${dto.bcg_date}" pattern="yyMMdd" var="dtoDate" /><!-- 게시글 작성날짜를 숫자로 -->
 	         		<c:if test="${today - dtoDate le 30}"><!-- 30일동안은 new 표시 -->
-	            		<span>new</span>
+	            		<img src="/image/new.png" width="30" height="30">
 	         		</c:if>
 	         	
 	         	<!-- BEST 뱃지 -->	
 	         	<fmt:formatNumber value="${dto.bcg_sale }" var="sale"/>
 		         	<c:if test="${sale >= 10}">
-		         		<span>best</span>
+		         		<img src="/image/best.png" width="30" height="30">
 		         	</c:if>
+		         	
+		        <!-- SALE 뱃지 -->	
+	         	<c:if test="${dto.bcg_discount > 0}">
+	         		<img src="/image/sale.png" width="30" height="30">
+	         	</c:if>
+		        <br/> 	 	
 				<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
 					<img src="${dto.bcg_img}" height="200" width="200">
 					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
