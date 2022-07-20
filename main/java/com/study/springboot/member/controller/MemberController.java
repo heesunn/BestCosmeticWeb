@@ -203,4 +203,10 @@ public class MemberController
 		return "admin/memberManagement";
 	}
 
+	@RequestMapping("/admin/upgradeAdmin")
+	public @ResponseBody JSONObject upgradeAdmin(HttpServletRequest request) {
+		JSONObject obj = new JSONObject();
+		return obj;
+	}
+
 }

@@ -14,7 +14,7 @@
 </div>
 <div style="float: left">
     <h1>주문/배송</h1>
-    <table width="500" cellpadding="0" cellspacing="0" border="1">
+    <table border="1">
         <tr>
             <td>주문번호</td>
             <td>주문금액</td>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -208,7 +209,7 @@
         검색결과 : <span style="color: red">${page.totalCount}</span>명,
         총 회원수 : <span style="color: red">${page.totalCount}</span>명
     </p>
-    <table id="myList" cellpadding="0" cellspacing="0" border="1">
+    <table id="myList" border="1">
         <thead>
             <tr>
                 <th>번호<button onclick="sortTD(0)">▲</button><button onclick="reverseTD(0)">▼</button></th>
@@ -233,11 +234,58 @@
                             <td>sns이용자(아이디 없음)</td>
                         </c:otherwise>
                     </c:choose>
-                    <td>${dto.bcm_joined_on}</td>
+                    <td><fmt:formatDate value="${dto.bcm_joined_on}" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td>${dto.order_count}</td>
                     <td>${dto.total_price}</td>
-                    <td><input type="button" value="보기" onclick=""></td>
+                    <td><input type="button" value="보기" onclick="crm${dto.bcm_num}()"></td>
                 </tr>
+                <div id="popupDiv${dto.bcm_num}" style="background-color:black; display: none; position: absolute;top: 100px;left: 300px;z-index: 999999;">
+                    <div style="width: 500px;height: 800px; background-color: black;color: white">
+                        <h2>회원 기본정보</h2>
+                        회원 번호 : ${dto.bcm_num} <br>
+                        이름 : ${dto.bcm_name} <br>
+                        아이디 : ${dto.bcm_id} <br>
+                        구글 id : ${dto.bcm_googleid} <br>
+                        페이스북 id : ${dto.bcm_facebookid} <br>
+                        네이버 id : ${dto.bcm_naverid} <br>
+                        카카오 id : ${dto.bcm_kakaoid} <br>
+                        우편번호 : ${dto.bcm_zipcode} <br>
+                        주소 : ${dto.bcm_address1} &nbsp;&nbsp; ${dto.bcm_address3} &nbsp;&nbsp; ${dto.bcm_address2} <br>
+                        휴대폰 : ${dto.bcm_phonenum1} &nbsp;-&nbsp; ${dto.bcm_phonenum2} &nbsp;-&nbsp; ${dto.bcm_phonenum3} <br>
+                        권한 : ${dto.bcm_authority} <input type="button" value="관리자로 승격" onclick="upgradeAdmin${dto.bcm_num}()"><br>
+
+                        <h2>회원 기본정보</h2>
+                        가입일 : ${dto.bcm_joined_on} <br>
+                        주문횟수 : ${dto.order_count} <br>
+                        주문총액 : ${dto.total_price} <br>
+
+                    </div>
+                    <div style="background: black;height:20px;">
+                        <a href="javascript:clkBtn${dto.bcm_num}()" style="position:absolute;right:5px;color:white;">[닫기]</a>
+                    </div>
+                </div>
+                <script>
+                    function crm${dto.bcm_num}(){
+                        $("#popupDiv${dto.bcm_num}").css({ 'display' : 'block' });
+                    }
+                    function clkBtn${dto.bcm_num}(){
+                        $("#popupDiv${dto.bcm_num}").css({ 'display' : 'none' });
+                    }
+                </script>
+                <script>
+                    var queryString = 'bcm_num='+'${dto.bcm_num}';
+                    function upgradeAdmin${dto.bcm_num}() {
+                        $.ajax({
+                            url : '/admin/orderList',
+                            type : 'POST',
+                            data : queryString,
+                            dataType: 'json',
+                            success : function(json) {
+
+                            }
+                        });
+                    }
+                </script>
             </c:forEach>
         </tbody>
             <tr>

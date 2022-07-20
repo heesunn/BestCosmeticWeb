@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 </div>
 <div style="float: left">
 <h1>취소/교환/반품</h1>
-    <table width="500" cellpadding="0" cellspacing="0" border="1">
+    <table border="1">
         <tr>
             <td>주문번호</td>
             <td>주문금액</td>
@@ -28,7 +29,7 @@
             <input id="realmoney${dto.bco_ordernum}" type="hidden" value="${dto.bco_totalprice}"/>
             <td><a href="#" onclick="javascript:window.open('/member/orderDetail?bco_ordernum=${dto.bco_ordernum}', '주문내역 상세', 'width=400, height=300')">${dto.bco_order_name}</a></td>
             <td>${dto.bco_order_status}</td>
-            <td>${dto.bco_statusdate}</td>
+            <td><fmt:formatDate value="${dto.bco_statusdate}" pattern="yyyy-MM-dd HH:mm"/></td>
         </tr>
 <script>
     var money = $('#money${dto.bco_ordernum}').text();
