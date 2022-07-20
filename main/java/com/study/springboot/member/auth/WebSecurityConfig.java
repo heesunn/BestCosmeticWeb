@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 					@Override
 					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 							AuthenticationException exception) throws IOException, ServletException {
-						System.out.println("fail");
+//						System.out.println("fail");
 						request.setAttribute("message", "아이디나 비밀번호가 일치하지 않습니다.");
 						RequestDispatcher dispatcher = request.getRequestDispatcher("guest/loginView");
 						dispatcher.forward(request, response);
@@ -76,9 +76,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 					@Override
 					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 							Authentication authentication) throws IOException, ServletException {
-						Collection<? extends GrantedAuthority> auth = authentication.getAuthorities();
-						System.out.println(auth);
-						System.out.println("success");
+//						Collection<? extends GrantedAuthority> auth = authentication.getAuthorities();
+//						System.out.println(auth);
+//						System.out.println("success");
 						String name = request.getParameter("j_username");
 						loginSession.memberLogin(name);
 						response.sendRedirect("/");

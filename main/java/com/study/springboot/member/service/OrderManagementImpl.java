@@ -42,6 +42,7 @@ public class OrderManagementImpl implements OrderManagement {
 		int nStart = (nPage - 1) * listCount + 1;
 		int nEnd = (nPage - 1) * listCount + listCount;
 		
+
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("deliveryReady",dto);
 	}
@@ -66,6 +67,7 @@ public class OrderManagementImpl implements OrderManagement {
 			String sPage = request.getParameter("page");
 			nPage = Integer.parseInt(sPage);
 		} catch (Exception e) {}
+
 		int count = dao.orderManagementCount(orderStatus);
 		PageInfo pinfo = articlePage(nPage, count, null, null);
 		model.addAttribute("page", pinfo);
@@ -79,6 +81,7 @@ public class OrderManagementImpl implements OrderManagement {
 		int nStart = (nPage - 1) * listCount + 1;
 		int nEnd = (nPage - 1) * listCount + listCount;
 		
+
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("inTransit",dto);
 	}
@@ -95,6 +98,7 @@ public class OrderManagementImpl implements OrderManagement {
 			String sPage = request.getParameter("page");
 			nPage = Integer.parseInt(sPage);
 		} catch (Exception e) {}
+
 		int count = dao.orderManagementCount(orderStatus);
 		PageInfo pinfo = articlePage(nPage, count, null, null);
 		model.addAttribute("page", pinfo);
@@ -108,6 +112,7 @@ public class OrderManagementImpl implements OrderManagement {
 		int nStart = (nPage - 1) * listCount + 1;
 		int nEnd = (nPage - 1) * listCount + listCount;
 		
+
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("deliveryCompleted",dto);
 	}
@@ -120,6 +125,7 @@ public class OrderManagementImpl implements OrderManagement {
 			String sPage = request.getParameter("page");
 			nPage = Integer.parseInt(sPage);
 		} catch (Exception e) {}
+
 		int count = dao.orderManagementCount(orderStatus);
 		PageInfo pinfo = articlePage(nPage, count, null, null);
 		model.addAttribute("page", pinfo);
@@ -133,6 +139,7 @@ public class OrderManagementImpl implements OrderManagement {
 		int nStart = (nPage - 1) * listCount + 1;
 		int nEnd = (nPage - 1) * listCount + listCount;
 		
+
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("purchaseConfirmation",dto);
 	}
@@ -144,6 +151,7 @@ public class OrderManagementImpl implements OrderManagement {
 			String sPage = request.getParameter("page");
 			nPage = Integer.parseInt(sPage);
 		} catch (Exception e) {}
+
 		int nStart = (nPage - 1) * listCount + 1;
 		int nEnd = (nPage - 1) * listCount + listCount;
 		

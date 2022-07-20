@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.springboot.member.dto.ValidationMember;
 import com.study.springboot.member.service.JoinService;
-import com.study.springboot.member.service.LikeServiceImpl;
-import com.study.springboot.member.service.MemberWithdrawalServiceImpl;
-import com.study.springboot.member.service.OrderDetailServiceImpl;
+import com.study.springboot.member.service.LikeService;
+import com.study.springboot.member.service.MemberWithdrawalService;
+import com.study.springboot.member.service.OrderDetailService;
 import com.study.springboot.member.service.OrderManagement;
-import com.study.springboot.member.service.PwChangeServiceImpl;
-import com.study.springboot.member.service.PwCheckServiceImpl;
+import com.study.springboot.member.service.PwChangeService;
+import com.study.springboot.member.service.PwCheckService;
 
 @Controller
 public class KMemberController
 {
 	@Autowired
-	LikeServiceImpl likeService;
+	LikeService likeService;
 	@Autowired
-	OrderDetailServiceImpl orderDetail; 
+	OrderDetailService orderDetail; 
 	@Autowired
-	PwChangeServiceImpl pwChange;
+	PwChangeService pwChange;
 	@Autowired
-	PwCheckServiceImpl pwCheck;
+	PwCheckService pwCheck;
 	@Autowired
-	MemberWithdrawalServiceImpl withdrawal;
+	MemberWithdrawalService withdrawal;
 	@Autowired
 	JoinService joinService;
 	@Autowired
@@ -44,7 +44,7 @@ public class KMemberController
 		return "guest/log/main";
 	}
 	@RequestMapping("/guest/loginView")
-	public String loginView(HttpServletRequest request) {
+	public String loginView() {
 		return "guest/log/loginView";
 	}
 	@RequestMapping("/member/like")
@@ -55,7 +55,6 @@ public class KMemberController
 	@RequestMapping("/member/likeDelete")
 	public @ResponseBody String likeDelete(HttpServletRequest request) {
 		String result = likeService.likeDelete(request);
-		
 		return result;
 	}
 	@RequestMapping("/member/orderDetail")
@@ -65,7 +64,7 @@ public class KMemberController
 		return "member/orderDetail";
 	}
 	@RequestMapping("/member/passwordChange")
-	public String pwChangeView(HttpServletRequest request, Model model) {
+	public String pwChangeView() {
 		return "/member/passwordChange";
 	}
 	@RequestMapping("/member/pwCheck")
@@ -77,7 +76,6 @@ public class KMemberController
 		else {
 			result = "불일치";
 		}
-		System.out.println(result);
 		return result;
 	}
 	@RequestMapping("/member/pwChange")
@@ -95,7 +93,7 @@ public class KMemberController
 		return result;
 	}
 	@RequestMapping("/member/out")
-	public String memberWithdrawal(HttpServletRequest request, Model model) {
+	public String memberWithdrawal() {
 		return "/member/memberWithdrawal";
 	}
 	@RequestMapping("/member/memberDelete")
@@ -105,20 +103,20 @@ public class KMemberController
 		return result;
 	}
 	@RequestMapping("/admin/adminTop")
-	public String adminTop(HttpServletRequest request, Model model) {
+	public String adminTop() {
 		return "/admin/adminTop";
 	}
 	@RequestMapping("/admin/adminPageView")
-	public String adminPageView(HttpServletRequest request, Model model) {
+	public String adminPageView() {
 		return "/admin/adminPageView";
 	}
 	@RequestMapping("/admin/adminMain")
-	public String adminMain(HttpServletRequest request, Model model) {
+	public String adminMain() {
 		return "/admin/adminMain";
 	}
 	
 	
-	
+
 	@RequestMapping("/admin/deliveryReady")
 	public String deliveryReady(HttpServletRequest request, Model model) {
 		OrderManagement.deliveryReady(request, model);
