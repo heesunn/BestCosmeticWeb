@@ -2,6 +2,7 @@ package com.study.springboot.goods.dao;
 
 import java.util.ArrayList;
 
+import com.study.springboot.goods.dto.GoodsJoinLikes;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.study.springboot.goods.dto.GoodsDto;
@@ -36,4 +37,7 @@ public interface GoodsDao
 	public int goodsTableUpdate(int bcg_key);
 	//포인트리스트 찜(갯수 가져오기)
 	public int likeCount(int count);
+
+	public ArrayList<GoodsJoinLikes> sessionPointList(int bcm_num,int end, int start);
+	public ArrayList<GoodsJoinLikes> seessionXPointList(int end, int start);
 }

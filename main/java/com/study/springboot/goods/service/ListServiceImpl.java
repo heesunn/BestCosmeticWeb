@@ -1,10 +1,14 @@
 package com.study.springboot.goods.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.study.springboot.goods.dto.GoodsJoinLikes;
+import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
+import com.study.springboot.member.dto.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -219,5 +223,84 @@ public class ListServiceImpl implements ListService {
 		pinfo.setEndPage(endPage);
 		
 		return pinfo;
+	}
+
+	@Override
+	public void pointList2(HttpServletRequest request, Model model) {
+		HttpSession session = null;
+		int nPage= 1;
+		int bcm_num = 0;
+		session = request.getSession();
+
+		try {
+			bcm_num = (int) session.getAttribute("num");
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		}catch(Exception e) {
+		}
+
+		int totalCount = goodsDao.selectCountPoint();
+
+		int listCount = 20; //한 페이지당 보여줄 게시물의 갯수
+		int pageCount = 10; //하단에 보여줄 페이지 리스트의 갯수.
+
+		//총 페이지 수
+		int totalPage = totalCount / listCount;
+		if (totalCount % listCount > 0)
+			totalPage++;
+
+		//현재 페이지
+		// curPage = 현재 보고 있는 페이지
+		int myCurPage = nPage;
+		if (myCurPage > totalPage)
+			myCurPage = totalPage;
+		if (myCurPage < 1)
+			myCurPage = 1;
+
+		//시작 페이지
+		int startPage = ((myCurPage - 1) / pageCount) * pageCount + 1;
+		// +1 은 첫 페이지가 0이나 10이 아니라 1이나 11로 하기 위함임
+
+		//끝페이지
+		int endPage = startPage + pageCount - 1;
+		if(endPage > totalPage)
+			endPage = totalPage;
+		// -1 은  첫 페이지가 0이나 10이 아니라 1이나 11로 하기 위함임
+
+		PageInfo pinfo = new PageInfo();
+		pinfo.setTotalCount(totalCount);
+		pinfo.setListCount(listCount);
+		pinfo.setTotalPage(totalPage);
+		pinfo.setCurPage(myCurPage);
+		pinfo.setPageCount(pageCount);
+		pinfo.setStartPage(startPage);
+		pinfo.setEndPage(endPage);
+
+		System.out.println(pinfo.toString());
+
+		model.addAttribute("page" , pinfo);
+
+		nPage = pinfo.getCurPage();
+
+
+		session = request.getSession();
+		session.setAttribute("cpage", nPage);
+
+		int nStart= (nPage-1)*listCount+1;
+		int nEnd = (nPage-1)*listCount+listCount;
+		if(bcm_num == 0) {
+			ArrayList<GoodsJoinLikes> dtos = goodsDao.seessionXPointList(nEnd,nStart);
+			model.addAttribute("list",dtos);
+			System.out.println("세션 x");
+			System.out.println("bcm_num = " + bcm_num);
+			System.out.println(dtos);
+		}else {
+			ArrayList<GoodsJoinLikes> dtos = goodsDao.sessionPointList(bcm_num,nEnd,nStart);
+			model.addAttribute("list",dtos);
+			System.out.println("세션 o");
+			System.out.println("bcm_num = " + bcm_num);
+			System.out.println(dtos);
+		}
+
 	}
 }

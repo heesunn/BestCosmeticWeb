@@ -98,4 +98,32 @@
          when not matched then 
             insert (BCM_NUM, BCG_KEY, BCL_DATE) values(#{param1}, #{param2}, sysdate)        
    	</update>
+	<!-- 세션 있을때 -->
+	<select id="sessionPointList" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
+		select *
+		from ( select rownum num, A.*
+		from (select c.*, d.bcg_key item
+		from bc_goods C , bc_like D
+		where C.bcg_category = 'point'
+		and C.BCG_key = D.bcg_key (+)
+		and (D.bcm_num= #{param1} or d.bcm_num is null)
+		order by C.bcg_date desc, C.bcg_key desc ) A
+		where rownum &lt;= #{param2} ) B
+		where B.num &gt;= #{param3}
+	</select>
+	<!-- 세션 없을때 -->
+	<select id="seessionXPointList" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
+		select *
+		from ( select rownum num, A.*
+		from (select c.*, d.bcg_key item
+		from (select bcg_key
+		from bc_like
+		group by bcg_key) D,
+		bc_goods C
+		where C.bcg_category = 'point'
+		and C.BCG_key = D.bcg_key (+)
+		order by C.bcg_date desc, C.bcg_key desc  ) A
+		where rownum &lt;= #{param1} ) B
+		where B.num &gt;= #{param2}
+	</select>
 </mapper>

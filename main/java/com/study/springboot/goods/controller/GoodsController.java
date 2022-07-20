@@ -245,8 +245,9 @@ public class GoodsController
 	//카테고리 - 포인트
 	@RequestMapping("/guest/categoryPoint")   //포인트메이크업 카테고리
 	public String pointList(HttpServletRequest request, Model model) {
-		listService.pointList(request, model);
-        return "guest/goods/categoryPoint"; 
+		//listService.pointList(request, model);
+        listService.pointList2(request,model);
+		return "guest/goods/categoryPoint";
 	}
 	
 	//카테고리 - 찜
