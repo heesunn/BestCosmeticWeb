@@ -66,7 +66,7 @@
 	</delete>
 	<select id="orderDetail" resultType="com.study.springboot.member.dto.OrderDetail">
 		select a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price as total_price
-		from bc_order_detail A, bc_goods B , bc_detailgoods C where A.bcg_key = B.bcg_key and A.bcd_detailkey = C.bcd_detailkey and a.bco_ordernum = #{param1} 
+		from bc_order_detail A, bc_goods B , bc_detailgoods C where A.bcg_key = B.bcg_key and A.bcd_detailkey = C.bcd_detailkey and a.bcg_key = c.bcg_key and a.bco_ordernum = #{param1} 
 		group by a.bco_ordernum, a.bcg_key, a.bcd_detailkey, a.bco_count, b.bcg_name, b.bcg_price, b.bcg_img, c.bcd_option, a.bco_count*b.bcg_price
 	</select>
 	<select id="pwCheck" resultType="com.study.springboot.member.dto.MemberDto">
