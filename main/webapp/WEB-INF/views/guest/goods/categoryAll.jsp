@@ -60,8 +60,7 @@
 					<c:otherwise>
 						<p style="text-decoration:line-through">
 							<fmt:formatNumber type="number" maxFractionDigits="0"  value="${dto.bcg_price/(100-dto.bcg_discount)*100}" />
-						</p> 
-						-> ${dto.bcg_price}
+						</p> -> ${dto.bcg_price}
 					</c:otherwise>
 				</c:choose>
 				
