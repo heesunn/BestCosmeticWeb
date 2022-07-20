@@ -55,16 +55,15 @@
 				${dto.bcg_name}<br/>
 				<c:choose>
 					<c:when test="${dto.bcg_discount == 0}">
-						${dto.bcg_price}원 
+						<fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
 					</c:when>
 					<c:otherwise>
 						<p style="text-decoration:line-through">
-							<fmt:formatNumber type="number" maxFractionDigits="0"  value="${dto.bcg_price/(100-dto.bcg_discount)*100}" />
-						</p> -> ${dto.bcg_price}
+							<fmt:formatNumber type="number" maxFractionDigits="0" 
+							value="${dto.bcg_price/(100-dto.bcg_discount)*100}" pattern="#,###"/>
+						</p> -> <fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
 					</c:otherwise>
-				</c:choose>
-				
-				
+				</c:choose>							
 			</td>
 		<c:if test="${i%j == j-1 }">	
 		</tr>	

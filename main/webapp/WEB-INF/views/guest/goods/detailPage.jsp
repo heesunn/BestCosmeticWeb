@@ -109,15 +109,16 @@
 						<tr>
 							<c:choose>
 								<c:when test="${BCG_DISCOUNT == 0}">
-									<td colspan="4">${BCG_PRICE}</td>
+									<td colspan="4"><fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>
 								</c:when>
 								<c:otherwise>
 									<td colspan="2">
 										<p style="text-decoration:line-through">
-											<fmt:formatNumber type="number" maxFractionDigits="0"  value="${BCG_PRICE/(100-BCG_DISCOUNT)*100}" />
+											<fmt:formatNumber type="number" maxFractionDigits="0" 
+											value="${BCG_PRICE/(100-BCG_DISCOUNT)*100}" pattern="#,###"/>
 										</p>
 									</td>
-									<td colspan="2">-> ${BCG_PRICE}</td>
+									<td colspan="2">-> <fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
@@ -150,7 +151,7 @@
 				                           min="1" max="${BCG_STOCK}" size="2" maxlength="2" value="1" >
 				                <span onclick="upCount(this);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
 				            </td> 
-							<td colspan="2">총 ${BCG_PRICE}원</td>				            
+							<td colspan="2">총 <fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>				            
 						</tr>				
 						<tr>
 						    <td colspan="4">
