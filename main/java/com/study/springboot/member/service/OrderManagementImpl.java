@@ -1,5 +1,6 @@
 package com.study.springboot.member.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,8 @@ public class OrderManagementImpl implements OrderManagement {
 	@Autowired
 	KMemberDao dao;
 	
-	int listCount = 5;		// 한 페이지당 보여줄 게시물의 갯수
-	int pageCount = 5;		// 하단에 보여줄 페이지 리스트의 갯수
+	int listCount = 20;		// 한 페이지당 보여줄 게시물의 갯수
+	int pageCount = 10;		// 하단에 보여줄 페이지 리스트의 갯수
 	
 	@Override
 	public void deliveryReady(HttpServletRequest request, Model model) {
@@ -36,7 +37,7 @@ public class OrderManagementImpl implements OrderManagement {
 		nPage = pinfo.getCurPage();
 		model.addAttribute("cpage", nPage);
 		
-		int totalPrice = dao.orderManagementTotalPrice(orderStatus);
+		String totalPrice = dao.orderManagementTotalPrice(orderStatus);
 		model.addAttribute("totalPrice", totalPrice);
 
 		int nStart = (nPage - 1) * listCount + 1;
@@ -45,19 +46,6 @@ public class OrderManagementImpl implements OrderManagement {
 
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("deliveryReady",dto);
-	}
-	@Override
-	public String stateInTransit(HttpServletRequest request, Model model) {
-		String result = "";
-		int updateCount = 0;
-		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
-		for(int i=0; i<bco_ordernumList.length; i++) {
-			updateCount += dao.stateInTransitChange(bco_ordernumList[i]);
-		}
-		if(updateCount == bco_ordernumList.length) {
-			result = "success";
-		}
-		return result;
 	}
 	@Override
 	public void inTransit(HttpServletRequest request, Model model) {
@@ -75,7 +63,7 @@ public class OrderManagementImpl implements OrderManagement {
 		nPage = pinfo.getCurPage();
 	   	model.addAttribute("cpage", nPage);
 	   	
-	   	int totalPrice = dao.orderManagementTotalPrice(orderStatus);
+	   	String totalPrice = dao.orderManagementTotalPrice(orderStatus);
 		model.addAttribute("totalPrice", totalPrice);
 
 		int nStart = (nPage - 1) * listCount + 1;
@@ -84,11 +72,6 @@ public class OrderManagementImpl implements OrderManagement {
 
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("inTransit",dto);
-	}
-	@Override
-	public void stateDeliveryCompleted(HttpServletRequest request, Model model) {
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void deliveryCompleted(HttpServletRequest request, Model model) {
@@ -106,7 +89,7 @@ public class OrderManagementImpl implements OrderManagement {
 		nPage = pinfo.getCurPage();
 	   	model.addAttribute("cpage", nPage);
 	   	
-	   	int totalPrice = dao.orderManagementTotalPrice(orderStatus);
+	   	String totalPrice = dao.orderManagementTotalPrice(orderStatus);
 		model.addAttribute("totalPrice", totalPrice);
 
 		int nStart = (nPage - 1) * listCount + 1;
@@ -133,7 +116,7 @@ public class OrderManagementImpl implements OrderManagement {
 		nPage = pinfo.getCurPage();
 	   	model.addAttribute("cpage", nPage);
 	   	
-	   	int totalPrice = dao.orderManagementTotalPrice(orderStatus);
+	   	String totalPrice = dao.orderManagementTotalPrice(orderStatus);
 		model.addAttribute("totalPrice", totalPrice);
 
 		int nStart = (nPage - 1) * listCount + 1;
@@ -143,6 +126,36 @@ public class OrderManagementImpl implements OrderManagement {
 		List<OrderDeliveryDto> dto = dao.orderManagement(orderStatus, nEnd, nStart);
 		model.addAttribute("purchaseConfirmation",dto);
 	}
+	
+	@Override
+	public String stateDeliveryCompleted(HttpServletRequest request, Model model) {
+		String result = "";
+		int updateCount = 0;
+		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
+		for(int i=0; i<bco_ordernumList.length; i++) {
+			updateCount += dao.stateDeliveryCompletedChange(bco_ordernumList[i]);
+		}
+		if(updateCount == bco_ordernumList.length) {
+			result = "success";
+		}
+		return result;
+		
+	}
+	@Override
+	public String stateInTransit(HttpServletRequest request, Model model) {
+		String result = "";
+		int updateCount = 0;
+		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
+		for(int i=0; i<bco_ordernumList.length; i++) {
+			updateCount += dao.stateInTransitChange(bco_ordernumList[i]);
+		}
+		if(updateCount == bco_ordernumList.length) {
+			result = "success";
+		}
+		return result;
+	}
+	
+	
 	@Override
 	public void drSearch(HttpServletRequest request, Model model) {
 		String orderStatus = "배송준비중";
@@ -156,28 +169,29 @@ public class OrderManagementImpl implements OrderManagement {
 		int nEnd = (nPage - 1) * listCount + listCount;
 		
 		String searchType = request.getParameter("searchType");
-		String searchWord = request.getParameter("searchWord");
+		String word  = request.getParameter("searchWord");
+		String searchWord = "%"+word+"%";
 		
 		int count = 0;
 		if(searchType.equals("bcm_name")) {
 			count = dao.nameOrderManagementCount(orderStatus, searchWord);
 			List<OrderDeliveryDto> dto = dao.nameOrderManagement(orderStatus, nEnd, nStart, searchWord);
 			model.addAttribute("deliveryReady",dto);
-			int totalPrice = dao.nameOrderManagementTotalPrice(orderStatus, searchWord);
+			String totalPrice = dao.nameOrderManagementTotalPrice(orderStatus, searchWord);
 			model.addAttribute("totalPrice", totalPrice);
 		}
 		else if(searchType.equals("bco_recipient")) {
 			count = dao.recipientOrderManagementCount(orderStatus, searchWord);
 			List<OrderDeliveryDto> dto = dao.recipientOrderManagement(orderStatus, nEnd, nStart, searchWord);
 			model.addAttribute("deliveryReady",dto);
-			int totalPrice = dao.recipientOrderManagementTotalPrice(orderStatus, searchWord);
+			String totalPrice = dao.recipientOrderManagementTotalPrice(orderStatus, searchWord);
 			model.addAttribute("totalPrice", totalPrice);
 		}
 		else if(searchType.equals("bco_ordernum")) {
 			count = dao.ordernumOrderManagementCount(orderStatus, searchWord);
 			List<OrderDeliveryDto> dto = dao.ordernumOrderManagement(orderStatus, nEnd, nStart, searchWord);
 			model.addAttribute("deliveryReady",dto);
-			int totalPrice = dao.ordernumOrderManagementTotalPrice(orderStatus, searchWord);
+			String totalPrice = dao.ordernumOrderManagementTotalPrice(orderStatus, searchWord);
 			model.addAttribute("totalPrice", totalPrice);
 		}
 		PageInfo pinfo = articlePage(nPage, count, searchType, searchWord);
@@ -188,12 +202,89 @@ public class OrderManagementImpl implements OrderManagement {
 	}
 	@Override
 	public void itSearch(HttpServletRequest request, Model model) {
-		// TODO Auto-generated method stub
+		String orderStatus = "배송중";
+		int nPage = 1;
+		try {
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {}
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
 		
+		String searchType = request.getParameter("searchType");
+		String word  = request.getParameter("searchWord");
+		String searchWord = "%"+word+"%";
+		
+		int count = 0;
+		if(searchType.equals("bcm_name")) {
+			count = dao.nameOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.nameOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("inTransit",dto);
+			String totalPrice = dao.nameOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		else if(searchType.equals("bco_recipient")) {
+			count = dao.recipientOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.recipientOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("inTransit",dto);
+			String totalPrice = dao.recipientOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		else if(searchType.equals("bco_ordernum")) {
+			count = dao.ordernumOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.ordernumOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("inTransit",dto);
+			String totalPrice = dao.ordernumOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		PageInfo pinfo = articlePage(nPage, count, searchType, searchWord);
+		model.addAttribute("page", pinfo);
+		nPage = pinfo.getCurPage();
+	   	model.addAttribute("cpage", nPage);
 	}
 	@Override
 	public void dcSearch(HttpServletRequest request, Model model) {
-		// TODO Auto-generated method stub
+		String orderStatus = "배송완료";
+		int nPage = 1;
+		try {
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {}
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
+		
+		String searchType = request.getParameter("searchType");
+		String word  = request.getParameter("searchWord");
+		String searchWord = "%"+word+"%";
+		
+		int count = 0;
+		if(searchType.equals("bcm_name")) {
+			count = dao.nameOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.nameOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("deliveryCompleted",dto);
+			String totalPrice = dao.nameOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		else if(searchType.equals("bco_recipient")) {
+			count = dao.recipientOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.recipientOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("deliveryCompleted",dto);
+			String totalPrice = dao.recipientOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		else if(searchType.equals("bco_ordernum")) {
+			count = dao.ordernumOrderManagementCount(orderStatus, searchWord);
+			List<OrderDeliveryDto> dto = dao.ordernumOrderManagement(orderStatus, nEnd, nStart, searchWord);
+			model.addAttribute("deliveryCompleted",dto);
+			String totalPrice = dao.ordernumOrderManagementTotalPrice(orderStatus, searchWord);
+			model.addAttribute("totalPrice", totalPrice);
+		}
+		PageInfo pinfo = articlePage(nPage, count, searchType, searchWord);
+		model.addAttribute("page", pinfo);
+		nPage = pinfo.getCurPage();
+	   	model.addAttribute("cpage", nPage);
 		
 	}
 	@Override

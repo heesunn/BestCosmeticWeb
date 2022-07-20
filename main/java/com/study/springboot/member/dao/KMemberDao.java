@@ -33,19 +33,20 @@ public interface KMemberDao {
     
     public List<OrderDeliveryDto> orderManagement(String orderStatus, int nEnd, int nStart);
     public int orderManagementCount(String bco_order_status);
-    public int orderManagementTotalPrice(String bco_order_status);
+    public String orderManagementTotalPrice(String bco_order_status);
     
     public int nameOrderManagementCount(String bco_order_status, String bcm_name);
-    public int nameOrderManagementTotalPrice(String bco_order_status, String bcm_name);
+    public String nameOrderManagementTotalPrice(String bco_order_status, String bcm_name);
     public List<OrderDeliveryDto> nameOrderManagement(String orderStatus, int nEnd, int nStart, String detail);
     
     public int recipientOrderManagementCount(String bco_order_status, String bco_recipient);
-    public int recipientOrderManagementTotalPrice(String bco_order_status, String bco_recipient);
+    public String recipientOrderManagementTotalPrice(String bco_order_status, String bco_recipient);
     public List<OrderDeliveryDto> recipientOrderManagement(String orderStatus, int nEnd, int nStart, String detail);
     
     public int ordernumOrderManagementCount(String bco_order_status, String bco_ordernum);
-    public int ordernumOrderManagementTotalPrice(String bco_order_status, String bco_ordernum);
+    public String ordernumOrderManagementTotalPrice(String bco_order_status, String bco_ordernum);
     public List<OrderDeliveryDto> ordernumOrderManagement(String orderStatus, int nEnd, int nStart, String detail);
     
     public int stateInTransitChange(String bco_ordernum);
+    public int stateDeliveryCompletedChange(String bco_ordernum);
 }

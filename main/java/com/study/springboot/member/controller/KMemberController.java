@@ -44,7 +44,11 @@ public class KMemberController
 		return "guest/log/main";
 	}
 	@RequestMapping("/guest/loginView")
-	public String loginView() {
+	public String loginView(HttpServletRequest request) {
+		String uri = request.getHeader("Referer");
+	    if (uri != null && !uri.contains("/loginDo")) {
+	        request.getSession().setAttribute("prevPage", uri);
+	    }
 		return "guest/log/loginView";
 	}
 	@RequestMapping("/member/like")
@@ -137,12 +141,8 @@ public class KMemberController
 		OrderManagement.purchaseConfirmation(request, model);
 		return "/admin/purchaseConfirmation";
 	}
-	@RequestMapping("/admin/stateInTransit")
-	public @ResponseBody String stateInTransit(HttpServletRequest request, Model model) {
-		String result = OrderManagement.stateInTransit(request, model);
-		
-		return result;
-	}
+	
+	
 	@RequestMapping("/admin/drSearch")
 	public String drSearch(HttpServletRequest request, Model model) {
 		OrderManagement.drSearch(request, model);
@@ -150,17 +150,31 @@ public class KMemberController
 	}
 	@RequestMapping("/admin/itSearch")
 	public String itSearch(HttpServletRequest request, Model model) {
-		
+		OrderManagement.itSearch(request, model);
 		return "/admin/inTransit";
 	}
 	@RequestMapping("/admin/dcSearch")
 	public String dcSearch(HttpServletRequest request, Model model) {
-		
+		OrderManagement.dcSearch(request, model);
 		return "/admin/deliveryCompleted";
 	}
 	@RequestMapping("/admin/pcSearch")
 	public String pcSearch(HttpServletRequest request, Model model) {
 		
 		return "/admin/purchaseConfirmation";
+	}
+	
+	
+	@RequestMapping("/admin/stateInTransit")
+	public @ResponseBody String stateInTransit(HttpServletRequest request, Model model) {
+		String result = OrderManagement.stateInTransit(request, model);
+		
+		return result;
+	}
+	@RequestMapping("/admin/stateDeliveryCompleted")
+	public @ResponseBody String stateDeliveryCompleted(HttpServletRequest request, Model model) {
+		String result = OrderManagement.stateDeliveryCompleted(request, model);
+		
+		return result;
 	}
 }
