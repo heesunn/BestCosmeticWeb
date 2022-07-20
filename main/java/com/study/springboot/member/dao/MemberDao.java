@@ -1,9 +1,6 @@
 package com.study.springboot.member.dao;
 
-import com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto;
-import com.study.springboot.member.dto.GoodsJoinDetailGoodsDto;
-import com.study.springboot.member.dto.MemberDto;
-import com.study.springboot.member.dto.OrderDeliveryDto;
+import com.study.springboot.member.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -41,4 +38,7 @@ public interface MemberDao {
     public int updateGoodsStock(int bcg_key);
     public int updateDetailGoodsStock(int bcg_key,int bcd_detailkey);
     public int deleteBasketAfterPayment(int bcm_num,int bcg_key,int bcd_detailkey);
+    public ArrayList<MemberJoinOrderHistoryDto> memberManagement(int nEnd, int nStart);
+    public int memberManagementArticlePage(int curPage);
+
 }

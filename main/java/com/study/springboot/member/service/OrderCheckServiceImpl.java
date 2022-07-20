@@ -33,7 +33,6 @@ public class OrderCheckServiceImpl implements OrderCheckService{
 
         JSONObject obj = new JSONObject();
 
-        ArrayList<GoodsJoinDetailGoodsDto> dtos = new ArrayList<GoodsJoinDetailGoodsDto>();
         for(int i = 0 ; i<keyListArr.length ; i++){
             System.out.println("keyListArr "+ i +" = " + keyListArr[i]);
             System.out.println("detailkeyListArr " + i +" = " + detailkeyListArr[i]);

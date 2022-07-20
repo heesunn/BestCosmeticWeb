@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Map;
 
 
 @Controller
@@ -40,6 +39,8 @@ public class MemberController
 	AfterPaymentService afterPaymentService;
 	@Autowired
 	Make1000MemberService make1000MemberService;
+	@Autowired
+	MemberManagementViewService memberManagementViewService;
 
 	@RequestMapping("/guest/join")
 	public String join() {
@@ -195,6 +196,11 @@ public class MemberController
 	public @ResponseBody String makeMemberService() {
 		make1000MemberService.makeMember();
 		return "1000명 생성완료";
+	}
+	@RequestMapping("/admin/memberManagement")
+	public String memberManagement(HttpServletRequest request, Model model) {
+		memberManagementViewService.memberManagementView(request,model);
+		return "admin/memberManagement";
 	}
 
 }

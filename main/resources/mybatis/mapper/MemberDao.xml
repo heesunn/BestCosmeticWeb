@@ -9,84 +9,87 @@
             (BCM_NUM , BCM_ID , BCM_PW , BCM_NAME , BCM_EMAIL, BCM_GOOGLEID, BCM_NAVERID, BCM_KAKAOID, BCM_FACEBOOKID,
              BCM_ZIPCODE,BCM_ADDRESS1,BCM_ADDRESS2,BCM_ADDRESS3,BCM_PHONENUM1,BCM_PHONENUM2,BCM_PHONENUM3,
              BCM_AUTHORITY,BCM_ENABLE,BCM_JOINED_ON,BCM_STOPDATE)
-            VALUES ( bcm_num_seq.nextval , #{param1} , #{param2} , #{param3} , #{param4} , '','','','','','','','','','',
-                    '','role_user','true',sysdate,sysdate)
+            VALUES ( BCM_NUM_SEQ.NEXTVAL , #{param1} , #{param2} , #{param3} , #{param4} , '','','','','','','','','','',
+                    '','role_user','true',SYSDATE,SYSDATE)
     </insert>
     <select id="userCheck" resultType="com.study.springboot.member.dto.MemberDto">
-        select * from bc_member where bcm_id = #{param1}
+        SELECT * FROM BC_MEMBER WHERE BCM_ID = #{param1}
     </select>
     <select id="selectUser" resultType="com.study.springboot.member.dto.MemberDto">
-        select * from bc_member where bcm_num = #{param1}
+        SELECT * FROM BC_MEMBER WHERE BCM_NUM = #{param1}
     </select>
     <select id="orderDeliveryView" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
-        <!--select * from bc_order_history where bcm_num = #{param1}-->
-        <!--order by는 현재 주문번호로 해놨는데 원래는 주문시간으로 order by 해야함 시간순으로 하면 스크립트실행 때 같은 시간으로 들어가서 페이징 문제생김-->
-        select * from (select rownum num, A.* from
-                      (select * from bc_order_history where bcm_num = #{param1}
-                                and bco_order_status = '배송준비중'
-                                or bco_order_status = '배송중'
-                                or bco_order_status = '배송완료'
-                                or bco_order_status = '구매확정'
-                                order by bco_orderdate desc ) A
-                                where rownum &lt;= #{param2} ) B where B.num &gt;= #{param3}
+        SELECT * FROM (SELECT ROWNUM NUM, A.* FROM
+                      (SELECT * FROM BC_ORDER_HISTORY WHERE BCM_NUM = #{param1}
+                                AND BCO_ORDER_STATUS = '배송준비중'
+                                OR BCO_ORDER_STATUS = '배송중'
+                                OR BCO_ORDER_STATUS = '배송완료'
+                                OR BCO_ORDER_STATUS = '구매확정'
+                                ORDER BY BCO_ORDERDATE DESC ) A
+                                WHERE ROWNUM &lt;= #{param2} ) B WHERE B.NUM &gt;= #{param3}
     </select>
     <select id="articlePage" resultType="_int">
-        select count(*) as total from bc_order_history where bco_order_status = '배송준비중'
-                                                       or bco_order_status = '배송중'
-                                                       or bco_order_status = '배송완료'
-                                                       or bco_order_status = '구매확정'
+        SELECT COUNT(*) AS TOTAL FROM BC_ORDER_HISTORY WHERE BCO_ORDER_STATUS = '배송준비중'
+                                                       OR BCO_ORDER_STATUS = '배송중'
+                                                       OR BCO_ORDER_STATUS = '배송완료'
+                                                       OR BCO_ORDER_STATUS = '구매확정'
     </select>
     <update id="cancellationRequest">
-        update bc_order_history set bco_order_status = '취소신청', bco_statusdate = sysdate
-                                where bcm_num = #{param1} and bco_ordernum = #{param2}
+        UPDATE BC_ORDER_HISTORY SET BCO_ORDER_STATUS = '취소신청', BCO_STATUSDATE = SYSDATE
+                                WHERE BCM_NUM = #{param1} AND BCO_ORDERNUM = #{param2}
     </update>
     <update id="exchangeRequest">
-        update bc_order_history set bco_order_status = '교환신청', bco_statusdate = sysdate
-                                where bcm_num = #{param1} and bco_ordernum = #{param2}
+        UPDATE BC_ORDER_HISTORY SET BCO_ORDER_STATUS = '교환신청', BCO_STATUSDATE = SYSDATE
+                                WHERE BCM_NUM = #{param1} AND BCO_ORDERNUM = #{param2}
     </update>
     <update id="refundRequest">
-        update bc_order_history set bco_order_status = '반품신청', bco_statusdate = sysdate
-                                where bcm_num = #{param1} and bco_ordernum = #{param2}
+        UPDATE BC_ORDER_HISTORY SET BCO_ORDER_STATUS = '반품신청', BCO_STATUSDATE = SYSDATE
+                                WHERE BCM_NUM = #{param1} AND BCO_ORDERNUM = #{param2}
     </update>
     <update id="purchaseConfirmation">
-        update bc_order_history set bco_order_status = '구매확정', bco_statusdate = sysdate
-                                where bcm_num = #{param1} and bco_ordernum = #{param2}
+        UPDATE BC_ORDER_HISTORY
+        SET BCO_ORDER_STATUS = '구매확정', BCO_STATUSDATE = SYSDATE
+        WHERE BCM_NUM = #{param1}
+        AND BCO_ORDERNUM = #{param2}
     </update>
     <select id="cancelExchangeRefund" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
         <!--현재 order by 주문번호인데 나중에 상태변화날짜로 바꿔줄것-->
-        select * from (select rownum num, a.* from
-        (select * from bc_order_history where bcm_num = #{param1}
-                    and bco_order_status = '취소신청'
-                    or bco_order_status = '취소완료'
-                    or bco_order_status = '교환신청'
-                    or bco_order_status = '교환상품회수중'
-                    or bco_order_status = '교환완료'
-                    or bco_order_status = '반품신청'
-                    or bco_order_status = '반품회수중'
-                    or bco_order_status = '반품완료'
-                    order by bco_orderdate desc ) A
-                    where rownum &lt;= #{param2} ) B where B.num &gt;= #{param3}
+        SELECT * FROM (SELECT ROWNUM NUM, A.* FROM
+        (SELECT * FROM BC_ORDER_HISTORY WHERE BCM_NUM = #{param1}
+                    AND BCO_ORDER_STATUS = '취소신청'
+                    OR BCO_ORDER_STATUS = '취소완료'
+                    OR BCO_ORDER_STATUS = '교환신청'
+                    OR BCO_ORDER_STATUS = '교환상품회수중'
+                    OR BCO_ORDER_STATUS = '교환완료'
+                    OR BCO_ORDER_STATUS = '반품신청'
+                    OR BCO_ORDER_STATUS = '반품회수중'
+                    OR BCO_ORDER_STATUS = '반품완료'
+                    ORDER BY BCO_ORDERDATE DESC ) A
+                    WHERE ROWNUM &lt;= #{param2} ) B WHERE B.NUM &gt;= #{param3}
     </select>
     <select id="articlePage2" resultType="_int">
-        SELECT COUNT(*) AS TOTAL FROM BC_ORDER_HISTORY WHERE BCO_ORDER_STATUS = '취소신청'
-                                                          OR BCO_ORDER_STATUS = '취소완료'
-                                                          OR BCO_ORDER_STATUS = '교환신청'
-                                                          OR BCO_ORDER_STATUS = '교환상품회수중'
-                                                          OR BCO_ORDER_STATUS = '교환완료'
-                                                          OR BCO_ORDER_STATUS = '반품신청'
-                                                          OR BCO_ORDER_STATUS = '반품회수중'
-                                                          OR BCO_ORDER_STATUS = '반품완료'
+        SELECT COUNT(*) AS TOTAL
+        FROM BC_ORDER_HISTORY
+        WHERE BCO_ORDER_STATUS = '취소신청'
+          OR BCO_ORDER_STATUS = '취소완료'
+          OR BCO_ORDER_STATUS = '교환신청'
+          OR BCO_ORDER_STATUS = '교환상품회수중'
+          OR BCO_ORDER_STATUS = '교환완료'
+          OR BCO_ORDER_STATUS = '반품신청'
+          OR BCO_ORDER_STATUS = '반품회수중'
+          OR BCO_ORDER_STATUS = '반품완료'
     </select>
     <update id="modifyMember">
-        UPDATE BC_MEMBER SET BCM_EMAIL = #{param1},
-                             BCM_PHONENUM1 = #{param2},
-                             BCM_PHONENUM2 = #{param3},
-                             BCM_PHONENUM3 = #{param4},
-                             BCM_ZIPCODE = #{param5},
-                             BCM_ADDRESS1 = #{param6},
-                             BCM_ADDRESS2 = #{param7},
-                             BCM_ADDRESS3 = #{param8}
-                    WHERE BCM_NUM= #{param9}
+        UPDATE BC_MEMBER
+        SET BCM_EMAIL = #{param1},
+             BCM_PHONENUM1 = #{param2},
+             BCM_PHONENUM2 = #{param3},
+             BCM_PHONENUM3 = #{param4},
+             BCM_ZIPCODE = #{param5},
+             BCM_ADDRESS1 = #{param6},
+             BCM_ADDRESS2 = #{param7},
+             BCM_ADDRESS3 = #{param8}
+        WHERE BCM_NUM= #{param9}
     </update>
     <select id="basketListView" resultType="com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto" >
         SELECT
@@ -165,35 +168,56 @@
     </insert>
     <insert id="insertOrderHistory">
         INSERT INTO BC_ORDER_HISTORY
-        (BCM_NUM, BCO_PHONENUM1, BCO_PHONENUM2, BCO_PHONENUM3 ,BCO_ORDERNUM, BCM_NAME, BCO_RECIPIENT,
-         BCO_TOTALPRICE,BCO_ORDER_STATUS,BCO_ORDERDATE,BCO_DELIVERYDATE,BCO_STATUSDATE,BCO_ORDER_NAME)
-        VALUES
-        ( #{param1}, #{param2} , #{param3}, #{param4} , #{param5} ,#{param6},#{param7},
-          #{param8} , '배송준비중' , SYSDATE, '' , SYSDATE , #{param9} )
+                (BCM_NUM, BCO_PHONENUM1, BCO_PHONENUM2, BCO_PHONENUM3 ,BCO_ORDERNUM, BCM_NAME, BCO_RECIPIENT,
+             BCO_TOTALPRICE,BCO_ORDER_STATUS,BCO_ORDERDATE,BCO_DELIVERYDATE,BCO_STATUSDATE,BCO_ORDER_NAME)
+            VALUES
+                ( #{param1}, #{param2} , #{param3}, #{param4} , #{param5} ,#{param6},#{param7},
+              #{param8} , '배송준비중' , SYSDATE, '' , SYSDATE , #{param9} )
     </insert>
     <insert id="insertDeliveryInfo">
         INSERT INTO BC_DELIVERY_INFO
-        (BCM_NUM,BCO_ORDERNUM,BCD_ZIPCODE,BCD_ADDRESS1,BCD_ADDRESS2,BCD_ADDRESS3,BCD_DATE,BCD_REQUEST)
-        VALUES
-        ( #{param1}, #{param2}, #{param3}, #{param4}, #{param5},#{param6}, SYSDATE, #{param7} )
+                (BCM_NUM,BCO_ORDERNUM,BCD_ZIPCODE,BCD_ADDRESS1,BCD_ADDRESS2,BCD_ADDRESS3,BCD_DATE,BCD_REQUEST)
+            VALUES
+                ( #{param1}, #{param2}, #{param3}, #{param4}, #{param5},#{param6}, SYSDATE, #{param7} )
     </insert>
     <update id="updateGoodsStock">
         UPDATE BC_GOODS
-        SET BCG_STOCK = BCG_STOCK-1
-        WHERE BCG_KEY = #{param1}
+            SET BCG_STOCK = BCG_STOCK-1
+            WHERE BCG_KEY = #{param1}
     </update>
     <update id="updateDetailGoodsStock">
         UPDATE BC_DETAILGOODS
-        SET BCD_STOCK = BCD_STOCK-1
-        WHERE BCG_KEY = #{param1}
-        AND BCD_DETAILKEY = #{param2}
+            SET BCD_STOCK = BCD_STOCK-1
+            WHERE BCG_KEY = #{param1}
+            AND BCD_DETAILKEY = #{param2}
     </update>
     <delete id="deleteBasketAfterPayment">
-        delete from bc_basket
-        where bcm_num = #{param1}
-        and bcg_key = #{param2}
-        and bcd_detailkey = #{param3}
+        DELETE
+            FROM BC_BASKET
+            WHERE BCM_NUM = #{param1}
+            AND BCG_KEY = #{param2}
+            AND BCD_DETAILKEY = #{param3}
     </delete>
+    <select id="memberManagement" resultType="com.study.springboot.member.dto.MemberJoinOrderHistoryDto">
+        SELECT *
+        FROM (SELECT ROWNUM NUM, A.*
+                FROM (SELECT C.*, ORDER_COUNT, TOTAL_PRICE
+                        FROM (SELECT BCM_NUM,COUNT(BCM_NUM) ORDER_COUNT ,SUM(BCO_TOTALPRICE) TOTAL_PRICE
+                                FROM BC_ORDER_HISTORY
+                            GROUP BY BCM_NUM
+                            ORDER BY BCM_NUM) D,
+                            BC_MEMBER C
+                        WHERE C.BCM_NUM = D.BCM_NUM(+)
+                          AND C.BCM_AUTHORITY = 'role_user'
+                        ORDER BY C.BCM_NUM ASC) A
+                WHERE ROWNUM &lt;= #{param1} ) B
+        WHERE B.NUM &gt;= #{param2}
+    </select>
+    <select id="memberManagementArticlePage" resultType="_int">
+        SELECT COUNT(*) AS TOTAL
+        FROM BC_MEMBER
+        WHERE BCM_AUTHORITY = 'role_user'
+    </select>
 </mapper>
 
 <!--
