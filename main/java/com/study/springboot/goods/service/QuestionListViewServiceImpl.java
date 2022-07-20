@@ -81,6 +81,5 @@ public class QuestionListViewServiceImpl implements QuestionListViewService{
         ArrayList<QuestionDto> dtos = questionDao.questionListView(bcg_key,nEnd,nStart);
         //문의 리스트
         model.addAttribute("questionList",dtos);
-
     }
 }
