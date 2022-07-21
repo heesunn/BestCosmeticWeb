@@ -3,9 +3,7 @@ package com.study.springboot.goods.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import com.study.springboot.goods.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dao.InBagDao;
+import com.study.springboot.goods.dao.ReviewDao;
 import com.study.springboot.goods.dto.GoodsDto;
+import com.study.springboot.goods.service.DeleteService;
+import com.study.springboot.goods.service.DetailAddService;
+import com.study.springboot.goods.service.GLikeService;
+import com.study.springboot.goods.service.ListOptionService;
+import com.study.springboot.goods.service.ListService;
+import com.study.springboot.goods.service.PageDetailService;
+import com.study.springboot.goods.service.QuestionListViewService;
+import com.study.springboot.goods.service.ReviewListViewService;
 
 @Controller
 public class GoodsController
@@ -25,6 +32,8 @@ public class GoodsController
 	private GoodsDao goodsDao;
 	@Autowired
 	private InBagDao inBagDao;
+	@Autowired
+	private ReviewDao reviewDao;
 	@Autowired
 	ListService listService;
 	@Autowired
@@ -277,6 +286,25 @@ public class GoodsController
 						Integer.parseInt(request.getParameter("BCG_KEY")),
 						Integer.parseInt(request.getParameter("BCD_DETAILKEY")),
 						Integer.parseInt(request.getParameter("BCB_COUNT")));				
+		return "guest/goods/detailPage";
+	}
+	
+	//리뷰 작성 뷰
+	@RequestMapping("/member/reviewWrite")
+	public String reviewWrite(HttpServletRequest request, Model model) throws IOException {
+		return "/member/reviewWrite";
+	}
+	
+	//리뷰 작성
+	@RequestMapping("/member/upReview")
+	public String upReview(HttpServletRequest request, Model model) throws IOException {
+		reviewDao.upReview(Integer.parseInt(request.getParameter("BCG_KEY")),
+							request.getParameter("BCG_NAME"), 
+							Integer.parseInt(request.getParameter("BCM_NUM")),
+							request.getParameter("BCM_NAME"),
+							request.getParameter("BCR_PHOTO"),
+							Integer.parseInt(request.getParameter("BCR_SCORE")),
+							request.getParameter("BCR_CONTENT"));
 		return "guest/goods/detailPage";
 	}
 	

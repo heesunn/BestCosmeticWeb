@@ -18,18 +18,57 @@
 <title>상세페이지</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <script type="text/javascript">
-	function upCount(ths) {
+	//수량버튼 +
+	function upCount(ths) {            
 		var $input = $(ths).parents("td").find("input[name='BCB_COUNT']");
-	    var tCount = Number($input.val());
-	    var result =$input.val(Number(tCount)+1);
+	    var tCount = Number($input.val());	
+	    if(${fn:length(list)}==1) {                     //상세옵션이 따로 없을 경우
+		    var option = ${list.get(0).bcd_stock};	    //상세테이블 리스트의 0번 인덱스의 재고량. 걍 &{BCG_STOCK}으로 해도됨
+	    	if(tCount==option) {
+		    	alert("재고수량을 초과하였습니다.");
+			    return;
+	    	} else {
+		    	var result = $input.val(Number(tCount)+1);
+		    	sum(tCount+1);
+		    }	
+	    } else {                                        //상세옵션이 따로 있을 경우
+	    	var index = $('#BCD_DETAILKEY').find("option:selected").data("nm");   //상세옵션중 선택된 옵션의 data-nm값(인덱스값)
+	    	var option = ${list.get(index).bcd_stock};	                          //리스트 중 해당 인덱스의 재고량
+	    	if(tCount==option) {
+		    	alert("재고수량을 초과하였습니다.");
+			    return;
+	    	} else {
+		    	var result = $input.val(Number(tCount)+1);
+		    	sum(tCount+1);
+		    }	
+	    }    
 	}
 	
-	function downCount(ths) {
+	//수량버튼 -
+	function downCount(ths) {                
 		var $input = $(ths).parents("td").find("input[name='BCB_COUNT']");
 	    var tCount = Number($input.val());
-	    var result = $input.val(Number(tCount)-1);
+	    if (tCount==1) {
+	    	alert("수량은 1개 이하로 고를 수 없습니다.");
+		    return;
+	    } else {
+	    	var result = $input.val(Number(tCount)-1);
+	    	sum(tCount-1);
+	    }
 	}
-
+	
+	function sum(count) {                         //가격 총 합계
+		var totalPrice = ${BCG_PRICE}*count;
+		document.getElementById("totalPrice").innerHTML = thousandSeparatorCommas(totalPrice);
+	}
+	
+	function thousandSeparatorCommas(number) {    //총 합계에 콤마찍기
+		 var string = "" + number;                       // 문자로 바꾸기. 
+		 string = string.replace( /[^-+\.\d]/g, "" )     // ±기호와 소수점, 숫자들만 남기고 전부 지우기. 
+		 var regExp = /^([-+]?\d+)(\d{3})(\.\d+)?/;      // 필요한 정규식. 
+		 while (regExp.test(string)) string = string.replace( regExp, "총 " + "$1" + "," + "$2" + "$3" + "원");  // 쉼표 삽입. 
+		 return string; 
+	} 
 	
 	function inBag() {                 //장바구니
 		if(<%=bcm_num%> == 0) {
@@ -89,10 +128,13 @@
 	        }       	
 	    });
 	}
-	
-
-	
 </script>
+<style type="text/css">
+	.starPoint {
+	    font-size: 1em;
+	    color: rgba(250, 208, 0, 0.99);
+	}
+</style>
 </head>
 <body>
 	<div style="float: top">
@@ -138,13 +180,14 @@
 									<td colspan="4"><fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>
 								</c:when>
 								<c:otherwise>
-									<td colspan="2">
+									<td>
 										<p style="text-decoration:line-through">
 											<fmt:formatNumber type="number" maxFractionDigits="0" 
 											value="${BCG_PRICE/(100-BCG_DISCOUNT)*100}" pattern="#,###"/>
 										</p>
 									</td>
-									<td colspan="2">-> <fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>
+									<td>-></td>
+									<td colspan="2"><fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
@@ -153,9 +196,9 @@
 						<tr>
 						    <td colspan="4">						    	
 								<select id="BCD_DETAILKEY" name="BCD_DETAILKEY">
-									<c:forEach items="${list}" var="ddtos">
-										<option value="${ddtos.bcd_detailkey}">											
-											${ddtos.bcd_option}
+									<c:forEach items="${list}" var="ddtos" varStatus="status">
+										<option value="${ddtos.bcd_detailkey}" data-nm="${status.index}">											
+											${ddtos.bcd_option} (남은수량 : ${ddtos.bcd_stock})
 										</option>
 									</c:forEach>
 								</select>
@@ -174,10 +217,10 @@
 							<td colspan="2">
 				                <span onclick="downCount(this);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
 				                	<input type="text" id="BCB_COUNT" name="BCB_COUNT" 
-				                           min="1" max="${BCG_STOCK}" size="2" maxlength="2" value="1" >
+				                           	size="2" maxlength="2" value="1" readonly>
 				                <span onclick="upCount(this);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
 				            </td> 
-							<td colspan="2">총 <fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</td>				            
+							<td colspan="2"><div id="totalPrice">총 <fmt:formatNumber value="${BCG_PRICE}" pattern="#,###"/>원</div></td>				            
 						</tr>				
 						<tr>
 						    <td colspan="4">
@@ -215,10 +258,166 @@
 		</table>
 	</div>
 	<div id="reViewView" style="display: none">
-		<h1>리뷰창</h1>
+		<h1>리뷰창 : ${BCG_NAME}</h1>
+		<table border="1">
+			<c:if test="${reviewPage.totalCount==0}"> 
+				<tr><td colspan="11">리뷰가 없습니다.</td></tr>
+			</c:if> 
+			<c:forEach items="${reviewList}" var="dto">			
+			<tr class="starPoint">				
+				<td> 
+					<c:if test="${dto.bcr_score==0}">☆☆☆☆☆</c:if>
+					<c:if test="${dto.bcr_score==1}">★☆☆☆☆</c:if>
+					<c:if test="${dto.bcr_score==2}">★★☆☆☆</c:if>
+					<c:if test="${dto.bcr_score==3}">★★★☆☆</c:if>
+					<c:if test="${dto.bcr_score==4}">★★★★☆</c:if>
+					<c:if test="${dto.bcr_score==5}">★★★★★</c:if>
+				</td>
+			</tr>
+			<tr>				
+				<td> ${dto.bcm_name} <fmt:formatDate value="${dto.bcr_date}" pattern="yyyy-MM-dd" var="bcr_date" />${bcr_date} </td>
+			</tr>
+			<tr>
+				<c:if test="${dto.bcr_photo==null}"><td> ${dto.bcr_content} </td></c:if>
+				<c:if test="${dto.bcr_photo!=null}">
+					<td><img src="${dto.bcr_photo}" width="150" height="150"> </td>
+					<td> ${dto.bcr_content} </td>							
+				</c:if>			
+			</tr>
+			</c:forEach>
+			<c:if test="${reviewPage.totalCount>0}"> 
+			<tr>
+				<td colspan="11">
+					<!-- 처음 -->
+					<c:choose>
+					<c:when test="${(reviewPage.curPage - 1) < 1}">
+						[ &lt;&lt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&reviewPage=1">[ &lt;&lt; ]</a>
+					</c:otherwise>
+					</c:choose>
+					
+					<!-- 이전 -->
+					<c:choose>
+					<c:when test="${(reviewPage.curPage - 1) < 1}">
+						[ &lt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&reviewPage=${reviewPage.curPage - 1}">[ &lt; ]</a>
+					</c:otherwise>
+					</c:choose>
+					
+					<!-- 개별 페이지 -->
+					<c:forEach var="fEach" begin="${reviewPage.startPage}" end="${reviewPage.endPage}" step="1">
+						<c:choose>
+						<c:when test="${reviewPage.curPage == fEach}">
+							[ ${fEach} ] &nbsp;
+						</c:when>
+						<c:otherwise>
+							<a href="detailPage?BCG_KEY=${BCG_KEY}&reviewPage=${fEach}">[ ${fEach} ]</a> &nbsp;
+						</c:otherwise>
+						</c:choose>
+					</c:forEach>	
+					
+					<!-- 다음 -->
+					<c:choose>
+					<c:when test="${(reviewPage.curPage + 1) > reviewPage.totalPage}">
+						[ &gt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&reviewPage=${reviewPage.curPage + 1}">[ &gt; ]</a>
+					</c:otherwise>
+					</c:choose>
+					
+					<!-- 끝 -->
+					<c:choose>
+					<c:when test="${reviewPage.curPage == reviewPage.totalPage}">
+						[ &gt;&gt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&reviewPage=${reviewPage.totalPage}">[ &gt;&gt; ]</a>
+					</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
+			</c:if>
+		</table>
 	</div>
 	<div id="qnaView" style="display: none">
 		<h1>문의</h1>
+		<table border="1">
+			<c:if test="${questionPage.totalCount==0}"> 
+				<tr><td colspan="11">문의가 없습니다.</td></tr>
+			</c:if> 
+			<c:forEach items="${questionList}" var="dto">
+				<c:if test="${dto.bca_content==null}"> <tr><td>답변대기중</td></tr> </c:if>
+				<c:if test="${dto.bca_content!=null}"> <tr><td>답변완료</td></tr> </c:if>
+				<tr> <td> ${dto.bcm_name} ${dto.bcq_date}</td> </tr>
+				<tr> <td> ${dto.bcq_content} </td> </tr>
+				<c:if test="${dto.bca_content!=null}">
+					<tr> <td>${dto.bca_date}</td> </tr>
+					<tr> <td>${dto.bca_content}</td> </tr>
+				</c:if>
+			</c:forEach>
+			<c:if test="${questionPage.totalCount>0}"> 
+			<tr>
+				<td colspan="11">
+					<!-- 처음 -->
+					<c:choose>
+					<c:when test="${(questionPage.curPage - 1) < 1}">
+						[ &lt;&lt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=1">[ &lt;&lt; ]</a>
+					</c:otherwise>
+					</c:choose>
+					
+					<!-- 이전 -->
+					<c:choose>
+					<c:when test="${(questionPage.curPage - 1) < 1}">
+						[ &lt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.curPage - 1}">[ &lt; ]</a>
+					</c:otherwise>
+					</c:choose>
+					
+					<!-- 개별 페이지 -->
+					<c:forEach var="fEach" begin="${questionPage.startPage}" end="${questionPage.endPage}" step="1">
+						<c:choose>
+						<c:when test="${questionPage.curPage == fEach}">
+							[ ${fEach} ] &nbsp;
+						</c:when>
+						<c:otherwise>
+							<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${fEach}">[ ${fEach} ]</a> &nbsp;
+						</c:otherwise>
+						</c:choose>
+					</c:forEach>	
+					
+					<!-- 다음 -->
+					<c:choose>
+					<c:when test="${(questionPage.curPage + 1) > questionPage.totalPage}">
+						[ &gt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.curPage + 1}">[ &gt; ]</a>
+					</c:otherwise>
+					</c:choose>
+					
+					<!-- 끝 -->
+					<c:choose>
+					<c:when test="${questionPage.curPage == questionPage.totalPage}">
+						[ &gt;&gt; ]
+					</c:when>
+					<c:otherwise>
+						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.totalPage}">[ &gt;&gt; ]</a>
+					</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
+			</c:if>
+		</table>
 	</div>
 <script>
 	function review() {
