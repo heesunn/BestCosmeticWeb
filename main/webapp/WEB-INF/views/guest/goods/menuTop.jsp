@@ -28,6 +28,7 @@
 <body>
 	<br>
 	<div class="top">	
+<<<<<<< HEAD
 		
 			<nav class="navbar navbar-expand-lg navbar-light ">
 				<div class="collapse navbar-collapse" >
@@ -78,7 +79,17 @@
 							</li>
 							</sec:authorize>
 							<li class="nav-item active">
-								<a class="nav-link" href="/member/basketView" id="myTop">장바구니</a>
+								<a class="nav-link" onclick="javascript:window.location='/member/basketView'">
+									장바구니
+									<c:choose>
+										<c:when test="${basketCount>0}">
+											<span>${basketCount}</span>
+										</c:when>
+										<c:otherwise>
+											<span></span>
+										</c:otherwise>
+									</c:choose>
+								</a>
 							</li>
 							<li class="nav-item active">
 								<a class="nav-link" href="/member/like" id="myTop">찜</a>
@@ -96,7 +107,6 @@
 			</nav>
 
 	</div>
-	 
 	<hr/>
 </body>
 </html>

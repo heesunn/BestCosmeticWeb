@@ -44,4 +44,17 @@ public class BasketServiceImpl implements BasketService {
         int updateCount = memberDao.basketDownCount(bcm_num,bcg_key,bcd_detailkey);
         return updateCount;
     }
+
+    @Override
+    public int basketCount(HttpServletRequest request, Model model) {
+        int bcm_num=0;
+        session = request.getSession();
+        try {
+            bcm_num = (int) session.getAttribute("num");
+        }catch (Exception e){
+        }
+        int basketCount = memberDao.basketCount(bcm_num);
+        model.addAttribute("basketCount", basketCount);
+        return 0;
+    }
 }
