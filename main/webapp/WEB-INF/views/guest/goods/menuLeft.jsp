@@ -3,37 +3,61 @@
 <html>
 <head>
     <title>Title</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <script src="http://code.jquery.com/jquery-latest.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
     <style>
         #cateoryLeft{
-            background-color: black;
             width: 210px;
-            color: white;
+            white-space: nowrap;
+        }
+        
+        a {
+        	color: #000000;
+        	font-size: 14px;
+        }
 
-        }
-        .list:hover{
-            color: black;
-            background-color: white;
-            font-weight : bold;
-        }
     </style>
 </head>
 <body>
+
     <div id="cateoryLeft">
-        <h3>Best Cosmetic</h3>
-        <hr>
-
-			<ul>
-					<li class="list" onclick="javascript:window.location='categoryAll'">전체보기</li>
-					<hr>
-                    <li class="list" >스킨케어</li>
-                    <li class="list" >클렌징</li>
-                    <li class="list" >선케어</li>
-                    <li class="list" >베이스 메이크업</li>
-                    <li class="list" onclick="javascript:window.location='categoryPoint'">포인트 메이크업</li>
-                    <li class="list" >향수</li>
-           </ul>
-
-    </div>
+ <!-- 
+ 		<div class="container-fluid">
+  			<div class="row flex-nowrap">
+				<div class="col-3 bd-sidebar sidebar-light">
+ -->
+					<ul class="nav flex-column nav-light" >
+							<li class="nav-item active">
+								<a class="nav-link" href="/guest/cateoryAll" id="sidebar">전체보기</a>
+							</li>
+							<br>
+							
+							<li class="nav-item active">
+								<a class="nav-link" href="" id="sidebar">스킨케어</a>
+							</li>
+							
+							<li class="nav-item active">
+								<a class="nav-link" href="" id="sidebar">클렌징</a>
+							</li>
+							
+							<li class="nav-item active">
+								<a class="nav-link" href="" id="sidebar">선케어</a>
+							</li>
+							
+							<li class="nav-item active">
+								<a class="nav-link" href="" id="sidebar">베이스메이크업</a>
+							</li>
+		                    
+							<li class="nav-item active">
+								<a class="nav-link" href="/guest/categoryPoint" id="sidebar">포인트 메이크업</a>
+							</li>
+		                    
+		                    <li class="nav-item active">
+								<a class="nav-link" href="" id="sidebar">향수</a>
+							</li>
+		           </ul>
+	</div>
 </body>
 </html>
