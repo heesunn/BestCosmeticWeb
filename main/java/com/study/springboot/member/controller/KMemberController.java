@@ -41,11 +41,7 @@ public class KMemberController
 	JoinService joinService;
 	@Autowired
 	OrderManagement OrderManagement;
-	
-	@RequestMapping("/")
-	public String main() {
-		return "guest/log/main";
-	}
+
 	@RequestMapping("/guest/channelTalk")
 	public String channelTalk() {
 		return "guest/log/channelTalk";
