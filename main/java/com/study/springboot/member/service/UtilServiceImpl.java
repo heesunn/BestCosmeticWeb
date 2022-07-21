@@ -1,13 +1,22 @@
 package com.study.springboot.member.service;
 
+import com.study.springboot.member.dao.MemberDao;
+import com.study.springboot.member.dto.DeliveryInfoDto;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Random;
 
 @Service
 public class UtilServiceImpl implements UtilService{
-
+    @Autowired
+    MemberDao memberDao;
+    HttpSession session;
     @Override
     public void createOrderNum(Model model) {
         Random random = new Random();
@@ -37,4 +46,13 @@ public class UtilServiceImpl implements UtilService{
         model.addAttribute("orderNum", strNum);
     }
 
+    @Override
+    public JSONObject lastDeliveryDestination(HttpServletRequest request) {
+        session = request.getSession();
+        int bcm_num = (int) session.getAttribute("num");
+        ArrayList<DeliveryInfoDto> dtos = memberDao.lastDeliveryDestination(bcm_num);
+        JSONObject object = new JSONObject();
+        object.put("lastDelivery", dtos);
+        return object;
+    }
 }
