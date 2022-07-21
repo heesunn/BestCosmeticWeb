@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.study.springboot.goods.service.*;
-import com.study.springboot.member.service.BasketService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dao.InBagDao;
+import com.study.springboot.goods.dao.QuestionDao;
 import com.study.springboot.goods.dao.ReviewDao;
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.service.DeleteService;
@@ -25,6 +24,7 @@ import com.study.springboot.goods.service.ListService;
 import com.study.springboot.goods.service.PageDetailService;
 import com.study.springboot.goods.service.QuestionListViewService;
 import com.study.springboot.goods.service.ReviewListViewService;
+import com.study.springboot.member.service.BasketService;
 
 @Controller
 public class GoodsController
@@ -36,6 +36,8 @@ public class GoodsController
 	private InBagDao inBagDao;
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private QuestionDao questionDao;
 	@Autowired
 	ListService listService;
 	@Autowired
@@ -311,6 +313,18 @@ public class GoodsController
 							request.getParameter("BCR_CONTENT"));
 		return "guest/goods/detailPage";
 	}
+	
+	//문의 작성
+		@RequestMapping("/member/uploadQnA")
+		public String uploadQnA(HttpServletRequest request, Model model) throws IOException {
+			questionDao.uploadQnA(Integer.parseInt(request.getParameter("BCG_KEY")),
+								  request.getParameter("BCG_NAME"), 
+							 	  Integer.parseInt(request.getParameter("BCM_NUM")),
+								  request.getParameter("BCM_NAME"),
+								  request.getParameter("BCQ_CONTENT"),
+								  request.getParameter("BCQ_SECRET"));
+			return "guest/goods/detailPage";
+		}
 	
 	//상단, 좌측 메뉴 조각들**********************************************************************************************
 	@RequestMapping("/guest/menuLeft")        //좌측 메뉴

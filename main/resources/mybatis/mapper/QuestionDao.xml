@@ -16,5 +16,8 @@
     <select id="questionListViewArticlePage" resultType="_int">
         SELECT COUNT(*) AS TOTAL FROM BC_QUESTION WHERE BCG_KEY = #{param1}
     </select>
-
+	<insert id="uploadQnA">
+		insert into BC_QUESTION (BCG_KEY, BCG_NAME, BCM_NUM, BCM_NAME, BCQ_DATE, BCQ_CONTENT, BCQ_SECRET, BCA_DATE, BCA_CONTENT) 
+			values (#{param1}, #{param2}, #{param3}, #{param4}, sysdate, #{param5}, #{param6}, null, null)
+	</insert>
 </mapper>

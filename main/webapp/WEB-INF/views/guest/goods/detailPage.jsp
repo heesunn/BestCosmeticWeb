@@ -5,10 +5,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	int bcm_num = 0;
+	String bcm_name = ""; 
 	if(session.getAttribute("num")!=null) {
 		bcm_num = (int)session.getAttribute("num");
-	} else {
-		bcm_num = 0;
+		bcm_name = (String)session.getAttribute("name");
 	}
 %>
 <!DOCTYPE html>
@@ -127,6 +127,25 @@
 	        	window.location.reload;
 	        }       	
 	    });
+	}
+	
+	function uploadQnA() {                 //문의하기
+		if(<%=bcm_num%> == 0) {
+			window.location='/guest/loginView';
+		} else {
+			var queryString=$("#uploadQ").serialize();
+            console.log(queryString);
+			$.ajax({
+            	url: '/member/uploadQnA',  
+                type: 'POST',
+                data: queryString,
+                dataType: 'text',
+                complete: function(json) {
+                	alert("등록 완료");
+                	return;
+                },				
+            });
+		}
 	}
 </script>
 <style type="text/css">
@@ -345,11 +364,25 @@
 		</table>
 	</div>
 	<div id="qnaView" style="display: none">
-		<h1>문의</h1>
+		<h1>문의창 : ${BCG_NAME}</h1>
 		<table border="1">
 			<c:if test="${questionPage.totalCount==0}"> 
 				<tr><td colspan="11">문의가 없습니다.</td></tr>
 			</c:if> 
+			<form id="uploadQ" name="uploadQ">
+			    <tr>
+			    	<td>
+			    		<textarea id="BCQ_CONTENT" name="BCQ_CONTENT" cols="50" rows="5"></textarea>
+			    		<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">
+						<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">
+						<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">
+						<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">
+						<br>
+						비밀글설정 <input type="checkbox" name="BCQ_SECRET" id="BCQ_SECRET">
+	    			</td>
+	    			<td><input type="button" value="등록" onclick="uploadQnA()"></td>
+	    		</tr>
+    		</form>
 			<c:forEach items="${questionList}" var="dto">
 				<c:if test="${dto.bca_content==null}"> <tr><td>답변대기중</td></tr> </c:if>
 				<c:if test="${dto.bca_content!=null}"> <tr><td>답변완료</td></tr> </c:if>
