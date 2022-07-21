@@ -36,7 +36,7 @@ public interface GoodsDao
 	//포인트리스트 찜(굿즈테이블업데이트)
 	public int goodsTableUpdate(int bcg_key);
 	//포인트리스트 찜(갯수 가져오기)
-	public int likeCount(int count);
+	public int likeCount(int bcm_num, int bcg_key);
 
 	public ArrayList<GoodsJoinLikes> sessionPointList(int bcm_num,int end, int start);
 	public ArrayList<GoodsJoinLikes> seessionXPointList(int end, int start);

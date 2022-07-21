@@ -250,17 +250,15 @@ public class GoodsController
 	}
 	
 	//카테고리 - 찜
-		@RequestMapping("/member/glike")   
-		public String like(HttpServletRequest request, Model model, int count) {
-			String bcm_num = request.getParameter("BCM_NUM");		
-			int bcg_key = Integer.parseInt(request.getParameter("BCG_KEY"));
-			likeService.likeTableUpdate(request, model);
-
-			model.addAttribute("like", goodsDao.likeCount(count));
-			System.out.println(count);
-			
-	        return "guest/goods/categoryPoint"; 
-		}
+	@RequestMapping("/member/glike")   
+	public String like(HttpServletRequest request, Model model) {
+		String bcm_num = request.getParameter("BCM_NUM");		
+		int bcg_key = Integer.parseInt(request.getParameter("BCG_KEY"));
+		System.out.println(bcm_num);
+		System.out.println(bcg_key);
+		likeService.likeTableUpdate(request, model);
+        return "guest/goods/categoryPoint"; 
+	}
 	
 	//상세페이지 뷰
 	@RequestMapping("/guest/detailPage")   

@@ -74,6 +74,22 @@
 		}
 	}
 	
+	function likeUpdate() {     //찜 업데이트
+	   	var queryString=$("#list").serialize();
+  		//var queryString = "BCM_NUM=" + $("#BCM_NUM").val();
+  		//queryString = queryString + "&BCG_KEY=" + $("#key${dto.bcg_key }").val();
+	    console.log(queryString);
+	    $.ajax({
+	    	url: '/member/glike',  
+	        type: 'POST',
+	        data: queryString,
+	        dataType: 'text',
+	        success: function(json) {  
+	        	window.location.reload;
+	        }       	
+	    });
+	}
+	
 
 	
 </script>
@@ -93,7 +109,26 @@
 					<thead>
 						<tr>
 							<td colspan="3">${BCG_NAME}</td>
-							<td>♡</td>
+							<td>
+								<form id="list" name="list">
+					         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num %>">
+					         		<input type="hidden" id="key" name="BCG_KEY" value="${BCG_KEY}">
+					                <c:choose>
+					                    <c:when test="${ (sessionScope.num) == null}">
+					                    </c:when>
+					                    <c:otherwise>
+					                        <c:choose>
+					                            <c:when test="${like == 0}">
+					                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate()">
+					                            </c:when>
+					                            <c:otherwise>
+					                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate()">
+					                            </c:otherwise>
+					                        </c:choose>
+					                    </c:otherwise>
+					                </c:choose>
+					         	</form>
+							</td>
 						</tr>
 					</thead>
 					<tbody>

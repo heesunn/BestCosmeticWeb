@@ -79,16 +79,6 @@
 		select count(*) from bc_like where bcm_num = #{param1} and bcg_key = #{param2}
 	</select>
 
-	<!--  
-	<update id="goodsTableUpdate">
-      merge into BC_GOODS using dual 
-         on (BCM_NUM = #{param1} and BCG_KEY = #{param2} )
-         when matched then 
-         	update set bcg_like = bcg_like-1 where BCG_KEY = #{param1}
-         when not matched then 
-            update set bcg_like = bcg_like+1 where BCG_KEY = #{param1}     
-   	</update>
-   	-->
    	<update id="likeTableUpdate">
       merge into BC_LIKE using dual 
          on (BCM_NUM = #{param1} and BCG_KEY = #{param2} )
@@ -98,6 +88,7 @@
          when not matched then 
             insert (BCM_NUM, BCG_KEY, BCL_DATE) values(#{param1}, #{param2}, sysdate)        
    	</update>
+   	
 	<!-- 세션 있을때 -->
 	<select id="sessionPointList" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
 		select *

@@ -27,7 +27,10 @@ public class GLikeServiceImpl implements GLikeService{
 		
 		int insertCount = goodsDao.likeTableUpdate(bcm_num, bcg_key);
 		int updateCount = goodsDao.goodsTableUpdate(bcg_key);
+		int likeCount = goodsDao.likeCount(bcm_num, bcg_key);
+		model.addAttribute("like", likeCount);
+		System.out.println(likeCount);
 		
-		return insertCount;
+		return likeCount;
 	}
 }
