@@ -325,34 +325,27 @@ function submit_state() {
 		    					console.log(data.length);
 		    					var text = "";
 		    					for(var i=0; i<data.length; i++) {
+		    						var bcg_price = data[i].bcg_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    						var total_price = data[i].total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		    						text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
 		    						text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
-		    						text += '<p class="text">금액 : <span id="iprice">'+data[i].bcg_price+'</span>원</p><br>';
+		    						text += '<p class="text">금액 : <span>'+bcg_price+'</span>원</p><br>';
 		    						text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 		    						text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
-		    						text += '<p class="text">결제 금액 : <span id="itotalprice">'+data[i].total_price+'</span>원</p><br>';
-		    						text += '<c:if test="'+data[i].bco_order_status+' == '+구매확정+'}">';
-		    						text += '<form action="/member/">';
-		    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-		    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
-		    						text += '<input type="submit" value="리뷰쓰기">';
-		    						text += '</form>';
-		    						text += '</c:if>';
-		    						text += '<c:if test="'+data[i].bco_order_status+' == '+배송완료+'}">';
-		    						text += '<button>구매확정 하러가기</button>';
-		    						text += '</c:if>';
+		    						text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
+		    						if(data[i].bco_order_status == '구매확정') {
+		    							text += '<form action="/member/reviewWrite">';
+		    							text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
+		    							text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
+			    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
+			    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
+			    						text += '<input type="submit" value="리뷰쓰기">';
+			    						text += '</form>';
+		    						}
 		    						text += '<hr>';
 		    						console.log(text);
 		    						$('#infoDiv').empty().append(text);
 		    					}
-		    					var moneys = $('#iprice').text();
-		    				    var moneys2 = moneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    				    $('#iprice').text(moneys2);
-		    				    
-		    				    var totalMoneys = $('#itotalprice').text();
-		    				    var totalMoneys2 = totalMoneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    				    $('#itotalprice').text(totalMoneys2);
-		    					document.getElementById("popup_layer").style.display = "block";
 		    				}
 						});
 					}

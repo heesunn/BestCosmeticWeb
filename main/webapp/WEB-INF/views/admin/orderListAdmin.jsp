@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>배송준비</title>
 <style>
+	.stateButton {
+		float : left;
+		margin-top : 10px;
+	}
 	.orderInfo {
 		display : none;
 	}
@@ -236,15 +240,17 @@ function selectAll(selectAll)  {
 	})
 }
 function submit_state() {
-	var queryString = $("input:checkbox[name=bco_ordernum]:checked").serialize();
+	var queryString = $('#stateChangeTotalList').serialize();
+	queryString += "&";
+	queryString += $("input:checkbox[name=bco_ordernum]:checked").serialize();
 	
 	$.ajax({
-		url : '/admin/stateInTransit',
+		url : '/admin/stateChange',
 		type : 'POST',
 		data : queryString,
 		success : function(data) {
 			if(data == 'success'){
-				alert("선택 하신 주문의 상태가 '배송중' 으로 변경되었습니다.");
+				alert("주문 상태가 변경되었습니다.");
 				window.location.reload();
 			}
 			else {
@@ -262,18 +268,19 @@ function submit_state() {
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-	<h1>배송준비</h1>
+	<h1>주문리스트</h1>
 	<div>
-		<form action="/admin/drSearch">
+		<form action="/admin/olSearch">
 			<select name="searchType" id='serch'>
 				<option value='bcm_name'>주문인</option>
 				<option value='bco_recipient'>수령인</option>
 				<option value='bco_ordernum'>주문번호</option>
+				<option value='bco_order_status'>주문상태</option>
 			</select>
 			<input type="text" name="searchWord">
 			<input type="submit" value="검색">
 		</form>
-		<button onclick="javascript:window.location = '/admin/deliveryReady'">검색 초기화</button>
+		<button onclick="javascript:window.location = '/admin/orderListAdmin'">검색 초기화</button>
 		<span>검색결과 : ${page.totalCount} 건</span>&nbsp;&nbsp;&nbsp;ㅣ <span>총결제금액 : <strong id="totalprice">${totalPrice }</strong></span>
 		<script>
 			var money = $('#totalprice').text();
@@ -289,33 +296,35 @@ function submit_state() {
 		            <th>주문번호</th>
 		            <th>주문일<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
 		            <th>주문인<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
-		            <th>수령인<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
+		            <th>수령인</th>
 		            <th>결제총액<button onclick="sortTD(5)">▲</button><button onclick="reverseTD(5)">▼</button></th>
 		            <th>주문내역</th>
+		            <th>주문상태</th>
 	            </tr>
 	        </thead>
 	        <tbody>
-	    	<c:forEach items="${deliveryReady}" var="ready">
+	    	<c:forEach items="${orderListAdmin}" var="list">
 		        <tr>
-		        	<td><input type='checkbox' name='bco_ordernum' value='${ready.bco_ordernum}' onclick='checkSelectAll(event)'/></td>
-		            <td>${ready.bco_ordernum}</td>
-		            <td><fmt:formatDate value="${ready.bco_orderdate}" pattern="yyyy-MM-dd HH:mm"/></td>
-		            <td>${ready.bcm_name}</td>
-		            <td>${ready.bco_recipient}</td>
-		            <td id="price${ready.bco_ordernum}">${ready.bco_totalprice}</td>
+		        	<td><input type='checkbox' name='bco_ordernum' value='${list.bco_ordernum}' onclick='checkSelectAll(event)'/></td>
+		            <td>${list.bco_ordernum}</td>
+		            <td><fmt:formatDate value="${list.bco_orderdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+		            <td>${list.bcm_name}</td>
+		            <td>${list.bco_recipient}</td>
+		            <td id="price${list.bco_ordernum}">${list.bco_totalprice}</td>
 		            <td><a href="#" 
-		            	onclick="javascript:openPop${ready.bco_ordernum}()">${ready.bco_order_name}</a>
+		            	onclick="javascript:openPop${list.bco_ordernum}()">${list.bco_order_name}</a>
 		            </td>
+		            <td>${list.bco_order_status}</td>
 		        </tr>
 		        <script>
-				    var money = $('#price${ready.bco_ordernum}').text();
+				    var money = $('#price${list.bco_ordernum}').text();
 				    var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				    $('#price${ready.bco_ordernum}').text(money2+"원");
+				    $('#price${list.bco_ordernum}').text(money2+"원");
 				</script>
 				<script>
-					function openPop${ready.bco_ordernum}() {
+					function openPop${list.bco_ordernum}() {
 		    	
-						var queryString = 'bco_ordernum=${ready.bco_ordernum}';
+						var queryString = 'bco_ordernum=${list.bco_ordernum}';
 	
 						$.ajax({
 		    				url : '/member/orderDetail',
@@ -325,33 +334,26 @@ function submit_state() {
 		    					console.log(data.length);
 		    					var text = "";
 		    					for(var i=0; i<data.length; i++) {
+		    						var bcg_price = data[i].bcg_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    						var total_price = data[i].total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		    						text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
 		    						text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
-		    						text += '<p class="text">금액 : <span id="iprice">'+data[i].bcg_price+'</span>원</p><br>';
+		    						text += '<p class="text">금액 : <span>'+bcg_price+'</span>원</p><br>';
 		    						text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 		    						text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
-		    						text += '<p class="text">결제 금액 : <span id="itotalprice">'+data[i].total_price+'</span>원</p><br>';
-		    						text += '<c:if test="'+data[i].bco_order_status+' == '+구매확정+'}">';
-		    						text += '<form action="/member/">';
-		    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-		    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
-		    						text += '<input type="submit" value="리뷰쓰기">';
-		    						text += '</form>';
-		    						text += '</c:if>';
-		    						text += '<c:if test="'+data[i].bco_order_status+' == '+배송완료+'}">';
-		    						text += '<button>구매확정 하러가기</button>';
-		    						text += '</c:if>';
+		    						text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
+		    						if(data[i].bco_order_status == '구매확정') {
+		    							text += '<form action="/member/reviewWrite">';
+		    							text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
+		    							text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
+			    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
+			    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
+			    						text += '<input type="submit" value="리뷰쓰기">';
+			    						text += '</form>';
+		    						}
 		    						text += '<hr>';
-		    						console.log(text);
 		    						$('#infoDiv').empty().append(text);
 		    					}
-		    					var moneys = $('#iprice').text();
-		    				    var moneys2 = moneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    				    $('#iprice').text(moneys2);
-		    				    
-		    				    var totalMoneys = $('#itotalprice').text();
-		    				    var totalMoneys2 = totalMoneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    				    $('#itotalprice').text(totalMoneys2);
 		    					document.getElementById("popup_layer").style.display = "block";
 		    				}
 						});
@@ -360,7 +362,7 @@ function submit_state() {
 			</c:forEach>
 	    	</tbody>
 	        <tr>
-	            <td colspan="7">
+	            <td colspan="8">
 	                <!--처음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1)<1}">
@@ -368,10 +370,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=1">[ &lt;&lt; ]</a>
+	                        	<a href="orderListAdmin?page=1">[ &lt;&lt; ]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+	                        	<a href="olSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -383,10 +385,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=${page.curPage-1}">[&lt;]</a>
+	                        	<a href="orderListAdmin?page=${page.curPage-1}">[&lt;]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+	                        	<a href="olSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -400,10 +402,10 @@ function submit_state() {
 	
 	                        <c:otherwise>
 	                        	<c:if test="${page.searchType == null }">
-	                            	<a href="deliveryReady?page=${fEach}">[${fEach}]</a>&nbsp;
+	                            	<a href="orderListAdmin?page=${fEach}">[${fEach}]</a>&nbsp;
 	                            </c:if>
 	                            <c:if test="${page.searchType != null }">
-	                            	<a href="drSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
+	                            	<a href="olSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
 	                            </c:if>
 	                        </c:otherwise>
 	                    </c:choose>
@@ -416,10 +418,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=${page.curPage+1}">[&gt;]</a>
+	                        	<a href="orderListAdmin?page=${page.curPage+1}">[&gt;]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+	                        	<a href="olSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -431,10 +433,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=${page.totalPage}">[&gt;&gt;]</a>
+	                        	<a href="orderListAdmin?page=${page.totalPage}">[&gt;&gt;]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+	                        	<a href="olSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -465,7 +467,22 @@ function submit_state() {
 			function sortTD( index ){    replace.ascending( index );    } 
 			function reverseTD( index ){    replace.descending( index );    } 
 		</script>
-    	<button onclick="submit_state()">선택한 주문 배송시작</button>
+		<form id="stateChangeTotalList">
+			<select name="status" id='serch'>
+				<option value='배송준비중'>배송준비중</option>
+				<option value='배송중'>배송중</option>
+				<option value='배송완료'>배송완료</option>
+				<option value='구매확정'>구매확정</option>
+				<option value='취소신청'>취소신청</option>
+				<option value='취소완료'>취소완료</option>
+				<option value='교환신청'>교환신청</option>
+				<option value='교환상품회수중'>교환상품회수중</option>
+				<option value='반품신청'>반품신청</option>
+				<option value='반품회수중'>반품회수중</option>
+				<option value='반품완료'>반품완료</option>
+			</select>
+			<input type="button" onclick="submit_state()" value="변경">
+		</form>
 	</div>
 </body>
 </html>

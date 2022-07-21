@@ -127,17 +127,126 @@
 			where B.num >= #{param3}
 	</select>
 	<update id="stateInTransitChange">
-		update bc_order_history set bco_order_status = '배송중' where bco_ordernum = #{param1}
+		update bc_order_history set bco_order_status = '배송중', bco_statusdate = sysdate where bco_ordernum = #{param1}
 	</update>
 	<update id="stateDeliveryCompletedChange">
-		update bc_order_history set bco_order_status = '배송완료' where bco_ordernum = #{param1}
+		update bc_order_history set bco_order_status = '배송완료', bco_statusdate = sysdate where bco_ordernum = #{param1}
 	</update>
-	
+	<update id="stateChange">
+		update bc_order_history set bco_order_status = #{param1}, bco_statusdate = sysdate where bco_ordernum = #{param2}
+	</update>
 	<select id="orderManagementCER" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
-		select bco_ordernum, bco_orderdate, bcm_name, bco_recipient, bco_totalprice, bco_order_name from ( select rownum num, A.* from (
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
 			select * from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') order by bco_orderdate desc ) A 
 			<![CDATA[where rownum <= #{param1}]]> ) B 
 			where B.num >= #{param2}
+	</select>
+	<select id="orderManagementCERCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정')
+	</select>
+	<select id="orderManagementCERTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정')
+	</select>
+	<select id="nameOrderManagementCERCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bcm_name like #{param1}
+	</select>
+	<select id="nameOrderManagementCERTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bcm_name like #{param1}
+	</select>
+	<select id="nameOrderManagementCER" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bcm_name like #{param1} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	<select id="ordernumOrderManagementCERCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bco_ordernum like #{param1}
+	</select>
+	<select id="ordernumOrderManagementCERTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bco_ordernum like #{param1}
+	</select>
+	<select id="ordernumOrderManagementCER" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bco_ordernum like #{param1} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	<select id="orderStatusOrderManagementCERCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bco_order_status like #{param1}
+	</select>
+	<select id="orderStatusOrderManagementCERTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bco_order_status like #{param1}
+	</select>
+	<select id="orderStatusOrderManagementCER" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') and bco_order_status like #{param1} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param3}
+	</select>
+	
+	
+	
+	
+	
+	<select id="TotalOrderListCount" resultType="_int">
+		select count(*) as total from bc_order_history
+	</select>
+	<select id="TotalOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param1}]]> ) B 
+			where B.num >= #{param2}
+	</select>
+	<select id="TotalOrderListTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history
+	</select>
+	<select id="nameTotalOrderListCount" resultType="_int">
+		select count(*) as total from bc_order_history where bcm_name like #{param1}
+	</select>
+	<select id="nameTotalOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bcm_name like #{param3} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param1}]]> ) B 
+			where B.num >= #{param2}
+	</select>
+	<select id="nameTotalOrderListTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bcm_name like #{param1}
+	</select>
+	<select id="recipientTotalOrderListCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_recipient like #{param1}
+	</select>
+	<select id="recipientTotalOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_recipient like #{param3} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param1}]]> ) B 
+			where B.num >= #{param2}
+	</select>
+	<select id="recipientTotalOrderListTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_recipient like #{param1}
+	</select>
+	<select id="ordernumTotalOrderListCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_ordernum like #{param1}
+	</select>
+	<select id="ordernumTotalOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_ordernum like #{param3} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param1}]]> ) B 
+			where B.num >= #{param2}
+	</select>
+	<select id="ordernumTotalOrderListTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_ordernum like #{param1}
+	</select>
+	<select id="orderStatusTotalOrderListCount" resultType="_int">
+		select count(*) as total from bc_order_history where bco_order_status like #{param1}
+	</select>
+	<select id="orderStatusTotalOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		select bcm_num, bco_ordernum, bcm_name, bco_recipient, bco_totalprice, bco_order_status, bco_orderdate, bco_deliverydate, bco_statusdate, bco_order_name from ( select rownum num, A.* from (
+			select * from bc_order_history where bco_order_status like #{param3} order by bco_orderdate desc ) A 
+			<![CDATA[where rownum <= #{param1}]]> ) B 
+			where B.num >= #{param2}
+	</select>
+	<select id="orderStatusTotalOrderListTotalPrice" resultType="string">
+		select sum(bco_totalprice) from bc_order_history where bco_order_status like #{param1}
 	</select>
 </mapper>
 <!--

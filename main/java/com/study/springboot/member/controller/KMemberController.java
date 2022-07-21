@@ -143,10 +143,15 @@ public class KMemberController
 		OrderManagement.purchaseConfirmation(request, model);
 		return "/admin/purchaseConfirmation";
 	}
-	@RequestMapping("/admin/adminCER")
+	@RequestMapping("/admin/cancelExchangeRefundAdmin")
 	public String cancelExchangeRefundAdmin(HttpServletRequest request, Model model) {
 		OrderManagement.cancelExchangeRefundAdmin(request, model);
 		return "/admin/cancelExchangeRefundAdmin";
+	}
+	@RequestMapping("/admin/orderListAdmin")
+	public String orderListAdmin(HttpServletRequest request, Model model) {
+		OrderManagement.orderListAdmin(request, model);
+		return "/admin/orderListAdmin";
 	}
 	
 	
@@ -175,6 +180,11 @@ public class KMemberController
 		OrderManagement.cerSearch(request, model);
 		return "/admin/cancelExchangeRefundAdmin";
 	}
+	@RequestMapping("/admin/olSearch")
+	public String olSearch(HttpServletRequest request, Model model) {
+		OrderManagement.olSearch(request, model);
+		return "/admin/orderListAdmin";
+	}
 	
 	
 	@RequestMapping("/admin/stateInTransit")
@@ -189,10 +199,10 @@ public class KMemberController
 		
 		return result;
 	}
-	@RequestMapping("/admin/stateChangeCER")
-	public @ResponseBody String stateChangeCER(HttpServletRequest request, Model model) {
-		String result = OrderManagement.stateChangeCER(request, model);
-		
+	@RequestMapping("/admin/stateChange")
+	public @ResponseBody String stateChange(HttpServletRequest request, Model model) {
+		String result = OrderManagement.stateChange(request, model);
+
 		return result;
 	}
 }

@@ -37,9 +37,9 @@
                     <li class="list" onclick="javascript:window.location = '/admin/deliveryReady'">배송준비</li>
                     <li class="list" onclick="javascript:window.location = '/admin/inTransit'">배송중</li>
                     <li class="list" onclick="javascript:window.location = '/admin/deliveryCompleted'">배송완료</li>
-                    <li class="list" >취소/교환/반품</li>
+                    <li class="list" onclick="javascript:window.location = '/admin/cancelExchangeRefundAdmin'">취소/교환/반품</li>
                     <li class="list" onclick="javascript:window.location = '/admin/purchaseConfirmation'">구매확정</li>
-                    <li class="list" >주문리스트</li>
+                    <li class="list" onclick="javascript:window.location = '/admin/orderListAdmin'">주문리스트</li>
                 </ul>
             </li>
             <li>
