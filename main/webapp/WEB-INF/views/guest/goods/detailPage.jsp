@@ -471,5 +471,6 @@
 		$("#reViewView").css({ 'display' : 'none' });
 	}
 </script>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

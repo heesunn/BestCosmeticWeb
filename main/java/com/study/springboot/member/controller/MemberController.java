@@ -226,4 +226,5 @@ public class MemberController
 		JSONObject obj = utilService.lastDeliveryDestination(request);
 		return obj;
 	}
+
 }

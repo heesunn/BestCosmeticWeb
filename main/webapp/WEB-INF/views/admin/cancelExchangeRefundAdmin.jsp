@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>배송준비</title>
 <style>
+	.stateButton {
+		float : left;
+		margin-top : 10px;
+	}
 	.orderInfo {
 		display : none;
 	}
@@ -36,7 +40,7 @@
 	/*popup*/
 </style>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script>
+<script type="text/javascript">
 
 // 출처 : http://tonks.tistory.com/79 
 // 에러가 나온다면, 여기에 댓글을 남겨주세요. 
@@ -235,16 +239,20 @@ function selectAll(selectAll)  {
 		checkbox.checked = selectAll.checked;
 	})
 }
-function submit_state() {
-	var queryString = $("input:checkbox[name=bco_ordernum]:checked").serialize();
+function submit_state(text) {
+	var status = text;
+	var queryString = "status="+status+"&";
+	queryString += $("input:checkbox[name=bco_ordernum]:checked").serialize();
+	console.log(queryString);
 	
 	$.ajax({
-		url : '/admin/stateInTransit',
+		url : '/admin/stateChange',
 		type : 'POST',
 		data : queryString,
 		success : function(data) {
+			console.log(data);
 			if(data == 'success'){
-				alert("선택 하신 주문의 상태가 '배송중' 으로 변경되었습니다.");
+				alert("선택 하신 주문의 상태가 "+status+" 로 변경되었습니다.");
 				window.location.reload();
 			}
 			else {
@@ -273,7 +281,7 @@ function submit_state() {
 			<input type="text" name="searchWord">
 			<input type="submit" value="검색">
 		</form>
-		<button onclick="javascript:window.location = '/admin/deliveryReady'">검색 초기화</button>
+		<button onclick="javascript:window.location = '/admin/cancelExchangeRefundAdmin'">검색 초기화</button>
 		<span>검색결과 : ${page.totalCount} 건</span>&nbsp;&nbsp;&nbsp;ㅣ <span>총결제금액 : <strong id="totalprice">${totalPrice }</strong></span>
 		<script>
 			var money = $('#totalprice').text();
@@ -287,35 +295,35 @@ function submit_state() {
 	        	<tr>
 		        	<th><input type='checkbox' name='selectall' value='selectall' onclick='selectAll(this)'/></th>
 		            <th>주문번호</th>
-		            <th>주문일<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
+		            <th>신청일시<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
 		            <th>주문인<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
-		            <th>수령인<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
-		            <th>결제총액<button onclick="sortTD(5)">▲</button><button onclick="reverseTD(5)">▼</button></th>
+		            <th>결제총액<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
 		            <th>주문내역</th>
+		            <th>주문상태</th>
 	            </tr>
 	        </thead>
 	        <tbody>
-	    	<c:forEach items="${deliveryReady}" var="ready">
+	    	<c:forEach items="${cancelExchangeRefundAdmin}" var="cer">
 		        <tr>
-		        	<td><input type='checkbox' name='bco_ordernum' value='${ready.bco_ordernum}' onclick='checkSelectAll(event)'/></td>
-		            <td>${ready.bco_ordernum}</td>
-		            <td><fmt:formatDate value="${ready.bco_orderdate}" pattern="yyyy-MM-dd HH:mm"/></td>
-		            <td>${ready.bcm_name}</td>
-		            <td>${ready.bco_recipient}</td>
-		            <td id="price${ready.bco_ordernum}">${ready.bco_totalprice}</td>
+		        	<td><input type='checkbox' name='bco_ordernum' value='${cer.bco_ordernum}' onclick='checkSelectAll(event)'/></td>
+		            <td>${cer.bco_ordernum}</td>
+		            <td><fmt:formatDate value="${cer.bco_statusdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+		            <td>${cer.bcm_name}</td>
+		            <td id="price${cer.bco_ordernum}">${cer.bco_totalprice}</td>
 		            <td><a href="#" 
-		            	onclick="javascript:openPop${ready.bco_ordernum}()">${ready.bco_order_name}</a>
+		            	onclick="javascript:openPop${cer.bco_ordernum}()">${cer.bco_order_name}</a>
 		            </td>
+		            <td>${cer.bco_order_status}</td>
 		        </tr>
 		        <script>
-				    var money = $('#price${ready.bco_ordernum}').text();
+				    var money = $('#price${cer.bco_ordernum}').text();
 				    var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				    $('#price${ready.bco_ordernum}').text(money2+"원");
+				    $('#price${cer.bco_ordernum}').text(money2+"원");
 				</script>
 				<script>
-					function openPop${ready.bco_ordernum}() {
+					function openPop${cer.bco_ordernum}() {
 		    	
-						var queryString = 'bco_ordernum=${ready.bco_ordernum}';
+						var queryString = 'bco_ordernum=${cer.bco_ordernum}';
 	
 						$.ajax({
 		    				url : '/member/orderDetail',
@@ -325,33 +333,26 @@ function submit_state() {
 		    					console.log(data.length);
 		    					var text = "";
 		    					for(var i=0; i<data.length; i++) {
+		    						var bcg_price = data[i].bcg_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    						var total_price = data[i].total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		    						text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
 		    						text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
-		    						text += '<p class="text">금액 : <span id="iprice">'+data[i].bcg_price+'</span>원</p><br>';
+		    						text += '<p class="text">금액 : <span>'+bcg_price+'</span>원</p><br>';
 		    						text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 		    						text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
-		    						text += '<p class="text">결제 금액 : <span id="itotalprice">'+data[i].total_price+'</span>원</p><br>';
-		    						text += '<c:if test="'+data[i].bco_order_status+' == '+구매확정+'}">';
-		    						text += '<form action="/member/">';
-		    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-		    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
-		    						text += '<input type="submit" value="리뷰쓰기">';
-		    						text += '</form>';
-		    						text += '</c:if>';
-		    						text += '<c:if test="'+data[i].bco_order_status+' == '+배송완료+'}">';
-		    						text += '<button>구매확정 하러가기</button>';
-		    						text += '</c:if>';
+		    						text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
+		    						if(data[i].bco_order_status == '구매확정') {
+		    							text += '<form action="/member/reviewWrite">';
+		    							text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
+		    							text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
+			    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
+			    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
+			    						text += '<input type="submit" value="리뷰쓰기">';
+			    						text += '</form>';
+		    						}
 		    						text += '<hr>';
-		    						console.log(text);
 		    						$('#infoDiv').empty().append(text);
 		    					}
-		    					var moneys = $('#iprice').text();
-		    				    var moneys2 = moneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    				    $('#iprice').text(moneys2);
-		    				    
-		    				    var totalMoneys = $('#itotalprice').text();
-		    				    var totalMoneys2 = totalMoneys.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		    				    $('#itotalprice').text(totalMoneys2);
 		    					document.getElementById("popup_layer").style.display = "block";
 		    				}
 						});
@@ -368,10 +369,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=1">[ &lt;&lt; ]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=1">[ &lt;&lt; ]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+	                        	<a href="cerSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -383,10 +384,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=${page.curPage-1}">[&lt;]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=${page.curPage-1}">[&lt;]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+	                        	<a href="cerSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -400,10 +401,10 @@ function submit_state() {
 	
 	                        <c:otherwise>
 	                        	<c:if test="${page.searchType == null }">
-	                            	<a href="deliveryReady?page=${fEach}">[${fEach}]</a>&nbsp;
+	                            	<a href="cancelExchangeRefundAdmin?page=${fEach}">[${fEach}]</a>&nbsp;
 	                            </c:if>
 	                            <c:if test="${page.searchType != null }">
-	                            	<a href="drSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
+	                            	<a href="cerSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
 	                            </c:if>
 	                        </c:otherwise>
 	                    </c:choose>
@@ -416,10 +417,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=${page.curPage+1}">[&gt;]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=${page.curPage+1}">[&gt;]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+	                        	<a href="cerSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -431,10 +432,10 @@ function submit_state() {
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryReady?page=${page.totalPage}">[&gt;&gt;]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=${page.totalPage}">[&gt;&gt;]</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="drSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+	                        	<a href="cerSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -465,7 +466,12 @@ function submit_state() {
 			function sortTD( index ){    replace.ascending( index );    } 
 			function reverseTD( index ){    replace.descending( index );    } 
 		</script>
-    	<button onclick="submit_state()">선택한 주문 배송시작</button>
+		<p class="stateButton">선택 주문 : </p>
+    	<button class="stateButton" onclick="submit_state('취소완료')">취소 완료</button>
+    	<button class="stateButton" onclick="submit_state('교환상품회수중')">교환 회수</button>
+    	<button class="stateButton" onclick="submit_state('배송완료')">교환 완료</button>
+    	<button class="stateButton" onclick="submit_state('반품회수중')">반품 회수</button>
+    	<button class="stateButton" onclick="submit_state('반품완료')">반품 완료</button>
 	</div>
 </body>
 </html>

@@ -240,7 +240,7 @@
                     <td><input type="button" value="보기" onclick="crm${dto.bcm_num}()"></td>
                 </tr>
                 <div id="popupDiv${dto.bcm_num}" style="background-color:black; display: none; position: absolute;top: 100px;left: 300px;z-index: 999999;">
-                    <div style="width: 500px;height: 800px; background-color: black;color: white">
+                    <div style="width: 500px;height: 600px; background-color: black;color: white">
                         <h2>회원 기본정보</h2>
                         회원 번호 : ${dto.bcm_num} <br>
                         이름 : ${dto.bcm_name} <br>

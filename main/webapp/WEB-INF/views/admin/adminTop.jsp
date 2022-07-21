@@ -12,9 +12,9 @@
 <body>
 <table>
 	<tr>
-		<td><div>Best코스메틱</div></td>
-		<td><div>관리자 페이지</div></td>
-		<td><div>관리자 <%=name %>님 <a href="/logout">(로그아웃)</a></div></td>
+		<td><p>Best코스메틱</p></td>
+		<td><p onclick="javascript:window.location = '/admin'">관리자 페이지</p></td>
+		<td><p>관리자 <%=name %>님 <a href="/logout">(로그아웃)</a></p></td>
 	</tr>
 </table>
 </body>

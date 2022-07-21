@@ -202,6 +202,6 @@ function sch() {     //검색기능
    하단 페이지 리스트 수 / pageCount : ${page.pageCount}<br>
    리스트 첫 페이지 / startPage : ${page.startPage}<br>
    리스트 마지막 페이지 / endPage : ${page.endPage}<br>
-         
+<c:import url="/guest/channelTalk"></c:import>   
 </body>
 </html>

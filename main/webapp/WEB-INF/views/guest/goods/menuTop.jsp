@@ -64,16 +64,16 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent" >
 						<ul class="navbar-nav mr-auto" >					
 							<li class="nav-item active">
-								<a class="nav-link" href="/member/mypageView" id="myTop">마이페이지</a>
+								<a class="nav-link" href="/member/orderDelivery" id="myTopMyPage">마이페이지</a>
 							</li>
 							<sec:authorize access="isAnonymous()">
 							<li class="nav-item active">
-								<a class="nav-link" href="/guest/loginView" id="myTop">로그인</a>
+								<a class="nav-link" href="/guest/loginView" id="myTopLogin">로그인</a>
 							</li>
 							</sec:authorize>
 							<sec:authorize access="isAuthenticated()">
 							<li class="nav-item active">
-								<a class="nav-link" href="/logout" id="myTop">로그아웃</a>
+								<a class="nav-link" href="/logout" id="myTopLogout">로그아웃</a>
 							</li>
 							</sec:authorize>
 							<li class="nav-item active">

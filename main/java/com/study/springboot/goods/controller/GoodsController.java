@@ -243,7 +243,7 @@ public class GoodsController
 	}
 	
 	//메인화면
-	@RequestMapping("/guest/mainHome")
+	@RequestMapping("/")
 	public String mainHome(HttpServletRequest request, Model model) {
 		listService.list(request, model);
         return "guest/goods/mainHome"; 

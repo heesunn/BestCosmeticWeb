@@ -17,10 +17,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>취소/교환/반품</title>
     <script src="http://code.jquery.com/jquery.js"></script>
 </head>
 <body>
+<div style="float: top">
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div>
     <div style="display:inline-block; background-color: #767b86;height: 100px;width: 200px;">
         <h2>장바구니</h2>
@@ -56,5 +59,6 @@
     <h1 style="color: blue">주문 완료 되었습니다.</h1>
     <a href="/member/orderDelivery">주문내역 보기</a>
 </div>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>
