@@ -25,6 +25,19 @@
 					<li class="nav-item active">
 						<a class="nav-link" onclick="">로그아웃</a>
 					</li>
+					<li class="nav-item active">
+						<a class="nav-link" onclick="javascript:window.location='/member/basketView'">
+							장바구니
+							<c:choose>
+								<c:when test="${basketCount>0}">
+									<span>${basketCount}</span>
+								</c:when>
+								<c:otherwise>
+									<span></span>
+								</c:otherwise>
+							</c:choose>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>

@@ -71,7 +71,7 @@ public class KMemberController
 	}
 	@RequestMapping("/member/passwordChange")
 	public String pwChangeView() {
-		return "/member/passwordChange";
+		return "member/passwordChange";
 	}
 	@RequestMapping("/member/pwCheck")
 	public @ResponseBody String pwCheck(HttpServletRequest request, Model model) {

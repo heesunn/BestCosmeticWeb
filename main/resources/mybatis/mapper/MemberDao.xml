@@ -294,6 +294,11 @@
         SET BCO_ORDER_STATUS = '구매확정'
         WHERE 14 &lt;= (SYSDATE - BCO_ORDERDATE)
     </update>
+    <select id="basketCount" resultType="_int">
+        select  count(*) as total
+        from bc_basket
+        where bcm_num = #{param1}
+    </select>
 </mapper>
 
 <!--
