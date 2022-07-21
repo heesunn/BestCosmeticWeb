@@ -50,15 +50,6 @@
                     <li class="list" onclick="javascript:window.location='/admin/stockManager'">재고관리</li>
                 </ul>
             </li>
-            <li>
-                게시물관리
-                <ul style="list-style-type: circle">
-                    <li class="list" >공지사항관리</li>
-                    <li class="list" >리뷰관리</li>
-                    <li class="list" >FAQ</li>
-                    <li class="list" >채팅문의</li>
-                </ul>
-            </li>
         </ul>
     </div>
 </body>
