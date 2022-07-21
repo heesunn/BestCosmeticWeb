@@ -34,5 +34,6 @@ function snsLogin(sns) {
 <button onclick="snsLogin('facebook')">Facebook Login</button><br>
 <button onclick="snsLogin('kakao')">Kakao Login</button><br>
 <button onclick="snsLogin('naver')">Naver Login</button>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

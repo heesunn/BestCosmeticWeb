@@ -133,5 +133,6 @@
 			</td>
 		</tr>
 	</table>	
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

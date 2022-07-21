@@ -64,5 +64,6 @@ function deleteCheck() {
 	회원 탈퇴에 동의하시겠습니까?</p><br>
 	<button onclick="deleteCheck()">회원탈퇴하기</button>
 </div>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

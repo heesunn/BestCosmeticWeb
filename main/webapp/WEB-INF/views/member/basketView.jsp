@@ -322,5 +322,6 @@
     $('#allPrice').text(allPrice2+"원");
     $('#prePrice').text(prePrice2+"원");
 </script>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

@@ -253,5 +253,6 @@
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
 </script>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

@@ -191,5 +191,6 @@
 		</div>
 	</div>
 </div>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

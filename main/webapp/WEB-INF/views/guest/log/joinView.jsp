@@ -258,5 +258,6 @@
         <h4 id="p1" style="color: red"></h4>
         <input type="button" value="가입하기" onclick="form_check()">
     </form>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

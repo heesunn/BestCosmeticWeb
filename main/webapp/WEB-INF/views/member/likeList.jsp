@@ -120,5 +120,6 @@
 		</tr>
 	</table>
 </div>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

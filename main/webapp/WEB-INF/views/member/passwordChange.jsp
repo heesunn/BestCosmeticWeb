@@ -103,5 +103,6 @@ function passwordCheck() {
 	    <button type="button" onclick="formTest()">비밀번호 변경</button>
 	</form>
 </div>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

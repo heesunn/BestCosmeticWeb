@@ -77,5 +77,6 @@
 			<td><input type='image' class='rightBtn' src='/image/rightBtn.png' onclick="next()"></td>
 		</tr>			
 	</table>	
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

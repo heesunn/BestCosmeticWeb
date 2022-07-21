@@ -59,5 +59,6 @@
     <h1 style="color: blue">주문 완료 되었습니다.</h1>
     <a href="/member/orderDelivery">주문내역 보기</a>
 </div>
+<c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

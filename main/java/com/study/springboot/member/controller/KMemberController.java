@@ -46,6 +46,10 @@ public class KMemberController
 	public String main() {
 		return "guest/log/main";
 	}
+	@RequestMapping("/guest/channelTalk")
+	public String channelTalk() {
+		return "guest/log/channelTalk";
+	}
 	@RequestMapping("/guest/loginView")
 	public String loginView(HttpServletRequest request) {
 		String uri = request.getHeader("Referer");
