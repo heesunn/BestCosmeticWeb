@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>주문배송</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
@@ -37,7 +37,9 @@
 	/*popup*/
 </style>
 <body>
-
+<div style="float: top">
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div style="float: left">
     <c:import url="/member/mypageView"></c:import>
 </div>

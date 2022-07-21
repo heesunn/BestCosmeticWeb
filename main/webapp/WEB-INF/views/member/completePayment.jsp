@@ -17,10 +17,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>취소/교환/반품</title>
     <script src="http://code.jquery.com/jquery.js"></script>
 </head>
 <body>
+<div style="float: top">
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div>
     <div style="display:inline-block; background-color: #767b86;height: 100px;width: 200px;">
         <h2>장바구니</h2>

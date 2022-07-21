@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>장바구니</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script>
@@ -55,7 +55,6 @@
                 data : queryString,
                 dataType: 'json',
                 success : function(json) {
-
                     sessionStorage.setItem("orderList",JSON.stringify(json));
                     window.location='/member/paymentView';
                 }
@@ -65,7 +64,9 @@
     </script>
 </head>
 <body>
-
+<div style="float: top">
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div>
     <div>
         <div>
@@ -128,7 +129,7 @@
                             <td>
                                 <!--수량 나중에 ajax로 받을것-->
                                 <input type="text" name="count" id="count${dto.bcg_key}"
-                                       min="1" max="${dto.bcd_stock}" size="2" maxlength="2" value="${dto.bcb_count}" disabled>
+                                       min="1" max="${dto.bcd_stock}" size="2" maxlength="2" value="${dto.bcb_count}" readonly>
                                 <span onclick="upCount${dto.bcg_key}()"><i class="fas fa-arrow-alt-circle-up up"></i></span>
                                 <span onclick="downCount${dto.bcg_key}()"><i class="fas fa-arrow-alt-circle-down down"></i></span>
                             </td>

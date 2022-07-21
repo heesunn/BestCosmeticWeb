@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>주문/결제</title>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="https://js.bootpay.co.kr/bootpay-4.1.5.min.js"
             type="application/javascript"></script>
@@ -50,7 +50,7 @@
             }
             aJsonArray.push(list);
         }
-        console.log(aJsonArray);
+        //console.log(aJsonArray);
 
         var JsonArr = new Array();
         length = aJsonArray.length-1;
@@ -73,7 +73,7 @@
         }else{
             orderName = bcgName;
         }
-        console.log(orderName);
+        //console.log(orderName);
 
         var orderId="";
 
@@ -268,6 +268,9 @@
     </script>
 </head>
 <body>
+<div style="float: top">
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div>
     <div>
         <div style="display:inline-block; background-color: #767b86;height: 100px;width: 200px;">
@@ -515,10 +518,10 @@
                 console.log(json);
                 for(key in json){
                     var lastDeliveryList = json[key];
-                    console.log(lastDeliveryList);
+                    //console.log(lastDeliveryList);
 
                     for(i=0;i<lastDeliveryList.length ; i++){
-                        console.log(lastDeliveryList[i]);
+                        //console.log(lastDeliveryList[i]);
                         var text ='';
                         text += '<span id="desZipcode'+i+'">'+lastDeliveryList[i].bcd_zipcode+'</span><br>';
                         text += '<span id="desAddress1'+i+'">'+lastDeliveryList[i].bcd_address1+'</span>&nbsp;&nbsp;';
