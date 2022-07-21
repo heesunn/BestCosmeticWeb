@@ -32,7 +32,7 @@
 				<div class="collapse navbar-collapse" >
 					<form>
 					<div>
-						<a class="navbar-brand" href="/guest/mainHome" id="logo"> 
+						<a class="navbar-brand" href="/" id="logo">
 							<img src="/image/red-heart.png" width="40" height="40" class="d-inline-block align-top" alt="">
 							BestCosmetic
 						</a>
