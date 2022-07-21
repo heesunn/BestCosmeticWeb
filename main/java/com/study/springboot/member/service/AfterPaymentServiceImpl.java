@@ -43,6 +43,10 @@ public class AfterPaymentServiceImpl implements AfterPaymentService {
                     String deliveryRequest = request.getParameter("deliveryRequest");
                     String orderName = request.getParameter("orderName");
 
+                    memberDao.insertOrderHistory(bcm_num,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
+                            orderNum,sId,reciName,realTotalPrice,orderName);
+                    memberDao.insertDeliveryInfo(bcm_num,orderNum,bcm_zipcode,bcm_address1,
+                            bcm_address2,bcm_address3,deliveryRequest);
                     JSONArray jsonArray = new JSONArray(orderListJson);
                     System.out.println(jsonArray.length());
                     for (int i = 0; i<jsonArray.length() ; i++) {
@@ -54,10 +58,7 @@ public class AfterPaymentServiceImpl implements AfterPaymentService {
                         memberDao.updateDetailGoodsStock(bcg_key, bcg_detailkey);
                         memberDao.deleteBasketAfterPayment(bcm_num,bcg_key,bcg_detailkey);
                     }
-                    memberDao.insertOrderHistory(bcm_num,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
-                                                orderNum,sId,reciName,realTotalPrice,orderName);
-                    memberDao.insertDeliveryInfo(bcm_num,orderNum,bcm_zipcode,bcm_address1,
-                                                bcm_address2,bcm_address3,deliveryRequest);
+
                 }
             });
             System.out.println("커밋");

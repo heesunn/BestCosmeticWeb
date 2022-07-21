@@ -8,4 +8,5 @@ public interface BasketService {
     public int deleteBasket(HttpServletRequest request, Model model);
     public int basketUpCount(HttpServletRequest request,Model model);
     public int basketDownCount(HttpServletRequest request,Model model);
+    public int basketCount(HttpServletRequest request, Model model);
 }

@@ -48,6 +48,8 @@ public interface MemberDao {
     public int serchByNumMemberManagementArticlePage(String searchWord);
     public int upgradeAdmin(String bcm_num);
     public int updatePurchaseConfirmation();
+    public int basketCount(int bcm_num);
+    public ArrayList<DeliveryInfoDto> lastDeliveryDestination(int bcm_num);
 
 
 

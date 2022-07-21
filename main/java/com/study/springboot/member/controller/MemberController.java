@@ -221,4 +221,9 @@ public class MemberController
 		updatePurchaseConfirmationService.updatePurchaseConfirmation();
 		return "redirect:/admin/memberManagement";
 	}
+	@RequestMapping("/member/lastDeliveryDestination")
+	public @ResponseBody JSONObject lastDeliveryDestination(HttpServletRequest request){
+		JSONObject obj = utilService.lastDeliveryDestination(request);
+		return obj;
+	}
 }

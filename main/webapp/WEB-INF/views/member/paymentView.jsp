@@ -126,11 +126,11 @@
                 url : '/member/afterPayment',
                 type : 'POST',
                 data : queryString,
-                dataType: 'test',
-                success : function(test) {
-                    if(test==="1"){
+                dataType: 'text',
+                success : function(text) {
+                    if(text==="1"){
                         console.log("결제성공");
-                    }else if(test ==="0"){
+                    }else if(text ==="0"){
                         console.log("결제실패")
                         return;
                     }
@@ -344,7 +344,8 @@
                     <td>주소 *</td>
                     <td>
                         <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_zipcode}">
-                        <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
+                        <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기">
+                        <input type="button" onclick="lastDeliveryDestination()" value="최근 배송지"> <br>
                         <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address1}"><br>
                         <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address2}">
                         <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address3}">
@@ -494,6 +495,73 @@
         // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+    }
+</script>
+<div style="background-color:gray; border: black 10px; display: none; position: absolute;top: 300px;left: 400px;z-index: 999999;" id="lastDeliveryDestinationDiv">
+    <div id="selectDestination" style="width: 300px; height: 400px;">
+
+    </div>
+    <div style="background: gray;height:20px;">
+        <a href="javascript:closelastDeliveryDestination()" style="position:absolute;right:5px;color:white;">[닫기]</a>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url : '/member/lastDeliveryDestination',
+            type : 'POST',
+            dataType: 'json',
+            success : function(json) {
+                console.log(json);
+                for(key in json){
+                    var lastDeliveryList = json[key];
+                    console.log(lastDeliveryList);
+
+                    for(i=0;i<lastDeliveryList.length ; i++){
+                        console.log(lastDeliveryList[i]);
+                        var text ='';
+                        text += '<span id="desZipcode'+i+'">'+lastDeliveryList[i].bcd_zipcode+'</span><br>';
+                        text += '<span id="desAddress1'+i+'">'+lastDeliveryList[i].bcd_address1+'</span>&nbsp;&nbsp;';
+                        text += '<span id="desAddress2'+i+'">'+lastDeliveryList[i].bcd_address2+'</span>';
+                        if (lastDeliveryList[i].bcd_address3 != null){
+                            text += '<span id="desAddress3'+i+'">'+lastDeliveryList[i].bcd_address3+'</span>';
+                        }
+                        text += '<input type="button" value="선택" onclick="selectDestinationFn'+i+'()"><br><hr>';
+
+                        $('#selectDestination').append(text);
+                    }
+
+                }
+            }
+        });
+
+    });
+    function lastDeliveryDestination(){
+        $("#lastDeliveryDestinationDiv").css({ 'display' : 'block' });
+    }
+    function closelastDeliveryDestination(){
+        $("#lastDeliveryDestinationDiv").css({ 'display' : 'none' });
+    }
+    function selectDestinationFn0(){
+        $('#sample2_postcode').val($('#desZipcode0').text());
+        $('#sample2_address').val($('#desAddress10').text());
+        $('#sample2_detailAddress').val($('#desAddress20').text());
+        $('#sample2_extraAddress').val($('#desAddress30').text());
+        $("#lastDeliveryDestinationDiv").css({ 'display' : 'none' });
+    }
+    function selectDestinationFn1(){
+        $('#sample2_postcode').val($('#desZipcode1').text());
+        $('#sample2_address').val($('#desAddress11').text());
+        $('#sample2_detailAddress').val($('#desAddress21').text());
+        $('#sample2_extraAddress').val($('#desAddress31').text());
+        $("#lastDeliveryDestinationDiv").css({ 'display' : 'none' });
+    }
+    function selectDestinationFn2(){
+        $('#sample2_postcode').val($('#desZipcode2').text());
+        $('#sample2_address').val($('#desAddress12').text());
+        $('#sample2_detailAddress').val($('#desAddress22').text());
+        $('#sample2_extraAddress').val($('#desAddress32').text());
+        $("#lastDeliveryDestinationDiv").css({ 'display' : 'none' });
     }
 </script>
 </body>

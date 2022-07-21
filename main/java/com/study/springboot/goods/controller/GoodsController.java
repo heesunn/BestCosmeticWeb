@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.study.springboot.goods.service.*;
+import com.study.springboot.member.service.BasketService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +52,8 @@ public class GoodsController
 	QuestionListViewService questionListViewService;
 	@Autowired
 	ReviewListViewService reviewListViewService;
+	@Autowired
+	BasketService basketService;
 
 	int BCG_KEY = 0;
 	String BCG_NAME = "";
@@ -316,6 +320,7 @@ public class GoodsController
 	
 	@RequestMapping("/guest/menuTop")         //상단 메뉴
 	public String menuTop(HttpServletRequest request, Model model) {
+		basketService.basketCount(request,model);
 	    return "guest/goods/menuTop"; 
     }
 }

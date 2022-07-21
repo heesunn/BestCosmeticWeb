@@ -16,4 +16,5 @@
     <select id="questionListViewArticlePage" resultType="_int">
         SELECT COUNT(*) AS TOTAL FROM BC_QUESTION WHERE BCG_KEY = #{param1}
     </select>
+
 </mapper>
