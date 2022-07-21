@@ -66,7 +66,6 @@ public class KMemberController
 	}
 	@RequestMapping("/member/orderDetail")
 	public @ResponseBody List<OrderDetail> orderDetailView(@RequestParam("bco_ordernum") String ordernum ,HttpServletRequest request, Model model) {
-		System.out.println(ordernum);
 		List<OrderDetail> detail = orderDetail.orderDetail(ordernum, model);
 		return detail;
 	}

@@ -262,12 +262,12 @@ function submit_state() {
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-	<h1>취소/교환/반품</h1>
+	<h1>배송준비</h1>
 	<div>
-		<form action="/admin/cerSearch">
+		<form action="/admin/drSearch">
 			<select name="searchType" id='serch'>
 				<option value='bcm_name'>주문인</option>
-				<option value='bco_order_status'>주문상태</option>
+				<option value='bco_recipient'>수령인</option>
 				<option value='bco_ordernum'>주문번호</option>
 			</select>
 			<input type="text" name="searchWord">
