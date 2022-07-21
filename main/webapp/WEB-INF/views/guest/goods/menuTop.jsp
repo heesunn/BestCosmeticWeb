@@ -27,9 +27,7 @@
 </head>
 <body>
 	<br>
-	<div class="top">	
-<<<<<<< HEAD
-		
+	<div class="top">
 			<nav class="navbar navbar-expand-lg navbar-light ">
 				<div class="collapse navbar-collapse" >
 					<form>

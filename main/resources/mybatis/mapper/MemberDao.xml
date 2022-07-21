@@ -295,9 +295,19 @@
         WHERE 14 &lt;= (SYSDATE - BCO_ORDERDATE)
     </update>
     <select id="basketCount" resultType="_int">
-        select  count(*) as total
-        from bc_basket
-        where bcm_num = #{param1}
+        SELECT  COUNT(*) AS TOTAL
+        FROM BC_BASKET
+        WHERE BCM_NUM = #{param1}
+    </select>
+    <select id="lastDeliveryDestination" resultType="com.study.springboot.member.dto.DeliveryInfoDto">
+        SELECT *
+        FROM (SELECT ROWNUM NUM, A.*
+              FROM (SELECT *
+                    FROM BC_DELIVERY_INFO
+                    WHERE BCM_NUM = #{param1}
+                    ORDER BY BCD_DATE DESC) A
+              WHERE ROWNUM &lt;= 3 ) B
+        WHERE B.NUM &gt;= 1
     </select>
 </mapper>
 

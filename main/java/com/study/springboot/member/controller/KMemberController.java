@@ -105,7 +105,7 @@ public class KMemberController
 	@RequestMapping("/member/memberDelete")
 	public @ResponseBody String memberDelete(HttpServletRequest request, Model model) {
 		String result = withdrawal.withdrawal(request, model);
-		//다른 테이블에서도 지워야함
+
 		return result;
 	}
 	@RequestMapping("/admin/adminTop")
