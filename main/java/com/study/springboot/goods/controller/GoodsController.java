@@ -313,18 +313,23 @@ public class GoodsController
 	//리뷰 작성 뷰
 	@RequestMapping("/member/reviewWrite")
 	public String reviewWrite(HttpServletRequest request, Model model) throws IOException {
+		model.addAttribute("BCG_KEY", Integer.parseInt(request.getParameter("bcg_key")));
+		model.addAttribute("BCG_IMG", request.getParameter("bcg_img"));
+		model.addAttribute("BCG_NAME", request.getParameter("bcg_name"));
 		return "/member/reviewWrite";
 	}
 	
 	//리뷰 작성
 	@RequestMapping("/member/upReview")
 	public String upReview(HttpServletRequest request, Model model) throws IOException {
+		String BCR_SCORE = request.getParameter("BCR_SCORE");
+		if(BCR_SCORE==null) { BCR_SCORE = "0"; }
 		reviewDao.upReview(Integer.parseInt(request.getParameter("BCG_KEY")),
 							request.getParameter("BCG_NAME"), 
 							Integer.parseInt(request.getParameter("BCM_NUM")),
 							request.getParameter("BCM_NAME"),
 							request.getParameter("BCR_PHOTO"),
-							Integer.parseInt(request.getParameter("BCR_SCORE")),
+							Integer.parseInt(BCR_SCORE),
 							request.getParameter("BCR_CONTENT"));
 		return "guest/goods/detailPage";
 	}

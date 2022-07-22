@@ -18,6 +18,13 @@
     </select>
     <insert id="upReview">
 		insert into BC_REVIEW (BCG_KEY, BCG_NAME, BCM_NUM, BCM_NAME, BCR_PHOTO, BCR_SCORE, BCR_DATE, BCR_CONTENT) 
-			values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, sysdate, #{param7})
+			<choose>
+				<when test="param5==null"> 
+					values (#{param1}, #{param2}, #{param3}, #{param4}, '', #{param6}, sysdate, #{param7}) 
+				</when>
+				<otherwise>
+					values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, sysdate, #{param7}) 
+				</otherwise>
+			</choose>
 	</insert>
 </mapper>

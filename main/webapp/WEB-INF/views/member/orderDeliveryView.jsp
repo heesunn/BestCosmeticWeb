@@ -152,10 +152,24 @@
             success : function(json) {
                 console.log(json);
                 if(json.desc == 1){
-                	
+                	alert("구매확정되었습니다");
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
+            }
+        });
+    }
+    
+    function review() {
+    	var queryString = $('#reviewPop').serialize();
+        console.log(queryString);
+        $.ajax({
+            url : '/member/reviewWrite',
+            type : 'POST',
+            data : queryString,
+            success : function(json) {
+            	var url = "/member/reviewWrite?" + queryString;
+                window.open(url, "", "width=600, height=400");
             }
         });
     }
@@ -193,12 +207,11 @@
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
 					if(data[i].bco_order_status == '구매확정') {
-						text += '<form action="/member/reviewWrite">';
+						text += '<form id="reviewPop">';
 						text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
 						text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
 						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
-						text += '<input type="submit" value="리뷰쓰기">';
+						text += '<input type="button" value="리뷰쓰기" onclick="review()">';
 						text += '</form>';
 					}
 					text += '<hr>';

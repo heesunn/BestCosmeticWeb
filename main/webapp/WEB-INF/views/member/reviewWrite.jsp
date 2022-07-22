@@ -1,5 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%
+	int bcm_num = 0;
+	String bcm_name = ""; 
+	if(session.getAttribute("num")!=null) {
+		bcm_num = (int)session.getAttribute("num");
+		bcm_name = (String)session.getAttribute("name");
+	}
+%>
 <html>
 <head>
     <title>Title</title>
@@ -14,16 +22,26 @@
     	// 대표사진 스토리지Url 만들어서 value 넣기
 	 	function getRealPath(obj){  
 			document.getElementById('BCR_PHOTO').value = 
-				'https://firebasestorage.googleapis.com/v0/b/bestcosmetic-624a1.appspot.com/o/review%2F' 
-				+ $(obj).val().split('/').pop().split('\\').pop() 
+				'https://firebasestorage.googleapis.com/v0/b/bestcosmetic-624a1.appspot.com/o/image%2F' 
+				+ $(obj).val().toString().split('/').pop().split('\\').pop() 
 				+ '?alt=media';
 		}
 	</script>   
     <script>    
-    	function form_check(){       //firebase에 이미지 저장       	
-        	// 리뷰사진 업로드
+    	function form_check(){      //사진유무체크  
+    		var filecheck = document.getElementsByClassName('hidden-upload-btn')[0].value;
+    		console.log("filecheck : "+filecheck);
+        	if (filecheck!='') { 
+        		imgUpload(); 
+        	} else { 
+        		submit_ajax();
+        	}        
+        }
+    	
+    	function imgUpload() {     //firebase에 이미지 저장     
+    		// 리뷰사진 업로드
     		// get dom in variables
-        	var hiddenBtn = document.getElementsByClassName('hidden-upload-btn')[0];       	
+        	var hiddenBtn = document.getElementsByClassName('hidden-upload-btn')[0]; 
         	// get file
             var file = hiddenBtn.files[0];
             // change file name so cannot overwrite
@@ -33,9 +51,9 @@
             // now upload
             var storageRef = firebase.storage().ref(path);
             var uploadTask = storageRef.put(file);
-                        
-            submit_ajax();            
-        }
+            
+            submit_ajax();
+    	}
 
         function submit_ajax() {     //BC_REVIEW oracle DB에 저장
             var queryString=$("#AddForm").serialize();
@@ -45,7 +63,7 @@
                 data: queryString,
                 dataType: 'text',
                 success: function(json) {  
-                	window.location.replace("/guest/goods/detailPage?BCG_KEY=${BCG_KEY}");           		               	           	
+                	window.close();           		               	           	
                 }
             });
         }
@@ -117,8 +135,8 @@
 					  placeholder="리뷰 내용을 입력해주세요"></textarea>
 			<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">   
        		<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">           
-       		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="${BCM_NUM}">           
-       		<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="${BCM_NAME}">           
+       		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">           
+       		<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">           
        		<input type="button" value="등록" onclick="form_check()">
 		</div>
     </form>
