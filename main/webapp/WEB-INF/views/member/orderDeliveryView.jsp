@@ -199,12 +199,10 @@
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
 					if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'false') {
-						text += '<form action="/member/reviewWrite">';
-						text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
-						text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
-						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
 						text += '<input type="button" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');">';
-						text += '</form>';
+					}
+					else if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'true'){
+						text += '리뷰 쓴 상품';
 					}
 					text += '<hr>';
 					$('#infoDiv').empty().append(text);
