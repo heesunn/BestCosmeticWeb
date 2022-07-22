@@ -20,4 +20,18 @@
 		insert into BC_QUESTION (BCG_KEY, BCG_NAME, BCM_NUM, BCM_NAME, BCQ_DATE, BCQ_CONTENT, BCQ_SECRET, BCA_DATE, BCA_CONTENT) 
 			values (#{param1}, #{param2}, #{param3}, #{param4}, sysdate, #{param5}, #{param6}, '', '')
 	</insert>
+	
+	<select id="questionListAdminView" resultType="com.study.springboot.goods.dto.QuestionDto">
+		select * from bc_question
+	</select>
+	
+	<select id="selectCountQuestion" resultType="_int">
+		select count(*) as total from bc_question
+	</select>
+	
+	<update id="answer">
+		update bc_question set bca_content = #{param4}, bca_date = sysdate
+		where bcg_key = #{param1} and bcm_num = #{param2} and bcq_content = #{param3}
+	</update>
+	
 </mapper>

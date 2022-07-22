@@ -363,8 +363,21 @@ public class GoodsController
 	//관리자 : 답변창
 	@RequestMapping("/admin/answer")
 	public String questionAnswer(HttpServletRequest request, Model model) {
-		questionListAdminViewService.questionListView(request, model);
+		model.addAttribute("BCG_KEY", request.getParameter("BCG_KEY"));
+		model.addAttribute("BCM_NUM", request.getParameter("BCM_NUM"));
+		model.addAttribute("BCQ_CONTENT", request.getParameter("BCQ_CONTENT"));
         return "admin/answer"; 
+	}
+	
+	//관리자 : 답변창
+	@RequestMapping("/admin/answerSuccess")
+	public String answerSuccess(HttpServletRequest request, Model model) {
+		questionDao.answer(request.getParameter("BCG_KEY"), 
+							request.getParameter("BCM_NUM"),
+							request.getParameter("BCQ_CONTENT"),
+							request.getParameter("BCA_CONTENT"));
+		System.out.println(request.getParameter("BCA_CONTENT"));
+        return "admin/goodsQuestionList"; 
 	}
 	
 	//상단, 좌측 메뉴 조각들**********************************************************************************************
