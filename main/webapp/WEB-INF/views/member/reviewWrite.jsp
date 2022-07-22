@@ -134,6 +134,7 @@
 			<textarea class="col-auto form-control" type="text" id="BCR_CONTENT" name="BCR_CONTENT"
 					  placeholder="리뷰 내용을 입력해주세요"></textarea>
 			<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">   
+			<input type="hidden" id="BCO_ORDERNUM" name="BCO_ORDERNUM" value="${BCO_ORDERNUM}">   
        		<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">           
        		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">           
        		<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">           

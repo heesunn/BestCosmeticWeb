@@ -14,4 +14,5 @@ public class ReviewDto {
     private int bcr_score;
     private Timestamp bcr_date;
     private String bcr_content;
+    private String bco_ordernum;
 }

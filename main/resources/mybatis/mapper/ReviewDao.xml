@@ -27,4 +27,8 @@
 				</otherwise>
 			</choose>
 	</insert>
+	<update id="rvOnetime">
+		update BC_ORDER_DETAIL set bco_reviewcheck = 'true' 
+			where bco_ordernum = #{param1} and bcg_key = #{param2}
+	</update>
 </mapper>

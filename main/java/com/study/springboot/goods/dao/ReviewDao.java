@@ -11,4 +11,5 @@ public interface ReviewDao {
 			String bcr_photo, int bcr_score, String bcr_content);
 	ArrayList<ReviewDto> reviewList(int bcg_key,int nEnd, int nStart);
     public int reviewListArticlePage(int bcg_key);
+    public int rvOnetime(String bco_ordernum, int bcg_key);
 }
