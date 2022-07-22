@@ -109,12 +109,18 @@ function sch() {     //검색기능
          	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
-                <c:choose>
-                    <c:when test="${dto.item == null}">
-                        <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key}()">
+	            <c:choose>
+                    <c:when test="${ (sessionScope.num) == null}">
                     </c:when>
                     <c:otherwise>
-                        <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key}()">
+                        <c:choose>
+                            <c:when test="${dto.item == null}">
+                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key }()">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key }()">
+                            </c:otherwise>
+                        </c:choose>
                     </c:otherwise>
                 </c:choose>
          	</form>
@@ -140,7 +146,7 @@ function sch() {     //검색기능
 		        	window.location.reload="/guest/categoryPoint";
 		        }       	
 		    });
-  		}   
+  		  }   
 	}
 </script>
       </c:forEach>

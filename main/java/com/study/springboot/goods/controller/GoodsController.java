@@ -236,6 +236,7 @@ public class GoodsController
 	public String guestSearch(HttpServletRequest request, Model model) {  
 		type = request.getParameter("type");
 		srchText = request.getParameter("srchText");
+		System.out.println(srchText);
 		return "guest/goods/categoryAll"; 
 	}
 	
@@ -278,7 +279,6 @@ public class GoodsController
 	//카테고리 - 포인트
 	@RequestMapping("/guest/categoryPoint")   //포인트메이크업 카테고리
 	public String pointList(HttpServletRequest request, Model model) {
-		//listService.pointList(request, model);
         listService.pointList2(request,model);
 		return "guest/goods/categoryPoint";
 	}
@@ -360,7 +360,7 @@ public class GoodsController
         return "admin/goodsQuestionList"; 
 	}
 	
-	//관리자 : 답변창
+	//관리자 : 답변창 뷰
 	@RequestMapping("/admin/answer")
 	public String questionAnswer(HttpServletRequest request, Model model) {
 		model.addAttribute("BCG_KEY", request.getParameter("BCG_KEY"));
