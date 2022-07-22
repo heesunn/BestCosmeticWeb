@@ -59,7 +59,11 @@
 	
 	function sum(count) {                         //가격 총 합계
 		var totalPrice = ${BCG_PRICE}*count;
-		document.getElementById("totalPrice").innerHTML = thousandSeparatorCommas(totalPrice);
+		if(totalPrice > 999) {
+			document.getElementById("totalPrice").innerHTML = thousandSeparatorCommas(totalPrice);
+		} else {
+			document.getElementById("totalPrice").innerHTML = "총 "+totalPrice+"원";
+		}				
 	}
 	
 	function thousandSeparatorCommas(number) {    //총 합계에 콤마찍기
@@ -142,7 +146,7 @@
                 dataType: 'text',
                 complete: function(json) {
                 	alert("등록 완료");
-                	return;
+                	window.location.reload;
                 },				
             });
 		}
@@ -387,7 +391,13 @@
 				<c:if test="${dto.bca_content==null}"> <tr><td>답변대기중</td></tr> </c:if>
 				<c:if test="${dto.bca_content!=null}"> <tr><td>답변완료</td></tr> </c:if>
 				<tr> <td> ${dto.bcm_name} ${dto.bcq_date}</td> </tr>
-				<tr> <td> ${dto.bcq_content} </td> </tr>
+				<c:if test="${dto.bcq_secret eq 'off'}">
+					<tr> <td> ${dto.bcq_content} </td> </tr>
+				</c:if>	
+				<c:if test="${dto.bcq_secret eq 'on'}">
+					<c:if test="${dto.bcm_name eq (sessionScope.name)}"> <tr> <td> ${dto.bcq_content} </td> </tr> </c:if>
+					<c:if test="${dto.bcm_name ne (sessionScope.name)}"> <tr> <td> '비밀글입니다' </td> </tr>  </c:if>
+				</c:if>	
 				<c:if test="${dto.bca_content!=null}">
 					<tr> <td>${dto.bca_date}</td> </tr>
 					<tr> <td>${dto.bca_content}</td> </tr>

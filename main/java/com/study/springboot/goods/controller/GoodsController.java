@@ -315,16 +315,18 @@ public class GoodsController
 	}
 	
 	//문의 작성
-		@RequestMapping("/member/uploadQnA")
-		public String uploadQnA(HttpServletRequest request, Model model) throws IOException {
-			questionDao.uploadQnA(Integer.parseInt(request.getParameter("BCG_KEY")),
-								  request.getParameter("BCG_NAME"), 
-							 	  Integer.parseInt(request.getParameter("BCM_NUM")),
-								  request.getParameter("BCM_NAME"),
-								  request.getParameter("BCQ_CONTENT"),
-								  request.getParameter("BCQ_SECRET"));
-			return "guest/goods/detailPage";
-		}
+	@RequestMapping("/member/uploadQnA")
+	public String uploadQnA(HttpServletRequest request, Model model) throws IOException {
+		String BCQ_SECRET = request.getParameter("BCQ_SECRET");
+		if(request.getParameter("BCQ_SECRET")==null) { BCQ_SECRET = "off"; }
+		questionDao.uploadQnA(Integer.parseInt(request.getParameter("BCG_KEY")),
+							  request.getParameter("BCG_NAME"), 
+						 	  Integer.parseInt(request.getParameter("BCM_NUM")),
+							  request.getParameter("BCM_NAME"),
+							  request.getParameter("BCQ_CONTENT"),
+							  BCQ_SECRET);
+		return "guest/goods/detailPage";
+	}
 	
 	//상단, 좌측 메뉴 조각들**********************************************************************************************
 	@RequestMapping("/guest/menuLeft")        //좌측 메뉴

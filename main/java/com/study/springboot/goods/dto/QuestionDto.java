@@ -12,7 +12,7 @@ public class QuestionDto {
     private String bcm_name;
     private Timestamp bcq_date;
     private String bcq_content;
-    private int bcq_secret;
+    private String bcq_secret;
     private Timestamp bca_date;
     private String bca_content;
 }
