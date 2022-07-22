@@ -5,6 +5,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<% 
+	int num = 0;
+	if(session.getAttribute("num")!= null) {
+		num = (int)session.getAttribute("num");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,12 +75,45 @@
 							value="${dto.bcg_price/(100-dto.bcg_discount)*100}" pattern="#,###"/>
 						</p> -> <fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
 					</c:otherwise>
-				</c:choose>							
+				</c:choose>	
+				
+				<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
+         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
+         		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
+                <c:choose>
+                    <c:when test="${ (sessionScope.num) == null}">
+                    </c:when>
+                    <c:otherwise>
+                        <c:choose>
+                            <c:when test="${dto.item == null}">
+                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key}()">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key}()">
+                            </c:otherwise>
+                        </c:choose>
+                    </c:otherwise>
+                </c:choose>
+         		</form>						
 			</td>
 		<c:if test="${i%j == j-1 }">	
 		</tr>	
 		</c:if>
 		<c:set var="i" value="${i+1 }" />
+		<script>
+	        function likeUpdate${dto.bcg_key}() {     //찜 업데이트
+			   	var queryString=$("#list${dto.bcg_key}").serialize();
+			    $.ajax({
+			    	url: '/member/glike',  
+			        type: 'POST',
+			        data: queryString,
+			        dataType: 'text',
+			        success: function(json) {  
+			        	window.location.reload="/guest/categoryAll";
+			        }       	
+			    });
+			}
+        </script>
 		</c:forEach>
 			
 		<tr>

@@ -3,6 +3,7 @@ package com.study.springboot.goods.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -282,13 +283,9 @@ public class GoodsController
 		return "guest/goods/categoryPoint";
 	}
 	
-	//카테고리 - 찜
+	//카테고리 & 상세페이지 - 찜
 	@RequestMapping("/member/glike")   
 	public String like(HttpServletRequest request, Model model) {
-		String bcm_num = request.getParameter("BCM_NUM");		
-		int bcg_key = Integer.parseInt(request.getParameter("BCG_KEY"));
-		System.out.println(bcm_num);
-		System.out.println(bcg_key);
 		likeService.likeTableUpdate(request, model);
         return "guest/goods/categoryPoint"; 
 	}
@@ -297,9 +294,14 @@ public class GoodsController
 	@RequestMapping("/guest/detailPage")   
 	public String detailPage(HttpServletRequest request, Model model) {
 		BCG_KEY = Integer.parseInt(request.getParameter("BCG_KEY"));
+		HttpSession session = request.getSession();
+		int BCM_NUM = 0;
+		if (session.getAttribute("num")!=null) { BCM_NUM = (int)session.getAttribute("num"); }		
 		pageDetailService.getGoodsInfo(request, model);
 		questionListViewService.questionListView(request,model);
 		reviewListViewService.reviewListView(request,model);
+		int Count = goodsDao.likeCount(BCM_NUM, BCG_KEY);
+		model.addAttribute("like", Count);
         return "guest/goods/detailPage"; 
 	}
 	

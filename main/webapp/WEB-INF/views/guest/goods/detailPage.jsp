@@ -117,20 +117,23 @@
 		}
 	}
 	
-	function likeUpdate() {     //찜 업데이트
-	   	var queryString=$("#list").serialize();
-  		//var queryString = "BCM_NUM=" + $("#BCM_NUM").val();
-  		//queryString = queryString + "&BCG_KEY=" + $("#key${dto.bcg_key }").val();
-	    console.log(queryString);
-	    $.ajax({
-	    	url: '/member/glike',  
-	        type: 'POST',
-	        data: queryString,
-	        dataType: 'text',
-	        success: function(json) {  
-	        	window.location.reload;
-	        }       	
-	    });
+	function likeUpdate${BCG_KEY}() {     //찜 업데이트
+		if(<%=bcm_num%> == 0) {
+			alert("로그인후 이용가능합니다.");
+			return;
+		} else {
+			if(${like}==0) { alert("찜목록에 추가 완료"); } 
+        	else { alert("찜목록에서 삭제 완료"); }
+			var queryString=$("#list${BCG_KEY}").serialize();
+		    $.ajax({
+		    	url: '/member/glike',  
+		        type: 'POST',
+		        data: queryString,
+		        success: function(json) {
+		        	window.location.reload="/guest/datailPage";
+		        }       	
+		    });
+		}
 	}
 	
 	function uploadQnA() {                 //문의하기
@@ -175,23 +178,15 @@
 						<tr>
 							<td colspan="3">${BCG_NAME}</td>
 							<td>
-								<form id="list" name="list">
+								<form id="list${BCG_KEY}" name="list${BCG_KEY}">
 					         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num %>">
 					         		<input type="hidden" id="key" name="BCG_KEY" value="${BCG_KEY}">
-					                <c:choose>
-					                    <c:when test="${ (sessionScope.num) == null}">
-					                    </c:when>
-					                    <c:otherwise>
-					                        <c:choose>
-					                            <c:when test="${like == 0}">
-					                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate()">
-					                            </c:when>
-					                            <c:otherwise>
-					                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate()">
-					                            </c:otherwise>
-					                        </c:choose>
-					                    </c:otherwise>
-					                </c:choose>
+		                            <c:if test="${like==1}">
+		                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${BCG_KEY}()">
+		                            </c:if>
+		                            <c:if test="${like==0}">
+		                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${BCG_KEY}()">
+		                            </c:if>
 					         	</form>
 							</td>
 						</tr>

@@ -31,11 +31,6 @@ function sch() {     //검색기능
         }       	
     });
 }
-
-
-
-
-
 </script>
 </head>
 <body>
@@ -76,21 +71,40 @@ function sch() {     //검색기능
       </c:if>
          <td> 
          	<!-- NEW 뱃지 -->
-         	<c:set var="now" value="<%=new java.util.Date()%>" /><!-- 현재시간 -->
+			<c:set var="now" value="<%=new java.util.Date()%>" /><!-- 현재시간 -->
          	<fmt:formatDate value="${now}" pattern="yyMMdd" var="today" /><!-- 현재시간을 숫자로 -->
          	<fmt:formatDate  value="${dto.bcg_date}" pattern="yyMMdd" var="dtoDate" /><!-- 게시글 작성날짜를 숫자로 -->
          		<c:if test="${today - dtoDate le 30}"><!-- 30일동안은 new 표시 -->
-            		<span>new</span>
+            		<img src="/image/new.png" width="30" height="30">
          		</c:if>
-         		
-         	<!-- BEST 뱃지 -->
-			<fmt:formatNumber value="${dto.bcg_sale }" var="sale"/>
-         	<c:if test="${sale >= 10}">
-         		<span>best</span>
+         	
+         	<!-- BEST 뱃지 -->	
+         	<fmt:formatNumber value="${dto.bcg_sale }" var="sale"/>
+	         	<c:if test="${sale >= 10}">
+	         		<img src="/image/best.png" width="30" height="30">
+	         	</c:if>
+	         	
+	        <!-- SALE 뱃지 -->	
+         	<c:if test="${dto.bcg_discount > 0}">
+         		<img src="/image/sale.png" width="30" height="30">
          	</c:if>
-            <img src="${dto.bcg_img}" height="200" width="200"><br/>
-            ${dto.bcg_name}<br/>
-            ${dto.bcg_price}원 
+	        <br/> 	
+            <a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
+				<img src="${dto.bcg_img}" height="200" width="200">
+				<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
+			</a><br/>
+			${dto.bcg_name}<br/>
+			<c:choose>
+				<c:when test="${dto.bcg_discount == 0}">
+					<fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
+				</c:when>
+				<c:otherwise>
+					<p style="text-decoration:line-through">
+						<fmt:formatNumber type="number" maxFractionDigits="0" 
+						value="${dto.bcg_price/(100-dto.bcg_discount)*100}" pattern="#,###"/>
+					</p> -> <fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
+				</c:otherwise>
+			</c:choose>	
 
          	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
@@ -101,10 +115,10 @@ function sch() {     //검색기능
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${dto.item == null}">
-                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key }()">
+                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key}()">
                             </c:when>
                             <c:otherwise>
-                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key }()">
+                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key}()">
                             </c:otherwise>
                         </c:choose>
                     </c:otherwise>
@@ -117,12 +131,8 @@ function sch() {     //검색기능
       </c:if>
       <c:set var="i" value="${i+1 }" />
       <script>
-      function likeUpdate${dto.bcg_key }() {     //찜 업데이트
-		   	var queryString=$("#list${dto.bcg_key }").serialize();
-      		//var queryString = "BCM_NUM=" + $("#BCM_NUM").val();
-      		//queryString = queryString + "&BCG_KEY=" + $("#key${dto.bcg_key }").val();
-
-		    console.log(queryString);
+      function likeUpdate${dto.bcg_key}() {     //찜 업데이트
+		   	var queryString=$("#list${dto.bcg_key}").serialize();
 		    $.ajax({
 		    	url: '/member/glike',  
 		        type: 'POST',
@@ -193,15 +203,6 @@ function sch() {     //검색기능
          </td>
       </tr>
    </table>
-   
-   <br>[참고]<br>
-   전체 게시글 수 / totalCount : ${page.totalCount}<br>
-   페이지당 게시글 수 / listCount : ${page.listCount}<br>
-   전체 페이지 수 / totalPage : ${page.totalPage}<br>
-   현재 페이지 번호 / curPage : ${page.curPage}<br>
-   하단 페이지 리스트 수 / pageCount : ${page.pageCount}<br>
-   리스트 첫 페이지 / startPage : ${page.startPage}<br>
-   리스트 마지막 페이지 / endPage : ${page.endPage}<br>
 <c:import url="/guest/channelTalk"></c:import>   
 </body>
 </html>

@@ -19,18 +19,13 @@ public class GLikeServiceImpl implements GLikeService{
 	@Override
 	public int likeTableUpdate(HttpServletRequest request, Model model) {
 		session = request.getSession();
-		int bcm_num = (int) session.getAttribute("num");
-		System.out.println(bcm_num);
-		
+		int bcm_num = (int) session.getAttribute("num");		
 		int bcg_key = Integer.parseInt(request.getParameter("BCG_KEY"));
-		System.out.println(bcg_key);
 		
 		int insertCount = goodsDao.likeTableUpdate(bcm_num, bcg_key);
 		int updateCount = goodsDao.goodsTableUpdate(bcg_key);
 		int likeCount = goodsDao.likeCount(bcm_num, bcg_key);
-		model.addAttribute("like", likeCount);
-		System.out.println(likeCount);
-		
+		model.addAttribute("like", likeCount);		
 		return likeCount;
 	}
 }
