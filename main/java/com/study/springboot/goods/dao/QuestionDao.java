@@ -12,5 +12,5 @@ public interface QuestionDao {
     public int questionListViewArticlePage(int bcg_key);
     ArrayList<QuestionDto> questionListAdminView(int nStart, int nEnd);
     public int selectCountQuestion();
-    public int answer(String bcg_key, String bcm_num, String bcq_content, String bca_content);
+    public int answer(String BCG_KEY, String BCM_NUM, String BCQ_CONTENT, String BCA_CONTENT);
 }
