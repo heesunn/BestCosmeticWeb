@@ -227,6 +227,21 @@ public class GoodsController
 		return "admin/goodsList"; 
 	}
 	
+	//게스트 : 전체 상품검색
+	@RequestMapping("/guest/guestSearch")
+	public String guestSearch(HttpServletRequest request, Model model) {  
+		type = request.getParameter("type");
+		srchText = request.getParameter("srchText");
+		return "guest/goods/categoryAll"; 
+	}
+	
+	//게스트 : 전체 상품검색결과
+	@RequestMapping("/guest/searchARs") 
+	public String searchARs(HttpServletRequest request, Model model) {    
+		listService.searchList(request, model, type, srchText);
+		return "guest/goods/categoryAll"; 
+	}
+	
 	//게스트 : 포인트카테고리 상품검색
 	@RequestMapping("/guest/categorySearch")
 	public String categorySearch(HttpServletRequest request, Model model) {    
