@@ -61,7 +61,7 @@
             <td id="money${dto.bco_ordernum}">${dto.bco_totalprice}</td>
             <input id="realmoney${dto.bco_ordernum}" type="hidden" value="${dto.bco_totalprice}"/>
             <td><a href="#" 
-		    	onclick="javascript:openPop${dto.bco_ordernum}()">${dto.bco_order_name}</a>
+		    	onclick="openPop${dto.bco_ordernum}()">${dto.bco_order_name}</a>
 		    </td>
             <td>${dto.bco_order_status}</td>
             <td>
@@ -159,20 +159,6 @@
             }
         });
     }
-    
-    function review() {
-    	var queryString = $('#reviewPop').serialize();
-        console.log(queryString);
-        $.ajax({
-            url : '/member/reviewWrite',
-            type : 'POST',
-            data : queryString,
-            success : function(json) {
-            	var url = "/member/reviewWrite?" + queryString;
-                window.open(url, "", "width=600, height=400");
-            }
-        });
-    }
 </script>
 <script>
     var money = $('#money${dto.bco_ordernum}').text();
@@ -180,10 +166,10 @@
     $('#money${dto.bco_ordernum}').text(money2);
     //머니값체크 , 넣은거
     var moneyValCheck =  $('#money${dto.bco_ordernum}').text();
-    console.log(moneyValCheck);
+//    console.log(moneyValCheck);
     //진짜 머니 , 없는거
     var realmoneyValCheck = $('#realmoney${dto.bco_ordernum}').val();
-    console.log(realmoneyValCheck);
+//    console.log(realmoneyValCheck);
 
 </script>
 <script>
@@ -200,22 +186,27 @@
 				for(var i=0; i<data.length; i++) {
 					var bcg_price = data[i].bcg_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					var total_price = data[i].total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					var imgbase64 = btoa(data[i].bcg_img);
+					var namebase64 = btoa(encodeURIComponent(data[i].bcg_name));
+					var url = '/member/reviewWrite?bco_ordernum='+data[i].bco_ordernum+'&bcg_img='+imgbase64+'&bcg_name='+namebase64+'&bcg_key='+data[i].bcg_key+'';
+					var width = '600';
+					var height = '400';
+					console.log(url);
 					text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
 					text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
 					text += '<p class="text">금액 : <span>'+bcg_price+'</span>원</p><br>';
 					text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
-					if(data[i].bco_order_status == '구매확정') {
-						text += '<form id="reviewPop">';
+					if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'false') {
+						text += '<form action="/member/reviewWrite">';
 						text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
 						text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
 						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-						text += '<input type="button" value="리뷰쓰기" onclick="review()">';
+						text += '<input type="button" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');">';
 						text += '</form>';
 					}
 					text += '<hr>';
-					console.log(text);
 					$('#infoDiv').empty().append(text);
 				}
 				document.getElementById("popup_layer").style.display = "block";

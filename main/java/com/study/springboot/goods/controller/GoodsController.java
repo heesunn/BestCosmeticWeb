@@ -1,6 +1,9 @@
 package com.study.springboot.goods.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.springboot.goods.dao.GoodsDao;
@@ -314,13 +318,24 @@ public class GoodsController
 						Integer.parseInt(request.getParameter("BCB_COUNT")));				
 		return "guest/goods/detailPage";
 	}
-	
+
 	//리뷰 작성 뷰
 	@RequestMapping("/member/reviewWrite")
-	public String reviewWrite(HttpServletRequest request, Model model) throws IOException {
-		model.addAttribute("BCG_KEY", Integer.parseInt(request.getParameter("bcg_key")));
-		model.addAttribute("BCG_IMG", request.getParameter("bcg_img"));
-		model.addAttribute("BCG_NAME", request.getParameter("bcg_name"));
+	public String reviewWrite(HttpServletRequest request, Model model,
+							@RequestParam("bco_ordernum") String ordernum,
+							@RequestParam("bcg_img") String img,
+							@RequestParam("bcg_name") String name,
+							@RequestParam("bcg_key") String key) throws IOException {
+		Decoder decoder = Base64.getDecoder();
+        byte[] _img = decoder.decode(img);
+        byte[] _name = decoder.decode(name);
+        String bcg_img = new String(_img);
+        String urlname = new String(_name);
+        String bcg_name = URLDecoder.decode(urlname);
+        model.addAttribute("BCO_ORDERNUM", ordernum);
+		model.addAttribute("BCG_KEY", key);
+		model.addAttribute("BCG_IMG", bcg_img);
+		model.addAttribute("BCG_NAME", bcg_name);
 		return "/member/reviewWrite";
 	}
 	

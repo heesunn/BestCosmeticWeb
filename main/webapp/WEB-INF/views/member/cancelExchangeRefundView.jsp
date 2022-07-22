@@ -82,7 +82,7 @@
 		var queryString = 'bco_ordernum=${dto.bco_ordernum}';
 
 		$.ajax({
-			url : '/member/orderDetail',
+		url : '/member/orderDetail',
 			type : 'POST',
 			data : queryString,
 			success : function(data) {
@@ -90,23 +90,27 @@
 				for(var i=0; i<data.length; i++) {
 					var bcg_price = data[i].bcg_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					var total_price = data[i].total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					var imgbase64 = btoa(data[i].bcg_img);
+					var namebase64 = btoa(encodeURIComponent(data[i].bcg_name));
+					var url = '/member/reviewWrite?bco_ordernum='+data[i].bco_ordernum+'&bcg_img='+imgbase64+'&bcg_name='+namebase64+'&bcg_key='+data[i].bcg_key+'';
+					var width = '600';
+					var height = '400';
+					console.log(url);
 					text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
 					text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
 					text += '<p class="text">금액 : <span>'+bcg_price+'</span>원</p><br>';
 					text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
-					if(data[i].bco_order_status == '구매확정') {
+					if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'false') {
 						text += '<form action="/member/reviewWrite">';
 						text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
 						text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
 						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
-						text += '<input type="submit" value="리뷰쓰기">';
+						text += '<input type="button" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');">';
 						text += '</form>';
 					}
 					text += '<hr>';
-					console.log(text);
 					$('#infoDiv').empty().append(text);
 				}
 				document.getElementById("popup_layer").style.display = "block";

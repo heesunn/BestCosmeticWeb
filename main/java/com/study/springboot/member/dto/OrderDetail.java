@@ -15,4 +15,5 @@ public class OrderDetail
 	private String bcd_option;
 	private int total_price;
 	private String bco_order_status;
+	private String bco_reviewcheck;
 }

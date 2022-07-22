@@ -317,15 +317,6 @@ function selectAll(selectAll)  {
 		    						text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 		    						text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 		    						text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
-		    						if(data[i].bco_order_status == '구매확정') {
-		    							text += '<form action="/member/reviewWrite">';
-		    							text += '<input type="hidden" name="bcg_img" value="'+data[i].bcg_img+'">';
-		    							text += '<input type="hidden" name="bcg_name" value="'+data[i].bcg_name+'">';
-			    						text += '<input type="hidden" name="bcg_key" value="'+data[i].bcg_key+'">';
-			    						text += '<input type="hidden" name="bcd_detailkey" value="'+data[i].bcd_detailkey+'">';
-			    						text += '<input type="submit" value="리뷰쓰기">';
-			    						text += '</form>';
-		    						}
 		    						text += '<hr>';
 		    						$('#infoDiv').empty().append(text);
 		    					}
