@@ -22,6 +22,7 @@ import com.study.springboot.goods.service.GLikeService;
 import com.study.springboot.goods.service.ListOptionService;
 import com.study.springboot.goods.service.ListService;
 import com.study.springboot.goods.service.PageDetailService;
+import com.study.springboot.goods.service.QuestionListAdminViewService;
 import com.study.springboot.goods.service.QuestionListViewService;
 import com.study.springboot.goods.service.ReviewListViewService;
 import com.study.springboot.member.service.BasketService;
@@ -56,6 +57,8 @@ public class GoodsController
 	ReviewListViewService reviewListViewService;
 	@Autowired
 	BasketService basketService;
+	@Autowired
+	QuestionListAdminViewService questionListAdminViewService;
 
 	int BCG_KEY = 0;
 	String BCG_NAME = "";
@@ -341,6 +344,20 @@ public class GoodsController
 							  request.getParameter("BCQ_CONTENT"),
 							  BCQ_SECRET);
 		return "guest/goods/detailPage";
+	}
+	
+	//관리자 : 문의 리스트 뷰
+	@RequestMapping("/admin/goodsQuestionList")
+	public String questionList(HttpServletRequest request, Model model) {
+		questionListAdminViewService.questionListView(request, model);
+        return "admin/goodsQuestionList"; 
+	}
+	
+	//관리자 : 답변창
+	@RequestMapping("/admin/answer")
+	public String questionAnswer(HttpServletRequest request, Model model) {
+		questionListAdminViewService.questionListView(request, model);
+        return "admin/answer"; 
 	}
 	
 	//상단, 좌측 메뉴 조각들**********************************************************************************************
