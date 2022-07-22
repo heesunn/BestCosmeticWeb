@@ -6,16 +6,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.study.springboot.goods.dto.GoodsJoinLikes;
-import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
-import com.study.springboot.member.dto.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dto.GoodsDto;
+import com.study.springboot.goods.dto.GoodsJoinLikes;
 import com.study.springboot.goods.dto.LPageInfo;
+import com.study.springboot.member.dto.PageInfo;
 
 @Service
 public class ListServiceImpl implements ListService {
@@ -52,6 +51,41 @@ public class ListServiceImpl implements ListService {
 
 		List<GoodsDto> dtos = goodsDao.list(nStart, nEnd);
 		model.addAttribute("list", dtos);
+	}
+
+	@Override
+	public void allList(HttpServletRequest request, Model model) {
+		HttpSession session = null;
+		int nPage= 1;
+		int bcm_num = 0;
+		session = request.getSession();
+
+		try {
+			bcm_num = (int) session.getAttribute("num");
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {
+		}
+
+		LPageInfo pinfo = articlePage(nPage);
+		model.addAttribute("page", pinfo);
+
+		nPage = pinfo.getCurPage();
+		
+		//session = request.getSession();
+		session.setAttribute("cpage", nPage);
+		
+	   	model.addAttribute("cpage", nPage);
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
+		if(bcm_num == 0) {
+			ArrayList<GoodsJoinLikes> dtos = goodsDao.listSessionX(nEnd, nStart);
+			model.addAttribute("list",dtos);
+		} else { 
+			ArrayList<GoodsJoinLikes> dtos = goodsDao.listSessionO(bcm_num, nEnd, nStart);
+			model.addAttribute("list",dtos);
+		}
 	}
 
 	public LPageInfo articlePage(int curPage) {

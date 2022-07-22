@@ -271,7 +271,7 @@ public class GoodsController
 	//카테고리 - 전체보기
 	@RequestMapping("/guest/categoryAll")
 	public String list(HttpServletRequest request, Model model) {
-		listService.list(request, model);
+		listService.allList(request, model);
         return "guest/goods/categoryAll"; 
 	}
 	

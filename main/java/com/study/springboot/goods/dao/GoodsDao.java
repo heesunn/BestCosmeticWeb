@@ -19,8 +19,11 @@ public interface GoodsDao
 	public int modify(int BCG_KEY, int BCG_PRICE, String BCG_INFO, int BCG_DISCOUNT, int BCG_MDPICK);
 	//상품 옵션추가 select
 	GoodsDto opSelect(int BCG_KEY);
-	//전체리스트
+	//메인에서 보여주는 리스트
 	ArrayList<GoodsDto> list(int start, int end);
+	//전체카테고리 : 찜 포함
+	ArrayList<GoodsJoinLikes> listSessionX(int end, int start);
+	ArrayList<GoodsJoinLikes> listSessionO(int bcm_num, int end, int start);
 	LPageInfo articlePage(int curPage);
 	public int selectCount();
 	//검색 : 상품명
@@ -29,6 +32,8 @@ public interface GoodsDao
 	public int selectCountSearch(String type, String srchText);
 	//포인트리스트
 	ArrayList<GoodsDto> pointList(int start, int end);
+	public ArrayList<GoodsJoinLikes> sessionPointList(int bcm_num,int end, int start);
+	public ArrayList<GoodsJoinLikes> seessionXPointList(int end, int start);
 	LPageInfo articlePagePoint(int curPage);
 	public int selectCountPoint();
 	//포인트리스트 찜(찜테이블추가)
@@ -37,7 +42,4 @@ public interface GoodsDao
 	public int goodsTableUpdate(int bcg_key);
 	//포인트리스트 찜(갯수 가져오기)
 	public int likeCount(int bcm_num, int bcg_key);
-
-	public ArrayList<GoodsJoinLikes> sessionPointList(int bcm_num,int end, int start);
-	public ArrayList<GoodsJoinLikes> seessionXPointList(int end, int start);
 }
