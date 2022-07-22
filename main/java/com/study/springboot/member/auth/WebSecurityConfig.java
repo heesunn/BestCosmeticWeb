@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 			.antMatchers("/admin/**").hasAuthority("role_admin")
 			.antMatchers("/member/**").hasAnyAuthority("role_user", "role_admin")
 			.antMatchers("/guest/**").permitAll()
+			.antMatchers("/api/**").permitAll()
 			.antMatchers("/**").permitAll()
 			.anyRequest().authenticated();
 		
