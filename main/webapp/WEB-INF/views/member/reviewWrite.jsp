@@ -63,6 +63,7 @@
                 data: queryString,
                 dataType: 'text',
                 success: function(json) {  
+                	opener.parent.location.reload();
                 	window.close();           		               	           	
                 }
             });
