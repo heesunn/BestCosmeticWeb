@@ -13,6 +13,23 @@
 	 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
    
+   	<script type="text/javascript">
+    function sch() {     //검색기능
+        var queryString=$("#search_ck").serialize();
+    	console.log(queryString);
+        $.ajax({
+        	url: '/guest/guestSearch',  
+            type: 'POST',
+            data: queryString,
+            dataType: 'text',
+            success: function(json) {  
+            	window.location.replace("/guest/searchARs");
+            }       	
+        });
+    }
+    </script>
+    
+    
     <style>
     	a #myTop {
     		font-size:13px;
@@ -96,10 +113,12 @@
 					</div>
 					</form>
 					<br>
-					<form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0">					
-					<input class="form-control mr-sm-2" id="srch" name="srch" type="search"
+					
+					<form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0">
+					<input type="hidden" name="type" value="bcg_name">					
+					<input class="form-control mr-sm-2" id="srchText" name="srchText" type="search"
 						placeholder="전체 상품 검색" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" onclick="">Search</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" onclick="sch()">Search</button>
 					</form>
 				</div>
 			</nav>
