@@ -17,7 +17,7 @@ public class MemberManagementViewServiceImpl implements MemberManagementViewServ
     @Autowired
     MemberDao memberDao;
     @Override
-    public void memberManagementView(HttpServletRequest request, Model model) {
+    public ArrayList<MemberJoinOrderHistoryDto> memberManagementView(HttpServletRequest request, Model model) {
         int nPage= 1;
         try {
             String sPage = request.getParameter("page");
@@ -94,19 +94,25 @@ public class MemberManagementViewServiceImpl implements MemberManagementViewServ
             ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.memberManagement(nEnd,nStart);
             model.addAttribute("list",dtos);
             System.out.println(dtos);
+            return dtos;
         }else if(searchType.equals("sName")){
             ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.serchByNameMemberManagement("%"+searchWord+"%",nEnd,nStart);
             model.addAttribute("list",dtos);
             System.out.println(dtos);
+            return dtos;
         }else if(searchType.equals("sId")){
             ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.serchByIdMemberManagement("%"+searchWord+"%",nEnd,nStart);
             model.addAttribute("list",dtos);
             System.out.println(dtos);
+            return dtos;
         }else if(searchType.equals("sNum")){
             ArrayList<MemberJoinOrderHistoryDto> dtos = memberDao.serchByNumMemberManagement(searchWord,nEnd,nStart);
             model.addAttribute("list",dtos);
             System.out.println(dtos);
+            return dtos;
         }
+
+        return null;
     }
 
     @Override

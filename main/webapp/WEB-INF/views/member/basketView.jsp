@@ -16,11 +16,14 @@
     <script>
         function orderCheckBoxList() {
             console.log("length : " + $("input:checkbox[name=checkbox]:checked").length);
+            if($("input:checkbox[name=checkbox]:checked").length<1){
+                alert("장바구니에 상품이 없습니다.");
+                return
+            }
 
             var keyList ="";
             var detailkeyList = "";
             var countList = "";
-
 
             var checkbox = $("input:checkbox[name=checkbox]:checked");
 

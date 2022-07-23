@@ -18,10 +18,11 @@ public class BasketViewServiceImpl implements BasketViewService{
     MemberDao memberDao;
     HttpSession session;
     @Override
-    public void basketView(HttpServletRequest request, Model model) {
+    public ArrayList<GoodsJoinBasketJoinGoodDetailDto> basketView(HttpServletRequest request, Model model) {
         session = request.getSession();
         int bcm_num = (int) session.getAttribute("num");
         ArrayList<GoodsJoinBasketJoinGoodDetailDto> dtos = memberDao.basketListView(bcm_num);
         model.addAttribute("list",dtos);
+        return dtos;
     }
 }
