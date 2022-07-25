@@ -11,26 +11,33 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+
 	
 	function optionDelete() {     //재고수정
-	    var queryString=$("#optionDelete").serialize();     
-	    $.ajax({
-	        url: '/admin/optionDelete',  
-	        type: 'POST',
-	        data: queryString,
-	        dataType: 'json',
-	        success: function(json) {  
-	            if(json.desc == 1){
-	                window.location.replace("/admin/opDelete");    
-	            } else if (json.desc == 0){
-	                alert("데이터베이스입력오류")
-	            } else if (json.desc == -1) {
-	                alert("배열없음")
-	            } else {
-	                alert(json.desc);
-	            }                                           
-	        }
-	    });
+		if($("input[name=BCD_DETAILKEY]:checked").length<1){
+            alert("적어도 1개는 체크.");
+			return;
+		} else {
+			var queryString=$("#optionDelete").serialize();     
+		    $.ajax({
+		        url: '/admin/optionDelete',  
+		        type: 'POST',
+		        data: queryString,
+		        dataType: 'json',
+		        success: function(json) {  
+		            if(json.desc == 1){
+		                window.location.replace("/admin/opDelete");    
+		            } else if (json.desc == 0){
+		                alert("데이터베이스입력오류")
+		            } else if (json.desc == -1) {
+		                alert("배열없음")
+		            } else {
+		                alert(json.desc);
+		            }                                           
+		        }
+		    });
+		}
+	    
 	}   
 </script>
 </head>

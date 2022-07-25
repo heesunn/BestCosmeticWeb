@@ -5,6 +5,45 @@
     <title>Title</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
+    
+    function form_check() {
+    	var num_check = /^[0-9]*$/;
+		if($('#BCG_PRICE').val().length == 0) {
+			alert("가격은 필수사항입니다.");
+			return;
+		}
+
+		if (!num_check.test($('#BCG_PRICE').val())) {
+            alert("가격은 숫자만 입력 가능합니다.");
+            $('#BCG_PRICE').focus();
+            return;
+        }
+		
+		if($('#BCD_DISCOUNT').val().length == 0) {
+   			alert("할인율은 필수사항입니다.");
+   			return;
+   		}
+		
+		if (!num_check.test($('#BCD_DISCOUNT').val())) {
+            alert("할인율은 숫자만 입력 가능합니다.");
+            $('#BCD_DISCOUNT').focus();
+            return;
+        }
+				
+		if($('#BCD_MDPICK').val().length == 0) {
+   			alert("MD's PICK은 필수사항입니다.");
+   			return;
+   		}
+		
+		if (!num_check.test($('#BCD_MDPICK').val())) {
+            alert("MD's Pick은 숫자만 입력 가능합니다.");
+            $('#BCD_MDPICK').focus();
+            return;
+        }
+
+		mod();
+		
+	}
 	    function mod() {     //상품 수정
 	        var queryString=$("#ModifyForm").serialize();       
 	        $.ajax({
@@ -45,7 +84,7 @@
         *기준가격에 할인율을 곱한 값이 최종가격이 되므로 유의해주세요.<br>
         MD's Pick : <input type="text" id="BCG_MDPICK" name="BCG_MDPICK" value="${BCG_MDPICK}"><br>  
         메인화면 노출 순서 : 1->2->3->4<br>           	
-        <input type="button" value="수정" onclick="mod()">
+        <input type="button" value="수정" onclick="form_check()">
         <input type="button" value="목록" onclick="javascript:window.location='/admin/goodsList'">
     </form>
 </body>

@@ -5,19 +5,7 @@
     <title>Title</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>  
     <script>
-    /*
-        //FormData 새로운 객체 생성 
-        var formData = new FormData();
-        // 넘길 데이터를 담아준다. 
-        var data = {
-            "BCG_NAME" : $("#BCG_NAME").val(),
-            "BCD_DETAILKEY" : $("#BCD_DETAILKEY").val(),
-            "BCD_OPTION" : $("#BCD_OPTION").val(),
-            "BCD_STOCK" : $("#BCD_STOCK").val()
-        };          
-        formData.append('key', new Blob([ JSON.stringify(data) ], {type : "application/json; charset=utf-8;"}));
-        console.log(formData);
-	*/
+
 
         function add() {      	
         	var count = $('.count').length;   //<tr> 개수 카운트
@@ -47,6 +35,39 @@
                 $(this).parent().parent().remove();
             });
         }
+        
+        function form_check() {
+        	var num_check = /^[0-9]*$/;
+			if($('#BCD_DETAILKEY').val().length == 0) {
+				alert("상세품번은 필수사항입니다.");
+				return;
+			}
+
+			if (!num_check.test($('#BCD_DETAILKEY').val())) {
+                alert("상세품번은 숫자만 입력 가능합니다.");
+                $('#BCD_DETAILKEY').focus();
+                return;
+            }
+			
+			if($('#BCD_OPTION').val().length == 0) {
+	   			alert("옵션이름은 필수사항입니다.");
+	   			return;
+	   		}
+					
+			if($('#BCD_STOCK').val().length == 0) {
+	   			alert("재고수량은 필수사항입니다.");
+	   			return;
+	   		}
+			
+			if (!num_check.test($('#BCD_STOCK').val())) {
+                alert("재고수량은 숫자만 입력 가능합니다.");
+                $('#BCD_STOCK').focus();
+                return;
+            }
+
+			submit_ajax();
+			
+		}
           
         function submit_ajax() {     //BC_DETAILGOODS oracle DB에 다중 insert
             var queryString=$("#AddDetailForm").serialize();
@@ -88,13 +109,13 @@
 				   	<td>1</td>
 				   	<td>
 					   	<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">
-					    상세품번 : <input type="text" id="BCD_DETAILKEY" name="BCD_DETAILKEY">
+					    상세품번 : <input type="text" id="BCD_DETAILKEY" name="BCD_DETAILKEY" value="0">
 				    </td> 
 				    <td>
-				    	옵션 : <input type="text" id="BCD_OPTION" name="BCD_OPTION" >
+				    	옵션 : <input type="text" id="BCD_OPTION" name="BCD_OPTION" value="-">
 				    </td>
 				    <td>
-				    	재고수량 : <input type="text" id="BCD_STOCK" name="BCD_STOCK" >	       
+				    	재고수량 : <input type="text" id="BCD_STOCK" name="BCD_STOCK" value="0">	       
 					</td> 
 				    <td name="del1" class="del1">
 					    <!-- 상품 디테일 목록 추가,삭제 -->
@@ -104,7 +125,7 @@
 		    </thead>
 		    <tbody>
 			    <tr>
-			    	<td><input type="button" value="등록" onClick="submit_ajax();"></td>	
+			    	<td><input type="button" value="등록" onClick="form_check();"></td>	
 			    </tr>
 		    </tbody>
 		</table>    

@@ -26,7 +26,40 @@
 				+ '?alt=media';
 		}
 	</script>   
-    <script>    
+    <script>  
+	    function null_check() {
+	    	var num_check = /^[0-9]*$/;
+			if($('#BCG_IMG').val().length == 0) {
+				alert("대표사진은 필수사항입니다.");
+				return;
+			}
+			
+			if($('#BCG_IMGDETAIL').val().length == 0) {
+	   			alert("상세사진은 필수사항입니다.");
+	   			return;
+	   		}
+					
+			if($('#BCG_NAME').val().length == 0) {
+	   			alert("상품명은 필수사항입니다.");
+	   			$('#BCG_NAME').focus();
+	   			return;
+	   		}
+			
+			if($('#BCG_PRICE').val().length == 0) {
+	   			alert("가격은 필수사항입니다.");
+	   			$('#BCG_PRICE').focus();
+	   			return;
+	   		}
+
+			if (!num_check.test($('#BCG_PRICE').val())) {
+                alert("가격은 숫자만 입력 가능합니다.");
+                $('#BCG_PRICE').focus();
+                return;
+            }
+			
+			form_check();
+		}
+	    
     	function form_check(){       //firebase에 이미지 저장       	
         	// 대표사진 업로드
     		// get dom in variables
@@ -55,9 +88,8 @@
             var uploadTask2 = storageRef2.put(file2);          
             
             submit_ajax();
-            
         }
-
+ 
         function submit_ajax() {     //BC_GOODS oracle DB에 저장
             var queryString=$("#AddForm").serialize();
             $.ajax({
@@ -98,7 +130,7 @@
         가격 : <input type="text" id="BCG_PRICE" name="BCG_PRICE"><br>
         전성분 : <br/>
         <textarea id="BCG_INFO" name="BCG_INFO" cols="50" rows="15"></textarea><br>               
-        <input type="button" value="등록" onclick="form_check()">
+        <input type="button" value="등록" onclick="null_check()">
     </form>
 </body>
 </html>
