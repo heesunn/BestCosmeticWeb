@@ -24,6 +24,17 @@
 	    var result = $input.val(Number(tCount)-1);
 	}
 	
+	function form_check() {
+		var num_check = /^[0-9]*$/;
+		if (!num_check.test($('#BCG_KEY').val())) {
+            alert("품번검색은 숫자만 입력 가능합니다.");
+            $('#BCG_KEY').focus();
+            return;
+        } else {
+        	sch();
+        }
+	}
+	
 	function sch() {             //검색기능
 	    var queryString=$("#adminSch").serialize();
 	    $.ajax({
@@ -36,6 +47,17 @@
 	        }          
 	    });
 	}	
+	
+	function num_check() {
+		var num_check = /^[0-9]*$/;
+		if (!num_check.test($('#count').val())) {
+            alert("재고는 숫자만 입력 가능합니다.");
+            $('#count').focus();
+            return;
+        } else {
+        	stockModify();
+        }
+	}
 	
 	function stockModify() {     //재고수정
 	    var queryString=$("#stockModify").serialize();     
@@ -74,13 +96,13 @@
 	<table border="1">
 		<tr>
 			<td colspan="3">관리자 - 재고관리</td>
-			<td><input type="button" value="수정" onclick="stockModify()"></td>
+			<td><input type="button" value="수정" onclick="num_check()"></td>
 		</tr>
 		<form id="adminSch" name="adminSch">      
 		<tr>
             <td colspan="4">                     
                <input type="text" id="BCG_KEY" name="BCG_KEY">
-               <input type="button" value="품번검색" onclick="sch()">
+               <input type="button" value="품번검색" onclick="form_check()">
             </td>
 		</tr>
 		</form>    

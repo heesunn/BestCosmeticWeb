@@ -10,17 +10,23 @@
 <title>관리자 - 상품리스트</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-	
+
 	function del() {     //상품 삭제 : 여러개 한번에 삭제 가능
-        var queryString=$("#ModifyDelete").serialize();
-        $.ajax({
-        	url: '/admin/delete',  
-            type: 'POST',
-            data: queryString,
-            dataType: 'text',
-            success: function(json) { }
-        });
-        del2();
+		console.log($("input[name=BCG_KEY]:checked").length);
+		if($("input[name=BCG_KEY]:checked").length<1) {
+            alert("적어도 1개는 체크.");
+			return;
+        } else if($("input[name=BCG_KEY]:checked").length>=1){
+        	var queryString=$("#ModifyDelete").serialize();
+	        $.ajax({
+	        	url: '/admin/delete',  
+	            type: 'POST',
+	            data: queryString,
+	            dataType: 'text',
+	            success: function(json) { }
+	        });
+	        del2();
+		} 
     }
 	
 	function del2() {     //상품 삭제 시 옵션까지 삭제
@@ -37,29 +43,47 @@
     }	
 	
 	function opAdd() {     //옵션추가 : 1개만 선택 가능
-        var queryString=$("#ModifyDelete").serialize();
-        $.ajax({
-        	url: '/admin/opSelect',  
-            type: 'POST',
-            data: queryString,
-            dataType: 'text',
-            success: function(json) {
-            	window.location="/admin/goodsAddDetail";   
-            }
-        });
-    }
-	
+		if($("input[name=BCG_KEY]:checked").length<1){
+            alert("적어도 1개는 체크.");
+			return;
+		} else if($("input[name=BCG_KEY]:checked").length==1){
+			var queryString=$("#ModifyDelete").serialize();
+	        $.ajax({
+	        	url: '/admin/opSelect',  
+	            type: 'POST',
+	            data: queryString,
+	            dataType: 'text',
+	            success: function(json) {
+	            	window.location="/admin/goodsAddDetail";   
+	        	}
+	    	});
+		} else {
+			alert("중복ㄴㄴ");
+			return;
+		}
+		
+	}
+
 	function mod() {     //상품 수정 : 1개만 선택 가능
-        var queryString=$("#ModifyDelete").serialize();
-        $.ajax({
-        	url: '/admin/opSelect',  
-            type: 'POST',
-            data: queryString,
-            dataType: 'text',
-            success: function(json) {
-            	window.location.replace("/admin/goodsModify");   
-            }
-        });
+		if($("input[name=BCG_KEY]:checked").length<1){
+            alert("적어도 1개는 체크.");
+			return;
+		} else if($("input[name=BCG_KEY]:checked").length==1){
+			var queryString=$("#ModifyDelete").serialize();
+			$.ajax({
+	        	url: '/admin/opSelect',  
+	            type: 'POST',
+	            data: queryString,
+	            dataType: 'text',
+	            success: function(json) {
+	            	window.location.replace("/admin/goodsModify");   
+	            }
+	        });
+		} else {
+			alert("중복ㄴㄴ");
+			return;
+		}
+
     }
 	
 	function sch() {     //검색기능
