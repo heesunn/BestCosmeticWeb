@@ -28,7 +28,16 @@
 		}
 	</script>   
     <script>    
-    	function form_check(){      //사진유무체크  
+	    function form_check() {
+			if($('#BCR_CONTENT').val().length == 0) {
+				alert("리뷰 내용을 입력해주세요");
+				$('#BCR_CONTENT').focus();
+				return;
+			}
+			file_form_check();
+	    }
+    
+    	function file_form_check(){      //사진유무체크  
     		var filecheck = document.getElementsByClassName('hidden-upload-btn')[0].value;
     		console.log("filecheck : "+filecheck);
         	if (filecheck!='') { 
