@@ -12,6 +12,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	 <script integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	
+	<style>
+		#dd {
+			float: right;
+		}
+	</style>
 </head>
 <body>
 <div class="adminTop">
@@ -23,10 +29,10 @@
 						</a>
 					</form>
 					<br>
-					<form class="form-inline my-2 my-lg-0">
-					<div class="collapse navbar-collapse">
-						<ul class="navbar-nav mr-auto" >					
-							<li class="nav-item active">
+					<form class="my-2 my-lg-0">
+					<div id="dd">
+						<ul>					
+							<li>
 								<p>관리자 <%=name %>님<a class="nav-link" href="/logout">로그아웃</a></p>
 							</li>
 						</ul>

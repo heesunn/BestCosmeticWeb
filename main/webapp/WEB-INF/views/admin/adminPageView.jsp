@@ -21,6 +21,10 @@
         	color: #000000;
         	font-size: 14px;
         }
+        
+        ul{
+   			list-style:none;
+   		}
 	
 </style>
 </head>
@@ -32,7 +36,8 @@
             <li>
                 회원
                 <ul>
-                    <li class="nav-item active" onclick="javascript:window.location='/admin/memberManagement'">회원관리</li>
+                    <li class="nav-item active">
+                    	<a href='/admin/memberManagement'>회원관리</a></li>
                 </ul>
             </li>
             <li>
@@ -41,7 +46,7 @@
                     <li class="nav-item active">
                     	<a href='/admin/deliveryReady'>배송준비</a></li>
                     <li class="nav-item active">
-                     	<a href='/admin/inTransit'></a>배송중</li>
+                     	<a href='/admin/inTransit'>배송중</a></li>
                     <li class="nav-item active">
                     	<a href='/admin/deliveryCompleted'>배송완료</a></li>
                     <li class="nav-item active"> 
@@ -55,9 +60,12 @@
             <li>
                 상품관리
                 <ul>
-                    <li class="nav-item active" onclick="javascript:window.location='/admin/goodsList'">상품리스트</li>
-                    <li class="nav-item active" onclick="javascript:window.location='/admin/goodsAdd'">상품등록</li>
-                    <li class="nav-item active" onclick="javascript:window.location='/admin/stockManager'">재고관리</li>
+                    <li class="nav-item active"> 
+                    	<a href='/admin/goodsList'>상품리스트</a></li>
+                    <li class="nav-item active">
+                    	<a href='/admin/goodsAdd'>상품등록</a></li>
+                    <li class="nav-item active">
+                    	<a href='/admin/stockManager'>재고관리</a></li>
                 </ul>
             </li>
         </ul>
