@@ -18,6 +18,14 @@
 <meta charset="UTF-8">
 <title>카테고리 - 포인트메이크업</title>
 <script>
+function form_check() {
+	if($('#srchText').val().length == 0) {
+		alert("검색어를 입력해주세요");
+		$('#srchText').focus();
+		return;
+	}
+	sch();
+}
 
 function sch() {     //검색기능
     var queryString=$("#categorySch").serialize();
@@ -49,7 +57,7 @@ function sch() {     //검색기능
 						<option value="bcg_name">품명</option>						
 					</select>
 					<input type="text" id="srchText" name="srchText">
-					<input type="button" value="검색" onclick="sch()">
+					<input type="button" value="검색" onclick="form_check()">
 				</td>
 			</tr>
 	</form>		
