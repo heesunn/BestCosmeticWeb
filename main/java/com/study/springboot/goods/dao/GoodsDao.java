@@ -21,6 +21,9 @@ public interface GoodsDao
 	GoodsDto opSelect(int BCG_KEY);
 	//메인에서 보여주는 리스트
 	ArrayList<GoodsDto> list(int start, int end);
+	ArrayList<GoodsDto> mdList(int start, int end);
+	ArrayList<GoodsDto> bestList(int start, int end);
+	ArrayList<GoodsDto> newList(int start, int end);
 	//전체카테고리 : 찜 포함
 	ArrayList<GoodsJoinLikes> listSessionX(int end, int start);
 	ArrayList<GoodsJoinLikes> listSessionO(int bcm_num, int end, int start);

@@ -5,37 +5,47 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%
-	int i = 0;
-	int j = 4;
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>메인페이지</title>
 
-<script>
-	function next() {
-		<% 
-			i = i+5;
-			j = j+5;
-		%>
-	}
-</script>
+<style>
+body {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    background: #E6E6FA;
+}
+.main {
+	background-color: #E6E6FA;
+	margin-left:auto; 
+    margin-right:auto;
+}
+.mdpick {
+	text-align: center; 
+	width: 300px;
+	background-color: white;
+}
+.NnB {
+	text-align: center; 
+	width: 240px;
+	background-color: white;
+}
+</style>
 </head>
 <body>
-	<div style="float: top">
+	<div class="menuTop" style="float: top">
     	<c:import url="/guest/menuTop"></c:import>
 	</div>
 	
-	<table border="1">
+	<table class="main">
 		<tr>
 			<td colspan="5">MDPICK</td>
 		</tr>		
 		<tr>
-			<c:forEach items="${list}" var="dto" begin="1" end="4">		
-				<td> 
+			<c:forEach items="${mdlist}" var="dto" begin="0" end="3">		
+				<td class="mdpick"> 
 					<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
 						<img src="${dto.bcg_img}" height="300" width="300">
 						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
@@ -43,38 +53,36 @@
 					${dto.bcg_name}<br/>						
 				</td>
 			</c:forEach>
-		</tr>		
+		</tr>	
+	</table>
+	<table class="main">	
 		<tr>
 			<td colspan="5">BEST</td>
 		</tr>		
 		<tr>
-			<td><input type='image' class='leftBtn' src='/image/leftBtn.png'></td>
-			<c:forEach items="${list}" var="dto" begin="<%=i%>" end="<%=j%>">		
-				<td> 
+			<c:forEach items="${blist}" var="dto" begin="0" end="4">		
+				<td class="NnB"> 
 					<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-						<img src="${dto.bcg_img}" height="250" width="250">
+						<img src="${dto.bcg_img}" height="240" width="240">
 						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 					</a><br/>
 					${dto.bcg_name}<br/>						
 				</td>
 			</c:forEach>
-			<td><input type='image' class='rightBtn' src='/image/rightBtn.png' onclick="next()"></td>
 		</tr>		
 		<tr>
 			<td colspan="5">NEW</td>
 		</tr>		
 		<tr>
-			<td><input type='image' class='leftBtn' src='/image/leftBtn.png'></td>
-			<c:forEach items="${list}" var="dto" begin="<%=i%>" end="<%=j%>">		
-				<td> 
+			<c:forEach items="${nlist}" var="dto" begin="0" end="4">		
+				<td class="NnB"> 
 					<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-						<img src="${dto.bcg_img}" height="250" width="250">
+						<img src="${dto.bcg_img}" height="240" width="240">
 						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 					</a><br/>
 					${dto.bcg_name}<br/>						
 				</td>
 			</c:forEach>
-			<td><input type='image' class='rightBtn' src='/image/rightBtn.png' onclick="next()"></td>
 		</tr>			
 	</table>	
 <c:import url="/guest/channelTalk"></c:import>

@@ -269,7 +269,9 @@ public class GoodsController
 	//메인화면
 	@RequestMapping("/")
 	public String mainHome(HttpServletRequest request, Model model) {
-		listService.list(request, model);
+		listService.mdList(request, model);
+		listService.bestList(request, model);
+		listService.newList(request, model);
         return "guest/goods/mainHome"; 
 	}
 	

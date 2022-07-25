@@ -182,7 +182,7 @@
     </insert>
     <update id="updateGoodsStock">
         UPDATE BC_GOODS
-            SET BCG_STOCK = BCG_STOCK-1
+            SET BCG_STOCK = BCG_STOCK-1, BCG_SALE = BCG_SALE+1
             WHERE BCG_KEY = #{param1}
     </update>
     <update id="updateDetailGoodsStock">

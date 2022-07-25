@@ -160,6 +160,11 @@
 	    font-size: 1em;
 	    color: rgba(250, 208, 0, 0.99);
 	}
+	body {
+	  padding-top: 120px;
+	  padding-bottom: 120px;
+	  background-color: #E6E6FA;
+	}
 </style>
 </head>
 <body>

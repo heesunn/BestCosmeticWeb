@@ -40,37 +40,31 @@ function sch() {     //검색기능
     });
 }
 </script>
+<style>
+body {
+	  padding-top: 120px;
+	  padding-bottom: 120px;
+	  background-color: #E6E6FA;
+	}
+</style>
 </head>
 <body>
-	<div style="float: top">
-       <c:import url="/guest/menuTop"></c:import>
-   </div>
+	<div class="menuTop" style="float: top">
+        <c:import url="/guest/menuTop"></c:import>
+    </div>
    
-   <div style="float: left">
-       <c:import url="/guest/menuLeft"></c:import>
-   </div>
-   
-   <form id="categorySch" name="categorySch">	
-			<tr>
-				<td>							
-					<select id="type" name="type">
-						<option value="bcg_name">품명</option>						
-					</select>
-					<input type="text" id="srchText" name="srchText">
-					<input type="button" value="검색" onclick="form_check()">
-				</td>
-			</tr>
-	</form>		
-   
-   <table border="1">
+    <div style="float: left">
+        <c:import url="/guest/menuLeft"></c:import>
+    </div>  
+         
+<table border="1">
       <tr>
          <td colspan="4">포인트 메이크업</td>
       </tr>
       <tr>
          <td colspan="4">총 ${page.totalCount}개</td>
       </tr>
-      
-      
+       
       <c:set var="i" value="0" />
       <c:set var="j" value="4" />
       <c:forEach items="${list}" var="dto">
@@ -157,11 +151,9 @@ function sch() {     //검색기능
   		  }   
 	}
 </script>
-      </c:forEach>
-      
-         
-      <tr>
-         <td colspan="4">
+    </c:forEach>   
+    <tr>
+        <td colspan="4">
             <!-- 처음 -->
             <c:choose>
             <c:when test="${(page.curPage - 1) < 1}">
@@ -204,18 +196,30 @@ function sch() {     //검색기능
             </c:otherwise>
             </c:choose>
             
-            <!-- 끝 -->
-            <c:choose>
-            <c:when test="${page.curPage == page.totalPage}">
-               [ &gt;&gt; ]
-            </c:when>
-            <c:otherwise>
-               <a href="categoryPoint?page=${page.totalPage}">[ &gt;&gt; ]</a>
-            </c:otherwise>
-            </c:choose>
-         </td>
-      </tr>
-   </table>
+			<!-- 끝 -->
+			<c:choose>
+			<c:when test="${page.curPage == page.totalPage}">
+			[ &gt;&gt; ]
+			</c:when>
+			<c:otherwise>
+				<a href="categoryPoint?page=${page.totalPage}">[ &gt;&gt; ]</a>
+			</c:otherwise>
+			</c:choose>
+		</td>
+	</tr>
+     
+	<form id="categorySch" name="categorySch">	
+		<tr>
+			<td>							
+				<select id="type" name="type">
+					<option value="bcg_name">품명</option>						
+				</select>
+				<input type="text" id="srchText" name="srchText">
+				<input type="button" value="검색" onclick="form_check()">
+			</td>
+		</tr>
+	</form>		
+</table>
 <c:import url="/guest/channelTalk"></c:import>   
 </body>
 </html>

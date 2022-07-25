@@ -52,6 +52,90 @@ public class ListServiceImpl implements ListService {
 		List<GoodsDto> dtos = goodsDao.list(nStart, nEnd);
 		model.addAttribute("list", dtos);
 	}
+	
+	@Override
+	public void mdList(HttpServletRequest request, Model model) {
+
+		int nPage = 1;
+		try {
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {
+		}
+
+		LPageInfo pinfo = articlePage(nPage);
+		model.addAttribute("page", pinfo);
+
+		nPage = pinfo.getCurPage();
+		
+		HttpSession session = null;
+		session = request.getSession();
+		session.setAttribute("cpage", nPage);
+		
+	   	model.addAttribute("cpage", nPage);
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
+
+		List<GoodsDto> dtos = goodsDao.mdList(nStart, nEnd);
+		model.addAttribute("mdlist", dtos);
+	}
+
+	@Override
+	public void bestList(HttpServletRequest request, Model model) {
+
+		int nPage = 1;
+		try {
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {
+		}
+
+		LPageInfo pinfo = articlePage(nPage);
+		model.addAttribute("page", pinfo);
+
+		nPage = pinfo.getCurPage();
+		
+		HttpSession session = null;
+		session = request.getSession();
+		session.setAttribute("cpage", nPage);
+		
+	   	model.addAttribute("cpage", nPage);
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
+
+		List<GoodsDto> dtos = goodsDao.bestList(nStart, nEnd);
+		model.addAttribute("blist", dtos);
+	}
+
+	@Override
+	public void newList(HttpServletRequest request, Model model) {
+
+		int nPage = 1;
+		try {
+			String sPage = request.getParameter("page");
+			nPage = Integer.parseInt(sPage);
+		} catch (Exception e) {
+		}
+
+		LPageInfo pinfo = articlePage(nPage);
+		model.addAttribute("page", pinfo);
+
+		nPage = pinfo.getCurPage();
+		
+		HttpSession session = null;
+		session = request.getSession();
+		session.setAttribute("cpage", nPage);
+		
+	   	model.addAttribute("cpage", nPage);
+
+		int nStart = (nPage - 1) * listCount + 1;
+		int nEnd = (nPage - 1) * listCount + listCount;
+
+		List<GoodsDto> dtos = goodsDao.newList(nStart, nEnd);
+		model.addAttribute("nlist", dtos);
+	}
 
 	@Override
 	public void allList(HttpServletRequest request, Model model) {

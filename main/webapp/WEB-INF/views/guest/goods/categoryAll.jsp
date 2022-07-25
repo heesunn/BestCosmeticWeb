@@ -16,9 +16,25 @@
 <head>
 <meta charset="UTF-8">
 <title>전체보기</title>
+<style>
+body {
+  padding-top: 120px;
+  padding-bottom: 120px;
+  background-color: #E6E6FA;
+}
+.badge {
+	position: absolute;
+}
+.badge2 {
+	position: absolute;
+}
+.tdsize {
+	width: 300px;
+}
+</style>
 </head>
 <body>
-	<div style="float: top">
+	<div class="menuTop" style="float: top">
     	<c:import url="/guest/menuTop"></c:import>
 	</div>
 	
@@ -40,28 +56,29 @@
 		<c:if test="${i%j == 0 }">		
 		<tr>
 		</c:if>
-			<td> 
-				<!-- NEW 뱃지 -->
-				<c:set var="now" value="<%=new java.util.Date()%>" /><!-- 현재시간 -->
-	         	<fmt:formatDate value="${now}" pattern="yyMMdd" var="today" /><!-- 현재시간을 숫자로 -->
-	         	<fmt:formatDate  value="${dto.bcg_date}" pattern="yyMMdd" var="dtoDate" /><!-- 게시글 작성날짜를 숫자로 -->
-	         		<c:if test="${today - dtoDate le 30}"><!-- 30일동안은 new 표시 -->
-	            		<img src="/image/new.png" width="30" height="30">
-	         		</c:if>
-	         	
-	         	<!-- BEST 뱃지 -->	
-	         	<fmt:formatNumber value="${dto.bcg_sale }" var="sale"/>
-		         	<c:if test="${sale >= 10}">
-		         		<img src="/image/best.png" width="30" height="30">
-		         	</c:if>
+			<td class="tdsize"> 
+				<div class="badge">
+					<!-- NEW 뱃지 -->
+					<c:set var="now" value="<%=new java.util.Date()%>" /><!-- 현재시간 -->
+		         	<fmt:formatDate value="${now}" pattern="yyMMdd" var="today" /><!-- 현재시간을 숫자로 -->
+		         	<fmt:formatDate  value="${dto.bcg_date}" pattern="yyMMdd" var="dtoDate" /><!-- 게시글 작성날짜를 숫자로 -->
+		         		<c:if test="${today - dtoDate le 30}"><!-- 30일동안은 new 표시 -->
+		            		<img src="/image/new.png" width="30" height="30">
+		         		</c:if>
 		         	
-		        <!-- SALE 뱃지 -->	
-	         	<c:if test="${dto.bcg_discount > 0}">
-	         		<img src="/image/sale.png" width="30" height="30">
-	         	</c:if>
-		        <br/> 	 	
+		         	<!-- BEST 뱃지 -->	
+		         	<fmt:formatNumber value="${dto.bcg_sale}" var="sale"/>
+			         	<c:if test="${sale >= 10}">
+			         		<img src="/image/best.png" width="30" height="30">
+			         	</c:if>
+			         	
+			        <!-- SALE 뱃지 -->	
+		         	<c:if test="${dto.bcg_discount > 0}">
+		         		<img src="/image/sale.png" width="30" height="30">
+		         	</c:if>
+	         	</div>
 				<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-					<img src="${dto.bcg_img}" height="200" width="200">
+					<img src="${dto.bcg_img}" height="300" width="300">
 					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 				</a><br/>
 				${dto.bcg_name}<br/>
@@ -80,6 +97,7 @@
 				<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
+         		<div class="badge2">
                 <c:choose>
                     <c:when test="${ (sessionScope.num) == null}">
                     </c:when>
@@ -94,6 +112,7 @@
                         </c:choose>
                     </c:otherwise>
                 </c:choose>
+                </div>
          		</form>						
 			</td>
 		<c:if test="${i%j == j-1 }">	

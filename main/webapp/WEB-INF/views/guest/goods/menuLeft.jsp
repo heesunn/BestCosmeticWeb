@@ -12,6 +12,7 @@
         #cateoryLeft{
             width: 210px;
             white-space: nowrap;
+            background: #E6E6FA;
         }
         
         a {

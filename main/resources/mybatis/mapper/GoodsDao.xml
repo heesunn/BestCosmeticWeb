@@ -20,6 +20,24 @@
 			<![CDATA[where rownum <= #{param2}]]> ) B 
 			where B.num >= #{param1}
 	</select>
+	<select id="mdList" resultType="com.study.springboot.goods.dto.GoodsDto">
+		select * from ( select rownum num, A.* from (
+			select * from bc_goods where bcg_mdpick != 0 order by bcg_mdpick asc, bcg_key desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param1}
+	</select>
+	<select id="bestList" resultType="com.study.springboot.goods.dto.GoodsDto">
+		select * from ( select rownum num, A.* from (
+			select * from bc_goods order by bcg_sale desc, bcg_key desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param1}
+	</select>
+	<select id="newList" resultType="com.study.springboot.goods.dto.GoodsDto">
+		select * from ( select rownum num, A.* from (
+			select * from bc_goods order by bcg_date desc, bcg_key desc ) A 
+			<![CDATA[where rownum <= #{param2}]]> ) B 
+			where B.num >= #{param1}
+	</select>
 	<select id="listSessionX" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
 		select *
 			from ( select rownum num, A.*
