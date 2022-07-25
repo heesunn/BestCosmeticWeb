@@ -3,7 +3,9 @@ package com.study.springboot.member.service.wjapp;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AppMemberLoginServiceImpl implements AppMemberLoginService
 {
 
