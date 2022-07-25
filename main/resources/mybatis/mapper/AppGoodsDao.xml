@@ -6,4 +6,25 @@
     <select id="goodsListView" resultType="com.study.springboot.goods.dto.GoodsDto">
         SELECT * FROM BC_GOODS ORDER BY BCG_KEY DESC
     </select>
+    <select id="goodsSkinCareListview" resultType="com.study.springboot.goods.dto.GoodsDto">
+        SELECT * FROM BC_GOODS WHERE BCG_CATEGORY ='skincare' ORDER BY BCG_KEY DESC
+    </select>
+    <select id="goodsPointListview" resultType="com.study.springboot.goods.dto.GoodsDto">
+        SELECT * FROM BC_GOODS WHERE BCG_CATEGORY ='point' ORDER BY BCG_KEY DESC
+    </select>
+    <select id="goodsBaseListview" resultType="com.study.springboot.goods.dto.GoodsDto">
+        SELECT * FROM BC_GOODS WHERE BCG_CATEGORY ='base' ORDER BY BCG_KEY DESC
+    </select>
+    <select id="goodsSelectOne" resultType="com.study.springboot.goods.dto.GoodsDto">
+        SELECT * FROM BC_GOODS WHERE BCG_KEY = #{param1}
+    </select>
+    <select id="goodsDetail" resultType="com.study.springboot.goods.dto.GoodsDetailDto">
+        SELECT * FROM BC_DETAILGOODS WHERE BCG_KEY = #{param1}
+    </select>
+    <update id="goodsFavoriteUp">
+        UPDATE BC_GOODS SET BCG_LIKE = BCG_LIKE + 1 WHERE BCG_KEY = #{param1}
+    </update>
+    <update id="goodsFavoriteDown">
+        UPDATE BC_GOODS SET BCG_LIKE = BCG_LIKE - 1 WHERE BCG_KEY = #{param1}
+    </update>
 </mapper>
