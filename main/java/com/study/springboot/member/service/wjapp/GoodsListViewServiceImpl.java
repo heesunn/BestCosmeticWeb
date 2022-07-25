@@ -14,7 +14,18 @@ public class GoodsListViewServiceImpl implements GoodsListViewService{
     AppGoodsDao appGoodsDao;
     @Override
     public ArrayList<GoodsDto> goodsListView(HttpServletRequest request) {
-        ArrayList<GoodsDto> dtos = appGoodsDao.goodsListView();
-        return dtos;
+        return appGoodsDao.goodsListView();
+    }
+    @Override
+    public ArrayList<GoodsDto> goodsSkinCareListview(HttpServletRequest request) {
+        return appGoodsDao.goodsSkinCareListview();
+    }
+    @Override
+    public ArrayList<GoodsDto> goodsPointListview(HttpServletRequest request) {
+        return appGoodsDao.goodsPointListview();
+    }
+    @Override
+    public ArrayList<GoodsDto> goodsBaseListview(HttpServletRequest request) {
+        return appGoodsDao.goodsBaseListview();
     }
 }

@@ -6,10 +6,15 @@ import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
 import com.study.springboot.member.service.BasketViewService;
 import com.study.springboot.member.service.MemberManagementViewService;
 import com.study.springboot.member.service.wjapp.AppBasketViewService;
+import com.study.springboot.member.service.wjapp.GoodsDetailViewService;
 import com.study.springboot.member.service.wjapp.GoodsListViewService;
+import com.study.springboot.member.service.wjapp.GoodsUpdateService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +29,10 @@ public class MemberRestController
     GoodsListViewService goodsListViewService;
     @Autowired
     AppBasketViewService appBasketViewService;
+    @Autowired
+    GoodsDetailViewService goodsDetailViewService;
+    @Autowired
+    GoodsUpdateService goodsUpdateService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -36,5 +45,25 @@ public class MemberRestController
     @GetMapping("/api/basketView")
     public ArrayList<GoodsJoinBasketJoinGoodDetailDto> basketView(HttpServletRequest request){
         return appBasketViewService.basketView(request);
+    }
+    @GetMapping("/api/category/skinCare")
+    public ArrayList<GoodsDto> skinCareList(HttpServletRequest request){
+        return goodsListViewService.goodsSkinCareListview(request);
+    }
+    @GetMapping("/api/category/point")
+    public ArrayList<GoodsDto> pointList(HttpServletRequest request){
+        return goodsListViewService.goodsPointListview(request);
+    }
+    @GetMapping("/api/category/base")
+    public ArrayList<GoodsDto> baseList(HttpServletRequest request){
+        return goodsListViewService.goodsBaseListview(request);
+    }
+    @GetMapping("/api/goodsDetailView")
+    public JSONObject goodsDetailView(HttpServletRequest request) {
+        return goodsDetailViewService.goodsDetailView(request);
+    }
+    @PostMapping("/api/goods/favoriteCount")
+    public void goodsFavoriteCount(HttpServletRequest request){
+        goodsUpdateService.goodsFavoriteCount(request);
     }
 }
