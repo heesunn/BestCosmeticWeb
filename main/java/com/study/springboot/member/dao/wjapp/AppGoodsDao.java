@@ -17,4 +17,5 @@ public interface AppGoodsDao {
     public int goodsFavoriteUp(String bcgKey);
     public int goodsFavoriteDown(String bcgKey);
 
+
 }
