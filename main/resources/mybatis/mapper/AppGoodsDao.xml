@@ -27,4 +27,13 @@
     <update id="goodsFavoriteDown">
         UPDATE BC_GOODS SET BCG_LIKE = BCG_LIKE - 1 WHERE BCG_KEY = #{param1}
     </update>
+    <select id="likeList" resultType="com.study.springboot.member.dto.Like">
+        SELECT * FROM BC_LIKE WHERE BCM_NUM = #{param1}
+    </select>
+    <insert id="memberFavoriteUp">
+        insert into BC_LIKE values (#{param1} , #{param2} , sysdate )
+    </insert>
+    <delete id="memberFavoriteDown">
+        delete from BC_LIKE where BCM_NUM = #{param1} and BCG_KEY = #{param2}
+    </delete>
 </mapper>

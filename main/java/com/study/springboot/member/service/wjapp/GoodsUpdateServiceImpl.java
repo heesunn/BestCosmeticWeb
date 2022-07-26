@@ -15,10 +15,13 @@ public class GoodsUpdateServiceImpl implements GoodsUpdateService{
     public void goodsFavoriteCount(HttpServletRequest request) {
         String bcgKey = request.getParameter("bcgKey");
         String count = request.getParameter("count");
+        String bcmNum = request.getParameter("bcmNum");
         if (count.equals("up")){
             appGoodsDao.goodsFavoriteUp(bcgKey);
+            appGoodsDao.memberFavoriteUp(bcmNum,bcgKey);
         }else {
             appGoodsDao.goodsFavoriteDown(bcgKey);
+            appGoodsDao.memberFavoriteDown(bcmNum,bcgKey);
         }
     }
 }

@@ -2,13 +2,11 @@ package com.study.springboot.member.controller;
 
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto;
+import com.study.springboot.member.dto.Like;
 import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
 import com.study.springboot.member.service.BasketViewService;
 import com.study.springboot.member.service.MemberManagementViewService;
-import com.study.springboot.member.service.wjapp.AppBasketViewService;
-import com.study.springboot.member.service.wjapp.GoodsDetailViewService;
-import com.study.springboot.member.service.wjapp.GoodsListViewService;
-import com.study.springboot.member.service.wjapp.GoodsUpdateService;
+import com.study.springboot.member.service.wjapp.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -33,6 +31,8 @@ public class MemberRestController
     GoodsDetailViewService goodsDetailViewService;
     @Autowired
     GoodsUpdateService goodsUpdateService;
+    @Autowired
+    MemberLikeListService memberLikeListService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -65,5 +65,9 @@ public class MemberRestController
     @PostMapping("/api/goods/favoriteCount")
     public void goodsFavoriteCount(HttpServletRequest request){
         goodsUpdateService.goodsFavoriteCount(request);
+    }
+    @PostMapping("/api/member/likeList")
+    public ArrayList<Like> likeList(HttpServletRequest request){
+        return memberLikeListService.likeList(request);
     }
 }
