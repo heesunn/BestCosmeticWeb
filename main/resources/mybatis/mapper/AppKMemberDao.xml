@@ -10,4 +10,12 @@
 	<select id="getMemberInfo" resultType="com.study.springboot.member.dto.MemberDto">
 		select * from bc_member where bcm_id = #{param1}
 	</select>
+	<insert id="createAppMemberAccount">
+		INSERT INTO BC_MEMBER
+            (BCM_NUM , BCM_ID , BCM_PW , BCM_NAME , BCM_EMAIL, BCM_GOOGLEID, BCM_NAVERID, BCM_KAKAOID, BCM_FACEBOOKID,
+             BCM_ZIPCODE,BCM_ADDRESS1,BCM_ADDRESS2,BCM_ADDRESS3,BCM_PHONENUM1,BCM_PHONENUM2,BCM_PHONENUM3,
+             BCM_AUTHORITY,BCM_ENABLE,BCM_JOINED_ON,BCM_STOPDATE)
+            VALUES ( BCM_NUM_SEQ.NEXTVAL , #{param1} , #{param2} , #{param3} , #{param4} , '','','','','','','','','','',
+                    '','role_user','true',SYSDATE,SYSDATE)
+	</insert>
 </mapper>

@@ -9,4 +9,5 @@ public interface AppKMemberDao
 {
 	public String AppPwCheck(String bcm_id);
 	public MemberDto getMemberInfo(String bcm_id);
+	public int createAppMemberAccount(String bcm_id, String bcm_pw, String bcm_name, String bcm_email);
 }
