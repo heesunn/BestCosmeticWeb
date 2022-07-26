@@ -2,6 +2,7 @@ package com.study.springboot.member.dao.wjapp;
 
 import com.study.springboot.goods.dto.GoodsDetailDto;
 import com.study.springboot.goods.dto.GoodsDto;
+import com.study.springboot.goods.dto.GoodsJoinLikes;
 import com.study.springboot.member.dto.Like;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,6 +21,7 @@ public interface AppGoodsDao {
     public ArrayList<Like> likeList(String bcmNum);
     public void memberFavoriteUp(String bcmNum, String bcgKey);
     public void memberFavoriteDown(String bcmNum, String bcgKey);
+    public ArrayList<GoodsJoinLikes> UserGoodsJoinLikelist(String bcmNum);
 
 
 }

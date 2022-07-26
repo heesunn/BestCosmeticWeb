@@ -36,4 +36,11 @@
     <delete id="memberFavoriteDown">
         delete from BC_LIKE where BCM_NUM = #{param1} and BCG_KEY = #{param2}
     </delete>
+    <select id="UserGoodsJoinLikelist" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
+        SELECT D.*
+        FROM BC_LIKE C, BC_GOODS D
+        WHERE C.BCG_KEY = D.BCG_KEY
+          AND C.BCM_NUM = #{param1}
+        ORDER BY C.BCL_DATE DESC
+    </select>
 </mapper>

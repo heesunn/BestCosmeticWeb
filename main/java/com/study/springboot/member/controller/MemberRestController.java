@@ -1,6 +1,7 @@
 package com.study.springboot.member.controller;
 
 import com.study.springboot.goods.dto.GoodsDto;
+import com.study.springboot.goods.dto.GoodsJoinLikes;
 import com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto;
 import com.study.springboot.member.dto.Like;
 import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
@@ -42,7 +43,7 @@ public class MemberRestController
     public ArrayList<GoodsDto> goodsList(HttpServletRequest request){
         return goodsListViewService.goodsListView(request);
     }
-    @GetMapping("/api/basketView")
+    @PostMapping("/api/basketView")
     public ArrayList<GoodsJoinBasketJoinGoodDetailDto> basketView(HttpServletRequest request){
         return appBasketViewService.basketView(request);
     }
@@ -69,5 +70,9 @@ public class MemberRestController
     @PostMapping("/api/member/likeList")
     public ArrayList<Like> likeList(HttpServletRequest request){
         return memberLikeListService.likeList(request);
+    }
+    @PostMapping("/api/member/UserGoodsJoinLikelist")
+    public ArrayList<GoodsJoinLikes> UserGoodsJoinLikelist(HttpServletRequest request){
+        return memberLikeListService.UserGoodsJoinLikelist(request);
     }
 }
