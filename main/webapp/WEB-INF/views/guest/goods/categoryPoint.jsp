@@ -41,11 +41,30 @@ function sch() {     //검색기능
 }
 </script>
 <style>
+@font-face {
+    font-family: 'tway_air';
+    src: url('/tway_air.ttf') format('truetype');
+}
 body {
-	  padding-top: 120px;
-	  padding-bottom: 120px;
-	  background-color: #E6E6FA;
-	}
+	padding-top: 120px;
+	padding-bottom: 120px;
+	background-color: #E6E6FA;
+}
+.badge {
+	position: absolute;
+	z-index: 2;
+}
+.badge2 {
+	position: absolute;
+	z-index: 1;
+}
+.tdsize {
+	width: 300px;	
+}
+.tableD {
+	font-family: 'tway_air';
+	border-color: #E6E6FA;
+}
 </style>
 </head>
 <body>
@@ -57,12 +76,9 @@ body {
         <c:import url="/guest/menuLeft"></c:import>
     </div>  
          
-<table border="1">
+<table class="tableD" border="2">
       <tr>
-         <td colspan="4">포인트 메이크업</td>
-      </tr>
-      <tr>
-         <td colspan="4">총 ${page.totalCount}개</td>
+         <td colspan="4" style="text-align: right">총 ${page.totalCount}개</td>
       </tr>
        
       <c:set var="i" value="0" />
@@ -71,7 +87,8 @@ body {
       <c:if test="${i%j == 0 }">   
       <tr>
       </c:if>
-         <td> 
+         <td class="tdsize"> 
+         	<div class="badge">
          	<!-- NEW 뱃지 -->
 			<c:set var="now" value="<%=new java.util.Date()%>" /><!-- 현재시간 -->
          	<fmt:formatDate value="${now}" pattern="yyMMdd" var="today" /><!-- 현재시간을 숫자로 -->
@@ -90,9 +107,9 @@ body {
          	<c:if test="${dto.bcg_discount > 0}">
          		<img src="/image/sale.png" width="30" height="30">
          	</c:if>
-	        <br/> 	
+         	</div>
             <a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-				<img src="${dto.bcg_img}" height="200" width="200">
+				<img src="${dto.bcg_img}" height="300" width="300">
 				<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 			</a><br/>
 			${dto.bcg_name}<br/>
@@ -111,6 +128,7 @@ body {
          	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
+	            <div class="badge2">
 	            <c:choose>
                     <c:when test="${ (sessionScope.num) == null}">
                     </c:when>
@@ -125,6 +143,7 @@ body {
                         </c:choose>
                     </c:otherwise>
                 </c:choose>
+                </div>
          	</form>
 
          </td>
@@ -152,7 +171,7 @@ body {
 	}
 </script>
     </c:forEach>   
-    <tr>
+    <tr style="text-align: center">
         <td colspan="4">
             <!-- 처음 -->
             <c:choose>
@@ -210,7 +229,7 @@ body {
      
 	<form id="categorySch" name="categorySch">	
 		<tr>
-			<td>							
+			<td colspan="4" style="text-align: center">							
 				<select id="type" name="type">
 					<option value="bcg_name">품명</option>						
 				</select>

@@ -12,8 +12,12 @@
 <title>메인페이지</title>
 
 <style>
+@font-face {
+    font-family: 'tway_air';
+    src: url('/tway_air.ttf') format('truetype');
+}
 body {
-    padding-top: 120px;
+    padding-top: 190px;
     padding-bottom: 120px;
     background: #E6E6FA;
 }
@@ -21,34 +25,37 @@ body {
 	background-color: #E6E6FA;
 	margin-left:auto; 
     margin-right:auto;
+	font-family: 'tway_air';
+	border-spacing: 5px;
+    border-collapse: separate;
 }
 .mdpick {
 	text-align: center; 
 	width: 300px;
-	background-color: white;
+	background-color: #E6E6FA;
 }
 .NnB {
 	text-align: center; 
 	width: 240px;
-	background-color: white;
+	background-color: #E6E6FA;
 }
 </style>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 	<div class="menuTop" style="float: top">
     	<c:import url="/guest/menuTop"></c:import>
 	</div>
 	
 	<table class="main">
 		<tr>
-			<td colspan="5">MDPICK</td>
+			<td colspan="4">MDPICK</td>
 		</tr>		
 		<tr>
 			<c:forEach items="${mdlist}" var="dto" begin="0" end="3">		
 				<td class="mdpick"> 
 					<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-						<img src="${dto.bcg_img}" height="300" width="300">
-						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
+						<img src="${dto.bcg_img}" height="auto" width="100%" style="border-radius:15%">	
+						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">						
 					</a><br/>
 					${dto.bcg_name}<br/>						
 				</td>
@@ -63,7 +70,7 @@ body {
 			<c:forEach items="${blist}" var="dto" begin="0" end="4">		
 				<td class="NnB"> 
 					<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-						<img src="${dto.bcg_img}" height="240" width="240">
+						<img src="${dto.bcg_img}" height="auto" width="100%" style="border-radius:15%">
 						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 					</a><br/>
 					${dto.bcg_name}<br/>						
@@ -77,7 +84,7 @@ body {
 			<c:forEach items="${nlist}" var="dto" begin="0" end="4">		
 				<td class="NnB"> 
 					<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-						<img src="${dto.bcg_img}" height="240" width="240">
+						<img src="${dto.bcg_img}" height="auto" width="100%" style="border-radius:15%">
 						<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 					</a><br/>
 					${dto.bcg_name}<br/>						

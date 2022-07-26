@@ -17,24 +17,33 @@
 <meta charset="UTF-8">
 <title>전체보기</title>
 <style>
+@font-face {
+    font-family: 'tway_air';
+    src: url('/tway_air.ttf') format('truetype');
+}
 body {
-  padding-top: 120px;
-  padding-bottom: 120px;
-  background-color: #E6E6FA;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    background-color: #E6E6FA;
 }
 .badge {
 	position: absolute;
+	z-index: 2;
 }
 .badge2 {
 	position: absolute;
+	z-index: 1;
 }
 .tdsize {
-	width: 300px;
+	width: 300px;	
+}
+.tableD {
+	font-family: 'tway_air';
 }
 </style>
 </head>
 <body>
-	<div class="menuTop" style="float: top">
+	<div class="menuTop" style="float: top;  z-index: 3;">
     	<c:import url="/guest/menuTop"></c:import>
 	</div>
 	
@@ -42,12 +51,9 @@ body {
     	<c:import url="/guest/menuLeft"></c:import>
 	</div>
 	
-	<table border="1">
+	<table class="tableD">
 		<tr>
-			<td colspan="4">전체보기</td>
-		</tr>
-		<tr>
-			<td>총 ${page.totalCount}개</td>
+			<td colspan="4" style="text-align: right">총 ${page.totalCount}개</td>
 		</tr>
 		
 		<c:set var="i" value="0" />
@@ -140,7 +146,7 @@ body {
 		</script>
 		</c:forEach>
 			
-		<tr>
+		<tr style="text-align: center">
 			<td colspan="4">
 				<!-- 처음 -->
 				<c:choose>
