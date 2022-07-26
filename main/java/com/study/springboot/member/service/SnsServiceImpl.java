@@ -1,7 +1,9 @@
 package com.study.springboot.member.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +14,7 @@ import com.study.springboot.member.dto.MemberDto;
 @Validated
 @Service
 public class SnsServiceImpl implements SnsService{
+
 	@Autowired
 	private HttpSession httpSession;
     @Autowired
@@ -42,17 +45,17 @@ public class SnsServiceImpl implements SnsService{
     		}
     	}
     	else if(snsName.equals("facebook")) {
-    		memberDto = memberDao.facebookCheck(id);
+    		memberDto = memberDao.facebookCheck(name, email);
     		if(memberDto == null) {
     			memberDao.facebookJoin(id, name, email);
-    			memberDto = memberDao.facebookCheck(id);
+    			memberDto = memberDao.facebookCheck(name, email);
     			httpSession.setAttribute("num", memberDto.getBcm_num());
     			httpSession.setAttribute("id", memberDto.getBcm_facebookid());
     			httpSession.setAttribute("name", memberDto.getBcm_name());
     			httpSession.setAttribute("email", memberDto.getBcm_email());
     		}
     		else {
-    			memberDto = memberDao.facebookCheck(id);
+    			memberDto = memberDao.facebookCheck(name, email);
     			httpSession.setAttribute("num", memberDto.getBcm_num());
     			httpSession.setAttribute("id", memberDto.getBcm_facebookid());
     			httpSession.setAttribute("name", memberDto.getBcm_name());
@@ -96,4 +99,37 @@ public class SnsServiceImpl implements SnsService{
     		}
 		}
     }
+    
+    @Override
+	public JSONObject appSnsLogin(HttpServletRequest request) {
+    	JSONObject obj = new JSONObject();
+		String snsName = request.getParameter("sns");
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		
+    	if(snsName.equals("facebook")) {
+    		memberDto = memberDao.facebookCheck(name, email);
+    		if(memberDto == null) {
+    			memberDao.facebookJoin(id, name, email);
+    			memberDto = memberDao.facebookCheck(name, email);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_facebookid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    		else {
+    			memberDto = memberDao.facebookCheck(name, email);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_facebookid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    	}
+		return obj;
+	}
 }

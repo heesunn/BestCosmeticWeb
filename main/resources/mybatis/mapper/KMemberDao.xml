@@ -9,7 +9,7 @@
     	select * from bc_member where bcm_googleid = #{param1}
     </select>
     <select id="facebookCheck" resultType="com.study.springboot.member.dto.MemberDto">
-    	select * from bc_member where bcm_facebookid = #{param1}
+    	select * from bc_member where bcm_name = #{param1} and bcm_email = #{param2} and bcm_facebookid is not null
     </select>
     <select id="kakaoCheck" resultType="com.study.springboot.member.dto.MemberDto">
     	select * from bc_member where bcm_kakaoid = #{param1}
