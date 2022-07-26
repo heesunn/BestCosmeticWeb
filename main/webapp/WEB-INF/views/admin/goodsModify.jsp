@@ -19,25 +19,25 @@
             return;
         }
 		
-		if($('#BCD_DISCOUNT').val().length == 0) {
+		if($('#BCG_DISCOUNT').val().length == 0) {
    			alert("할인율은 필수사항입니다.");
    			return;
    		}
 		
-		if (!num_check.test($('#BCD_DISCOUNT').val())) {
+		if (!num_check.test($('#BCG_DISCOUNT').val())) {
             alert("할인율은 숫자만 입력 가능합니다.");
-            $('#BCD_DISCOUNT').focus();
+            $('#BCG_DISCOUNT').focus();
             return;
         }
 				
-		if($('#BCD_MDPICK').val().length == 0) {
+		if($('#BCG_MDPICK').val().length == 0) {
    			alert("MD's PICK은 필수사항입니다.");
    			return;
    		}
 		
-		if (!num_check.test($('#BCD_MDPICK').val())) {
+		if (!num_check.test($('#BCG_MDPICK').val())) {
             alert("MD's Pick은 숫자만 입력 가능합니다.");
-            $('#BCD_MDPICK').focus();
+            $('#BCG_MDPICK').focus();
             return;
         }
 
