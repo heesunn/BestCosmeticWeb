@@ -130,6 +130,50 @@ public class SnsServiceImpl implements SnsService{
     			return obj;
     		}
     	}
+    	else if(snsName.equals("google")) {
+    		memberDto = memberDao.googleCheck(id);
+    		if(memberDto == null) {
+    			memberDao.googleJoin(id, name, email);
+    			memberDto = memberDao.googleCheck(id);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_googleid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    		else {
+    			memberDto = memberDao.googleCheck(id);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_googleid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    	}
+    	else if(snsName.equals("naver")) {
+    		memberDto = memberDao.naverCheck(id);
+    		if(memberDto == null) {
+    			memberDao.naverJoin(id, name, email);
+    			memberDto = memberDao.naverCheck(id);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_naverid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    		else {
+    			memberDto = memberDao.naverCheck(id);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_naverid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    	}
 		return obj;
 	}
 }
