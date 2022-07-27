@@ -24,12 +24,14 @@ import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.service.DeleteService;
 import com.study.springboot.goods.service.DetailAddService;
 import com.study.springboot.goods.service.GLikeService;
+import com.study.springboot.goods.service.GoodsModifyService;
 import com.study.springboot.goods.service.ListOptionService;
 import com.study.springboot.goods.service.ListService;
 import com.study.springboot.goods.service.PageDetailService;
 import com.study.springboot.goods.service.QuestionListAdminViewService;
 import com.study.springboot.goods.service.QuestionListViewService;
 import com.study.springboot.goods.service.ReviewListViewService;
+import com.study.springboot.member.dto.MemberDto;
 import com.study.springboot.member.service.BasketService;
 
 @Controller
@@ -64,6 +66,8 @@ public class GoodsController
 	BasketService basketService;
 	@Autowired
 	QuestionListAdminViewService questionListAdminViewService;
+	@Autowired
+	GoodsModifyService goodsModifyService;
 
 	int BCG_KEY = 0;
 	String BCG_NAME = "";
@@ -164,7 +168,17 @@ public class GoodsController
 				        Integer.parseInt(request.getParameter("BCG_DISCOUNT")),
 		        		Integer.parseInt(request.getParameter("BCG_MDPICK")));
 		return "admin/goodsList";
-	}			
+	}		
+	
+	//관리자 : MdPick 중복체크
+	@RequestMapping("/admin/mdPickCheck")
+	public @ResponseBody JSONObject mdPickCheck(HttpServletRequest request, Model model) {
+		JSONObject obj = new JSONObject();
+		GoodsDto goodsDto = goodsModifyService.mdPickCheck(request, model);
+		obj.put("mdPick", goodsDto);
+		System.out.println("obj : " + obj);
+		return obj;
+	}
 	
 	//관리자 : 상품 삭제
 	@RequestMapping("/admin/delete")

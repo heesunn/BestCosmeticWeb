@@ -35,17 +35,38 @@
    			return;
    		}
 		
-		if (!num_check.test($('#BCG_MDPICK').val())) {
-            alert("MD's Pick은 숫자만 입력 가능합니다.");
+		var num_check2 = /^[0-4]*$/;
+		if (!num_check2.test($('#BCG_MDPICK').val())) {
+            alert("MD's Pick은 0-4만 입력 가능합니다.");
             $('#BCG_MDPICK').focus();
             return;
         }
-
-		mod();
+		
+		if($('#BCG_MDPICK').val() != 0) {
+			var queryString=$("#BCG_MDPICK").serialize();
+	        $.ajax({
+	            url : '/admin/mdPickCheck',
+	            type : 'POST',
+	            data : queryString,
+	            dataType: 'json',
+	            success : function(json) {
+	                console.log(json.mdPick.bcg_mdpick);
+	                if(json.mdPick.bcg_mdpick == null){
+	                	mod();
+	                } else {
+	                	alert("Md Pick 중복불가");
+						return;
+	                }
+	            }
+	        });
+		} else {
+			mod();
+		}
+		
 		
 	}
 	    function mod() {     //상품 수정
-	        var queryString=$("#ModifyForm").serialize();       
+	        var queryString=$("#ModifyForm").serialize();
 	        $.ajax({
 	        	url: '/admin/modify',  
 	            type: 'POST',

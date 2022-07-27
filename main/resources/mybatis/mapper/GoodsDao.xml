@@ -185,4 +185,8 @@
          when not matched then 
             insert (BCM_NUM, BCG_KEY, BCL_DATE) values(#{param1}, #{param2}, sysdate)        
    	</update>
+	<select id="mdPickCheck" resultType="com.study.springboot.goods.dto.GoodsDto">
+        SELECT * FROM BC_GOODS WHERE BCG_MDPICK = #{param1}
+    </select>
+
 </mapper>
