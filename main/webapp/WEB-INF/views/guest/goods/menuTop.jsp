@@ -51,7 +51,8 @@
 		top: 0;
 		background: #E6E6FA;
 		font-family: 'tway_air';
-		height: 40px;
+		height: 40px;		
+		z-index: 3;
 	}
 	.logoNav {
 		position: fixed;
@@ -60,6 +61,7 @@
 		background: #E6E6FA;
 		font-family: 'tway_air';
 		height: 150px;
+		z-index: 4;
 	}
 	div #navbarSupportedContent {
 		font-size: 15px;
