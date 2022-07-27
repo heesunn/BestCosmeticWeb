@@ -1,5 +1,11 @@
 package com.study.springboot.goods.service.hs;
 
-public interface AQuestionService {
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.json.simple.JSONObject;
+
+
+public interface AQuestionService {
+	public JSONObject goodsQuestionView(HttpServletRequest request);
 }
