@@ -44,6 +44,7 @@
    	div #logo {
    		font-size: 50px;
    		font-weight: bold;
+   		margin-left: 10%;
    	}
    	.myNav {
 		position: fixed;
@@ -52,31 +53,39 @@
 		background: #E6E6FA;
 		font-family: 'tway_air';
 		height: 40px;		
-		z-index: 3;
+		z-index: 5;
 	}
 	.logoNav {
 		position: fixed;
-		box-shadow: 0 2px rgba(0, 0, 0, 0.1);		
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);		
 		width: 100%;
-		top: 40px;
+		top: 38px;
 		background: #E6E6FA;
 		font-family: 'tway_air';
 		height: 150px;
-		z-index: 4;
+		z-index: 10;
 	}
 	div #navbarSupportedContent {
 		font-size: 15px;
+		margin-left: 70%;
 	}
 	div #navbarScroll {
 		font-size: 20px;
 		background: #E6E6FA;
+		margin-left: 10%;
+	}
+	#search_ck { margin-left: 45%;}
+	@media ( max-width: 1150px ) {
+  	    div #navbarScroll { margin-left: 5%; }
+  	    div #logo { margin-left: 5%; }
+  	    #search_ck { margin-left: 35%;}
 	}
 </style> 
 </head>
 <body>
-	<nav class="myNav navbar-expand-lg navbar-light">
-		<div class="container" id="navbarSupportedContent" >
-			<ul class="navbar-nav justify-content-end" >					
+	<nav class="myNav navbar-expand-sm navbar-light">
+		<div class="container-fluid" id="navbarSupportedContent" >
+			<ul class="navbar-nav">					
 				<li class="nav-item">
 					<a class="nav-link" href="/member/orderDelivery" id="myTopMyPage">마이페이지</a>
 				</li>
@@ -109,15 +118,12 @@
 			</ul>
 		</div>
 	</nav>	
-	<nav class="logoNav navbar-expand-lg navbar-light">		
-	    <div class="container">
+	<nav class="logoNav navbar-expand-sm navbar-light">		
+	    <div class="container-fluid">
 		    <a class="navbar-brand" href="/" id="logo"> 
 				<img src="/image/logo.PNG" width="80" height="80" alt="">
 				BestCosmetic
 			</a>
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-		        <span class="navbar-toggler-icon"></span>
-		    </button>
 		    <div class="collapse navbar-collapse" id="navbarScroll">
 		        <ul class="navbar-nav me-auto navbar-nav-scroll">
 					<li class="nav-item dropdown">
@@ -145,12 +151,7 @@
 						<a class="nav-link" href="">특가</a>
 					</li>
 		        </ul> 
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        <form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0 justify-content-end">
+		        <form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0">
 					<input type="hidden" name="type" value="bcg_name">					
 					<input class="form-control mr-sm-2" id="srchText" name="srchText" type="search"
 						placeholder="전체 상품 검색" aria-label="Search"> &nbsp;

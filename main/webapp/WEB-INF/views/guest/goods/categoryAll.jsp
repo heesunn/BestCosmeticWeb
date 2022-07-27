@@ -28,12 +28,14 @@ body {
 .badge {
 	position: absolute;
 	z-index: 1;
+	left: 10px;
+	top: 10px;
 }
 .badge2 {
 	position: absolute;
 	z-index: 2;
-	right: 5px;
-	bottom: 43px;
+	right: 15px;
+	bottom: 50px;
 }
 .tdsize {
 	width: 300px;	
@@ -43,6 +45,7 @@ body {
 	font-family: 'tway_air';
 	position: relative;
     left: 210px; 
+    border-spacing: 5px;
 }
 div .menuTop {
 	float: top;
@@ -111,7 +114,7 @@ div .menuTop {
                 </div>
          		</form>	
 				<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-					<img src="${dto.bcg_img}" width="100%">
+					<img src="${dto.bcg_img}" width="100%" style="border-radius:15%">
 					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 				</a><br/>
 				${dto.bcg_name}<br/>
@@ -123,7 +126,10 @@ div .menuTop {
 						<p style="text-decoration:line-through; display:inline;">
 							<fmt:formatNumber type="number" maxFractionDigits="0" 
 							value="${dto.bcg_price/(100-dto.bcg_discount)*100}" pattern="#,###"/>
-						</p> → <fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
+						</p> → 
+						<p style="color:red; display:inline;">
+							<fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
+						</p>	
 					</c:otherwise>
 				</c:choose>						
 			</td>
@@ -153,7 +159,10 @@ div .menuTop {
 		  		}   
 			}
 		</script>
-		</c:forEach>	
+		</c:forEach>
+		<tr>
+			<td colspan="4">&nbsp;</td>
+		</tr>	
 		<tr style="text-align: center">
 			<td colspan="4">
 				<!-- 처음 -->
