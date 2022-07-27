@@ -14,4 +14,8 @@
     <select id="goodsNewListView" resultType="com.study.springboot.goods.dto.GoodsDto">
         select * from bc_goods where bcg_date > sysdate-30 order by bcg_date desc
     </select>
+    
+    <select id="goodsQuestionView" resultType="com.study.springboot.goods.dto.QuestionDto">
+        select * from bc_question where bcg_key = #{param1} order by bcq_date desc
+    </select>
 </mapper>
