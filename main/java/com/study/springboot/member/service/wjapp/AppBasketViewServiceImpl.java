@@ -15,7 +15,6 @@ public class AppBasketViewServiceImpl implements AppBasketViewService{
     @Override
     public ArrayList<GoodsJoinBasketJoinGoodDetailDto> basketView(HttpServletRequest request) {
         int bcm_num = Integer.parseInt(request.getParameter("bcmNum"));
-        System.out.println(bcm_num);
         return memberDao.basketListView(bcm_num);
     }
 }
