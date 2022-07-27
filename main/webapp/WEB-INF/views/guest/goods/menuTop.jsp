@@ -56,6 +56,7 @@
 	}
 	.logoNav {
 		position: fixed;
+		box-shadow: 0 2px rgba(0, 0, 0, 0.1);		
 		width: 100%;
 		top: 40px;
 		background: #E6E6FA;

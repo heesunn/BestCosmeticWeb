@@ -82,6 +82,7 @@
 			<![CDATA[where rownum <= #{param2}]]> ) B 
 			where B.num >= #{param1}
 	</select>
+	<!-- 검색 -->
 	<select id="searchListSessionX" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
 		select * from ( select rownum num, A.* from (
 			select c.*, d.bcg_key item from (
