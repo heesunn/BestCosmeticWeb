@@ -11,13 +11,12 @@ import com.study.springboot.member.service.wjapp.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class MemberRestController
@@ -89,5 +88,9 @@ public class MemberRestController
     @PostMapping("/api/member/basket/delete")
     public void basketDelete(HttpServletRequest request){
         appBasketService.deleteBasket(request);
+    }
+    @PostMapping("/api/member/basket/add")
+    public void basketAdd(@RequestBody List<HashMap<String, Object>> json){
+        appBasketService.basketAdd(json);
     }
 }
