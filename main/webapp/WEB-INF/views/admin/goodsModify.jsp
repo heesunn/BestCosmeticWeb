@@ -50,8 +50,9 @@
 	            data : queryString,
 	            dataType: 'json',
 	            success : function(json) {
-	                console.log(json.mdPick.bcg_mdpick);
-	                if(json.mdPick.bcg_mdpick == null){
+	                console.log(json.mdPick);
+
+	                if(json.mdPick == null){
 	                	mod();
 	                } else {
 	                	alert("Md Pick 중복불가");

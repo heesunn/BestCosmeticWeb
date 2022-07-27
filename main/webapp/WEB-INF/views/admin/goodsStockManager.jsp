@@ -21,7 +21,12 @@
 	function downCount(ths) {
 		var $input = $(ths).parents("td").find("input[name='count']");
 	    var tCount = Number($input.val());
-	    var result = $input.val(Number(tCount)-1);
+	    if (tCount==0) {
+	    	alert("수량은 0개 이하로 내릴 수 없습니다.");
+		    return;
+	    } else {
+	    	var result = $input.val(Number(tCount)-1);
+	    }
 	}
 	
 	function form_check() {
@@ -126,7 +131,7 @@
             <td>
                 <span onclick="downCount(this);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
                 <input type="text" name="count" id="count"
-                                    min="1" max="${dto.bcd_stock}" size="2" maxlength="2" value="${dto.bcd_stock}" >
+                                    min="1" max="${dto.bcd_stock}" size="2" maxlength="2" value="${dto.bcd_stock}" readonly >
                 <span onclick="upCount(this);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
             </td>                  
 		</tr>
