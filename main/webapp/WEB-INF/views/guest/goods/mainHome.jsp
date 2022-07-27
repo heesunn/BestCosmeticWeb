@@ -19,7 +19,6 @@
 body {
     padding-top: 190px;
     padding-bottom: 120px;
-    background: #E6E6FA;
 }
 .main {
 	background-color: #E6E6FA;

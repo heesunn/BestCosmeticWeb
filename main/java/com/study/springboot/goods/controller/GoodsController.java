@@ -261,7 +261,7 @@ public class GoodsController
 	//게스트 : 전체 상품검색결과
 	@RequestMapping("/guest/searchARs") 
 	public String searchARs(HttpServletRequest request, Model model) {    
-		listService.searchList(request, model, type, srchText);
+		listService.searchList2(request, model, type, srchText);
 		return "guest/goods/categoryAll"; 
 	}
 	
@@ -276,7 +276,7 @@ public class GoodsController
 	//게스트 : 포인트카테고리 상품검색결과
 	@RequestMapping("/guest/searchCRs") 
 	public String searchCRs(HttpServletRequest request, Model model) {    
-		listService.searchList(request, model, type, srchText);
+		listService.searchList2(request, model, type, srchText);
 		return "guest/goods/categoryPoint"; 
 	}
 	
@@ -299,7 +299,7 @@ public class GoodsController
 	//카테고리 - 포인트
 	@RequestMapping("/guest/categoryPoint")   //포인트메이크업 카테고리
 	public String pointList(HttpServletRequest request, Model model) {
-        listService.pointList2(request,model);
+        listService.pointList(request,model);
 		return "guest/goods/categoryPoint";
 	}
 	

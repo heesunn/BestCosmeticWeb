@@ -22,28 +22,35 @@
     src: url('/tway_air.ttf') format('truetype');
 }
 body {
-    padding-top: 120px;
-    padding-bottom: 120px;
-    background-color: #E6E6FA;
+    padding-top: 190px;
+    padding-bottom: 120px;  
 }
 .badge {
 	position: absolute;
-	z-index: 2;
+	z-index: 1;
 }
 .badge2 {
 	position: absolute;
-	z-index: 1;
+	z-index: 2;
+	right: 5px;
+	bottom: 43px;
 }
 .tdsize {
 	width: 300px;	
+	position: relative;
 }
 .tableD {
 	font-family: 'tway_air';
+	position: relative;
+    left: 210px; 
+}
+div .menuTop {
+	float: top;
 }
 </style>
 </head>
-<body>
-	<div class="menuTop" style="float: top;  z-index: 3;">
+<body style="background-color: #E6E6FA;">
+	<div class="menuTop">
     	<c:import url="/guest/menuTop"></c:import>
 	</div>
 	
@@ -53,7 +60,7 @@ body {
 	
 	<table class="tableD">
 		<tr>
-			<td colspan="4" style="text-align: right">총 ${page.totalCount}개</td>
+			<td colspan="4">총 ${page.totalCount}개</td>
 		</tr>
 		
 		<c:set var="i" value="0" />
@@ -83,8 +90,28 @@ body {
 		         		<img src="/image/sale.png" width="30" height="30">
 		         	</c:if>
 	         	</div>
+	         	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
+         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
+         		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
+         		<div class="badge2" id="badge2">
+                <c:choose>
+                    <c:when test="${sessionScope.num == null}">
+                    </c:when>
+                    <c:otherwise>
+                        <c:choose>
+                            <c:when test="${dto.item == null}">
+                                <input type="image" src="/image/heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="image" src="/image/red-heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
+                            </c:otherwise>
+                        </c:choose>
+                    </c:otherwise>
+                </c:choose>
+                </div>
+         		</form>	
 				<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-					<img src="${dto.bcg_img}" height="300" width="300">
+					<img src="${dto.bcg_img}" width="100%">
 					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 				</a><br/>
 				${dto.bcg_name}<br/>
@@ -93,33 +120,12 @@ body {
 						<fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
 					</c:when>
 					<c:otherwise>
-						<p style="text-decoration:line-through">
+						<p style="text-decoration:line-through; display:inline;">
 							<fmt:formatNumber type="number" maxFractionDigits="0" 
 							value="${dto.bcg_price/(100-dto.bcg_discount)*100}" pattern="#,###"/>
-						</p> -> <fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
+						</p> → <fmt:formatNumber value="${dto.bcg_price}" pattern="#,###"/>원
 					</c:otherwise>
-				</c:choose>	
-				
-				<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
-         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
-         		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
-         		<div class="badge2">
-                <c:choose>
-                    <c:when test="${ (sessionScope.num) == null}">
-                    </c:when>
-                    <c:otherwise>
-                        <c:choose>
-                            <c:when test="${dto.item == null}">
-                                <input type="image" src="/image/heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key }()">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="image" src="/image/red-heart.png" height="20" width="20" onclick ="likeUpdate${dto.bcg_key }()">
-                            </c:otherwise>
-                        </c:choose>
-                    </c:otherwise>
-                </c:choose>
-                </div>
-         		</form>						
+				</c:choose>						
 			</td>
 		<c:if test="${i%j == j-1 }">	
 		</tr>	
@@ -131,6 +137,8 @@ body {
 		  			alert("로그인후 이용가능합니다.");
 		  			return;
 		  		} else {
+		  			if(${dto.item==null}) { alert("찜목록에 추가되었습니다"); } 
+		        	else { alert("찜목록에서 삭제되었습니다"); }
 		    	    var queryString=$("#list${dto.bcg_key}").serialize();
 				    $.ajax({
 				      	url: '/member/glike',  
@@ -138,33 +146,33 @@ body {
 				        data: queryString,
 				        dataType: 'text',
 				        success: function(json) {  
-				        	window.location.reload="/guest/categoryAll";
+				        	window.location.reload();
+				        	$("#badge2").load(location.href + " #badge2");
 				        }       	
 				    });
 		  		}   
 			}
 		</script>
-		</c:forEach>
-			
+		</c:forEach>	
 		<tr style="text-align: center">
 			<td colspan="4">
 				<!-- 처음 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
-					[ &lt;&lt; ]
+					 &lt;&lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=1">[ &lt;&lt; ]</a>
+					<a href="categoryAll?page=1"> &lt;&lt; </a>
 				</c:otherwise>
 				</c:choose>
 				
 				<!-- 이전 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
-					[ &lt; ]
+					 &lt; &nbsp;
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=${page.curPage - 1}">[ &lt; ]</a>
+					<a href="categoryAll?page=${page.curPage - 1}"> &lt; </a> &nbsp;
 				</c:otherwise>
 				</c:choose>
 				
@@ -172,10 +180,10 @@ body {
 				<c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
 					<c:choose>
 					<c:when test="${page.curPage == fEach}">
-						[ ${fEach} ] &nbsp;
+						 ${fEach}  &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="categoryAll?page=${fEach}">[ ${fEach} ]</a> &nbsp;
+						<a href="categoryAll?page=${fEach}"> ${fEach} </a> &nbsp;
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -183,20 +191,20 @@ body {
 				<!-- 다음 -->
 				<c:choose>
 				<c:when test="${(page.curPage + 1) > page.totalPage}">
-					[ &gt; ]
+					 &gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=${page.curPage + 1}">[ &gt; ]</a>
+					<a href="categoryAll?page=${page.curPage + 1}"> &gt; </a>
 				</c:otherwise>
 				</c:choose>
 				
 				<!-- 끝 -->
 				<c:choose>
 				<c:when test="${page.curPage == page.totalPage}">
-					[ &gt;&gt; ]
+					 &gt;&gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=${page.totalPage}">[ &gt;&gt; ]</a>
+					<a href="categoryAll?page=${page.totalPage}"> &gt;&gt; </a>
 				</c:otherwise>
 				</c:choose>
 			</td>

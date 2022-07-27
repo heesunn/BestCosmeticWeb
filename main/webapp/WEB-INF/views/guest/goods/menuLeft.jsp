@@ -15,6 +15,8 @@
 		}
     
         #cateoryLeft{
+	        position: fixed;
+        	top: 190px;
             width: 210px;
             white-space: nowrap;
             background: #E6E6FA;
@@ -23,7 +25,6 @@
         
         a {
         	color: #000000;
-        	font-size: 14px;
         }
 
     </style>
@@ -35,7 +36,7 @@
 			<li class="nav-item active">
 				<a class="nav-link" href="/guest/categoryAll" id="sidebar">전체보기</a>
 			</li>
-			<br>						
+			<hr>						
 			<li class="nav-item active">
 				<a class="nav-link" href="" id="sidebar">스킨케어</a>
 			</li>

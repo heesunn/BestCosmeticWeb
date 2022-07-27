@@ -29,12 +29,15 @@ public interface GoodsDao
 	ArrayList<GoodsJoinLikes> listSessionO(int bcm_num, int end, int start);
 	LPageInfo articlePage(int curPage);
 	public int selectCount();
-	//검색 : 상품명
+	//관리자 검색
 	ArrayList<GoodsDto> searchList(int start, int end, String type, String srchText);
+	//검색
+	ArrayList<GoodsJoinLikes> searchListSessionX(int end, int start, String type, String srchText);
+	ArrayList<GoodsJoinLikes> searchListSessionO(int bcm_num, int end, int start, String type, String srchText);
 	LPageInfo articlePageSearch(int curPage, String type, String srchText);
 	public int selectCountSearch(String type, String srchText);
 	//포인트리스트
-	ArrayList<GoodsDto> pointList(int start, int end);
+	//ArrayList<GoodsDto> pointList(int start, int end);
 	public ArrayList<GoodsJoinLikes> sessionPointList(int bcm_num,int end, int start);
 	public ArrayList<GoodsJoinLikes> seessionXPointList(int end, int start);
 	LPageInfo articlePagePoint(int curPage);
