@@ -34,6 +34,8 @@ public class MemberRestController
     GoodsUpdateService goodsUpdateService;
     @Autowired
     MemberLikeListService memberLikeListService;
+    @Autowired
+    AppBasketService appBasketService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -74,5 +76,18 @@ public class MemberRestController
     @PostMapping("/api/member/UserGoodsJoinLikelist")
     public ArrayList<GoodsJoinLikes> UserGoodsJoinLikelist(HttpServletRequest request){
         return memberLikeListService.UserGoodsJoinLikelist(request);
+    }
+    @PostMapping("/api/member/basket/upCount")
+    public void basketUpCount(HttpServletRequest request){
+        appBasketService.basketUpCount(request);
+    }
+    @PostMapping("/api/member/basket/downCount")
+    public void basketDownCount(HttpServletRequest request){
+        appBasketService.basketDownCount(request);
+    }
+
+    @PostMapping("/api/member/basket/delete")
+    public void basketDelete(HttpServletRequest request){
+        appBasketService.deleteBasket(request);
     }
 }
