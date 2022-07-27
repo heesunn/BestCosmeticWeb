@@ -45,4 +45,6 @@ public interface GoodsDao
 	public int goodsTableUpdate(int bcg_key);
 	//포인트리스트 찜(갯수 가져오기)
 	public int likeCount(int bcm_num, int bcg_key);
+	// mdpick 중복체크
+	public GoodsDto mdPickCheck(String bcg_mdpick);
 }
