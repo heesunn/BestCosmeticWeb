@@ -21,7 +21,7 @@ public interface KMemberDao {
     public void naverJoin(String bcm_snsId, String bcm_name, String bcm_email);
     // 가입되어있는지 체크
     public MemberDto googleCheck(String bcm_snsId);
-    public MemberDto facebookCheck(String bcm_snsId);
+    public MemberDto facebookCheck(String bcm_name, String bcm_email);
     public MemberDto kakaoCheck(String bcm_snsId);
     public MemberDto naverCheck(String bcm_snsId);
     // 세션에 회원정보 넣기

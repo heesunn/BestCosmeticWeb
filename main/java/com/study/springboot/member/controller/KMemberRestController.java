@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.study.springboot.member.service.SnsService;
 import com.study.springboot.member.service.wjapp.AppMemberJoinService;
 import com.study.springboot.member.service.wjapp.AppMemberLoginService;
 
@@ -17,6 +18,8 @@ public class KMemberRestController
 	AppMemberLoginService memberLoginService;
 	@Autowired
 	AppMemberJoinService memberJoinService;
+	@Autowired
+	SnsService snsService;
 	
     @PostMapping("/api/login")
     public JSONObject memberCheck(HttpServletRequest request) {
@@ -24,8 +27,13 @@ public class KMemberRestController
         return obj;
     }
     @PostMapping("/api/appjoin")
-    public JSONObject appjoin(HttpServletRequest request) {
+    public JSONObject appJoin(HttpServletRequest request) {
         JSONObject obj = memberJoinService.AppMemberJoin(request);
+        return obj;
+    }
+    @PostMapping("/api/facebook")
+    public JSONObject appFacebook(HttpServletRequest request) {
+        JSONObject obj = snsService.appSnsLogin(request);
         return obj;
     }
 }
