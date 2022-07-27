@@ -174,6 +174,28 @@ public class SnsServiceImpl implements SnsService{
     			return obj;
     		}
     	}
+    	else if(snsName.equals("kakao")) {
+    		memberDto = memberDao.kakaoCheck(id);
+    		if(memberDto == null) {
+    			memberDao.kakaoJoin(id, name, email);
+    			memberDto = memberDao.kakaoCheck(id);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_kakaoid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    		else {
+    			memberDto = memberDao.kakaoCheck(id);
+    			obj.put("error", "ok");
+    			obj.put("Num", memberDto.getBcm_num());
+    			obj.put("Id", memberDto.getBcm_kakaoid());
+    			obj.put("Name", memberDto.getBcm_name());
+    			obj.put("Email", memberDto.getBcm_email());
+    			return obj;
+    		}
+    	}
 		return obj;
 	}
 }
