@@ -105,6 +105,36 @@
 			where rownum &lt;= #{param3} ) B
 		where B.num &gt;= #{param2}
 	</select>
+	<!-- 카테고리검색  : 포인트 -->
+	<select id="searchCListSessionX" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
+		select * from ( select rownum num, A.* from (
+			select c.*, d.bcg_key item from (
+				select bcg_key from bc_like group by bcg_key) D, bc_goods C 
+					where C.bcg_category = 'point' and C.bcg_name like '%${param4}%' and C.BCG_key = D.bcg_key (+)
+				order by C.bcg_date desc, C.bcg_key desc  ) A
+			where rownum &lt;= #{param2} ) B
+		where B.num &gt;= #{param1}
+	</select>
+	<select id="searchCListSessionO" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
+		select * from ( select rownum num, A.* from (
+			select c.*, d.bcg_key item from bc_goods C , bc_like D where C.bcg_category = 'point' and 
+			<choose>
+				<when test="param4.equals('bcg_key')"> C.bcg_key = #{param5} </when>
+				<when test="param4.equals('bcg_name')"> C.bcg_name like '%${param5}%' </when>
+			</choose>
+				and C.BCG_key = D.bcg_key (+)
+				and (D.bcm_num= #{param1} or d.bcm_num is null)
+			order by C.bcg_date desc, C.bcg_key desc ) A
+			where rownum &lt;= #{param3} ) B
+		where B.num &gt;= #{param2}
+	</select>
+	<select id="selectCountSearchC" resultType="_int">
+		select count(*) as total from BC_GOODS where bcg_category = 'point' and 
+		<choose>
+			<when test="param1.equals('bcg_key')"> bcg_key = #{param2} </when>
+			<when test="param1.equals('bcg_name')"> bcg_name like '%${param2}%' </when>
+		</choose>
+	</select>
 	<!-- 포인트메이크업 -->
 	<select id="selectCountPoint" resultType="_int">
 		select count(*) as total from BC_GOODS where BCG_CATEGORY = 'point'
@@ -137,14 +167,6 @@
 		where rownum &lt;= #{param1} ) B
 		where B.num &gt;= #{param2}
 	</select>
-	<!-- 
-	<select id="pointList" resultType="com.study.springboot.goods.dto.GoodsDto">
-		select * from ( select rownum num, A.* from (
-			select * from bc_goods where bcg_category = 'point' order by bcg_date desc, bcg_key desc  ) A 
-			<![CDATA[where rownum <= #{param2}]]> ) B 
-			where B.num >= #{param1}
-	</select>
-	 -->
 	<!-- 상품 삭제 -->
 	<delete id="delete">
 		delete from bc_goods where bcg_key = #{param1}

@@ -254,7 +254,6 @@ public class GoodsController
 	public String guestSearch(HttpServletRequest request, Model model) {  
 		type = request.getParameter("type");
 		srchText = request.getParameter("srchText");
-		System.out.println(srchText);
 		return "guest/goods/categoryAll"; 
 	}
 	
@@ -269,14 +268,14 @@ public class GoodsController
 	@RequestMapping("/guest/categorySearch")
 	public String categorySearch(HttpServletRequest request, Model model) {    
 		type = request.getParameter("type");
-		srchText = request.getParameter("srchText");
+		srchText = request.getParameter("srchText2");
 		return "guest/goods/categoryPoint"; 
 	}
 		
 	//게스트 : 포인트카테고리 상품검색결과
 	@RequestMapping("/guest/searchCRs") 
 	public String searchCRs(HttpServletRequest request, Model model) {    
-		listService.searchList2(request, model, type, srchText);
+		listService.searchCList2(request, model, type, srchText);
 		return "guest/goods/categoryPoint"; 
 	}
 	
