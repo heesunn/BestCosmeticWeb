@@ -31,8 +31,8 @@ public class KMemberRestController
         JSONObject obj = memberJoinService.AppMemberJoin(request);
         return obj;
     }
-    @PostMapping("/api/facebook")
-    public JSONObject appFacebook(HttpServletRequest request) {
+    @PostMapping("/api/snsLogin")
+    public JSONObject appSnsLogin(HttpServletRequest request) {
         JSONObject obj = snsService.appSnsLogin(request);
         return obj;
     }
