@@ -24,7 +24,6 @@
   	
   	function sch() {     //검색기능
        var queryString=$("#search_ck").serialize();
-   	console.log(queryString);
        $.ajax({
        	url: '/guest/guestSearch',  
            type: 'POST',

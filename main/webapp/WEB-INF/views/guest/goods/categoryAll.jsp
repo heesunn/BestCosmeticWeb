@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>전체보기</title>
+<title>카테고리 - 전체보기</title>
 <style>
 @font-face {
     font-family: 'tway_air';
@@ -46,6 +46,7 @@ body {
 	position: relative;
     left: 210px; 
     border-spacing: 5px;
+    border-collapse: separate;
 }
 div .menuTop {
 	float: top;
@@ -65,6 +66,10 @@ div .menuTop {
 		<tr>
 			<td colspan="4">총 ${page.totalCount}개</td>
 		</tr>
+		
+		<c:if test="${page.totalCount == 0 }"> 
+        	<td colspan="4" style="text-align:center">검색 결과가 없습니다.</td>
+        </c:if> 
 		
 		<c:set var="i" value="0" />
 		<c:set var="j" value="4" />
@@ -158,11 +163,12 @@ div .menuTop {
 				    });
 		  		}   
 			}
-		</script>
-		</c:forEach>
+</script>
+	</c:forEach>
 		<tr>
 			<td colspan="4">&nbsp;</td>
 		</tr>	
+		<c:if test="${page.totalCount != 0 }">   		
 		<tr style="text-align: center">
 			<td colspan="4">
 				<!-- 처음 -->
@@ -218,6 +224,7 @@ div .menuTop {
 				</c:choose>
 			</td>
 		</tr>
+		</c:if>
 	</table>	
 <c:import url="/guest/channelTalk"></c:import>
 </body>
