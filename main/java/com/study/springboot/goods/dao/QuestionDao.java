@@ -3,6 +3,7 @@ package com.study.springboot.goods.dao;
 import com.study.springboot.goods.dto.QuestionDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Mapper
@@ -12,5 +13,5 @@ public interface QuestionDao {
     public int questionListViewArticlePage(int bcg_key);
     ArrayList<QuestionDto> questionListAdminView(int nStart, int nEnd);
     public int selectCountQuestion();
-    public int answer(String BCG_KEY, String BCM_NUM, String BCQ_CONTENT, String BCA_CONTENT);
+    public int answer(String BCG_KEY, String BCM_NUM, String BCQ_CONTENT, Timestamp BCQ_DATE, String BCA_CONTENT);
 }

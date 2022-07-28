@@ -43,6 +43,7 @@
 				<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY }">
 				<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="${BCM_NUM }">
 				<input type="hidden" id="BCQ_CONTENT" name="BCQ_CONTENT" value="${BCQ_CONTENT }">
+				<input type="hidden" id="BCQ_DATE" name="BCQ_DATE" value="${BCQ_DATE }">
 				<textarea id="BCA_CONTENT" id="BCA_CONTENT" name="BCA_CONTENT" cols="50" rows="15"></textarea>
 				<input type="button" value="등록" onclick="Add()">
 				</form>

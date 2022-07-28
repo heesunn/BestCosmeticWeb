@@ -18,4 +18,10 @@
             VALUES ( BCM_NUM_SEQ.NEXTVAL , #{param1} , #{param2} , #{param3} , #{param4} , '','','','','','','','','','',
                     '','role_user','true',SYSDATE,SYSDATE)
 	</insert>
+	<select id="orderInfo" resultType="com.study.springboot.member.dto.AppOrderInfo">
+		select COUNT(CASE WHEN bco_order_status='배송준비중' THEN 1 END) as deliveryReady, 
+		    COUNT(CASE WHEN bco_order_status='배송중' THEN 1 END) as inTransit, 
+		    COUNT(CASE WHEN bco_order_status='배송완료' THEN 1 END) as deliveryCompleted 
+		    from bc_order_history where bcm_num = #{param1}
+	</select>
 </mapper>

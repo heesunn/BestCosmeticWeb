@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.study.springboot.member.service.SnsService;
 import com.study.springboot.member.service.wjapp.AppMemberJoinService;
 import com.study.springboot.member.service.wjapp.AppMemberLoginService;
+import com.study.springboot.member.service.wjapp.AppOrderInfoService;
 
 @RestController
 public class KMemberRestController
@@ -20,6 +21,8 @@ public class KMemberRestController
 	AppMemberJoinService memberJoinService;
 	@Autowired
 	SnsService snsService;
+	@Autowired
+	AppOrderInfoService orderInfoService;
 	
     @PostMapping("/api/login")
     public JSONObject memberCheck(HttpServletRequest request) {
@@ -34,6 +37,11 @@ public class KMemberRestController
     @PostMapping("/api/snsLogin")
     public JSONObject appSnsLogin(HttpServletRequest request) {
         JSONObject obj = snsService.appSnsLogin(request);
+        return obj;
+    }
+    @PostMapping("/api/orderInfo")
+    public JSONObject orderInfo(HttpServletRequest request) {
+        JSONObject obj = orderInfoService.orderInfo(request);
         return obj;
     }
 }

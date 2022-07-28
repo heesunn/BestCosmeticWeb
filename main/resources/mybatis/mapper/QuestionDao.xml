@@ -30,8 +30,8 @@
 	</select>
 	
 	<update id="answer">
-		update bc_question set bca_content = #{param4}, bca_date = sysdate
-		where bcg_key = #{param1} and bcm_num = #{param2} and bcq_content = #{param3}
+		update bc_question set bca_content = #{param5}, bca_date = sysdate
+		where bcg_key = #{param1} and bcm_num = #{param2} and bcq_content = #{param3} and bcq_date = #{param4}
 	</update>
 	
 </mapper>

@@ -168,7 +168,7 @@ div .menuTop {
 		<tr>
 			<td colspan="4">&nbsp;</td>
 		</tr>	
-		<c:if test="${page.totalCount != 0 }">   		
+		<c:if test="${page.totalCount > 0 }">   		
 		<tr style="text-align: center">
 			<td colspan="4">
 				<!-- 처음 -->

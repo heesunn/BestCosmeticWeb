@@ -73,7 +73,7 @@
 		background: #E6E6FA;
 		margin-left: 10%;
 	}
-	#search_ck { margin-left: 45%;}
+	#search_ck { margin-left: 50%;}
 	@media ( max-width: 1150px ) {
   	    div #navbarScroll { margin-left: 5%; }
   	    div #logo { margin-left: 5%; }

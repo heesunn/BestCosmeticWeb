@@ -33,6 +33,7 @@ public class PageDetailServiceImpl implements PageDetailService {
 		model.addAttribute("BCG_IMGDETAIL", dto.getBcg_imgdetail());
 		model.addAttribute("BCG_NAME", dto.getBcg_name());
 		model.addAttribute("BCG_PRICE", dto.getBcg_price());
+		model.addAttribute("BCG_CATEGORY", dto.getBcg_category());
 		model.addAttribute("BCG_STOCK", dto.getBcg_stock());
 		model.addAttribute("BCG_DATE", dto.getBcg_date());
 		model.addAttribute("BCG_LIKE", dto.getBcg_like());
