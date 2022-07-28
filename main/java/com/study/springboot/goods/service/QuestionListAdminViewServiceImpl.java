@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -92,11 +94,11 @@ public class QuestionListAdminViewServiceImpl implements QuestionListAdminViewSe
     	String bcg_key = request.getParameter("BCG_KEY");
     	String bcm_num = request.getParameter("BCM_NUM");
     	String bcq_content = request.getParameter("BCQ_CONTENT");
-    	
+    	Timestamp bcq_date = Timestamp.valueOf(request.getParameter("BCQ_DATE"));
     	String bca_content = request.getParameter("BCA_CONTENT");
     	
     	int count = -1;
-    	count = questionDao.answer(bcg_key, bcm_num, bcq_content, bca_content);
+    	count = questionDao.answer(bcg_key, bcm_num, bcq_content, bcq_date, bca_content);
     	
     	return count;
     }  

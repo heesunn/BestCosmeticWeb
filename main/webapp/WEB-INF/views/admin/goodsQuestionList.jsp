@@ -11,10 +11,11 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
-function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT) {
-    var url= "/admin/answer?"+"BCG_KEY="+BCG_KEY+"&BCM_NUM="+BCM_NUM+"&BCQ_CONTENT="+BCQ_CONTENT;
-    var url2= "BCG_KEY="+BCG_KEY+"&BCM_NUM="+BCM_NUM+"&BCQ_CONTENT="+BCQ_CONTENT;
-    console.log(url);
+function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
+    var url= "/admin/answer?"+"BCG_KEY="+BCG_KEY+"&BCM_NUM="+BCM_NUM+"&BCQ_CONTENT="+BCQ_CONTENT+"&BCQ_DATE="+BCQ_DATE;
+    var url2= "BCG_KEY="+BCG_KEY+"&BCM_NUM="+BCM_NUM+"&BCQ_CONTENT="+BCQ_CONTENT+"&BCQ_DATE="+BCQ_DATE;
+    console.log("url : " + url);
+    console.log("url2 : " + url2);
     $.ajax({
         url : '/admin/answer',
         type : 'POST',
@@ -27,6 +28,13 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT) {
 </script>
 </head>
 <body>
+	<div style="float: top">
+    	<c:import url="/admin/adminTop"></c:import>
+	</div>
+	
+	<div style="float: left">
+    	<c:import url="/admin/adminPageView"></c:import>
+	</div>
 <table border="1">
 		<tr>
 			<td colspan="9">관리자 - 상품문의리스트</td>
@@ -70,7 +78,7 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT) {
 				</c:if>							
 				<c:if test="${dto.bca_content == null}">
 					<td colspan="2"> 
-						<input type="button" value="답변등록" onclick="AnswerAdd('${dto.bcg_key}','${dto.bcm_num}', '${dto.bcq_content}');">
+						<input type="button" value="답변등록" onclick="AnswerAdd('${dto.bcg_key}','${dto.bcm_num}', '${dto.bcq_content}', '${dto.bcq_date}');">
 					</td>
 				</c:if>
 				

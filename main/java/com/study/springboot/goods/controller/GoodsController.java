@@ -2,8 +2,12 @@ package com.study.springboot.goods.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Base64.Decoder;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -399,17 +403,20 @@ public class GoodsController
 		model.addAttribute("BCG_KEY", request.getParameter("BCG_KEY"));
 		model.addAttribute("BCM_NUM", request.getParameter("BCM_NUM"));
 		model.addAttribute("BCQ_CONTENT", request.getParameter("BCQ_CONTENT"));
+		model.addAttribute("BCQ_DATE", request.getParameter("BCQ_DATE"));
         return "admin/answer"; 
 	}
 	
 	//관리자 : 답변창
 	@RequestMapping("/admin/answerSuccess")
 	public String answerSuccess(HttpServletRequest request, Model model) {
+		System.out.println("sdsdsdsdsdsd" + request.getParameter("BCQ_DATE"));
+		Timestamp BCQ_DATE = Timestamp.valueOf(request.getParameter("BCQ_DATE"));
 		questionDao.answer(request.getParameter("BCG_KEY"), 
 							request.getParameter("BCM_NUM"),
 							request.getParameter("BCQ_CONTENT"),
+							BCQ_DATE,
 							request.getParameter("BCA_CONTENT"));
-		System.out.println(request.getParameter("BCA_CONTENT"));
         return "admin/goodsQuestionList"; 
 	}
 	

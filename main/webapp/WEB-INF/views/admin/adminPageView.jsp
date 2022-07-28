@@ -37,7 +37,7 @@
                 회원
                 <ul>
                     <li class="nav-item active">
-                    	<a href='/admin/memberManagement'>회원관리</a></li>
+                    	<a href='/admin/memberManagement'>회원관리</a></li>	
                 </ul>
             </li>
             <li>
@@ -65,7 +65,9 @@
                     <li class="nav-item active">
                     	<a href='/admin/goodsAdd'>상품등록</a></li>
                     <li class="nav-item active">
-                    	<a href='/admin/stockManager'>재고관리</a></li>
+                    	<a href='/admin/stockManager'>재고관리</a></li>                  
+                    <li class="nav-item active">
+                    	<a href='/admin/goodsQuestionList'>상품문의</a></li>	
                 </ul>
             </li>
         </ul>
