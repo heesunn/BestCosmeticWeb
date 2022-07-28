@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.springboot.goods.dto.GoodsDto;
+import com.study.springboot.goods.dto.QuestionDto;
 import com.study.springboot.goods.service.hs.AGoodsMainListViewService;
 import com.study.springboot.goods.service.hs.AQuestionService;
 
@@ -38,8 +39,12 @@ public class GoodsRestController
 		}
 	 
 	 @GetMapping("/api/goodsQuestionList")
-	    public JSONObject goodsQuestionView(HttpServletRequest request){
-		 System.out.println("3333");
+	    public ArrayList<QuestionDto> goodsQuestionView(HttpServletRequest request){
 	        return questionService.goodsQuestionView(request);
+	    }
+	 
+	 @PostMapping("/api/question")
+	    public void question(HttpServletRequest request){
+	        questionService.question(request);
 	    }
 }

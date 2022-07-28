@@ -1,11 +1,14 @@
 package com.study.springboot.goods.service.hs;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONObject;
+import com.study.springboot.goods.dto.QuestionDto;
 
 
 public interface AQuestionService {
-	public JSONObject goodsQuestionView(HttpServletRequest request);
+	public ArrayList<QuestionDto> goodsQuestionView(HttpServletRequest request);
+	public void question(HttpServletRequest request);
 }
