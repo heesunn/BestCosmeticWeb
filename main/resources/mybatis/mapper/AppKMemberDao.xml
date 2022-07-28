@@ -24,4 +24,14 @@
 		    COUNT(CASE WHEN bco_order_status='배송완료' THEN 1 END) as deliveryCompleted 
 		    from bc_order_history where bcm_num = #{param1}
 	</select>
+	<select id="selectOrdernum" resultType="string">
+		select bco_ordernum from bc_order_history where bcm_num = #{param1} order by bco_orderdate desc
+	</select>
+	<select id="appOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
+		SELECT A.*,b.bcg_img FROM 
+		    bc_order_history A, 
+		    (SELECT bco_ordernum, bcg_img FROM 
+		    (SELECT * FROM bc_order_detail where bco_ordernum = #{param1} order by rownum desc)C ,
+		    bc_goods D WHERE c.bcg_key = d.bcg_key and ROWNUM = 1) B where a.bco_ordernum = b.bco_ordernum
+	</select>
 </mapper>
