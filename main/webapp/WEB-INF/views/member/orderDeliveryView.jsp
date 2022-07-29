@@ -24,6 +24,13 @@
 		padding-left : 5px;
 		border : 0;
 	}
+	.textbutton {
+		border: 2; 
+		border-radius: 5px; 
+		font-family: 'tway_air';
+		background-color: #d2d2fc; 
+		text-align: center;
+	}
 	#pimg {
 		float : left;
 	}
@@ -140,8 +147,7 @@
         <td>${dto.bco_ordernum}</td>
         <td id="money${dto.bco_ordernum}" style="text-align:right;">${dto.bco_totalprice}원</td>
         	<input id="realmoney${dto.bco_ordernum}" type="hidden" value="${dto.bco_totalprice}"/>
-        <td style="text-align:center;"><a href="#" onclick="openPop${dto.bco_ordernum}()">${dto.bco_order_name}</a>
-  </td>
+        <td style="text-align:center;"><a href="#" onclick="openPop${dto.bco_ordernum}()">${dto.bco_order_name}</a></td>
         <td>${dto.bco_order_status}</td>
         <td align="center" >
             <c:if test="${dto.bco_order_status == '배송준비중'}">
@@ -153,9 +159,15 @@
 							  background-color: #d2d2fc; text-align: center;">
             </c:if>
             <c:if test="${dto.bco_order_status == '배송완료'}">
-                <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()"><br>
-                <input type="button" value="반품신청" onclick="반품신청${dto.bco_ordernum}()"><br>
-                <input type="button" value="구매확정" onclick="구매확정${dto.bco_ordernum}()">
+                <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()"
+                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; text-align: center;"><br>
+                <input type="button" value="반품신청" onclick="반품신청${dto.bco_ordernum}()"
+                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; text-align: center;"><br>
+                <input type="button" value="구매확정" onclick="구매확정${dto.bco_ordernum}()"
+                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; text-align: center;">
             </c:if>
         </td>
     </tr>
@@ -249,17 +261,12 @@
     $('#money${dto.bco_ordernum}').text(money2);
     //머니값체크 , 넣은거
     var moneyValCheck =  $('#money${dto.bco_ordernum}').text();
-//    console.log(moneyValCheck);
     //진짜 머니 , 없는거
     var realmoneyValCheck = $('#realmoney${dto.bco_ordernum}').val();
-//    console.log(realmoneyValCheck);
-
 </script>
 <script>
-	function openPop${dto.bco_ordernum}() {
-  	
+	function openPop${dto.bco_ordernum}() { 	
 		var queryString = 'bco_ordernum=${dto.bco_ordernum}';
-
 		$.ajax({
 		url : '/member/orderDetail',
 			type : 'POST',
@@ -282,12 +289,12 @@
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
 					if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'false') {
-						text += '<input type="button" class="textbutton" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');">';
+						text += '<p style="padding-left:10px;"><input type="button" class="textbutton" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');"></p>';
 					}
 					else if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'true'){
-						text += '<p class="text">리뷰 쓴 상품</p>';
+						text += '<p style="font-size: 12px; color:grey; padding-left:10px; font-family: \'tway_air\';">리뷰작성완료</p>';
 					}
-					text += '<p class="text"><br><hr></p>';
+					text += '<hr>';
 					$('#infoDiv').empty().append(text);
 				}
 				document.getElementById("popup_layer").style.display = "block";
