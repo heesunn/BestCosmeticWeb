@@ -435,6 +435,9 @@
 		padding: 20px; 
 		vertical-align: top;
 	}
+	.far {
+		cursor:pointer;
+	}
 </style>
 </head>
 <body style="background-color: #E6E6FA;">

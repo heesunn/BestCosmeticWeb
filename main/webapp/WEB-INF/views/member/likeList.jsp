@@ -32,6 +32,7 @@
 		z-index: 2;
 		right: 15px;
 		top: 15px;
+		cursor:pointer;
 	}
 </style>
 <body style="background-color: #E6E6FA;">
