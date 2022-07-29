@@ -256,7 +256,7 @@
 	        			   style="width: 75%; height: 40px; border: none; border-radius: 10px; font-size: 15px;">
 	                <input type="button" value="중복확인" onclick="idCheck()" 
 	                	   style="width: 20%; height: 40px; text-align:center; font-size: 15px; float: right; font-family: 'tway_air'; 
-	                	   		  border: none; border-radius: 10px; background-color: #f2f2fc;"></td></tr>	                
+	                	   		  border: none; border-radius: 10px; cursor:pointer; background-color: #f2f2fc;"></td></tr>	                
 	        <tr><td>비밀번호</td>
 	        	<td colspan="2"><input type="password" id="pw" name="pw" maxlength="16" placeholder="숫자, 영문, 특수문자(!@#$%^&+=)를 포함한 8~16자를 입력해주세요"
 	        			   style="width: 100%; height: 40px; border: none; border-radius: 10px; font-size: 15px;"></td></tr>
@@ -306,11 +306,11 @@
 		        <td><input type="hidden" id="key" name="key">
 			        <input type="text" name="value" placeholder="보안코드를 입력하세요"
 			        	   style="width: 85%; height: 40px; border: none; border-radius: 10px; font-size: 15px; ">
-			        <img src="/image/icons-reset.png" onclick="codeReset()" style="top: 10; "/></td></tr>
-	        <tr><td colspan="3"><h4 id="p1" style="text-align: center; color: red"></h4></td></tr>
+			        <img src="/image/icons-reset.png" onclick="codeReset()" style="top: 10; cursor:pointer;"/></td></tr>
+	        <tr><td colspan="3"><h4 id="p1" style="text-align: center; color: red;"></h4></td></tr>
 	        <tr><td colspan="3"><input type="button" value="가입하기" onclick="form_check()"
 	        						   style="width: 100%; height: 40px; border: none; border-radius: 10px; font-size: 25px;
-	        						   		  font-family: 'tway_air'; text-align:center; background-color: #d2d2fc;"></td></tr>
+	        						   		  font-family: 'tway_air'; cursor:pointer; text-align:center; background-color: #d2d2fc;"></td></tr>
 	    </form>
 	</tbody> 
     </table>
