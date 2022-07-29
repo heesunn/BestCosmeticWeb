@@ -12,5 +12,6 @@ public interface YGoodsDao {
 	public ArrayList<GoodsDto> goodsMDListView();
 	public ArrayList<GoodsDto> goodsBestListView();
 	public ArrayList<GoodsDto> goodsNewListView();
-	public QuestionDto goodsQuestionView(String bcgKey); 
+	public ArrayList<QuestionDto> goodsQuestionView(String bcgKey); 
+	public void question(String bcg_key, String bcg_name, String bcm_num, String bcm_name, String bcq_content, String bcq_secret);
 }

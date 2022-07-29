@@ -1,5 +1,7 @@
 package com.study.springboot.goods.service.hs;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.springboot.goods.dao.hs.YGoodsDao;
+import com.study.springboot.goods.dto.QuestionDto;
 
 @Service
 public class AQuestionServiceImpl implements AQuestionService{
@@ -15,11 +18,20 @@ public class AQuestionServiceImpl implements AQuestionService{
 	YGoodsDao yGoodsDao;
 	
 	@Override
-    public JSONObject goodsQuestionView(HttpServletRequest request) {
+    public ArrayList<QuestionDto> goodsQuestionView(HttpServletRequest request) {
 		String bcgKey = request.getParameter("bcgKey");
-		System.out.println("2222"+bcgKey);
-		JSONObject jsonObject = new JSONObject();
-        jsonObject.put("question", yGoodsDao.goodsQuestionView(bcgKey));
-        return jsonObject;
+        return yGoodsDao.goodsQuestionView(bcgKey);
     }
+	
+	@Override
+    public void question(HttpServletRequest request) {
+        String bcg_key = request.getParameter("bcg_key");
+        String bcg_name = request.getParameter("bcg_name");
+        String bcm_num = request.getParameter("bcm_num");
+        String bcm_name = request.getParameter("bcm_name");
+        String bcq_content = request.getParameter("bcq_content");
+        String bcq_secret = request.getParameter("bcq_secret");
+        
+        
+	}
 }

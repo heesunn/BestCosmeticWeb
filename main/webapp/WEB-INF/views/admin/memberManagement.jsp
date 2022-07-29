@@ -185,25 +185,47 @@
             return textContent;
         }
     </script>
+    <style>
+    
+    @font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
+	
+	body  {
+	    padding-top: 160px;
+	    padding-bottom: 120px;
+	}
+	
+	#all {
+		margin-left: 220px;
+		font-family: 'tway_air';
+	}
+	
+	#myList {
+		text-align: center;
+	}
+    </style>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 <div style="float: top">
     <c:import url="/admin/adminTop"></c:import>
 </div>
 <div style="float: left">
     <c:import url="/admin/adminPageView"></c:import>
 </div>
-    <h1>회원관리</h1>
+<section id="all">
+    <h3>회원관리</h3><br>
 <div>
-    <form action="/admin/memberManagement">
-        <select id="searchType" name="searchType">
+    <form action="/admin/memberManagement" id="dd">
+        <select id="searchType" name="searchType" class="nav-link dropdown-toggle" style="float:left;" >
             <option id="sName" value="sName" selected>이름</option>
             <option id="sId" value="sId" >아이디</option>
             <option id="sNum" value="sNum">회원번호</option>
         </select>
-        <input type="text" id="searchWord" name="searchWord">
-        <input type="submit" value="검색">
-        <input type="button" value="검색초기화" onclick="javascript:window.location='/admin/memberManagement'">
+        <input class="form-control mr-sm-2" type="text" id="searchWord" name="searchWord" style="width: 200px; float:left;" >
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="float:left;" >검색</button>
+        <button class="btn btn-outline-secondary my-2 my-sm-0" onclick="javascript:window.location='/admin/memberManagement'">검색초기화</button>
     </form>
     <p>
         검색결과 : <span style="color: red">${page.totalCount}</span>명,
@@ -212,13 +234,13 @@
     <table id="myList" border="1">
         <thead>
             <tr>
-                <th>번호<button onclick="sortTD(0)">▲</button><button onclick="reverseTD(0)">▼</button></th>
-                <th>이름<button onclick="sortTD(1)">▲</button><button onclick="reverseTD(1)">▼</button></th>
-                <th>아이디<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
-                <th>가입일<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
-                <th>주문수<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
-                <th>주문총액<button onclick="sortTD(5)">▲</button><button onclick="reverseTD(5)">▼</button></th>
-                <th>CRM</th>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(0)">▲</button>번호<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(0)">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(1)">▲</button>이름<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(1)">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(2)">▲</button>아이디<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(2)">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(3)">▲</button>가입일<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(3)">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(4)">▲</button>주문수<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(4)">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(5)">▲</button>주문총액<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(5)">▼</button></td>
+                <td>CRM</td>
             </tr>
         </thead>
         <tbody>
@@ -239,8 +261,8 @@
                     <td id="price${dto.bcm_num}">${dto.total_price}</td>
                     <td><input type="button" value="보기" onclick="crm${dto.bcm_num}()"></td>
                 </tr>
-                <div id="popupDiv${dto.bcm_num}" style="background-color:black; display: none; position: absolute;top: 100px;left: 300px;z-index: 999999;">
-                    <div style="width: 500px;height: 600px; background-color: black;color: white">
+                <div id="popupDiv${dto.bcm_num}" style="background-color:#c4c4ff ; display: none; position: absolute;top: 100px;left: 300px;z-index: 999999; text-align: center;">
+                    <div style="width: 500px;height: 600px; background-color: #c4c4ff ;color: white; margin: auto;">
                         <h2>회원 기본정보</h2>
                         회원 번호 : ${dto.bcm_num} <br>
                         이름 : ${dto.bcm_name} <br>
@@ -252,8 +274,8 @@
                         우편번호 : ${dto.bcm_zipcode} <br>
                         주소 : ${dto.bcm_address1} &nbsp;&nbsp; ${dto.bcm_address3} &nbsp;&nbsp; ${dto.bcm_address2} <br>
                         휴대폰 : ${dto.bcm_phonenum1} &nbsp;-&nbsp; ${dto.bcm_phonenum2} &nbsp;-&nbsp; ${dto.bcm_phonenum3} <br>
-                        권한 : ${dto.bcm_authority} <input type="button" value="관리자로 승격" onclick="upgradeAdmin${dto.bcm_num}()"><br>
-
+                        권한 : ${dto.bcm_authority} <button class="btn btn-outline-secondary my-2 my-sm-0" onclick="upgradeAdmin${dto.bcm_num}()">관리자로 승격</button><br>
+						<br>
                         <h2>회원 기본정보</h2>
                         가입일 : ${dto.bcm_joined_on} <br>
                         주문횟수 : ${dto.order_count} <br>
@@ -303,15 +325,15 @@
                     <!--처음-->
                     <c:choose>
                         <c:when test="${(page.curPage-1)<1}">
-                            [ &lt;&lt; ]
+                            &lt;&lt;
                         </c:when>
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${page.searchType == null}">
-                                    <a href="/admin/memberManagement?page=1">[ &lt;&lt; ]</a>
+                                    <a href="/admin/memberManagement?page=1"> &lt;&lt; </a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/admin/memberManagement?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+                                    <a href="/admin/memberManagement?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}"> &lt;&lt; </a>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
@@ -320,15 +342,15 @@
                     <!--이전-->
                     <c:choose>
                         <c:when test="${(page.curPage-1) < 1}">
-                            [ &lt; ]
+                             &lt; 
                         </c:when>
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${page.searchType == null}">
-                                    <a href="/admin/memberManagement?page=${page.curPage-1}">[&lt;]</a>
+                                    <a href="/admin/memberManagement?page=${page.curPage-1}">&lt;</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/admin/memberManagement?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+                                    <a href="/admin/memberManagement?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&lt;</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
@@ -338,15 +360,15 @@
                     <c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
                         <c:choose>
                             <c:when test="${page.curPage == fEach}">
-                                [${fEach} ]&nbsp;
+                                ${fEach} &nbsp;
                             </c:when>
                             <c:otherwise>
                                 <c:choose>
                                     <c:when test="${page.searchType == null}">
-                                        <a href="/admin/memberManagement?page=${fEach}">[${fEach}]</a>&nbsp;
+                                        <a href="/admin/memberManagement?page=${fEach}">${fEach}</a>&nbsp;
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="/admin/memberManagement?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>
+                                        <a href="/admin/memberManagement?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">${fEach}</a>
                                     </c:otherwise>
                                 </c:choose>
                             </c:otherwise>
@@ -356,15 +378,15 @@
                     <!--다음-->
                     <c:choose>
                         <c:when test="${(page.curPage +1) > page.totalPage}">
-                            [&gt;]
+                            &gt;
                         </c:when>
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${page.searchType == null}">
-                                    <a href="/admin/memberManagement?page=${page.curPage+1}">[&gt;]</a>
+                                    <a href="/admin/memberManagement?page=${page.curPage+1}">&gt;</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/admin/memberManagement?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+                                    <a href="/admin/memberManagement?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
@@ -373,15 +395,15 @@
                     <!--끝-->
                     <c:choose>
                         <c:when test="${page.curPage == page.totalPage}">
-                            [&gt;&gt;]
+                            &gt;&gt;
                         </c:when>
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${page.searchType == null}">
-                                    <a href="/admin/memberManagement?page=${page.totalPage}">[&gt;&gt;]</a>
+                                    <a href="/admin/memberManagement?page=${page.totalPage}">&gt;&gt;</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/admin/memberManagement?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+                                    <a href="/admin/memberManagement?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;&gt;</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
@@ -396,6 +418,6 @@
         function reverseTD( index ){    replace.descending( index );    }
     </script>
 </div>
-
+</section>
 </body>
 </html>

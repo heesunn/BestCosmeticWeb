@@ -71,12 +71,25 @@
 		</tr>
 		<c:forEach items="${list}" var="dto">
 		<tr>
+		<c:choose>
+			<c:when test="${fn:length(list) == 1}">
             <td>
-				<input type="checkbox" id="BCD_DETAILKEY" name="BCD_DETAILKEY" value="${dto.bcd_detailkey}">
+				<input type="checkbox" id="BCD_DETAILKEY" name="BCD_DETAILKEY" value="${dto.bcd_detailkey}" disabled>
 				<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${dto.bcg_key}">
 				<input type="hidden" id="BCD_OPTION" name="BCD_OPTION" value="${dto.bcd_option}">
 				<input type="hidden" id="BCD_STOCK" name="BCD_STOCK" value="${dto.bcd_stock}">
-            </td>      
+            </td>
+            옵션이 1개일 때는 전체 상품 삭제 페이지에서 삭제 해주세요.
+            </c:when>
+            <c:otherwise>
+            <td>
+				<input type="checkbox" id="BCD_DETAILKEY" name="BCD_DETAILKEY" value="${dto.bcd_detailkey}" >
+				<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${dto.bcg_key}">
+				<input type="hidden" id="BCD_OPTION" name="BCD_OPTION" value="${dto.bcd_option}">
+				<input type="hidden" id="BCD_STOCK" name="BCD_STOCK" value="${dto.bcd_stock}">
+            </td>	
+            </c:otherwise>   
+         </c:choose>   
             <td> ${dto.bcg_key} </td>   
             <td> ${dto.bcd_detailkey} </td>   
             <td> ${dto.bcd_option} </td>            

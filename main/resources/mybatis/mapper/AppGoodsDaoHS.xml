@@ -18,4 +18,10 @@
     <select id="goodsQuestionView" resultType="com.study.springboot.goods.dto.QuestionDto">
         select * from bc_question where bcg_key = #{param1} order by bcq_date desc
     </select>
+    
+	<insert id="question">
+		insert into BC_QUESTION (BCG_KEY, BCG_NAME, BCM_NUM, BCM_NAME, BCQ_DATE, BCQ_CONTENT, BCQ_SECRET, BCA_DATE, BCA_CONTENT) 
+			values (#{param1}, #{param2}, #{param3}, #{param4}, sysdate, #{param5}, #{param6}, '', '')
+	</insert>
+
 </mapper>
