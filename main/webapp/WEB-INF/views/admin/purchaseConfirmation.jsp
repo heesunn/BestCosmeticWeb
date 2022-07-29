@@ -444,7 +444,7 @@ function selectAll(selectAll)  {
 				
 				</div>
 				<!--팝업 버튼 영역-->
-				<div class="popup_btn" style="float: bottom; margin-top: 50px;">
+				<div class="popup_btn" style="float: bottom; margin-top: 90px;">
 					<a href="javascript:closePop();">닫기</a>
 				</div>
 			</div>

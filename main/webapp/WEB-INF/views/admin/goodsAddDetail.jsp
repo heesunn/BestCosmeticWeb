@@ -68,7 +68,7 @@
                 alert("상세품번은 숫자만 입력 가능합니다.");
                 $('#BCD_DETAILKEY').focus();
                 return;
-            }
+            }			
 			
 			if($('#BCD_OPTION').val().length == 0) {
 	   			alert("옵션이름은 필수사항입니다.");
@@ -110,8 +110,7 @@
 		}
    </script>
 </head>
-<body>
-	
+<body style="background-color: #E6E6FA;">
 	<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
 	</div>
@@ -119,12 +118,12 @@
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-	
-    <h1>상품서브테이블 insert</h1><br/>
+	<section id="all">
+    <h3>상품옵션추가</h3><br/>
 
 	상품명 : ${BCG_NAME}
 	<form id="AddDetailForm">	      
-		<table>		
+		<table id="myList">		
 			<thead id="BCD_option" class="BCD_option">	
 			   	<tr class="count">
 				   	<td>1</td>
@@ -146,11 +145,11 @@
 		    </thead>
 		    <tbody>
 			    <tr>
-			    	<td><input type="button" value="등록" onClick="form_check();"></td>	
+			    	<td><input type="button" class="btn btn-outline-secondary my-2 my-sm-0" value="등록" onClick="form_check();"></td>	
 			    </tr>
 		    </tbody>
 		</table>    
 	</form>
-
+	</section>
 </body>
 </html>

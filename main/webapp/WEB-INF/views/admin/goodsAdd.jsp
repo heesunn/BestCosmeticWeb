@@ -131,7 +131,7 @@
         }
     </script>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 	<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
 	</div>
@@ -139,7 +139,8 @@
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-    <h1>상품등록</h1>
+	<section id="all">
+    <h3>상품등록</h3><br>
     <form id="AddForm" method="post">
 	    대표사진 : <input type="file" class="hidden-upload-btn" onchange="javascript:getRealPath(this);">
 	    		   <input type="hidden" id="BCG_IMG" name="BCG_IMG">  <br/>      			    
@@ -156,8 +157,9 @@
         		</select> <br/>
         가격 : <input type="text" id="BCG_PRICE" name="BCG_PRICE"><br>
         전성분 : <br/>
-        <textarea id="BCG_INFO" name="BCG_INFO" cols="50" rows="15"></textarea><br>               
-        <input type="button" value="등록" onclick="null_check()">
+        <textarea id="BCG_INFO" name="BCG_INFO" cols="50" rows="15"></textarea><br><br>               
+        <input type="button" class="btn btn-outline-secondary my-2 my-sm-0" value="등록" onclick="null_check()">
     </form>
+    </section>
 </body>
 </html>

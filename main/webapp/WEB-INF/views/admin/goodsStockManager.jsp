@@ -8,8 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 - 재고관리</title>
+<script src="https://kit.fontawesome.com/785a1334a7.js" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
 <style type="text/css">
-	@font-face {
+@font-face {
 	    font-family: 'tway_air';
 	    src: url('/tway_air.ttf') format('truetype');
 	}
@@ -29,7 +31,6 @@
 		width: 1000px;
 	}
 </style>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
 	function upCount(ths) {
@@ -108,29 +109,21 @@
 	}   
 </script>
 </head>
-<body>   
-
-	<div style="float: top">
+<body style="background-color: #E6E6FA;"> 
+<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
 	</div>
 	
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
-	</div>
-	
-	<table border="1">
-		<tr>
-			<td colspan="3">관리자 - 재고관리</td>
-			<td><input type="button" value="수정" onclick="num_check()"></td>
-		</tr>
-		<form id="adminSch" name="adminSch">      
-		<tr>
-            <td colspan="4">                     
-               <input type="text" id="BCG_KEY" name="BCG_KEY">
-               <input type="button" value="품번검색" onclick="form_check()">
-            </td>
-		</tr>
-		</form>    
+	</div>  
+<section id="all">
+<h3>재고관리</h3><br>
+	<form id="adminSch" name="adminSch">              
+	  <input class="form-control mr-sm-2" type="text" id="BCG_KEY" name="BCG_KEY">&nbsp;
+	  <input type="button" class="btn btn-outline-secondary my-2 my-sm-0" value="품번검색" onclick="form_check()">
+	</form>   <br> 
+	<table border="1" id="myList">
 		<c:if test="${BCG_KEY!= 0}">
 		<form id="stockModify" method="post">
 		<tr>
@@ -149,15 +142,18 @@
             <td> ${dto.bcd_detailkey} </td>   
             <td> ${dto.bcd_option} </td>            
             <td>
-                <span onclick="downCount(this);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
+                <span onclick="downCount(this);"><i class="fa-solid fa-circle-minus"></i></span>
                 <input type="text" name="count" id="count"
                                     min="1" max="${dto.bcd_stock}" size="2" maxlength="2" value="${dto.bcd_stock}" readonly >
-                <span onclick="upCount(this);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
+                <span onclick="upCount(this);"><i class="fa-solid fa-circle-plus"></i></span>
             </td>                  
 		</tr>
 		</c:forEach>   
 		</form>   
 		</c:if>   
-	</table>            
+	</table> 
+	<br>
+	<input type="button" class="btn btn-outline-secondary my-2 my-sm-0" value="수정" onclick="num_check()">
+</section>           
 </body>
 </html>

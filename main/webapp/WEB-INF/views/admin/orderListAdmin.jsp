@@ -46,7 +46,7 @@
 	/*팝업 박스*/
 	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 300px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
 	/*버튼영역*/
-	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#f2f2fc;word-break: break-word;}
+	.popup_box .popup_btn {display:table;table-layout:fixed;width:100%;height:70px;background:#f2f2fc;word-break: break-word; }
 	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#f2f2fc;}
 	.popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
 	.popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
@@ -467,7 +467,7 @@ function submit_state() {
 				
 				</div>
 				<!--팝업 버튼 영역-->
-				<div class="popup_btn" style="float: bottom; margin-top: 50px;">
+				<div class="popup_btn" style="float: bottom; margin-top: 90px;">
 					<a href="javascript:closePop();">닫기</a>
 				</div>
 			</div>

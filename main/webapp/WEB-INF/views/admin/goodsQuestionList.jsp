@@ -48,7 +48,7 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
  }
 </script>
 </head>
-<body>
+<body style="background-color: #E6E6FA; ">
 	<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
 	</div>
@@ -56,15 +56,12 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-<table border="1">
-		<tr>
-			<td colspan="9">관리자 - 상품문의리스트</td>
-		</tr>
-		
+<section id="all">
+<h3>상품문의리스트</h3>
+<br>
+총 ${page.totalCount}개
+<table border="1" id="myList">
 		<form id="questionList" method="post">
-			<tr>
-				<td colspan="9">총 ${page.totalCount}개</td>
-			</tr>
 			<c:if test="${page.totalCount>0}"> 
 			<tr>
 				<td>품번</td>
@@ -99,20 +96,9 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 				</c:if>							
 				<c:if test="${dto.bca_content == null}">
 					<td colspan="2"> 
-						<input type="button" value="답변등록" onclick="AnswerAdd('${dto.bcg_key}','${dto.bcm_num}', '${dto.bcq_content}', '${dto.bcq_date}');">
+						<input type="button" class="btn btn-outline-secondary my-2 my-sm-0" value="답변등록" onclick="AnswerAdd('${dto.bcg_key}','${dto.bcm_num}', '${dto.bcq_content}', '${dto.bcq_date}');">
 					</td>
-				</c:if>
-				
-					
-					<!--  
-					<td> 
-						<input type="text" id="BCA_CONTENT" name="BCA_CONTENT">
-						<input type="button" value="답변등록" onclick="AnswerAdd()">
-						<input type="button" value="답변등록" onclick="AnswerAdd(BCG_KEY.value, BCM_NUM.value, BCQ_CONTENT.value);">
-						<input type="button" value="답변등록" onclick="AnswerAdd(\''+${dto.bcg_key}+'\',\'+${dto.bcm_num}+'\', \'+${dto.bcq_content}+ '\');">
-					</td>
-					-->
-									
+				</c:if>				
 			</tr>
 			</c:forEach>	
 		</form>	
@@ -122,7 +108,7 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 				<!-- 처음 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
-					[ &lt;&lt; ]
+					 &lt;&lt; 
 				</c:when>
 				<c:otherwise>
 					<a href="goodsList?page=1">[ &lt;&lt; ]</a>
@@ -132,10 +118,10 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 				<!-- 이전 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
-					[ &lt; ]
+					 &lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.curPage - 1}">[ &lt; ]</a>
+					<a href="goodsList?page=${page.curPage - 1}"> &lt; </a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -143,10 +129,10 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 				<c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
 					<c:choose>
 					<c:when test="${page.curPage == fEach}">
-						[ ${fEach} ] &nbsp;
+						 ${fEach}  &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="goodsList?page=${fEach}">[ ${fEach} ]</a> &nbsp;
+						<a href="goodsList?page=${fEach}"> ${fEach} </a> &nbsp;
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -157,22 +143,23 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 					[ &gt; ]
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.curPage + 1}">[ &gt; ]</a>
+					<a href="goodsList?page=${page.curPage + 1}"> &gt; </a>
 				</c:otherwise>
 				</c:choose>
 				
 				<!-- 끝 -->
 				<c:choose>
 				<c:when test="${page.curPage == page.totalPage}">
-					[ &gt;&gt; ]
+					 &gt;&gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.totalPage}">[ &gt;&gt; ]</a>
+					<a href="goodsList?page=${page.totalPage}"> &gt;&gt; </a>
 				</c:otherwise>
 				</c:choose>
 			</td>
 		</tr>
 		</c:if>
 	</table>
+</section>
 </body>
 </html>

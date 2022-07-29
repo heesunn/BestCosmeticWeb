@@ -32,7 +32,6 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 
-	
 	function optionDelete() {     //재고수정
 		if($("input[name=BCD_DETAILKEY]:checked").length<1){
             alert("적어도 1개는 체크.");
@@ -46,7 +45,7 @@
 		        dataType: 'json',
 		        success: function(json) {  
 		            if(json.desc == 1){
-		                window.location.replace("/admin/opDelete");    
+		                window.location.reload();    
 		            } else if (json.desc == 0){
 		                alert("데이터베이스입력오류")
 		            } else if (json.desc == -1) {
@@ -61,7 +60,7 @@
 	}   
 </script>
 </head>
-<body>   
+<body style="background-color: #E6E6FA;">   
 	
 	<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
@@ -70,18 +69,10 @@
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-	
-	<table border="1">
-		<tr>
-			<td colspan="5">관리자 - 옵션삭제</td>
-		</tr>
-		<form id="optionDelete" method="post">
-		<tr>
-			<td colspan="4"> </td>
-            <td>
-           		<button onclick="optionDelete()">삭제</button>
-			</td>
-		</tr>   
+<section id="all">
+	<h3>옵션삭제</h3><br>
+	<table border="1" id="myList">
+		<form id="optionDelete" method="post">   
 		<tr>
             <td></td>
             <td>품번</td>
@@ -117,10 +108,10 @@
 		</tr>
 		</c:forEach>   
 		</form>   
-		<tr>
-			<td colspan="4"></td>
-			<td> <input type="button" value="목록" onclick="javascript:window.location='/admin/goodsList'"> </td>
-		</tr>
 	</table>
+	<br>
+	<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="optionDelete()">삭제</button>&nbsp;
+	<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="javascript:window.location='/admin/goodsList'">목록</button>
+</section>
 </body>
 </html>
