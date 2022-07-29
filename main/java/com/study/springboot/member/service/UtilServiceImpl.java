@@ -20,7 +20,7 @@ public class UtilServiceImpl implements UtilService{
     MemberDao memberDao;
     HttpSession session;
     @Override
-    public void createOrderNum(Model model) {
+    public String createOrderNum(HttpServletRequest request , Model model) {
         Random random = new Random();
         //한번에 랜덤뽑기
         int num = random.nextInt(100000000);
@@ -46,6 +46,7 @@ public class UtilServiceImpl implements UtilService{
         System.out.println(strNum);
 
         model.addAttribute("orderNum", strNum);
+        return strNum;
     }
 
     @Override

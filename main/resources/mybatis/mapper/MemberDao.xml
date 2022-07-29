@@ -21,10 +21,11 @@
     <select id="orderDeliveryView" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
         SELECT * FROM (SELECT ROWNUM NUM, A.* FROM
                       (SELECT * FROM BC_ORDER_HISTORY WHERE BCM_NUM = #{param1}
-                                AND BCO_ORDER_STATUS = '배송준비중'
+                                AND
+                                (BCO_ORDER_STATUS = '배송준비중'
                                 OR BCO_ORDER_STATUS = '배송중'
                                 OR BCO_ORDER_STATUS = '배송완료'
-                                OR BCO_ORDER_STATUS = '구매확정'
+                                OR BCO_ORDER_STATUS = '구매확정')
                                 ORDER BY BCO_ORDERDATE DESC ) A
                                 WHERE ROWNUM &lt;= #{param2} ) B WHERE B.NUM &gt;= #{param3}
     </select>
@@ -56,14 +57,15 @@
         <!--현재 order by 주문번호인데 나중에 상태변화날짜로 바꿔줄것-->
         SELECT * FROM (SELECT ROWNUM NUM, A.* FROM
         (SELECT * FROM BC_ORDER_HISTORY WHERE BCM_NUM = #{param1}
-                    AND BCO_ORDER_STATUS = '취소신청'
+                    AND
+                    (BCO_ORDER_STATUS = '취소신청'
                     OR BCO_ORDER_STATUS = '취소완료'
                     OR BCO_ORDER_STATUS = '교환신청'
                     OR BCO_ORDER_STATUS = '교환상품회수중'
                     OR BCO_ORDER_STATUS = '교환완료'
                     OR BCO_ORDER_STATUS = '반품신청'
                     OR BCO_ORDER_STATUS = '반품회수중'
-                    OR BCO_ORDER_STATUS = '반품완료'
+                    OR BCO_ORDER_STATUS = '반품완료')
                     ORDER BY BCO_ORDERDATE DESC ) A
                     WHERE ROWNUM &lt;= #{param2} ) B WHERE B.NUM &gt;= #{param3}
     </select>
