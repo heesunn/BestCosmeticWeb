@@ -25,7 +25,7 @@
 		    from bc_order_history where bcm_num = #{param1}
 	</select>
 	<select id="selectOrdernum" resultType="string">
-		select bco_ordernum from bc_order_history where bcm_num = #{param1} order by bco_orderdate desc
+		select bco_ordernum from bc_order_history where bcm_num = #{param1} and bco_order_status in('배송준비중', '배송중', '배송완료', '구매확정') order by bco_orderdate desc
 	</select>
 	<select id="appOrderList" resultType="com.study.springboot.member.dto.OrderDeliveryDto">
 		SELECT A.*,b.bcg_img FROM 
