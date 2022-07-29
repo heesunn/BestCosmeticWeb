@@ -7,6 +7,7 @@ import com.study.springboot.member.dto.Like;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface AppGoodsDao {
@@ -22,6 +23,6 @@ public interface AppGoodsDao {
     public void memberFavoriteUp(String bcmNum, String bcgKey);
     public void memberFavoriteDown(String bcmNum, String bcgKey);
     public ArrayList<GoodsJoinLikes> UserGoodsJoinLikelist(String bcmNum);
-
-
+    public ArrayList<GoodsDto> seaching(String searchStr);
+    public ArrayList<GoodsDto> seachSubmitted(String searchStr);
 }

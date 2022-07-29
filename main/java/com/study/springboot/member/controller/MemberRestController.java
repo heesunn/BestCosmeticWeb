@@ -40,6 +40,8 @@ public class MemberRestController
     UtilService utilService;
     @Autowired
     AppAfterPaymentService appAfterPaymentService;
+    @Autowired
+    AppSearchService appSearchService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -105,5 +107,13 @@ public class MemberRestController
     @PostMapping("/api/member/payment/after")
     public void afterPayment(@RequestBody HashMap<String, Object> json){
         appAfterPaymentService.afterPayment(json);
+    }
+    @GetMapping("/api/search/seaching")
+    public ArrayList<GoodsDto> seaching (HttpServletRequest request) {
+        return appSearchService.searching(request);
+    }
+    @GetMapping("/api/search/submitted")
+    public ArrayList<GoodsDto> searchSubmitted(HttpServletRequest request) {
+        return appSearchService.searchSubmitted(request);
     }
 }
