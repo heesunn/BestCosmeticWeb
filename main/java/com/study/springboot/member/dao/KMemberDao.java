@@ -33,7 +33,7 @@ public interface KMemberDao {
     // 찜 삭제
     public void likeDelete(int bcm_num, int bcg_key);
     // 주문상세
-    public List<OrderDetail> orderDetail(String bco_ordernum);
+    public ArrayList<OrderDetail> orderDetail(String bco_ordernum);
     // 비밀번호 확인
     public MemberDto pwCheck(String bcm_num);
     // 비밀번호 변경
