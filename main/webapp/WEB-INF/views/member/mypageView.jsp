@@ -17,6 +17,7 @@
             background: #E6E6FA;
             font-family: 'tway_air';
             padding: 15px;
+            z-index: 4;
         }
         a:hover{
             font-weight : bold;
