@@ -19,4 +19,5 @@ public class OrderDeliveryDto {
     private Timestamp bco_deliverydate;
     private Timestamp bco_statusdate;
     private String bco_order_name;
+    private String bcg_img;
 }
