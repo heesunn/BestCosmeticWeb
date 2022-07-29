@@ -24,6 +24,7 @@
 	
 	#myList {
 		text-align: center;
+		width: 1000px;
 	}
 	
 	.orderInfo {
@@ -297,7 +298,7 @@ function submit_state(text) {
 				<option value='bco_ordernum'>주문번호</option>
 			</select>
 			<input type="text" class="form-control mr-sm-2" name="searchWord" style="width: 200px; float:left;">
-			<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="float:left;">검색</button>
+			<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="float:left;">검색</button>&nbsp;
 			<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="javascript:window.location = '/admin/cancelExchangeRefundAdmin'">검색 초기화</button>
 		</form>
 		<p>
@@ -376,14 +377,14 @@ function submit_state(text) {
 	                <!--처음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1)<1}">
-	                        [ &lt;&lt; ]
+	                         &lt;&lt; 
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="cancelExchangeRefundAdmin?page=1">[ &lt;&lt; ]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=1"> &lt;&lt; </a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="cerSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+	                        	<a href="cerSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}"> &lt;&lt; </a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -391,14 +392,14 @@ function submit_state(text) {
 	                <!--이전-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1) < 1}">
-	                        [ &lt; ]
+	                         &lt; 
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="cancelExchangeRefundAdmin?page=${page.curPage-1}">[&lt;]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=${page.curPage-1}">&lt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="cerSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+	                        	<a href="cerSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&lt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -407,15 +408,15 @@ function submit_state(text) {
 	                <c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
 	                    <c:choose>
 	                        <c:when test="${page.curPage == fEach}">
-	                            [${fEach} ]&nbsp;
+	                            ${fEach} &nbsp;
 	                        </c:when>
 	
 	                        <c:otherwise>
 	                        	<c:if test="${page.searchType == null }">
-	                            	<a href="cancelExchangeRefundAdmin?page=${fEach}">[${fEach}]</a>&nbsp;
+	                            	<a href="cancelExchangeRefundAdmin?page=${fEach}">${fEach}</a>&nbsp;
 	                            </c:if>
 	                            <c:if test="${page.searchType != null }">
-	                            	<a href="cerSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
+	                            	<a href="cerSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">${fEach}</a>&nbsp;
 	                            </c:if>
 	                        </c:otherwise>
 	                    </c:choose>
@@ -424,14 +425,14 @@ function submit_state(text) {
 	                <!--다음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage +1) > page.totalPage}">
-	                        [&gt;]
+	                        &gt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="cancelExchangeRefundAdmin?page=${page.curPage+1}">[&gt;]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=${page.curPage+1}">&gt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="cerSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+	                        	<a href="cerSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -439,14 +440,14 @@ function submit_state(text) {
 	                <!--끝-->
 	                <c:choose>
 	                    <c:when test="${page.curPage == page.totalPage}">
-	                        [&gt;&gt;]
+	                        &gt;&gt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="cancelExchangeRefundAdmin?page=${page.totalPage}">[&gt;&gt;]</a>
+	                        	<a href="cancelExchangeRefundAdmin?page=${page.totalPage}">&gt;&gt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="cerSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+	                        	<a href="cerSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;&gt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -478,11 +479,11 @@ function submit_state(text) {
 			function reverseTD( index ){    replace.descending( index );    } 
 		</script>
 		<p class="stateButton">선택 주문 : </p>
-    	<button class="stateButton" onclick="submit_state('취소완료')">취소 완료</button>
-    	<button class="stateButton" onclick="submit_state('교환상품회수중')">교환 회수</button>
-    	<button class="stateButton" onclick="submit_state('배송완료')">교환 완료</button>
-    	<button class="stateButton" onclick="submit_state('반품회수중')">반품 회수</button>
-    	<button class="stateButton" onclick="submit_state('반품완료')">반품 완료</button>
+    	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="submit_state('취소완료')">취소 완료</button>
+    	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="submit_state('교환상품회수중')">교환 회수</button>
+    	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="submit_state('배송완료')">교환 완료</button>
+    	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="submit_state('반품회수중')">반품 회수</button>
+    	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="submit_state('반품완료')">반품 완료</button>
 	</div>
 	</section>
 </body>

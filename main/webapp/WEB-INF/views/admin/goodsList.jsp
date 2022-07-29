@@ -8,6 +8,27 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 - 상품리스트</title>
+<style type="text/css">
+	@font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
+	
+	body  {
+	    padding-top: 160px;
+	    padding-bottom: 120px;
+	}
+	
+	#all {
+		margin-left: 220px;
+		font-family: 'tway_air';
+	}
+	
+	#myList {
+		text-align: center;
+		width: 1000px;
+	}
+</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 
@@ -100,42 +121,34 @@
     }
 </script>
 </head>
-<body>	
+<body style="background-color: #E6E6FA;">	
 	
-	<div style="float: top">
-    	<c:import url="/admin/adminTop"></c:import>
-	</div>
-	
-	<div style="float: left">
-    	<c:import url="/admin/adminPageView"></c:import>
-	</div>
-	
-	<table border="1">
-		<tr>
-			<td colspan="10">관리자 - 상품리스트</td>
-			<td><button onclick="location.href='/admin/goodsList'">전체보기</button></td>
-		</tr>
-		<form id="adminSch" name="adminSch">		
-			<tr>
-				<td colspan="11">							
-					<select id="type" name="type">
-						<option value="bcg_key">품번</option>
-						<option value="bcg_name">품명</option>						
-					</select>
-					<input type="text" id="srchText" name="srchText">
-					<input type="button" value="검색" onclick="sch()">
-				</td>
-			</tr>
-		</form>		
+<div style="float: top">
+   	<c:import url="/admin/adminTop"></c:import>
+</div>
+
+<div style="float: left">
+   	<c:import url="/admin/adminPageView"></c:import>
+</div>
+
+	<section id="all">
+	<h3>상품리스트</h3>
+	<br>
+	<table border="1" id="myList">
+		<form id="adminSch" name="adminSch">					
+			<select id="type" name="type" class="nav-link dropdown-toggle" style="float:left;">
+				<option value="bcg_key">품번</option>
+				<option value="bcg_name">품명</option>						
+			</select>
+			<input class="form-control mr-sm-2" type="text" id="srchText" name="srchText" style="width: 200px; float:left;">
+			<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sch()" style="float:left;">검색</button>&nbsp;
+		</form>
+		<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="location.href='/admin/goodsList'">전체보기</button>	
+		<br>
 		<form id="ModifyDelete" method="post">
-			<tr>
-				<td colspan="9">총 ${page.totalCount}개</td>
-				<td colspan="2">
-					<input type="button" value="옵션추가" onclick="opAdd()">
-					<input type="button" value="수정" onclick="mod()">
-					<input type="button" value="삭제" onclick="del()">
-				</td>
-			</tr>
+			<p>
+				총 ${page.totalCount}개
+			</p>
 			<c:if test="${page.totalCount>0}"> 
 			<tr>
 				<td></td>
@@ -192,20 +205,20 @@
 				<!-- 처음 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
-					[ &lt;&lt; ]
+					 &lt;&lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=1">[ &lt;&lt; ]</a>
+					<a href="goodsList?page=1"> &lt;&lt; </a>
 				</c:otherwise>
 				</c:choose>
 				
 				<!-- 이전 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
-					[ &lt; ]
+					 &lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.curPage - 1}">[ &lt; ]</a>
+					<a href="goodsList?page=${page.curPage - 1}"> &lt; </a>
 				</c:otherwise>
 				</c:choose>
 				
@@ -213,10 +226,10 @@
 				<c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
 					<c:choose>
 					<c:when test="${page.curPage == fEach}">
-						[ ${fEach} ] &nbsp;
+						 ${fEach}  &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="goodsList?page=${fEach}">[ ${fEach} ]</a> &nbsp;
+						<a href="goodsList?page=${fEach}"> ${fEach} </a> &nbsp;
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -224,25 +237,31 @@
 				<!-- 다음 -->
 				<c:choose>
 				<c:when test="${(page.curPage + 1) > page.totalPage}">
-					[ &gt; ]
+					 &gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.curPage + 1}">[ &gt; ]</a>
+					<a href="goodsList?page=${page.curPage + 1}"> &gt; </a>
 				</c:otherwise>
 				</c:choose>
 				
 				<!-- 끝 -->
 				<c:choose>
 				<c:when test="${page.curPage == page.totalPage}">
-					[ &gt;&gt; ]
+					 &gt;&gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.totalPage}">[ &gt;&gt; ]</a>
+					<a href="goodsList?page=${page.totalPage}"> &gt;&gt; </a>
 				</c:otherwise>
 				</c:choose>
 			</td>
 		</tr>
 		</c:if>
-	</table>				
+		
+	</table>
+	<br>
+	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="opAdd()">옵션추가</button>
+	<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="mod()">수정</button>
+	<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="del()">삭제</button>
+</section>				
 </body>
 </html>

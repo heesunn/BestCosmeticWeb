@@ -23,7 +23,7 @@
 	.popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
 	/*popup*/
 	
-	 @font-face {
+	@font-face {
 	    font-family: 'tway_air';
 	    src: url('/tway_air.ttf') format('truetype');
 	}
@@ -40,6 +40,7 @@
 	
 	#myList {
 		text-align: center;
+		width: 1000px;
 	}
 	
 	.orderInfo {

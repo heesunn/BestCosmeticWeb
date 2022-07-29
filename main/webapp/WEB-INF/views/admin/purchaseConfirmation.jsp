@@ -24,6 +24,7 @@
 	
 	#myList {
 		text-align: center;
+		width: 1000px;
 	}
 	
 	.orderInfo {
@@ -267,18 +268,21 @@ function selectAll(selectAll)  {
 	</div>
 	<section id="all">
 	<h3>구매확정</h3>
+	<br>
 	<div>
 		<form action="/admin/pcSearch">
-			<select name="searchType" id='serch'>
+			<select name="searchType" id='serch' class="nav-link dropdown-toggle" style="float:left;">
 				<option value='bcm_name'>주문인</option>
 				<option value='bco_recipient'>수령인</option>
 				<option value='bco_ordernum'>주문번호</option>
 			</select>
-			<input type="text" name="searchWord">
-			<input type="submit" value="검색">
+			<input type="text" class="form-control mr-sm-2" name="searchWord" style="width: 200px; float:left;">
+			<button class="btn btn-outline-secondary my-2 my-sm-0"  type="submit" style="float:left;">검색</button>&nbsp;
+			<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="javascript:window.location = '/admin/purchaseConfirmation'">검색 초기화</button>
 		</form>
-		<button onclick="javascript:window.location = '/admin/purchaseConfirmation'">검색 초기화</button>
-		<span>검색결과 : ${page.totalCount} 건</span>&nbsp;&nbsp;&nbsp;ㅣ <span>총결제금액 : <strong id="totalprice">${totalPrice }</strong></span>
+		<p>
+		검색결과 :<span> ${page.totalCount} 건</span>&nbsp;&nbsp;&nbsp;ㅣ <span>총결제금액 : <strong id="totalprice">${totalPrice }</strong></span>
+		</p>
 		<script>
 			var money = $('#totalprice').text();
 			var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -289,12 +293,12 @@ function selectAll(selectAll)  {
 		<table id="myList" cellpadding="0" cellspacing="0" border="1">
 	        <thead>
 	        	<tr>
-		            <th>주문번호</th>
-		            <th>주문일<button onclick="sortTD(1)">▲</button><button onclick="reverseTD(1)">▼</button></th>
-		            <th>주문인<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
-		            <th>수령인<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
-		            <th>결제총액<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
-		            <th>주문내역</th>
+		            <td>&nbsp;주문번호&nbsp;</td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="sortTD(1)" style="outline: none; border: none;">▲</button>주문일<button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="reverseTD(1)" style="outline: none; border: none;">▼</button></td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="sortTD(2)" style="outline: none; border: none;">▲</button>주문인<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(2)" style="outline: none; border: none;">▼</button></td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="sortTD(3)" style="outline: none; border: none;">▲</button>수령인<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(3)"style="outline: none; border: none;">▼</button></td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0"  onclick="sortTD(4)" style="outline: none; border: none;">▲</button>결제총액<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(4)"style="outline: none; border: none;">▼</button></td>
+		            <td>&nbsp;주문내역&nbsp;</td>
 	            </tr>
 	        </thead>
 	        <tbody>
@@ -350,14 +354,14 @@ function selectAll(selectAll)  {
 	                <!--처음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1)<1}">
-	                        [ &lt;&lt; ]
+	                         &lt;&lt; 
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="purchaseConfirmation?page=1">[ &lt;&lt; ]</a>
+	                        	<a href="purchaseConfirmation?page=1"> &lt;&lt; </a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="pcSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+	                        	<a href="pcSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}"> &lt;&lt; </a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -365,14 +369,14 @@ function selectAll(selectAll)  {
 	                <!--이전-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1) < 1}">
-	                        [ &lt; ]
+	                         &lt; 
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="purchaseConfirmation?page=${page.curPage-1}">[&lt;]</a>
+	                        	<a href="purchaseConfirmation?page=${page.curPage-1}">&lt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="pcSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+	                        	<a href="pcSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&lt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -381,15 +385,15 @@ function selectAll(selectAll)  {
 	                <c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
 	                    <c:choose>
 	                        <c:when test="${page.curPage == fEach}">
-	                            [${fEach} ]&nbsp;
+	                            ${fEach} &nbsp;
 	                        </c:when>
 	
 	                        <c:otherwise>
 	                        	<c:if test="${page.searchType == null }">
-	                            	<a href="purchaseConfirmation?page=${fEach}">[${fEach}]</a>&nbsp;
+	                            	<a href="purchaseConfirmation?page=${fEach}">${fEach}</a>&nbsp;
 	                            </c:if>
 	                            <c:if test="${page.searchType != null }">
-	                            	<a href="pcSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
+	                            	<a href="pcSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">${fEach}</a>&nbsp;
 	                            </c:if>
 	                        </c:otherwise>
 	                    </c:choose>
@@ -398,14 +402,14 @@ function selectAll(selectAll)  {
 	                <!--다음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage +1) > page.totalPage}">
-	                        [&gt;]
+	                        &gt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="purchaseConfirmation?page=${page.curPage+1}">[&gt;]</a>
+	                        	<a href="purchaseConfirmation?page=${page.curPage+1}">&gt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="pcSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+	                        	<a href="pcSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -413,14 +417,14 @@ function selectAll(selectAll)  {
 	                <!--끝-->
 	                <c:choose>
 	                    <c:when test="${page.curPage == page.totalPage}">
-	                        [&gt;&gt;]
+	                        &gt;&gt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="purchaseConfirmation?page=${page.totalPage}">[&gt;&gt;]</a>
+	                        	<a href="purchaseConfirmation?page=${page.totalPage}">&gt;&gt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="pcSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+	                        	<a href="pcSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;&gt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>

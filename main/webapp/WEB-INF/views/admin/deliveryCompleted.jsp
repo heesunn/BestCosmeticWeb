@@ -24,7 +24,7 @@
 	
 	#myList {
 		text-align: center;
-		width: 900px;
+		width: 1000px;
 	}
 	
 	.orderInfo {

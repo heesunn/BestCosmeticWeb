@@ -20,6 +20,7 @@
 	        position: fixed;
         	top: 130px;
             width: 200px;
+            height:100%;
             white-space: nowrap;
             background: #E6E6FA;
             font-family: 'tway_air';
