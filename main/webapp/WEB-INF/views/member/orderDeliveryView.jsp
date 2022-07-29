@@ -46,7 +46,7 @@
 		transform:translate(-50%, -50%);
 		z-index:1002;
 		box-sizing:border-box;
-		background:#fff;
+		background-color: #f2f2fc;
 		box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);
 		-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);
 		-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);

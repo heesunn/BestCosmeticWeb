@@ -21,6 +21,7 @@
             white-space: nowrap;
             background: #E6E6FA;
             font-family: 'tway_air';
+            z-index: 4;
         }
         
         a {
