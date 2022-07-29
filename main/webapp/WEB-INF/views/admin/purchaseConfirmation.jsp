@@ -7,10 +7,25 @@
 <meta charset="UTF-8">
 <title>구매확정</title>
 <style>
-	.stateButton {
-		float : left;
-		margin-top : 10px;
+	 @font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
 	}
+	
+	body  {
+	    padding-top: 160px;
+	    padding-bottom: 120px;
+	}
+	
+	#all {
+		margin-left: 220px;
+		font-family: 'tway_air';
+	}
+	
+	#myList {
+		text-align: center;
+	}
+	
 	.orderInfo {
 		display : none;
 	}
@@ -23,14 +38,16 @@
 	}
 	#pimg {
 		float : left;
+		margin : 10px;
 	}
+
 	/*popup*/
 	.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
 	/*팝업 박스*/
-	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
+	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 300px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
 	/*버튼영역*/
-	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
-	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
+	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#f2f2fc;word-break: break-word;}
+	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#f2f2fc;}
 	.popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
 	.popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
 	.popup_box .popup_btn a.close_day {background:#5d5d5d;}
@@ -241,14 +258,15 @@ function selectAll(selectAll)  {
 }
 </script>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 	<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
 	</div>
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-	<h1>구매확정</h1>
+	<section id="all">
+	<h3>구매확정</h3>
 	<div>
 		<form action="/admin/pcSearch">
 			<select name="searchType" id='serch'>
@@ -434,5 +452,6 @@ function selectAll(selectAll)  {
 			function reverseTD( index ){    replace.descending( index );    } 
 		</script>
 	</div>
+	</section>
 </body>
 </html>

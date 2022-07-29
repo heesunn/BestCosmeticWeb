@@ -18,7 +18,7 @@
     
         #adminPageDiv01{
 	        position: fixed;
-        	top: 150px;
+        	top: 130px;
             width: 200px;
             white-space: nowrap;
             background: #E6E6FA;
@@ -45,11 +45,11 @@
 </head>
 <body>
     <div id="adminPageDiv01">
-    <section id="left">
+    <section id="left"><br>
     <a href="/admin">&nbsp;&nbsp;관리자페이지</a>
-	<hr>
         <ul class="nav flex-column nav-light" >
             <li class="title">
+            	<br>
                  &nbsp;&nbsp;- 회원
                 <ul>
                     <li class="nav-item active">

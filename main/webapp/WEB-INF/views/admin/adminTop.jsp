@@ -17,7 +17,7 @@
 	    font-family: 'tway_air';
 	    src: url('/tway_air.ttf') format('truetype');
 	}
-   	div #logo {
+   	#logo {
    		font-size: 50px;
    		font-weight: bold;
    		margin-left: 10%;
@@ -54,9 +54,9 @@
 				<img src="/image/logo.PNG" width="80" height="80" alt="">
 					BestCosmetic
 				</a>
-				<div class="container-fluid" id="navbarSupportedContent" >
-					<p>관리자 <%=name %>님<a class="nav-link" href="/logout" id="logout">로그아웃</a></p>
-				</div>
+			</div>
+			<div class="container-fluid" id="navbarSupportedContent" >
+				<p>관리자 <%=name %>님<a class="nav-link" href="/logout" id="logout">로그아웃</a></p>
 			</div>
 		</nav>
 </div>

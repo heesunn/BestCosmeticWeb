@@ -205,6 +205,7 @@
 	#myList {
 		text-align: center;
 	}
+
     </style>
 </head>
 <body style="background-color: #E6E6FA;">
@@ -217,14 +218,14 @@
 <section id="all">
     <h3>회원관리</h3><br>
 <div>
-    <form action="/admin/memberManagement" id="dd">
+    <form action="/admin/memberManagement" >
         <select id="searchType" name="searchType" class="nav-link dropdown-toggle" style="float:left;" >
             <option id="sName" value="sName" selected>이름</option>
             <option id="sId" value="sId" >아이디</option>
             <option id="sNum" value="sNum">회원번호</option>
         </select>
         <input class="form-control mr-sm-2" type="text" id="searchWord" name="searchWord" style="width: 200px; float:left;" >
-        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="float:left;" >검색</button>
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="float:left;" >검색</button>&nbsp;
         <button class="btn btn-outline-secondary my-2 my-sm-0" onclick="javascript:window.location='/admin/memberManagement'">검색초기화</button>
     </form>
     <p>
@@ -234,13 +235,13 @@
     <table id="myList" border="1">
         <thead>
             <tr>
-                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(0)">▲</button>번호<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(0)">▼</button></td>
-                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(1)">▲</button>이름<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(1)">▼</button></td>
-                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(2)">▲</button>아이디<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(2)">▼</button></td>
-                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(3)">▲</button>가입일<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(3)">▼</button></td>
-                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(4)">▲</button>주문수<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(4)">▼</button></td>
-                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(5)">▲</button>주문총액<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(5)">▼</button></td>
-                <td>CRM</td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(0)" style="outline: none; border: none;">▲</button>번호<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(0)" style="outline: none; border: none;">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(1)" style="outline: none; border: none;">▲</button>이름<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(1)" style="outline: none; border: none;">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(2)" style="outline: none; border: none;">▲</button>아이디<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(2)" style="outline: none; border: none;">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(3)" style="outline: none; border: none;">▲</button>가입일<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(3)" style="outline: none; border: none;">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(4)" style="outline: none; border: none;">▲</button>주문수<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(4)" style="outline: none; border: none;">▼</button></td>
+                <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(5)" style="outline: none; border: none;">▲</button>주문총액<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(5)" style="outline: none; border: none;">▼</button></td>
+                <td>&nbsp;CRM&nbsp;</td>
             </tr>
         </thead>
         <tbody>
@@ -259,9 +260,9 @@
                     <td><fmt:formatDate value="${dto.bcm_joined_on}" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td>${dto.order_count}</td>
                     <td id="price${dto.bcm_num}">${dto.total_price}</td>
-                    <td><input type="button" value="보기" onclick="crm${dto.bcm_num}()"></td>
+                    <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="crm${dto.bcm_num}()">보기</button></td>
                 </tr>
-                <div id="popupDiv${dto.bcm_num}" style="background-color:#c4c4ff ; display: none; position: absolute;top: 100px;left: 300px;z-index: 999999; text-align: center;">
+                <div id="popupDiv${dto.bcm_num}" style="background-color:#c4c4ff ; display: none; position: absolute; top: 100px;left: 300px;z-index: 999999; padding-left: 20px; padding-top: 30px;">
                     <div style="width: 500px;height: 600px; background-color: #c4c4ff ;color: white; margin: auto;">
                         <h2>회원 기본정보</h2>
                         회원 번호 : ${dto.bcm_num} <br>
@@ -282,7 +283,7 @@
                         주문총액 : ${dto.total_price} <br>
 
                     </div>
-                    <div style="background: black;height:20px;">
+                    <div style="background: #c4c4ff;height:20px;">
                         <a href="javascript:clkBtn${dto.bcm_num}()" style="position:absolute;right:5px;color:white;">[닫기]</a>
                     </div>
                 </div>
