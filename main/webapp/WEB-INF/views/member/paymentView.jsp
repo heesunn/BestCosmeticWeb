@@ -515,7 +515,7 @@
             type : 'POST',
             dataType: 'json',
             success : function(json) {
-                console.log(json);
+                //console.log(json);
                 for(key in json){
                     var lastDeliveryList = json[key];
                     //console.log(lastDeliveryList);
