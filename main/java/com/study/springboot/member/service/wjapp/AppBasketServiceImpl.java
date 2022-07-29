@@ -65,6 +65,5 @@ public class AppBasketServiceImpl implements AppBasketService{
                     (int) stringObjectHashMap.get("bcd_detailkey"),
                     (int) stringObjectHashMap.get("count"));
         }
-
     }
 }

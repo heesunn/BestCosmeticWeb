@@ -57,6 +57,12 @@
                 return;
             }
 			
+			if($('#BCG_INFO').val().length > 300) {
+	   			alert("전성분 글자수가 너무 많습니다.");
+	   			$('#BCG_INFO').focus();
+	   			return;
+	   		}
+			
 			form_check();
 		}
 	    
