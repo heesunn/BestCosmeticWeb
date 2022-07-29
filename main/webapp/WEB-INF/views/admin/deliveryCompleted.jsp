@@ -7,10 +7,26 @@
 <meta charset="UTF-8">
 <title>배송중</title>
 <style>
-	.stateButton {
-		float : left;
-		margin-top : 10px;
+	 @font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
 	}
+	
+	body  {
+	    padding-top: 160px;
+	    padding-bottom: 120px;
+	}
+	
+	#all {
+		margin-left: 220px;
+		font-family: 'tway_air';
+	}
+	
+	#myList {
+		text-align: center;
+		width: 1000px;
+	}
+	
 	.orderInfo {
 		display : none;
 	}
@@ -23,14 +39,16 @@
 	}
 	#pimg {
 		float : left;
+		margin : 10px;
 	}
+
 	/*popup*/
 	.popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
 	/*팝업 박스*/
-	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
+	.popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 300px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
 	/*버튼영역*/
-	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
-	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
+	.popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#f2f2fc;word-break: break-word;}
+	.popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#f2f2fc;}
 	.popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
 	.popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
 	.popup_box .popup_btn a.close_day {background:#5d5d5d;}
@@ -241,26 +259,29 @@ function selectAll(selectAll)  {
 }
 </script>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 	<div style="float: top">
     	<c:import url="/admin/adminTop"></c:import>
 	</div>
 	<div style="float: left">
     	<c:import url="/admin/adminPageView"></c:import>
 	</div>
-	<h1>배송완료</h1>
+<section id="all">
+	<h3>배송완료</h3><br>
 	<div>
 		<form action="/admin/dcSearch">
-			<select name="searchType" id='serch'>
+			<select name="searchType" id='serch' class="nav-link dropdown-toggle" style="float:left;">
 				<option value='bcm_name'>주문인</option>
 				<option value='bco_recipient'>수령인</option>
 				<option value='bco_ordernum'>주문번호</option>
 			</select>
-			<input type="text" name="searchWord">
-			<input type="submit" value="검색">
+			<input type="text" class="form-control mr-sm-2" name="searchWord" style="width: 200px; float:left;">
+			<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="float:left;">검색</button>&nbsp;
+			<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="javascript:window.location = '/admin/deliveryCompleted'">검색 초기화</button>
 		</form>
-		<button onclick="javascript:window.location = '/admin/deliveryCompleted'">검색 초기화</button>
-		<span>검색결과 : ${page.totalCount} 건</span>&nbsp;&nbsp;&nbsp;ㅣ <span>총결제금액 : <strong id="totalprice">${totalPrice }</strong></span>
+		<p>
+		검색결과 : <span>${page.totalCount} 건</span>&nbsp;&nbsp;&nbsp;ㅣ <span>총결제금액 : <strong id="totalprice">${totalPrice }</strong></span>
+		</p>
 		<script>
 			var money = $('#totalprice').text();
 			var money2 = money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -271,12 +292,12 @@ function selectAll(selectAll)  {
 		<table id="myList" cellpadding="0" cellspacing="0" border="1">
 	        <thead>
 	        	<tr>
-		            <th>주문번호</th>
-		            <th>주문일<button onclick="sortTD(1)">▲</button><button onclick="reverseTD(1)">▼</button></th>
-		            <th>주문인<button onclick="sortTD(2)">▲</button><button onclick="reverseTD(2)">▼</button></th>
-		            <th>수령인<button onclick="sortTD(3)">▲</button><button onclick="reverseTD(3)">▼</button></th>
-		            <th>결제총액<button onclick="sortTD(4)">▲</button><button onclick="reverseTD(4)">▼</button></th>
-		            <th>주문내역</th>
+		            <td>주문번호</td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(1)"style="outline: none; border: none;">▲</button>주문일<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(1)"style="outline: none; border: none;">▼</button></td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(2)"style="outline: none; border: none;">▲</button>주문인<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(2)"style="outline: none; border: none;">▼</button></td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(3)"style="outline: none; border: none;">▲</button>수령인<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(3)"style="outline: none; border: none;">▼</button></td>
+		            <td><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sortTD(4)"style="outline: none; border: none;">▲</button>결제총액<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="reverseTD(4)"style="outline: none; border: none;">▼</button></td>
+		            <td>주문내역</td>
 	            </tr>
 	        </thead>
 	        <tbody>
@@ -332,14 +353,14 @@ function selectAll(selectAll)  {
 	                <!--처음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1)<1}">
-	                        [ &lt;&lt; ]
+	                         &lt;&lt; 
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryCompleted?page=1">[ &lt;&lt; ]</a>
+	                        	<a href="deliveryCompleted?page=1"> &lt;&lt; </a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="dcSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}">[ &lt;&lt; ]</a>
+	                        	<a href="dcSearch?page=1&searchType=${page.searchType}&searchWord=${page.searchWord}"> &lt;&lt; </a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -347,14 +368,14 @@ function selectAll(selectAll)  {
 	                <!--이전-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage-1) < 1}">
-	                        [ &lt; ]
+	                        &lt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryCompleted?page=${page.curPage-1}">[&lt;]</a>
+	                        	<a href="deliveryCompleted?page=${page.curPage-1}">&lt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="dcSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&lt;]</a>
+	                        	<a href="dcSearch?page=${page.curPage-1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&lt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -363,15 +384,15 @@ function selectAll(selectAll)  {
 	                <c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
 	                    <c:choose>
 	                        <c:when test="${page.curPage == fEach}">
-	                            [${fEach} ]&nbsp;
+	                            ${fEach} &nbsp;
 	                        </c:when>
 	
 	                        <c:otherwise>
 	                        	<c:if test="${page.searchType == null }">
-	                            	<a href="deliveryCompleted?page=${fEach}">[${fEach}]</a>&nbsp;
+	                            	<a href="deliveryCompleted?page=${fEach}">${fEach}</a>&nbsp;
 	                            </c:if>
 	                            <c:if test="${page.searchType != null }">
-	                            	<a href="dcSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">[${fEach}]</a>&nbsp;
+	                            	<a href="dcSearch?page=${fEach}&searchType=${page.searchType}&searchWord=${page.searchWord}">${fEach}</a>&nbsp;
 	                            </c:if>
 	                        </c:otherwise>
 	                    </c:choose>
@@ -380,14 +401,14 @@ function selectAll(selectAll)  {
 	                <!--다음-->
 	                <c:choose>
 	                    <c:when test="${(page.curPage +1) > page.totalPage}">
-	                        [&gt;]
+	                        &gt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryCompleted?page=${page.curPage+1}">[&gt;]</a>
+	                        	<a href="deliveryCompleted?page=${page.curPage+1}">&gt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="dcSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;]</a>
+	                        	<a href="dcSearch?page=${page.curPage+1}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -395,14 +416,14 @@ function selectAll(selectAll)  {
 	                <!--끝-->
 	                <c:choose>
 	                    <c:when test="${page.curPage == page.totalPage}">
-	                        [&gt;&gt;]
+	                        &gt;&gt;
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<c:if test="${page.searchType == null }">
-	                        	<a href="deliveryCompleted?page=${page.totalPage}">[&gt;&gt;]</a>
+	                        	<a href="deliveryCompleted?page=${page.totalPage}">&gt;&gt;</a>
 	                        </c:if>
 	                        <c:if test="${page.searchType != null }">
-	                        	<a href="dcSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">[&gt;&gt;]</a>
+	                        	<a href="dcSearch?page=${page.totalPage}&searchType=${page.searchType}&searchWord=${page.searchWord}">&gt;&gt;</a>
 	                        </c:if>
 	                    </c:otherwise>
 	                </c:choose>
@@ -434,5 +455,6 @@ function selectAll(selectAll)  {
 			function reverseTD( index ){    replace.descending( index );    } 
 		</script>
 	</div>
+</section>
 </body>
 </html>

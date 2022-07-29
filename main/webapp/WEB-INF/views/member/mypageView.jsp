@@ -5,39 +5,54 @@
     <title>Title</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
+    	@font-face {
+		    font-family: 'tway_air';
+		    src: url('/tway_air.ttf') format('truetype');
+		}
         #myPageDiv01{
-            background-color: black;
+            position: fixed;
+        	top: 190px;
             width: 210px;
-            color: white;
-            height: 100%;
-
+            white-space: nowrap;
+            background: #E6E6FA;
+            font-family: 'tway_air';
+            padding: 15px;
+            z-index: 4;
         }
-        .list:hover{
-            color: black;
-            background-color: white;
+        a:hover{
             font-weight : bold;
+            color: #000000;
+        }
+        a {
+        	color: #000000;
         }
     </style>
 </head>
 <body>
     <div id="myPageDiv01">
-        <h1>마이페이지</h1>
-        <hr>
-        <ul style="list-style-type: square">
+        <ul class="nav flex-column nav-light">
+        	<li style="font-size: 30px; text-align: center;">MyPage</li>
+        	<li><br/></li>
             <li>
                 주문
-                <ul style="list-style-type: circle">
-                    <li class="list" onclick="javascript:window.location='/member/orderDelivery'">주문/배송조회</li>
-                    <li class="list" onclick="javascript:window.location='/member/cancelExchangeRefund'">취소/교환/반품</li>
+                <ul>
+                    <li class="nav-item active">
+                   		<a class="nav-link" href="/member/orderDelivery" id="sidebar">주문/배송조회</a></li>
+                    <li class="nav-item active">
+                    	<a class="nav-link" href="/member/cancelExchangeRefund" id="sidebar">취소/교환/반품</a></li>
                 </ul>
             </li>
             <li>
                 회원
-                <ul style="list-style-type: circle">
-                    <li class="list" onclick="javascript:window.location='/member/like'">찜 목록</li>
-                    <li class="list" onclick="javascript:window.location='/member/modifyMemberView'">회원 정보 수정</li>
-                    <li class="list" onclick="javascript:window.location='/member/passwordChange'">비밀번호 변경</li>
-                    <li class="list" onclick="javascript:window.location='/member/out'">회원 탈퇴</li>
+                <ul>
+                    <li class="nav-item active">
+                    	<a class="nav-link" href="/member/like" id="sidebar">찜 목록</a></li>
+                    <li class="nav-item active">
+                    	<a class="nav-link" href="/member/modifyMemberView" id="sidebar">회원 정보 수정</a></li>
+                    <li class="nav-item active">
+                    	<a class="nav-link" href="/member/passwordChange" id="sidebar">비밀번호 변경</a></li>
+                    <li class="nav-item active">
+                    	<a class="nav-link" href="/member/out" id="sidebar">회원 탈퇴</a></li>
                 </ul>
             </li>
         </ul>

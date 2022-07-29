@@ -3,6 +3,27 @@
 <html>
 <head>
     <title>Title</title>
+    <style type="text/css">
+	@font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
+	
+	body  {
+	    padding-top: 160px;
+	    padding-bottom: 120px;
+	}
+	
+	#all {
+		margin-left: 220px;
+		font-family: 'tway_air';
+	}
+	
+	#myList {
+		text-align: center;
+		width: 1000px;
+	}
+</style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
     

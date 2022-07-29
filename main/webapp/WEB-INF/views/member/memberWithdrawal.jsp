@@ -14,6 +14,10 @@
 		font-size : 20px;
 		float : left;
 	}
+	body {
+	    padding-top: 190px;
+	    padding-bottom: 120px;  
+	}
 </style>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>

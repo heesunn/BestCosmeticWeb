@@ -21,16 +21,20 @@
             white-space: nowrap;
             background: #E6E6FA;
             font-family: 'tway_air';
+            z-index: 4;
         }
         
         a {
         	color: #000000;
         }
 
+		a:hover{
+            font-weight : bold;
+            color: #000000;
+        }
     </style>
 </head>
 <body>
-
     <div id="cateoryLeft">
 		<ul class="nav flex-column nav-light" >
 			<li class="nav-item active">
