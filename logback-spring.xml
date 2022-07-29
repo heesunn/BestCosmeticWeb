@@ -9,12 +9,12 @@
     <logger name="com.study.springboot" level="info"/>
 
     <!-- log4j2-jdbc4 -->
-    <logger name="jdbc" level="DEBUG" />
+    <logger name="jdbc" level="off" />
     <logger name="jdbc.sqlonly" level="DEBUG" />
-    <logger name="jdbc.sqltiming" level="DEBUG" />
+    <logger name="jdbc.sqltiming" level="off" />
     <logger name="jdbc.resultset" level="DEBUG" />
-    <logger name="jdbc.resultsettable" level="DEBUG" />
-    <logger name="jdbc.connection" level="DEBUG" />
+    <logger name="jdbc.resultsettable" level="off" />
+    <logger name="jdbc.connection" level="off" />
     <!-- log4j2-jdbc4 -->
     
     <root level="off">

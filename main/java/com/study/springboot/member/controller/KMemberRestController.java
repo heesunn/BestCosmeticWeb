@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.springboot.member.dto.OrderDeliveryDto;
+import com.study.springboot.member.dto.OrderDetail;
 import com.study.springboot.member.service.SnsService;
 import com.study.springboot.member.service.wjapp.AppMemberJoinService;
 import com.study.springboot.member.service.wjapp.AppMemberLoginService;
 import com.study.springboot.member.service.wjapp.AppOrderDeliveryService;
+import com.study.springboot.member.service.wjapp.AppOrderDetailService;
 import com.study.springboot.member.service.wjapp.AppOrderInfoService;
 
 @RestController
@@ -30,6 +32,8 @@ public class KMemberRestController
 	AppOrderInfoService orderInfoService;
 	@Autowired
 	AppOrderDeliveryService orderDeliveryService;
+	@Autowired
+	AppOrderDetailService orderDetailService;
 	
     @PostMapping("/api/login")
     public JSONObject memberCheck(HttpServletRequest request) {
@@ -57,8 +61,8 @@ public class KMemberRestController
         return obj;
     }
     @PostMapping("/api/orderdetail")
-    public JSONObject appOrderdetail(HttpServletRequest request) {
-        JSONObject obj = orderInfoService.orderInfo(request);//
+    public ArrayList<OrderDetail> appOrderdetail(HttpServletRequest request) {
+    	ArrayList<OrderDetail> obj = orderDetailService.appOrderDetail(request);
         return obj;
     }
 }

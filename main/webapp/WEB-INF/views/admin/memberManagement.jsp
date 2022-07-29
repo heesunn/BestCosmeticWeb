@@ -218,7 +218,7 @@
 <section id="all">
     <h3>회원관리</h3><br>
 <div>
-    <form action="/admin/memberManagement" >
+    <form action="/admin/memberManagement">
         <select id="searchType" name="searchType" class="nav-link dropdown-toggle" style="float:left;" >
             <option id="sName" value="sName" selected>이름</option>
             <option id="sId" value="sId" >아이디</option>

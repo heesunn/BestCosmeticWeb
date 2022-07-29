@@ -57,14 +57,14 @@ function snsLogin(sns) {
 						   font-size: 20px;"></td>
 				<td style="height: 100px;"><input type="submit" value="LOGIN" 
 						   style="width: 100%; height: 100%; border: none; border-radius: 10px; font-family: 'tway_air';
-								  background-color: #d2d2fc; font-size: 25px; text-align: center; color: white;"></td></tr>
+								  background-color: #d2d2fc; cursor:pointer; font-size: 25px; text-align: center; color: white;"></td></tr>
 		</form>
 		<tr><td><br/></td></tr>
 		<tr><td colspan="2" style="font-size: 15px; color:grey; text-align: center;">${message}</td></tr>
 		<tr><td><br/></td></tr>
 		<tr><td colspan="2"><button onclick="join()" 
 						style="width: 100%; height: 40px; border: none; border-radius: 10px; font-family: 'tway_air';
-							  background-color: #d2d2fc; font-size: 25px; text-align: center; color: white;">회원가입</button></td></tr>
+							  background-color: #d2d2fc; cursor:pointer; font-size: 25px; text-align: center; color: white;">회원가입</button></td></tr>
 		<tr><td><br/></td></tr>
 		<!-- 
 		<a href="https://www.flaticon.com/kr/free-icons/" title="구글 아이콘">구글 아이콘  제작자: Freepik - Flaticon</a>

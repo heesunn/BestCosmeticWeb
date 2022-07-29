@@ -43,7 +43,7 @@
    	div #logo {
    		font-size: 50px;
    		font-weight: bold;
-   		margin-left: 10%;
+   		padding-left: 10%;
    	}
    	.myNav {
 		position: fixed;
@@ -71,13 +71,29 @@
 	div #navbarScroll {
 		font-size: 20px;
 		background: #E6E6FA;
-		margin-left: 10%;
+		padding-left: 10%;
+		padding-right: 10%;
 	}
-	#search_ck { margin-left: 50%;}
+	/* 상단바 호버 애니메이션 */
+	.navbar-nav:after{display:block; content:''; clear:both;}
+	.navbar-nav > li{position:relative; float:left; margin-right:5px;}
+	.navbar-nav > li > a{display:block; padding:0 15px; height:40px; line-height:40px;}
+	.navbar-nav > li:hover .dropdown-menu {display:block;}
+	.navbar-nav .dropdown-menu{display:none; position:absolute; left:0; right:0; text-align:center;}
+	.navbar-nav .dropdown-menu a{display:block; padding:5px;}
+	.navbar-nav .dropdown-menu a:active {background-color: #E6E6FA; color: black;}
+	
+	#search_ck { width: 40%; }
 	@media ( max-width: 1150px ) {
-  	    div #navbarScroll { margin-left: 5%; }
-  	    div #logo { margin-left: 5%; }
-  	    #search_ck { margin-left: 35%;}
+ 	    .logoNav > ul{
+ 	    	padding-right: 0%;
+ 	    }
+ 	    div #navbarScroll {
+			font-size: 20px;
+			background: #E6E6FA;
+			padding-left: 0%;
+			padding-right: 0%;
+		}		
 	}
 </style> 
 </head>
@@ -99,7 +115,7 @@
 				</li>
 				</sec:authorize>
 				<li class="nav-item">
-					<a class="nav-link" onclick="javascript:window.location='/member/basketView'">
+					<a class="nav-link" style="cursor:pointer;"onclick="javascript:window.location='/member/basketView'">
 						장바구니
 						<c:choose>
 							<c:when test="${basketCount>0}">
@@ -124,7 +140,7 @@
 				BestCosmetic
 			</a>
 		    <div class="collapse navbar-collapse" id="navbarScroll">
-		        <ul class="navbar-nav me-auto navbar-nav-scroll">
+		        <ul class="navbar-nav me-auto navbar-nav-scroll" style="width: 60%; padding-right: 20%;">
 					<li class="nav-item dropdown">
 					    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
 							상품
@@ -153,8 +169,8 @@
 		        <form id="search_ck" name="search_ck" action="" class="form-inline my-2 my-lg-0">
 					<input type="hidden" name="type" value="bcg_name">					
 					<input class="form-control mr-sm-2" id="srchText" name="srchText" type="search"
-						placeholder="전체 상품 검색" aria-label="Search"> &nbsp;
-					<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="form_check()">Search</button>
+						placeholder="전체 상품 검색" aria-label="Search" style="width: 75%">
+					<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="form_check()" style="width: 20%; text-align:center;">Search</button>
 				</form>
 			</div>
 	    </div>

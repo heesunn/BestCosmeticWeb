@@ -17,10 +17,19 @@
 	}
 	.text {
 		font-size : 16px;
+		font-family: 'tway_air';
 		margin : 0px;
 		float : left;
 		padding-top : 0px;
+		padding-left : 5px;
 		border : 0;
+	}
+	.textbutton {
+		border: 2; 
+		border-radius: 5px; 
+		font-family: 'tway_air';
+		background-color: #d2d2fc; 
+		text-align: center;
 	}
 	#pimg {
 		float : left;
@@ -43,6 +52,7 @@
 		overflow: auto; 
 		height: 600px; 
 		width:500px;
+		border-radius: 10px;
 		transform:translate(-50%, -50%);
 		z-index:1002;
 		box-sizing:border-box;
@@ -51,60 +61,37 @@
 		-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);
 		-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);
 	}
+	/*주문내역제목*/
+	.popup_box .poplist {
+		display:table;
+		table-layout: fixed;
+		width:100%;
+		height:30px;
+		background: #d2d2fc;
+		word-break: break-word;
+		position: absolute;
+		top: 0;
+		text-align:center;
+		font-size: 25px;
+		font-family: 'tway_air';
+	}
+	/*내역 리스트*/
+	.popup_box #infoDiv {		
+		position: relative;
+		top: 40px;
+		width: 100%;
+	}
 	/*버튼영역*/
 	.popup_box .popup_btn {
 		display:table;
 		table-layout: fixed;
-		width:100%;
-		height:70px;
-		background:#ECECEC;
+		width:8%;
+		height:40px;
 		word-break: break-word;
-	}
-	.popup_box .popup_btn a {
-		position: relative; 
-		display: table-cell; 
-		height:70px;  
-		font-size:17px;
-		text-align:center;
-		vertical-align:middle;
-		text-decoration:none; 
-		background:#ECECEC;
-	}
-	.popup_box .popup_btn a:before {
-		content:'';
-		display:block;
-		position:absolute;
-		top:26px;
-		right:29px;
-		width:1px;
-		height:21px;
-		background:#fff;
-		-moz-transform: rotate(-45deg); 
-		-webkit-transform: rotate(-45deg); 
-		-ms-transform: rotate(-45deg); 
-		-o-transform: rotate(-45deg); 
-		transform: rotate(-45deg);
-	}
-	.popup_box .popup_btn a:after {
-		content:'';
-		display:block;
-		position:absolute;
-		top:26px;
-		right:29px;
-		width:1px;
-		height:21px;
-		background:#fff;
-		-moz-transform: rotate(45deg); 
-		-webkit-transform: rotate(45deg); 
-		-ms-transform: rotate(45deg); 
-		-o-transform: rotate(45deg); 
-		transform: rotate(45deg);
-	}
-	.popup_box .popup_btn a.close_day {
-		background:#5d5d5d;
-	}
-	.popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after {
-		display:none;
+		position : fixed;
+		top: 0px;
+		right: 0px;
+		cursor:pointer;
 	}
 	/*오버레이 뒷배경*/
 	.popup_overlay {
@@ -116,7 +103,6 @@
 		z-index:1001;
 		background:rgba(0,0,0,0.5);
 	}
-	/*popup*/
 	
 	body {
 	    padding-top: 190px;
@@ -161,8 +147,7 @@
         <td>${dto.bco_ordernum}</td>
         <td id="money${dto.bco_ordernum}" style="text-align:right;">${dto.bco_totalprice}원</td>
         	<input id="realmoney${dto.bco_ordernum}" type="hidden" value="${dto.bco_totalprice}"/>
-        <td style="text-align:center;"><a href="#" onclick="openPop${dto.bco_ordernum}()">${dto.bco_order_name}</a>
-  </td>
+        <td style="text-align:center;"><a href="#" onclick="openPop${dto.bco_ordernum}()">${dto.bco_order_name}</a></td>
         <td>${dto.bco_order_status}</td>
         <td align="center" >
             <c:if test="${dto.bco_order_status == '배송준비중'}">
@@ -174,9 +159,15 @@
 							  background-color: #d2d2fc; text-align: center;">
             </c:if>
             <c:if test="${dto.bco_order_status == '배송완료'}">
-                <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()"><br>
-                <input type="button" value="반품신청" onclick="반품신청${dto.bco_ordernum}()"><br>
-                <input type="button" value="구매확정" onclick="구매확정${dto.bco_ordernum}()">
+                <input type="button" value="교환신청" onclick="교환신청${dto.bco_ordernum}()"
+                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; text-align: center;"><br>
+                <input type="button" value="반품신청" onclick="반품신청${dto.bco_ordernum}()"
+                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; text-align: center;"><br>
+                <input type="button" value="구매확정" onclick="구매확정${dto.bco_ordernum}()"
+                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; text-align: center;">
             </c:if>
         </td>
     </tr>
@@ -270,17 +261,12 @@
     $('#money${dto.bco_ordernum}').text(money2);
     //머니값체크 , 넣은거
     var moneyValCheck =  $('#money${dto.bco_ordernum}').text();
-//    console.log(moneyValCheck);
     //진짜 머니 , 없는거
     var realmoneyValCheck = $('#realmoney${dto.bco_ordernum}').val();
-//    console.log(realmoneyValCheck);
-
 </script>
 <script>
-	function openPop${dto.bco_ordernum}() {
-  	
+	function openPop${dto.bco_ordernum}() { 	
 		var queryString = 'bco_ordernum=${dto.bco_ordernum}';
-
 		$.ajax({
 		url : '/member/orderDetail',
 			type : 'POST',
@@ -296,17 +282,17 @@
 					var width = '600';
 					var height = '400';
 					console.log(url);
-					text += '<img id="pimg" src="'+data[i].bcg_img+'" width="100" height="115">';
+					text += '<img id="pimg" src="'+data[i].bcg_img+'" width="115" height="115" style="padding-left: 10px;">';
 					text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
 					text += '<p class="text">금액 : <span>'+bcg_price+'</span>원</p><br>';
 					text += '<p class="text">옵션 : '+data[i].bcd_option+'</p><br>';
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
 					if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'false') {
-						text += '<input type="button" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');">';
+						text += '<p style="padding-left:10px;"><input type="button" class="textbutton" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');"></p>';
 					}
 					else if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'true'){
-						text += '리뷰 쓴 상품';
+						text += '<p style="font-size: 12px; color:grey; padding-left:10px; font-family: \'tway_air\';">리뷰작성완료</p>';
 					}
 					text += '<hr>';
 					$('#infoDiv').empty().append(text);
@@ -386,12 +372,13 @@
    	<div class="popup_layer" id="popup_layer" style="display: none;">
 		<div class="popup_box">
 		<!--팝업 컨텐츠 영역-->
+			<div class="poplist">주문내역</div>
 			<div id="infoDiv">
 				
 			</div>
 			<!--팝업 버튼 영역-->
-			<div class="popup_btn" style="float: bottom; margin-top: 50px;">
-				<a href="javascript:closePop();">닫기</a>
+			<div class="popup_btn">
+				<img src="/image/delete.png" width="33" height="33" onclick="closePop();">
 			</div>
 		</div>
 	</div>
