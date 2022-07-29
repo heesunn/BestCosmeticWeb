@@ -87,6 +87,12 @@ function passwordCheck() {
 	});
 }
 </script>
+<style>
+	body {
+	    padding-top: 190px;
+	    padding-bottom: 120px;  
+	}
+</style>
 <body>
 <div>
     <c:import url="/guest/menuTop"></c:import>

@@ -20,50 +20,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>회원정보수정</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script>
-        function form_check() {
-            //이메일 잠시 활성화
-            $("#secondEmail").attr("disabled",false);
-            $("#sample2_postcode").attr("disabled",false);
-            $("#sample2_address").attr("disabled",false);
-            $("#sample2_extraAddress").attr("disabled",false);
+<title>회원정보수정</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    function form_check() {
+        //이메일 잠시 활성화
+        $("#secondEmail").attr("disabled",false);
+        $("#sample2_postcode").attr("disabled",false);
+        $("#sample2_address").attr("disabled",false);
+        $("#sample2_extraAddress").attr("disabled",false);
 
-            submit_ajax();
-        }
+        submit_ajax();
+    }
 
-        function submit_ajax() {
-            var queryString=$("#modifyForm").serialize();
-            console.log(queryString)
+    function submit_ajax() {
+        var queryString=$("#modifyForm").serialize();
+        console.log(queryString)
 
-            $.ajax({
-                url : '/member/modifyMember',
-                type : 'POST',
-                data : queryString,
-                dataType: 'json',
-                success : function(json) {
-                    console.log(json);
-                    $("#secondEmail").attr("disabled",true);
-                    $("#sample2_postcode").attr("disabled",true);
-                    $("#sample2_address").attr("disabled",true);
-                    $("#sample2_extraAddress").attr("disabled",true);
-                    if(json.desc == "1"){
-                        alert("수정되었습니다.")
-                    } else if (json.desc == "0") {
-                        alert("데이터베이스입력에러")
-                    } else if (json.desc == "-1") {
-                        alert("이상현상")
-                    } else {
-                        alert(json.desc);
-                    }
+        $.ajax({
+            url : '/member/modifyMember',
+            type : 'POST',
+            data : queryString,
+            dataType: 'json',
+            success : function(json) {
+                console.log(json);
+                $("#secondEmail").attr("disabled",true);
+                $("#sample2_postcode").attr("disabled",true);
+                $("#sample2_address").attr("disabled",true);
+                $("#sample2_extraAddress").attr("disabled",true);
+                if(json.desc == "1"){
+                    alert("수정되었습니다.")
+                } else if (json.desc == "0") {
+                    alert("데이터베이스입력에러")
+                } else if (json.desc == "-1") {
+                    alert("이상현상")
+                } else {
+                    alert(json.desc);
                 }
-            });
-        }
-    </script>
+            }
+        });
+    }
+</script>
+<style>
+	body {
+	    padding-top: 190px;
+	    padding-bottom: 120px;  
+	}
+</style>
 </head>
 <body>
 
+<div style="float: top">
+    <c:import url="/guest/menuTop"></c:import>
+</div>
 <div style="float: left">
     <c:import url="/member/mypageView"></c:import>
 </div>

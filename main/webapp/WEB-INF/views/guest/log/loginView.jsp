@@ -12,7 +12,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<!-- Bootstrap CSS -->
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 function join() {
@@ -52,14 +51,16 @@ function snsLogin(sns) {
 			<tr><td style="width: 300px; height: 100px;">
 					<input type="text" name="j_username" placeholder="ID" 
 						   style="width: 100%; height: 40px; border: none; border-radius: 10px;
-						   font-size: 20px; font-family: 'tway_air'; "><br/><br/>
+						   font-size: 20px;"><br/><br/>
 					<input type="password" name="j_password" placeholder="Password" 
 						   style="width: 100%; height: 40px; border: none; border-radius: 10px; 
-						   font-size: 20px; font-family: 'tway_air'; "></td>
+						   font-size: 20px;"></td>
 				<td style="height: 100px;"><input type="submit" value="LOGIN" 
 						   style="width: 100%; height: 100%; border: none; border-radius: 10px; font-family: 'tway_air';
 								  background-color: #d2d2fc; font-size: 25px; text-align: center; color: white;"></td></tr>
 		</form>
+		<tr><td><br/></td></tr>
+		<tr><td colspan="2" style="font-size: 15px; color:grey; text-align: center;">${message}</td></tr>
 		<tr><td><br/></td></tr>
 		<tr><td colspan="2"><button onclick="join()" 
 						style="width: 100%; height: 40px; border: none; border-radius: 10px; font-family: 'tway_air';

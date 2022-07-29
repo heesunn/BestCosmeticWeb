@@ -35,6 +35,11 @@
 	/*오버레이 뒷배경*/
 	.popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
 	/*popup*/
+	
+	body {
+	    padding-top: 190px;
+	    padding-bottom: 120px;  
+	}
 </style>
 <body>
 <div style="float: top">
