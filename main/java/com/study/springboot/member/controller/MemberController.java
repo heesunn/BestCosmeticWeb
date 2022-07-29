@@ -173,7 +173,7 @@ public class MemberController
 	@RequestMapping("/member/paymentView")
 	public String paymentView (HttpServletRequest request,Model model) {
 		modifyMemberViewService.modifyMemberView(request, model);
-		utilService.createOrderNum(model);
+		utilService.createOrderNum(request, model);
 		return "member/paymentView";
 	}
 	@RequestMapping("/member/basketUpCount")

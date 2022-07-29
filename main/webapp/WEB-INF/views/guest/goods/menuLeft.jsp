@@ -27,10 +27,13 @@
         	color: #000000;
         }
 
+		a:hover{
+            font-weight : bold;
+            color: #000000;
+        }
     </style>
 </head>
 <body>
-
     <div id="cateoryLeft">
 		<ul class="nav flex-column nav-light" >
 			<li class="nav-item active">

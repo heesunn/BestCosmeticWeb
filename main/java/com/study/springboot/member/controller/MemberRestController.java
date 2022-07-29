@@ -7,6 +7,7 @@ import com.study.springboot.member.dto.Like;
 import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
 import com.study.springboot.member.service.BasketViewService;
 import com.study.springboot.member.service.MemberManagementViewService;
+import com.study.springboot.member.service.UtilService;
 import com.study.springboot.member.service.wjapp.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class MemberRestController
     MemberLikeListService memberLikeListService;
     @Autowired
     AppBasketService appBasketService;
+    @Autowired
+    UtilService utilService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -92,5 +95,9 @@ public class MemberRestController
     @PostMapping("/api/member/basket/add")
     public void basketAdd(@RequestBody List<HashMap<String, Object>> json){
         appBasketService.basketAdd(json);
+    }
+    @GetMapping("/api/member/payment/orderNum")
+    public String orderNum(HttpServletRequest request,Model model){
+        return utilService.createOrderNum(request, model);
     }
 }
