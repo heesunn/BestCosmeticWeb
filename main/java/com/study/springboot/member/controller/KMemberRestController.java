@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +18,7 @@ import com.study.springboot.member.service.wjapp.AppMemberLoginService;
 import com.study.springboot.member.service.wjapp.AppOrderDeliveryService;
 import com.study.springboot.member.service.wjapp.AppOrderDetailService;
 import com.study.springboot.member.service.wjapp.AppOrderInfoService;
+import com.study.springboot.member.service.wjapp.AppPasswordChangeService;
 
 @RestController
 public class KMemberRestController
@@ -35,39 +35,43 @@ public class KMemberRestController
 	AppOrderDeliveryService orderDeliveryService;
 	@Autowired
 	AppOrderDetailService orderDetailService;
+	@Autowired
+	AppPasswordChangeService passwordChangeService;
 	
     @PostMapping("/api/login")
     public JSONObject memberCheck(HttpServletRequest request) {
-        JSONObject obj = memberLoginService.memberLogin(request);
-        return obj;
+        return memberLoginService.memberLogin(request);
     }
     @PostMapping("/api/appjoin")
     public JSONObject appJoin(HttpServletRequest request) {
-        JSONObject obj = memberJoinService.AppMemberJoin(request);
-        return obj;
+        return memberJoinService.AppMemberJoin(request);
     }
     @PostMapping("/api/snsLogin")
     public JSONObject appSnsLogin(HttpServletRequest request) {
-        JSONObject obj = snsService.appSnsLogin(request);
-        return obj;
+        return snsService.appSnsLogin(request);
     }
     @PostMapping("/api/orderInfo")
     public JSONObject orderInfo(HttpServletRequest request) {
-        JSONObject obj = orderInfoService.orderInfo(request);
-        return obj;
+        return orderInfoService.orderInfo(request);
     }
     @RequestMapping("/api/orderdelivery")
     public ArrayList<OrderDeliveryDto> appOrderdelivery(HttpServletRequest request) {
-    	ArrayList<OrderDeliveryDto> obj = orderDeliveryService.appOrderDeliveryInfo(request);
-        return obj;
+        return orderDeliveryService.appOrderDeliveryInfo(request);
     }
     @PostMapping("/api/orderdetail")
     public ArrayList<OrderDetail> appOrderdetail(HttpServletRequest request) {
-    	ArrayList<OrderDetail> obj = orderDetailService.appOrderDetail(request);
-        return obj;
+        return orderDetailService.appOrderDetail(request);
     }
     @PostMapping("/api/statusChange")
     public void appstatusChange(HttpServletRequest request) {
     	orderDeliveryService.appStatusChange(request);
+    }
+    @RequestMapping("/api/cancelExchangeRefund")
+    public ArrayList<OrderDeliveryDto> cancelExchangeRefund(HttpServletRequest request) {
+        return orderDeliveryService.appcancelExchangeRefund(request);
+    }
+    @PostMapping("/api/passwordChange")
+    public String appPasswordChange(HttpServletRequest request) {
+        return passwordChangeService.appPasswordChangeResult(request);
     }
 }

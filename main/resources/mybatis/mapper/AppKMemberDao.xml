@@ -34,4 +34,7 @@
 		    (SELECT * FROM bc_order_detail where bco_ordernum = #{param1} order by rownum desc)C ,
 		    bc_goods D WHERE c.bcg_key = d.bcg_key and ROWNUM = 1) B where a.bco_ordernum = b.bco_ordernum
 	</select>
+	<select id="selectCEROrdernum" resultType="string">
+		select bco_ordernum from bc_order_history where bcm_num = #{param1} and bco_order_status not in('배송준비중', '배송중', '배송완료', '구매확정') order by bco_orderdate desc
+	</select>
 </mapper>

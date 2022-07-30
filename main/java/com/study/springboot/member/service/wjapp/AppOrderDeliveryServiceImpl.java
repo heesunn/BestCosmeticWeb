@@ -59,4 +59,18 @@ public class AppOrderDeliveryServiceImpl implements AppOrderDeliveryService
 		}
 	}
 	
+	@Override
+	public ArrayList<OrderDeliveryDto> appcancelExchangeRefund(HttpServletRequest request)
+	{
+		String bcm_num = request.getParameter("num");
+		
+		ArrayList<OrderDeliveryDto> obj = new ArrayList<OrderDeliveryDto>();
+		ArrayList<String> ordernumList = appDao.selectCEROrdernum(Integer.parseInt(bcm_num));
+		
+		for(String ordernum : ordernumList) {
+			OrderDeliveryDto dto = appDao.appOrderList(ordernum);
+			obj.add(dto);
+		}
+		return obj;
+	}
 }

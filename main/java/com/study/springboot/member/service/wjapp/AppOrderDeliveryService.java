@@ -10,4 +10,5 @@ public interface AppOrderDeliveryService
 {
 	public ArrayList<OrderDeliveryDto> appOrderDeliveryInfo(HttpServletRequest request);
 	public void appStatusChange(HttpServletRequest request);
+	public ArrayList<OrderDeliveryDto> appcancelExchangeRefund(HttpServletRequest request);
 }

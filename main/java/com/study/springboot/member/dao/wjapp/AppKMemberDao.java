@@ -17,4 +17,6 @@ public interface AppKMemberDao
 	public AppOrderInfo orderInfo(int bcm_num);
 	public ArrayList<String> selectOrdernum(int bcm_num);
 	public OrderDeliveryDto appOrderList(String bco_ordernum);
+	public ArrayList<String> selectCEROrdernum(int bcm_num);
+	public OrderDeliveryDto appCERList(String bco_ordernum);
 }
