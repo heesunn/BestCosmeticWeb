@@ -19,46 +19,90 @@
 <head>
     <title>취소/교환/반품</title>
     <script src="http://code.jquery.com/jquery.js"></script>
+<style>
+    @font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
+	body {
+	    padding-top: 210px;
+	    padding-bottom: 120px;  
+	}
+	.selectpage {
+		background-color: #d2d2fc;
+		border-radius: 0 50px 50px 0;
+	}
+	.payheader {
+		font-size: 30px;
+		text-align: center;
+		height: 100px;
+		width: 100%;
+		background-color: #f2f2fc;
+		border-radius: 50px;
+	}
+	.tableD {
+		position: relative;
+	    margin: auto;
+	    width: 1200px;	  
+	    padding-left: 15px;  
+	    text-align: center;
+	    align: center; 
+	    font-family: 'tway_air';
+	}
+
+</style>    
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 <div style="float: top">
     <c:import url="/guest/menuTop"></c:import>
 </div>
-<div>
-    <div style="display:inline-block; background-color: #767b86;height: 100px;width: 200px;">
-        <h2>장바구니</h2>
-        <h6>주문하실 상품을 선택해주세요</h6>
-    </div>
-    <div style="display:inline-block;background-color: #767b86;height: 100px;width: 100px;">
-        <h2>&gt;&gt;</h2>
-    </div>
-    <div style="display:inline-block;background-color: #767b86;height: 100px;width: 200px;">
-        <h2>주문/결제</h2>
-    </div>
-    <div style="display:inline-block;background-color: #767b86;height: 100px;width: 100px;">
-        <h2>&gt;&gt;</h2>
-    </div>
-    <div style="display:inline-block;background-color: #3c3f45;height: 100px;width: 200px;">
-        <h2>주문완료</h2>
-    </div>
-</div>
-<hr/>
-<div>
-    <table cellpadding="0" cellspacing="0" border="1">
+<div class="tableD">
+    <br>
+    <table class="payheader" >
+    	<colgroup>
+    		<col style="width: 25%">
+    		<col style="width: 12%">
+    		<col style="width: 25%">
+    		<col style="width: 12%">
+    		<col style="width: 25%">
+    	</colgroup>       	
         <tr>
-            <td>주문자
+        	<td>장바구니</td>
+         	<td><img src="/image/rightBtn.png"></td>
+        	<td>주문/결제</td>
+        	<td><img src="/image/rightBtn.png"> </td>
+         	<td class="selectpage">주문완료</td>
+    	</tr>
+    </table>
+    <br>
+    <table style="width:100%; font-size: 20px; border-spacing: 5px;">
+        <thead style="height: 50px; background-color: #d2d2fc;">
+        <tr>
+            <td>주문번호</td>
+            <td>주문자</td>
+            <td>이메일</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>${orderNum}
                 <input type="hidden" id="sId" name="sId" value="<%= sName %>">
                 <input type="hidden" id="orderNum" name="orderNum" value="${orderNum}">
             </td>
             <td id="sName"><%=sName %></td>
             <td id="sEmail"><%=sEmail %></td>
         </tr>
+        </tbody>
     </table>
+	<div>
+	    <h4>주문 완료 되었습니다.</h4>
+	    <br>
+        <button style="width: 100%; border: none; font-size: 30px; background-color: #d2d2fc; text-align: center; border-radius: 30px;" onclick="location.href='/member/orderDelivery'";>
+            주문내역 보기
+        </button>
+	</div>    
 </div>
-<div>
-    <h1 style="color: blue">주문 완료 되었습니다.</h1>
-    <a href="/member/orderDelivery">주문내역 보기</a>
-</div>
+<hr/>
 <c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

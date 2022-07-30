@@ -207,7 +207,7 @@
 		    </div>
 		
     		<input type="button" value="수정" onclick="form_check()"
-    			   style="border: none; border-radius: 10px; font-size: 15px; vertical-align: moddle;
+    			   style="border: none; border-radius: 10px; font-size: 15px; vertical-align: middle;
         				 float: right; font-family: 'tway_air'; padding: 10px; background-color: #d2d2fc;">
   		</td></tr>
   		</form>

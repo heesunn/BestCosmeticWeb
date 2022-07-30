@@ -266,146 +266,210 @@
             }
         }
     </script>
+<style>
+    @font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
+	body {
+	    padding-top: 210px;
+	    padding-bottom: 120px;  
+	}
+	.selectpage {
+		background-color: #d2d2fc;
+	}
+	.payheader {
+		font-size: 30px;
+		text-align: center;
+		height: 100px;
+		width: 100%;
+		background-color: #f2f2fc;
+		border-radius: 50px;
+	}
+	.tableD {
+		position: relative;
+	    margin: auto;
+	    width: 1200px;	  
+	    padding-left: 15px;  
+	    text-align: center;
+	    align: center; 
+	    font-family: 'tway_air';
+	}
+	input[type=checkbox] {
+		zoom: 2;
+		cursor:pointer; 	
+	}
+</style>    
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 <div style="float: top">
     <c:import url="/guest/menuTop"></c:import>
 </div>
-<div>
-    <div>
-        <div style="display:inline-block; background-color: #767b86;height: 100px;width: 200px;">
-            <h2>장바구니</h2>
-            <h6>주문하실 상품을 선택해주세요</h6>
-        </div>
-        <div style="display:inline-block;background-color: #767b86;height: 100px;width: 100px;">
-            <h2>&gt;&gt;</h2>
-        </div>
-        <div style="display:inline-block;background-color: #3c3f45;height: 100px;width: 200px;">
-            <h2>주문/결제</h2>
-        </div>
-        <div style="display:inline-block;background-color: #767b86;height: 100px;width: 100px;">
-            <h2>&gt;&gt;</h2>
-        </div>
-        <div style="display:inline-block;background-color: #767b86;height: 100px;width: 200px;">
-            <h2>주문완료</h2>
-        </div>
-    </div>
-    <hr/>
-    <form id="paymentForm">
-    <div>
-        <table cellpadding="0" cellspacing="0" border="1">
+<div class="tableD">
+    <div style="width:100%;">
+    	<br>
+        <table class="payheader" >
+        	<colgroup>
+        		<col style="width: 25%">
+        		<col style="width: 12%">
+        		<col style="width: 25%">
+        		<col style="width: 12%">
+        		<col style="width: 25%">
+        	</colgroup>       	
             <tr>
-                <td>주문자
-                    <input type="hidden" id="sId" name="sId" value="<%= sName %>">
-                    <input type="hidden" id="orderNum" name="orderNum" value="${orderNum}">
-                </td>
-                <td id="sName"><%=sName %></td>
-                <td id="sEmail"><%=sEmail %></td>
-            </tr>
+            	<td>장바구니</td>
+	            <td><img src="/image/rightBtn.png"></td>
+	            <td class="selectpage">주문/결제</td>
+	            <td><img src="/image/rightBtn.png"> </td>
+	            <td>주문완료</td>
+        	</tr>
         </table>
     </div>
+    <br>
+    <form id="paymentForm">
+    <div>
+        <table style="width:100%; font-size: 20px; border-spacing: 5px;">
+	        <thead style="height: 50px; background-color: #d2d2fc;">
+	        <tr>
+	            <td>주문번호</td>
+	            <td>주문자</td>
+	            <td>이메일</td>
+	        </tr>
+	        </thead>
+	        <tbody>
+	        <tr>
+	            <td>${orderNum}
+	                <input type="hidden" id="sId" name="sId" value="<%= sName %>">
+	                <input type="hidden" id="orderNum" name="orderNum" value="${orderNum}">
+	            </td>
+	            <td id="sName"><%=sName %></td>
+	            <td id="sEmail"><%=sEmail %></td>
+	        </tr>
+	        </tbody>
+	    </table>
+    </div>
     <hr/>
     <div>
-        <div style="float: left ;">
-            <h2>배송정보</h2>
-
-            <table cellpadding="0" cellspacing="0" border="1">
-                <tr>
-                    <td>수령인 *</td>
-                    <td>
-                        <input type="text" id="reciName" name="reciName" value="<%= sName %>">
-                        <input type="hidden" id="orderListJson" name="orderListJson" value="">
-                        <input type="hidden" id="realTotalPrice" name="realTotalPrice" value="">
-                        <input type="hidden" id="sorderName" name="orderName" value="">
-                    </td>
-                </tr>
-                <tr>
-                    <td>휴대폰 *</td>
-                    <td>
-                        <select id="bcm_phonenum1" name="bcm_phonenum1">
-                            <c:choose>
-                                <c:when test="${user.bcm_phonenum1 == null}">
-                                    <option value="">::선택::</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${user.bcm_phonenum1}">${user.bcm_phonenum1}</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <option value="011">011</option>
-                            <option value="016">016</option>
-                            <option value="017">017</option>
-                            <option value="019">019</option>
-                            <option value="010">010</option>
-                        </select>
-                        &nbsp;-&nbsp;
-                        <input type="text" id="bcm_phonenum2" size="4" maxlength="4" name="bcm_phonenum2" value="${user.bcm_phonenum2}">
-                        &nbsp;-&nbsp;
-                        <input type="text" id="bcm_phonenum3" size="4" maxlength="4" name="bcm_phonenum3" value="${user.bcm_phonenum3}">
-                    </td>
-                </tr>
-                <tr>
-                    <td>주소 *</td>
-                    <td>
-                        <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_zipcode}">
-                        <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기">
-                        <input type="button" onclick="lastDeliveryDestination()" value="최근 배송지"> <br>
-                        <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address1}"><br>
-                        <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address2}">
-                        <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address3}">
-                    </td>
-                </tr>
-                <tr>
-                    <td>배송요청사항</td>
-                    <td>
-                        <input type="text" maxlength="20" name="deliveryRequest" placeholder="최대 20자">
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-
-        <div style="float: left ;margin-top: 50px; margin-left: 100px;">
-            <table cellpadding="0" cellspacing="0" border="1">
-                <tr>
-                    <td colspan="2">상품금액</td>
-                </tr>
-                <tr>
-                    <td colspan="2" id="idTotalPrice">45,000원</td>
-                </tr>
-                <tr>
-                    <td colspan="2" id="deliveryPrice">배송비</td>
-                </tr>
-                <tr>
-                    <td colspan="2">0원</td>
-                </tr>
-                <tr>
-                    <td colspan="2">할인금액</td>
-                </tr>
-                <tr>
-                    <td colspan="2">0원</td>
-                </tr>
-                <tr>
-                    <td><h3 style="color: red">최종결제금액</h3></td>
-                    <td id="idTotalPrice2">47,500원</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="checkbox" id="checkbox" name="checkbox">
-                        주문내역확인 동의(필수)
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="결제하기" onclick="formCheck();">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="장바구니가기" onclick="javascript:window.location='/member/basketView'">
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <table style="width:100%; font-size: 20px; border-spacing: 5px;">
+        	<colgroup>
+        		<col style="width:20%; background-color: #d2d2fc;">
+        		<col style="width:80%; float: left; background-color: #f2f2fc;">
+        	</colgroup>
+        	<thead style="height: 50px; background-color: #d2d2fc;">
+		        <tr>
+		            <td colspan="2">[배송정보]</td>
+		        </tr>
+	        </thead>
+	        <tbody>
+	            <tr>
+	                <td>수령인 *</td>
+	                <td>
+	                    <input type="text" id="reciName" name="reciName" value="<%= sName %>"
+	                    	   style="width: 100%; border: none; border-radius: 10px;">
+	                    <input type="hidden" id="orderListJson" name="orderListJson" value="">
+	                    <input type="hidden" id="realTotalPrice" name="realTotalPrice" value="">
+	                    <input type="hidden" id="sorderName" name="orderName" value="">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>휴대폰 *</td>
+	                <td style="align: left;">
+	                    <select id="bcm_phonenum1" name="bcm_phonenum1"
+	                    		style="width: 15%; border: none; height: 30px; border-radius: 10px; ">
+	                        <c:choose>
+	                            <c:when test="${user.bcm_phonenum1 == null}">
+	                                <option value="">::선택::</option>
+	                            </c:when>
+	                            <c:otherwise>
+	                                <option value="${user.bcm_phonenum1}">${user.bcm_phonenum1}</option>
+	                            </c:otherwise>
+	                        </c:choose>
+	                        <option value="011">011</option>
+	                        <option value="016">016</option>
+	                        <option value="017">017</option>
+	                        <option value="019">019</option>
+	                        <option value="010">010</option>
+	                    </select>
+	                    &nbsp;-&nbsp;
+	                    <input type="text" id="bcm_phonenum2" size="4" maxlength="4" name="bcm_phonenum2" value="${user.bcm_phonenum2}"
+	                    	   style="width: 15%; border: none; border-radius: 10px;">
+	                    &nbsp;-&nbsp;
+	                    <input type="text" id="bcm_phonenum3" size="4" maxlength="4" name="bcm_phonenum3" value="${user.bcm_phonenum3}"
+	                    	   style="width: 15%; border: none; border-radius: 10px;">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>주소 *</td>
+	                <td>
+	                    <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_zipcode}"
+	                    	   style="width: 30%; border: none; border-radius: 10px;">
+	                    <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"
+	                    	   style="width: 20%; border: 2; border-radius: 10px; cursor:pointer; background-color: #f2f2fc;">
+	                    <input type="button" onclick="lastDeliveryDestination()" value="최근 배송지"
+	                    	   style="width: 20%; border: 2; border-radius: 10px; cursor:pointer; background-color: #f2f2fc;"><br>
+	                    <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address1}"
+	                    	   style="width: 100%; border: none; border-radius: 10px;"><br>
+	                    <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address2}"
+	                    	   style="width: 50%; border: none; border-radius: 10px;">
+	                    <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address3}"
+	                    	   style="width: 48%; border: none; border-radius: 10px;">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td>배송요청사항</td>
+	                <td>
+	                    <input type="text" maxlength="20" name="deliveryRequest" placeholder="최대 20자까지 입력가능합니다"
+	                    	   style="width: 100%; border: none; border-radius: 10px;">
+	                </td>
+	            </tr>
+	    	</tbody>        
+        </table>
+        <br>
+        <table style="width:100%; font-size: 20px; ">
+        	<colgroup>
+        		<col style="width:50%;">
+        		<col style="width:50%;">
+        	</colgroup>
+        	<thead style="height: 50px; background-color: #d2d2fc;">
+		        <tr>
+		            <td colspan="2">[결제정보]</td>
+		        </tr>
+	        </thead>
+	        <tbody>
+	            <tr>
+	                <td>상품금액</td>               
+	                <td id="idTotalPrice">45,000원</td>
+	            </tr>
+	            <tr>
+	                <td id="deliveryPrice">배송비</td>
+	                <td>0원</td>
+	            </tr>
+	            <tr>
+	                <td>할인금액</td>
+	                <td>0원</td>
+	            </tr>
+	            <tr style="background-color: #f2f2fc; color: red; font-size:30px;">
+	                <td>최종결제금액</td>
+	                <td id="idTotalPrice2">47,500원</td>
+	            </tr>
+	            <tr>
+	                <td colspan="2">
+	                    <input type="checkbox" id="checkbox" name="checkbox">
+	                    주문내역확인 동의(필수)
+	                </td>
+	            </tr>
+	            <tr>
+	            	<td>
+	                    <input type="button" value="장바구니가기" onclick="javascript:window.location='/member/basketView'"
+	                    	   style="border: 2; width: 30%; font-size: 30px; border-radius: 10px; cursor:pointer; background-color: #d2d2fc;">
+	                </td>
+	                <td>
+	                    <input type="button" value="결제하기" onclick="formCheck();"
+	                    	   style="border: 2; width: 30%; font-size: 30px; border-radius: 10px; cursor:pointer; background-color: #d2d2fc;">
+	                </td>                   
+	            </tr>
+            </tbody>
+        </table>
     </div>
     </form>
 </div>
@@ -489,7 +553,7 @@
     function initLayerPosition(){
         var width = 300; //우편번호서비스가 들어갈 element의 width
         var height = 400; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+        var borderWidth = 1; //샘플에서 사용하는 border의 두께
 
         // 위에서 선언한 값들을 실제 element에 넣는다.
         element_layer.style.width = width + 'px';
@@ -497,15 +561,16 @@
         element_layer.style.border = borderWidth + 'px solid';
         // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 100 + 'px';
     }
 </script>
-<div style="background-color:gray; border: black 10px; display: none; position: absolute;top: 300px;left: 400px;z-index: 999999;" id="lastDeliveryDestinationDiv">
-    <div id="selectDestination" style="width: 300px; height: 400px;">
+<div style="background-color: #f2f2fc; border: 1px solid; display: none; position: fixed; top: 310px; left: 750px;
+			z-index: 999999;" id="lastDeliveryDestinationDiv">
+    <div id="selectDestination" style="width: 400px; height: 350px; padding: 15px; font-family: 'tway_air';">
 
     </div>
-    <div style="background: gray;height:20px;">
-        <a href="javascript:closelastDeliveryDestination()" style="position:absolute;right:5px;color:white;">[닫기]</a>
+    <div style="height:20px;">
+        <a href="javascript:closelastDeliveryDestination()" style="position:absolute; right:5px; bottom: 5px; color: black; font-family: 'tway_air';">[닫기]</a>
     </div>
 </div>
 <script>
