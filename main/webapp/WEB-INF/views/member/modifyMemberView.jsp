@@ -62,13 +62,28 @@
     }
 </script>
 <style>
+	@font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
 	body {
 	    padding-top: 190px;
 	    padding-bottom: 120px;  
 	}
+	.tableD {
+		font-family: 'tway_air';
+		position: relative;
+	    left: 210px; 
+	    width: 1200px;	  
+	    padding-left: 15px;   
+	}
+	thead {
+		background-color: #f2f2fc;
+		text-align: center;
+	}
 </style>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 
 <div style="float: top">
     <c:import url="/guest/menuTop"></c:import>
@@ -76,104 +91,128 @@
 <div style="float: left">
     <c:import url="/member/mypageView"></c:import>
 </div>
-<div style="float: left" >
+ <table class="tableD">
+ 	<colgroup>
+    	<col style="width:50%">
+    	<col style="width:50%">
+ 	</colgroup>
+	<thead>
+	<tr><td colspan="2" style="font-size: 25px;">회원 정보 수정</td></tr>
     <form id="modifyForm">
-    <h1>회원 정보 수정</h1>
-    <h5>필수 입력사항</h5>
-    <table cellpadding="0" cellspacing="0" border="1">
-        <tr>
-            <td>아이디</td>
-            <td>${user.bcm_id}</td>
-        </tr>
-        <tr>
-            <td>이름</td>
-            <td><%= sName %></td>
-        </tr>
-        <tr>
-            <td>이메일</td>
-            <td>
-                <input type="text" id="firstEmail" name="firstEmail" value="<%=firstEmail%>">@
-                <input type="text" id="secondEmail" name="secondEmail" disabled value="<%=secondEmail%>">
-                <select id="selectEmail" name="selectEmail">
-                    <option value="1" selected>직접입력</option>
-                    <option value="naver.com">naver.com</option>
-                    <option value="hanmail.net">hanmail.net</option>
-                    <option value="hotmail.com">hotmail.com</option>
-                    <option value="nate.com">nate.com</option>
-                    <option value="yahoo.co.kr">yahoo.co.kr</option>
-                    <option value="empas.com">empas.com</option>
-                    <option value="dreamwiz.com">dreamwiz.com</option>
-                    <option value="freechal.com">freechal.com</option>
-                    <option value="lycos.co.kr">lycos.co.kr</option>
-                    <option value="korea.com">korea.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="hanmir.com">hanmir.com</option>
-                    <option value="paran.com">paran.com</option>
-                </select>
-                <script type="text/javascript">
-                    //이메일 입력방식 선택
-                    $('#selectEmail').change(function(){
-                        $("#selectEmail option:selected").each(function () {
+	    <tr>
+	        <td>[필수 입력사항]</td>
+	        <td>[선택 입력사항]</td>
+	    </tr>
+    </thead>
+    <tbody>
+    	<tr>
+    		<td>
+    		<table style="width: 100%; padding-left: 10px; vertical-align : top;">
+    			<tr><td>아이디 : ${user.bcm_id}<br></td></tr>
+       		    <tr><td>이름 : <%= sName %><br></td></tr>
+        		<tr><td>이메일</td></tr>
+            	<tr><td><input type="text" id="firstEmail" name="firstEmail" value="<%=firstEmail%>"
+            					style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;"> @
+                		<input type="text" id="secondEmail" name="secondEmail" disabled value="<%=secondEmail%>"
+                				style="width: 30%; height: 30px; border: 2; border-radius: 10px; font-size: 15px;">
+						<select id="selectEmail" name="selectEmail"
+		                		style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;
+        					    float: right; font-family: 'tway_air'; padding-right: 10px;">
+		                    <option value="1" selected>직접입력</option>
+		                    <option value="naver.com">naver.com</option>
+		                    <option value="hanmail.net">hanmail.net</option>
+		                    <option value="hotmail.com">hotmail.com</option>
+		                    <option value="nate.com">nate.com</option>
+		                    <option value="yahoo.co.kr">yahoo.co.kr</option>
+		                    <option value="empas.com">empas.com</option>
+		                    <option value="dreamwiz.com">dreamwiz.com</option>
+		                    <option value="freechal.com">freechal.com</option>
+		                    <option value="lycos.co.kr">lycos.co.kr</option>
+		                    <option value="korea.com">korea.com</option>
+		                    <option value="gmail.com">gmail.com</option>
+		                    <option value="hanmir.com">hanmir.com</option>
+		                    <option value="paran.com">paran.com</option>
+		                </select><br>
+		         </td></tr>
+	         </table>       
+<script type="text/javascript">
+    //이메일 입력방식 선택
+    $('#selectEmail').change(function(){
+        $("#selectEmail option:selected").each(function () {
 
-                            if($(this).val()== '1'){ //직접입력일 경우
-                                $("#secondEmail").val('');                        //값 초기화
-                                $("#secondEmail").attr("disabled",false); //활성화
-                            }else{ //직접입력이 아닐경우
-                                $("#secondEmail").val($(this).text());      //선택값 입력
-                                $("#secondEmail").attr("disabled",true); //비활성화
-                            }
-                        });
-                    });
-                </script>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <h5>선택 입력사항</h5>
-    <table cellpadding="0" cellspacing="0" border="1">
-        <tr>
-            <td>휴대폰</td>
-            <td>
-                <select id="bcm_phonenum1" name="bcm_phonenum1">
-                    <c:choose>
-                        <c:when test="${user.bcm_phonenum1 == null}">
-                            <option value="">::선택::</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${user.bcm_phonenum1}">${user.bcm_phonenum1}</option>
-                        </c:otherwise>
-                    </c:choose>
-                    <option value="011">011</option>
-                    <option value="016">016</option>
-                    <option value="017">017</option>
-                    <option value="019">019</option>
-                    <option value="010">010</option>
-                </select>
-                &nbsp;-&nbsp;
-                <input type="text" id="bcm_phonenum2" size="4" maxlength="4" name="bcm_phonenum2" value="${user.bcm_phonenum2}">
-                &nbsp;-&nbsp;
-                <input type="text" id="bcm_phonenum3" size="4" maxlength="4" name="bcm_phonenum3" value="${user.bcm_phonenum3}">
-            </td>
-        </tr>
-        <tr>
-            <td>주소</td>
-            <td>
-                <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_zipcode}">
-                <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-                <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address1}"><br>
-                <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address2}">
-                <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address3}">
-            </td>
-        </tr>
-    </table>
-    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-    </div>
-
-    <input type="button" value="수정" onclick="form_check()">
-    </form>
-</div>
-
+            if($(this).val()== '1'){ //직접입력일 경우
+                $("#secondEmail").val('');                        //값 초기화
+                $("#secondEmail").attr("disabled",false); //활성화
+            }else{ //직접입력이 아닐경우
+                $("#secondEmail").val($(this).text());      //선택값 입력
+                $("#secondEmail").attr("disabled",true); //비활성화
+            }
+        });
+    });
+</script>
+    		</td>
+   			<td>
+   				<table style="width: 100%; padding-left: 10px;">
+			        <tr><td>휴대폰</td></tr>
+			        <tr><td><select id="bcm_phonenum1" name="bcm_phonenum1"
+			        				style="width: 25%; height: 30px; border: 2; border-radius: 10px; font-size: 15px;
+	        					    float: center; font-family: 'tway_air'; text-align: center;">
+			                    <c:choose>
+			                        <c:when test="${user.bcm_phonenum1 == null}">
+			                            <option value="">::선택::</option>
+			                        </c:when>
+			                        <c:otherwise>
+			                            <option value="${user.bcm_phonenum1}">${user.bcm_phonenum1}</option>
+			                        </c:otherwise>
+			                    </c:choose>
+			                    <option value="011">011</option>
+			                    <option value="016">016</option>
+			                    <option value="017">017</option>
+			                    <option value="019">019</option>
+			                    <option value="010">010</option>
+			                </select>
+			                &nbsp;-&nbsp;
+			                <input type="text" id="bcm_phonenum2" size="4" maxlength="4" name="bcm_phonenum2" value="${user.bcm_phonenum2}"
+			                	   style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;
+	        					   float: center; font-family: 'tway_air'; text-align: center;">
+			                &nbsp;-&nbsp;
+			                <input type="text" id="bcm_phonenum3" size="4" maxlength="4" name="bcm_phonenum3" value="${user.bcm_phonenum3}"
+			                	   style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;
+	        					   float: center; font-family: 'tway_air'; text-align: center;"><br>
+			        </td></tr>
+			        <tr><td>주소</td></tr>
+			        <tr><td>
+		                <input type="text" name="bcm_zipcode" id="sample2_postcode" placeholder="우편번호" disabled value="${user.bcm_zipcode}"
+		                	   style="width: 50%; height: 30px; border: 2; border-radius: 10px; font-size: 15px;
+	        					    float: center; font-family: 'tway_air';">
+		                <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"
+		                	   style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px; background-color: #d2d2fc;
+	        					    float: left; padding-left: 5px; font-family: 'tway_air'; float: right; padding-right: 10px;"><br>
+		                <input type="text" name="bcm_address1" id="sample2_address" placeholder="주소" disabled value="${user.bcm_address1}"
+		                	   style="width: 100%; height: 30px; border: 2; border-radius: 10px; font-size: 15px;
+	        					    float: center; font-family: 'tway_air';"><br>
+		                <input type="text" name="bcm_address2" id="sample2_detailAddress" placeholder="상세주소" value="${user.bcm_address2}"
+				               style="width: 49%; height: 30px; border: none; border-radius: 10px; font-size: 15px;
+	        					    float: center; font-family: 'tway_air';">
+		                <input type="text" name="bcm_address3" id="sample2_extraAddress" placeholder="참고항목" disabled value="${user.bcm_address3}"
+		                	   style="width: 48%; height: 30px; border: none; border-radius: 10px; font-size: 15px;
+	        					    float: center; font-family: 'tway_air';"><br>
+		            </td></tr>
+    			</table>
+    		</td>
+    	</tr>			
+    	<tr><td colspan="2">
+		    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+		        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+		    </div>
+		
+    		<input type="button" value="수정" onclick="form_check()"
+    			   style="border: none; border-radius: 10px; font-size: 15px; vertical-align: moddle;
+        				 float: right; font-family: 'tway_air'; padding: 10px; background-color: #d2d2fc;">
+  		</td></tr>
+  		</form>
+	</tbody>
+</table>	
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element
@@ -251,7 +290,7 @@
     function initLayerPosition() {
         var width = 300; //우편번호서비스가 들어갈 element의 width
         var height = 400; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+        var borderWidth = 1; //샘플에서 사용하는 border의 두께
 
         // 위에서 선언한 값들을 실제 element에 넣는다.
         element_layer.style.width = width + 'px';
@@ -259,7 +298,7 @@
         element_layer.style.border = borderWidth + 'px solid';
         // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 100 + 'px';
     }
 </script>
 <c:import url="/guest/channelTalk"></c:import>

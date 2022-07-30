@@ -79,29 +79,29 @@
         }
     </script>
 	<style type="text/css">
-		#AddForm fieldset{
+		.fset fieldset{
 		    display: inline-block;
 		    direction: rtl;
-		    border:0;
+		    border: 2px;
 		}
-		#AddForm fieldset legend{
+		.fset fieldset legend{
 		    text-align: right;
 		}
-		#AddForm input[type=radio]{
+		.fset input[type=radio]{
 		    display: none;
 		}
-		#AddForm label{
+		.fset label{
 		    font-size: 3em;
 		    color: transparent;
 		    text-shadow: 0 0 0 #f0f0f0;
 		}
-		#AddForm label:hover{
+		.fset label:hover{
 		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 		}
-		#AddForm label:hover ~ label{
+		.fset label:hover ~ label{
 		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 		}
-		#AddForm input[type=radio]:checked ~ label{
+		.fset input[type=radio]:checked ~ label{
 		    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 		}
 		#BCR_CONTENT {
@@ -113,43 +113,91 @@
 		    border-radius: 5px;
 		    font-size: 16px;
 		    resize: none;
+		    font-family: 'tway_air';
+		}
+		@font-face {
+	    	font-family: 'tway_air';
+	    	src: url('/tway_air.ttf') format('truetype');
+		}
+		.filebox label {
+		    display: inline-block;
+		    padding: .5em .75em;
+		    font-size: inherit;
+		    line-height: normal;
+		    text-align: right;
+		    vertical-align: middle;
+		    background-color: #d2d2fc;
+		    cursor: pointer;
+		    border: 2px;
+		    border-radius: 5px;
+		    -webkit-transition: background-color 0.2s;
+		    transition: background-color 0.2s;
+		    font-family: 'tway_air';
+		}
+		
+		.filebox label:hover {
+		    background-color: #E6E6FA;
+		}
+		.filebox input[type="file"] {
+  		    position: absolute;
+		    width: 1px;
+		    height: 1px;
+		    padding: 0;
+		    margin: -1px;
+		    overflow: hidden;
+		    clip: rect(0, 0, 0, 0);
+		    border: 0;
+		}
+		.rUp {
+			font-family: 'tway_air';
+			text-align: center;
+			width: 100%;
 		}
 	</style>
 </head>
-<body>
-	
-    <h1>리뷰등록</h1>
-    <form id="AddForm" method="post">
-		<div>
-	        <img src="${BCG_IMG}" width="100" height="100"> ${BCG_NAME}<br/>  		
-		</div>
-		<fieldset>
-			<span class="text-bold">별점을 선택해주세요</span>
-			<!-- 라디오 선택 안하면 0점인거 체크해야함 -->
-			<input type="radio" name="BCR_SCORE" value="5" id="rate1"><label
-				for="rate1">★</label>
-			<input type="radio" name="BCR_SCORE" value="4" id="rate2"><label
-				for="rate2">★</label>
-			<input type="radio" name="BCR_SCORE" value="3" id="rate3"><label
-				for="rate3">★</label>
-			<input type="radio" name="BCR_SCORE" value="2" id="rate4"><label
-				for="rate4">★</label>
-			<input type="radio" name="BCR_SCORE" value="1" id="rate5"><label
-				for="rate5">★</label>
-		</fieldset>
-		<div>
-			리뷰 사진을 등록해주세요<br/>      	
-			<input type="file" class="hidden-upload-btn" onchange="javascript:getRealPath(this);">
-	    	<input type="hidden" id="BCR_PHOTO" name="BCR_PHOTO"><br/>      			         	                          
-			<textarea class="col-auto form-control" type="text" id="BCR_CONTENT" name="BCR_CONTENT"
-					  placeholder="리뷰 내용을 입력해주세요"></textarea>
-			<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">   
-			<input type="hidden" id="BCO_ORDERNUM" name="BCO_ORDERNUM" value="${BCO_ORDERNUM}">   
-       		<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">           
-       		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">           
-       		<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">           
-       		<input type="button" value="등록" onclick="form_check()">
-		</div>
-    </form>
+<body style="background-color: #f2f2fc;">
+	<table class="rUp">
+	<thead style="font-size: 30px; background-color: #d2d2fc;">	
+		<tr><td>리뷰 등록창</td></tr>
+    </thead>
+    <tbody>
+	    <form id="AddForm" method="post">
+			<tr><td><img src="${BCG_IMG}" width="250px"></td></tr>
+			<tr><td>${BCG_NAME}<br/></td></tr>
+			<tr><td class="fset"><fieldset>
+				<!-- 라디오 선택 안하면 0점인거 체크해야함 -->
+				<input type="radio" name="BCR_SCORE" value="5" id="rate1"><label
+					for="rate1">★</label>
+				<input type="radio" name="BCR_SCORE" value="4" id="rate2"><label
+					for="rate2">★</label>
+				<input type="radio" name="BCR_SCORE" value="3" id="rate3"><label
+					for="rate3">★</label>
+				<input type="radio" name="BCR_SCORE" value="2" id="rate4"><label
+					for="rate4">★</label>
+				<input type="radio" name="BCR_SCORE" value="1" id="rate5"><label
+					for="rate5">★</label>
+			</fieldset></td></tr>
+			<tr><td class="filebox">
+				<label for="r_file">리뷰 사진 업로드</label>
+				<input type="file" class="hidden-upload-btn" id="r_file" onchange="javascript:getRealPath(this);"><br/>
+		    	<input type="hidden" id="BCR_PHOTO" name="BCR_PHOTO">   			         	                          
+			</td></tr>
+			<tr><td>	
+				<textarea class="col-auto form-control" type="text" id="BCR_CONTENT" name="BCR_CONTENT"
+						  placeholder="리뷰 내용을 입력해주세요"></textarea><br/>
+				<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">   
+				<input type="hidden" id="BCO_ORDERNUM" name="BCO_ORDERNUM" value="${BCO_ORDERNUM}">   
+	       		<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">           
+	       		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">           
+	       		<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">           
+	       	</td></tr>
+	       	<tr><td>
+	       		<input type="button" value="등록" onclick="form_check()"
+	       			   style="border: 0; border-radius: 5px; font-family: 'tway_air';
+							  background-color: #d2d2fc; font-size: 15px; text-align: center; cursor: pointer; padding:10px;">
+			</td></tr>
+	    </form>
+	</tbody>  
+    </table>
 </body>
 </html>

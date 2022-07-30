@@ -49,7 +49,7 @@ function formTest() {
 <script>
 function submit_ajax() {
 	var queryString=$("#pwChange").serialize();
-	alert(queryString);
+	//alert(queryString);
 	$.ajax({
 		url : '/member/pwChange',
 		type : 'POST',
@@ -88,27 +88,57 @@ function passwordCheck() {
 }
 </script>
 <style>
+	@font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
 	body {
 	    padding-top: 190px;
 	    padding-bottom: 120px;  
 	}
+	.tableD {
+		position: relative;
+	    left: 210px; 
+	    width: 1200px;	  
+	    padding-left: 15px;  
+	    text-align: center;
+	    align: center; 
+	}
+	thead {
+		background-color: #f2f2fc;
+		text-align: center;
+		font-family: 'tway_air';
+	}
 </style>
-<body>
+<body style="background-color: #E6E6FA;">
 <div>
     <c:import url="/guest/menuTop"></c:import>
 </div>
 <div style="float: left">
     <c:import url="/member/mypageView"></c:import>
 </div>
-<div style="float: left">
-	<form id="pwChange">
+<table class="tableD">
+	<thead>
+	<tr><td style="font-size: 25px;">비밀번호 변경</td></tr>
+    </thead>
+    <tbody>
+    <form id="pwChange">
 		<input type="hidden" name="bcm_num" value="<%= bcm_num%>">
-		현재 비밀번호 : <input type="password" id="cPw" name="cPw" maxlength="16" placeholder="현재 비밀번호" ><br>
-		새로운 비밀번호 : <input type="password" id="nPw" name="nPw" maxlength="16" placeholder="password" > <br/>
-	    새로운 비밀번호 확인 : <input type="password" id="nPwConfirm" name="nPwConfirm" maxlength="16" placeholder="password확인"> <br/>
-	    <button type="button" onclick="formTest()">비밀번호 변경</button>
+		<tr><td style="font-family: 'tway_air';">현재 비밀번호</td></tr>
+		<tr><td><input type="password" id="cPw" name="cPw" maxlength="16" placeholder="현재 비밀번호" 
+					   style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;"></td></tr>
+		<tr><td style="font-family: 'tway_air';">새로운 비밀번호</td></tr>
+		<tr><td><input type="password" id="nPw" name="nPw" maxlength="16" placeholder="password" 
+					   style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;"></td></tr>
+	    <tr><td style="font-family: 'tway_air';">새로운 비밀번호 확인</td></tr>
+	    <tr><td><input type="password" id="nPwConfirm" name="nPwConfirm" maxlength="16" placeholder="password확인"
+	    			   style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;"></td></tr>
+	    <tr><td><button type="button" onclick="formTest()"
+	    				style="width: 20%; border: none; border-radius: 10px; font-size: 15px; background-color: #d2d2fc; font-family: 'tway_air';">
+	    				비밀번호 변경</button></td></tr>
 	</form>
-</div>
+	</tbody>
+</table>
 <c:import url="/guest/channelTalk"></c:import>
 </body>
 </html>

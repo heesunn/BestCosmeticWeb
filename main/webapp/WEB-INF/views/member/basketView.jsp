@@ -3,110 +3,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>장바구니</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script>
-        //총금액
-        var allPrice=0;
-        var allCount=0;
-        //배송비
-        var prePrice=0;
-    </script>
-    <script>
-        function orderCheckBoxList() {
-            console.log("length : " + $("input:checkbox[name=checkbox]:checked").length);
-            if($("input:checkbox[name=checkbox]:checked").length<1){
-                alert("장바구니에 상품이 없습니다.");
-                return
-            }
-
-            var keyList ="";
-            var detailkeyList = "";
-            var countList = "";
-
-            var checkbox = $("input:checkbox[name=checkbox]:checked");
-
-            checkbox.each(function (i) {
-                //checkbox.parent() : checkbox의 부모 td.
-                //checkbox.parent().parent : td의 부모가 tr.
-                var tr = checkbox.parent().parent().eq(i);
-                var td = tr.children();
-
-                var key = td.eq(0).children().eq(2).val();
-                var detailkey = td.eq(0).children().eq(1).val();
-                var count = td.eq(4).children().eq(0).val();
-
-                keyList += key+"/";
-                detailkeyList += detailkey + "/";
-                countList += count + "/";
-            })
-
-            keyList = keyList.substring(0,keyList.length-1);
-            detailkeyList = detailkeyList.substring(0,detailkeyList.length-1);
-            countList = countList.substring(0,countList.length-1);
-
-            console.log(keyList);
-            console.log(detailkeyList);
-            console.log(countList);
-
-            var queryString = "keyList="+keyList+"&detailkeyList="+detailkeyList+"&countList="+countList;
-            console.log(queryString);
-            $.ajax({
-                url : '/member/orderList',
-                type : 'POST',
-                data : queryString,
-                dataType: 'json',
-                success : function(json) {
-                    sessionStorage.setItem("orderList",JSON.stringify(json));
-                    window.location='/member/paymentView';
-                }
-            });
-
+<title>장바구니</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+    //총금액
+    var allPrice=0;
+    var allCount=0;
+    //배송비
+    var prePrice=0;
+</script>
+<script>
+    function orderCheckBoxList() {
+        console.log("length : " + $("input:checkbox[name=checkbox]:checked").length);
+        if($("input:checkbox[name=checkbox]:checked").length<1){
+            alert("장바구니에 상품이 없습니다.");
+            return
         }
-    </script>
+
+        var keyList ="";
+        var detailkeyList = "";
+        var countList = "";
+
+        var checkbox = $("input:checkbox[name=checkbox]:checked");
+
+        checkbox.each(function (i) {
+            //checkbox.parent() : checkbox의 부모 td.
+            //checkbox.parent().parent : td의 부모가 tr.
+            var tr = checkbox.parent().parent().eq(i);
+            var td = tr.children();
+
+            var key = td.eq(0).children().eq(2).val();
+            var detailkey = td.eq(0).children().eq(1).val();
+            var count = td.eq(4).children().eq(0).val();
+
+            keyList += key+"/";
+            detailkeyList += detailkey + "/";
+            countList += count + "/";
+        })
+
+        keyList = keyList.substring(0,keyList.length-1);
+        detailkeyList = detailkeyList.substring(0,detailkeyList.length-1);
+        countList = countList.substring(0,countList.length-1);
+
+        console.log(keyList);
+        console.log(detailkeyList);
+        console.log(countList);
+
+        var queryString = "keyList="+keyList+"&detailkeyList="+detailkeyList+"&countList="+countList;
+        console.log(queryString);
+        $.ajax({
+            url : '/member/orderList',
+            type : 'POST',
+            data : queryString,
+            dataType: 'json',
+            success : function(json) {
+                sessionStorage.setItem("orderList",JSON.stringify(json));
+                window.location='/member/paymentView';
+            }
+        });
+
+    }
+</script>
+<style>
+    @font-face {
+	    font-family: 'tway_air';
+	    src: url('/tway_air.ttf') format('truetype');
+	}
+	body {
+	    padding-top: 210px;
+	    padding-bottom: 120px;  
+	}
+	.selectpage {
+		background-color: #d2d2fc;
+		border-radius: 50px 0 0 50px;
+	}
+	.payheader {
+		font-size: 30px;
+		text-align: center;
+		height: 100px;
+		width: 100%;
+		background-color: #f2f2fc;
+		border-radius: 50px;
+	}
+	.tableD {
+		position: relative;
+	    margin: auto;
+	    width: 1200px;	  
+	    padding-left: 15px;  
+	    text-align: center;
+	    align: center; 
+	    font-family: 'tway_air';
+	}
+	input[type=checkbox] {
+		zoom: 2;
+		cursor:pointer; 	
+	}
+</style>
 </head>
-<body>
+<body style="background-color: #E6E6FA;">
 <div style="float: top">
     <c:import url="/guest/menuTop"></c:import>
 </div>
-<div>
-    <div>
-        <div>
-            <div style="display: inline-block;background-color: #3c3f45;height: 100px;width: 200px;">
-                <h2>장바구니</h2>
-                <h6>주문하실 상품을 선택해주세요</h6>
-            </div>
-            <div style="display: inline-block;background-color: #767b86;height: 100px;width: 100px;">
-                <h2>&gt;&gt;</h2>
-            </div>
-            <div style="display: inline-block;background-color: #767b86;height: 100px;width: 200px;">
-                <h2>주문/결제</h2>
-            </div>
-            <div style="display: inline-block;background-color: #767b86;height: 100px;width: 100px;">
-                <h2>&gt;&gt;</h2>
-            </div>
-            <div style="display: inline-block;background-color: #767b86;height: 100px;width: 200px;">
-                <h2>주문완료</h2>
-            </div>
-        </div>
-        <hr/>
+<div class="tableD">
+    <div style="width:100%;">
+    	<br>
+        <table class="payheader" >
+        	<colgroup>
+        		<col style="width: 25%">
+        		<col style="width: 12%">
+        		<col style="width: 25%">
+        		<col style="width: 12%">
+        		<col style="width: 25%">
+        	</colgroup>       	
+            <tr>
+            	<td class="selectpage">장바구니</td>
+	            <td><img src="/image/rightBtn.png"></td>
+	            <td>주문/결제</td>
+	            <td><img src="/image/rightBtn.png"> </td>
+	            <td>주문완료</td>
+        	</tr>
+        </table>
         <div style="display: block">
 <%--            <input type="checkbox" id="checkAll" value="checkall" onclick="checkAll(this)" checked>--%>
 <%--                전체선택--%>
 <%--            <button onclick="">선택삭제</button>--%>
         </div>
+        <br>
         <div>
             <form id="orderForm">
-                <table cellpadding="0" cellspacing="0" border="1">
-                    <tr>
-                        <td></td>
-                        <td colspan="2">상품정보</td>
-                        <td>판매가</td>
-                        <td>수량</td>
-                        <td>합계금액</td>
-                        <td>선택</td>
-                    </tr>
+                <table style="width:100%; font-size: 20px; border-spacing: 5px;">
+                    <thead style="height: 50px; background-color: #d2d2fc;">
+	                    <tr>
+	                        <td></td>
+	                        <td colspan="2">상품정보</td>
+	                        <td>판매가</td>
+	                        <td>수량</td>
+	                        <td>합계금액</td>
+	                        <td>선택</td>
+	                    </tr>
+                    </thead>
+                    <tbody>
                     <c:forEach items="${list}" var="dto">
                         <tr>
                             <td>
@@ -118,7 +155,7 @@
 
                             </td>
                             <td onclick="javascript:window.location='/guest/detailPage?BCG_KEY=${dto.bcg_key}'">
-                                <img src="${dto.bcg_img}" width="150" height="150">
+                                <img src="${dto.bcg_img}" width="200" height="200">
                             </td>
                             <td onclick="javascript:window.location='/guest/detailPage?BCG_KEY=${dto.bcg_key}'">
                                 ${dto.bcg_name} <br>
@@ -141,7 +178,9 @@
                                 합계금액
                             </td>
                             <td>
-                                <input type="button" onclick="deleteBasket${dto.bcg_key}()" value="삭제">
+                                <input type="button" onclick="deleteBasket${dto.bcg_key}()" value="삭제"
+                                	   style="border: 2; border-radius: 5px; font-family: 'tway_air';
+				  							  background-color: #d2d2fc; text-align: center;">
                             </td>
                         </tr>
 
@@ -296,23 +335,28 @@
     $('#price${dto.bcg_key}').text(money2+"원");
 </script>
                     </c:forEach>
+                </tbody>    
                 </table>
             </form>
             <br>
-            <table width="500" cellpadding="0" cellspacing="0" border="1">
+            <table style="width:100%; font-size: 20px; border-spacing: 5px;">
+                <thead style="height: 50px; background-color: #d2d2fc;">
                 <tr>
                     <td>상품 금액</td>
                     <td>배송비</td>
                     <td>결제 예정금액</td>
                 </tr>
+                </thead>
+                <tbody>
                 <tr>
                     <td id="allPrice" name="allPrice"></td>
                     <td>0원</td>
                     <td id="prePrice" name="prePrice" style="color: red"></td>
                 </tr>
+                </tbody>
             </table>
             <br>
-            <div  style="width: 100%;background-color: #4477f9;text-align: center" onclick="orderCheckBoxList()">
+            <div style="width: 100%; background-color: #d2d2fc; text-align: center; cursor:pointer; border-radius: 30px;" onclick="orderCheckBoxList()">
                 <h1>주문하기</h1>
             </div>
         </div>

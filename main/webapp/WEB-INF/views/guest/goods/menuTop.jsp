@@ -14,15 +14,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
 <script type="text/javascript">
-  	function form_check() {
+  	function form_check_Search() {
   		if($('#srchText').val().length == 0) {
   			alert("검색어를 입력해주세요");
   			$('#srchText').focus();
   			return;
-  		} else { sch(); }
+  		} else { sch_Search(); }
   	}
   	
-  	function sch() {     //검색기능
+  	function sch_Search() {     //검색기능
        var queryString=$("#search_ck").serialize();
        $.ajax({
        	url: '/guest/guestSearch',  
@@ -170,7 +170,7 @@
 					<input type="hidden" name="type" value="bcg_name">					
 					<input class="form-control mr-sm-2" id="srchText" name="srchText" type="search"
 						placeholder="전체 상품 검색" aria-label="Search" style="width: 75%">
-					<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="form_check()" style="width: 20%; text-align:center;">Search</button>
+					<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="form_check_Search()" style="width: 20%; text-align:center;">Search</button>
 				</form>
 			</div>
 	    </div>

@@ -5,7 +5,6 @@
 <head>
     <title>주문배송</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-
 </head>
 <style>
 	@font-face {
@@ -279,8 +278,8 @@
 					var imgbase64 = btoa(data[i].bcg_img);
 					var namebase64 = btoa(encodeURIComponent(data[i].bcg_name));
 					var url = '/member/reviewWrite?bco_ordernum='+data[i].bco_ordernum+'&bcg_img='+imgbase64+'&bcg_name='+namebase64+'&bcg_key='+data[i].bcg_key+'';
-					var width = '600';
-					var height = '400';
+					var width = '400';
+					var height = '650';
 					console.log(url);
 					text += '<img id="pimg" src="'+data[i].bcg_img+'" width="115" height="115" style="padding-left: 10px;">';
 					text += '<p class="text">상품명 : '+data[i].bcg_name+'</p><br>';
@@ -289,7 +288,7 @@
 					text += '<p class="text">수량 : '+data[i].bco_count+'</p><br>';
 					text += '<p class="text">결제 금액 : <span>'+total_price+'</span>원</p><br>';
 					if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'false') {
-						text += '<p style="padding-left:10px;"><input type="button" class="textbutton" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', width=\''+width+'\', height=\''+height+'\');"></p>';
+						text += '<p style="padding-left:10px;"><input type="button" class="textbutton" value="리뷰쓰기" onclick="javascript:window.open(\''+url+'\', \'\', \'width='+width+', height='+height+'\');"></p>';
 					}
 					else if(data[i].bco_order_status == '구매확정' && data[i].bco_reviewcheck == 'true'){
 						text += '<p style="font-size: 12px; color:grey; padding-left:10px; font-family: \'tway_air\';">리뷰작성완료</p>';
