@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,5 +65,9 @@ public class KMemberRestController
     public ArrayList<OrderDetail> appOrderdetail(HttpServletRequest request) {
     	ArrayList<OrderDetail> obj = orderDetailService.appOrderDetail(request);
         return obj;
+    }
+    @PostMapping("/api/statusChange")
+    public void appstatusChange(HttpServletRequest request) {
+    	orderDeliveryService.appStatusChange(request);
     }
 }

@@ -9,5 +9,5 @@ import com.study.springboot.member.dto.OrderDeliveryDto;
 public interface AppOrderDeliveryService
 {
 	public ArrayList<OrderDeliveryDto> appOrderDeliveryInfo(HttpServletRequest request);
-	public int appStatusChange(HttpServletRequest request);
+	public void appStatusChange(HttpServletRequest request);
 }

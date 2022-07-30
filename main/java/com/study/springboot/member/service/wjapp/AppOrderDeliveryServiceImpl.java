@@ -36,26 +36,27 @@ public class AppOrderDeliveryServiceImpl implements AppOrderDeliveryService
 	}
 
 	@Override
-	public int appStatusChange(HttpServletRequest request) {
-		int updateCount = 0;
+	public void appStatusChange(HttpServletRequest request) {
 		String status = request.getParameter("status");
 		String num = request.getParameter("num");
 		int bcm_num = Integer.parseInt(num);
 		String bco_ordernum = request.getParameter("ordernum");
 		if(status.equals("취소신청")) {
-			updateCount = memberDao.cancellationRequest(bcm_num,bco_ordernum);
+			System.out.println("취소신청");
+			memberDao.cancellationRequest(bcm_num,bco_ordernum);
 		}
 		else if(status.equals("교환신청")) {
-			updateCount = memberDao.exchangeRequest(bcm_num,bco_ordernum);
+			System.out.println("교환신청");
+			memberDao.exchangeRequest(bcm_num,bco_ordernum);
 		}
 		else if(status.equals("반품신청")) {
-			updateCount = memberDao.refundRequest(bcm_num,bco_ordernum);
+			System.out.println("반품신청");
+			memberDao.refundRequest(bcm_num,bco_ordernum);
 		}
 		else if(status.equals("구매확정")) {
-			updateCount = memberDao.purchaseConfirmation(bcm_num,bco_ordernum);
+			System.out.println("구매확정");
+			memberDao.purchaseConfirmation(bcm_num,bco_ordernum);
 		}
-		
-		return updateCount;
 	}
 	
 }
