@@ -54,7 +54,7 @@ public class AppAfterPaymentServiceImple implements AppAfterPaymentService{
 
                     memberDao.insertOrderHistory(Integer.parseInt(bcmNum),phoneNum1,phoneNum2,phoneNum3,orderNum,
                             bcmName,reciName,totalPrice,orderName);
-                    memberDao.insertDeliveryInfo(Integer.parseInt(bcmNum),orderNum,zipcode,address1,address2,address3,deliveryRequest);
+                    memberDao.insertDeliveryInfo(Integer.parseInt(bcmNum),orderNum,zipcode,address1,address3,address2,deliveryRequest);
                     for (HashMap<String, Object> stringObjectHashMap : orderList) {
                         int bcgKey= (int) stringObjectHashMap.get("bcgKey");
                         int bcgDetailkey= (int) stringObjectHashMap.get("bcgDetailkey");

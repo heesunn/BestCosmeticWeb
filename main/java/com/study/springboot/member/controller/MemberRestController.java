@@ -2,10 +2,10 @@ package com.study.springboot.member.controller;
 
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.dto.GoodsJoinLikes;
+import com.study.springboot.goods.dto.ReviewDto;
 import com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto;
 import com.study.springboot.member.dto.Like;
 import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
-import com.study.springboot.member.service.BasketViewService;
 import com.study.springboot.member.service.MemberManagementViewService;
 import com.study.springboot.member.service.UtilService;
 import com.study.springboot.member.service.wjapp.*;
@@ -42,6 +42,8 @@ public class MemberRestController
     AppAfterPaymentService appAfterPaymentService;
     @Autowired
     AppSearchService appSearchService;
+    @Autowired
+    AppReviewService appReviewService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -119,5 +121,13 @@ public class MemberRestController
     @GetMapping("/api/member/basket/count")
     public int basketCount(HttpServletRequest request){
         return appBasketService.basketCount(request);
+    }
+    @PostMapping("/api/member/review/write")
+    public void reviewWrite(HttpServletRequest request){
+        appReviewService.reviewWrite(request);
+    }
+    @GetMapping("/api/member/review/list")
+    public ArrayList<ReviewDto> reviewList(HttpServletRequest request){
+        return appReviewService.reviewList(request);
     }
 }
