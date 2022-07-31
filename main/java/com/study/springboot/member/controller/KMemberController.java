@@ -104,7 +104,7 @@ public class KMemberController
 	}
 	@RequestMapping("/member/memberDelete")
 	public @ResponseBody String memberDelete(HttpServletRequest request, Model model) {
-		String result = withdrawal.withdrawal(request, model);
+		String result = withdrawal.withdrawal(request);
 
 		return result;
 	}

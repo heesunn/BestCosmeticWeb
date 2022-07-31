@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.study.springboot.member.dto.MemberDto;
 import com.study.springboot.member.dto.OrderDeliveryDto;
 import com.study.springboot.member.dto.OrderDetail;
+import com.study.springboot.member.service.MemberWithdrawalService;
 import com.study.springboot.member.service.SnsService;
+import com.study.springboot.member.service.wjapp.AppMemberInfoService;
 import com.study.springboot.member.service.wjapp.AppMemberJoinService;
 import com.study.springboot.member.service.wjapp.AppMemberLoginService;
 import com.study.springboot.member.service.wjapp.AppOrderDeliveryService;
@@ -37,6 +40,10 @@ public class KMemberRestController
 	AppOrderDetailService orderDetailService;
 	@Autowired
 	AppPasswordChangeService passwordChangeService;
+	@Autowired
+	AppMemberInfoService memberInfoService;
+	@Autowired
+	MemberWithdrawalService withdrawalService;
 	
     @PostMapping("/api/login")
     public JSONObject memberCheck(HttpServletRequest request) {
@@ -73,5 +80,17 @@ public class KMemberRestController
     @PostMapping("/api/passwordChange")
     public String appPasswordChange(HttpServletRequest request) {
         return passwordChangeService.appPasswordChangeResult(request);
+    }
+    @PostMapping("/api/getUserInfo")
+    public MemberDto appGetUserInfo(HttpServletRequest request) {
+        return memberInfoService.appGetMemberInfo(request);
+    }
+    @PostMapping("/api/updateUserInfo")
+    public void appUpdateUserInfo(HttpServletRequest request) {
+    	memberInfoService.appUpdateMemberInfo(request);
+    }
+    @PostMapping("/api/deleteMember")
+    public String appDeleteMember(HttpServletRequest request) {
+    	return withdrawalService.withdrawal(request);
     }
 }
