@@ -32,6 +32,6 @@ public class AQuestionServiceImpl implements AQuestionService{
         String bcq_content = request.getParameter("bcq_content");
         String bcq_secret = request.getParameter("bcq_secret");
         
-        
+        yGoodsDao.question(bcg_key, bcg_name, bcm_num, bcm_name, bcq_content, bcq_secret);
 	}
 }
