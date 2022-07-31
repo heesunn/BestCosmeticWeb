@@ -116,4 +116,8 @@ public class MemberRestController
     public ArrayList<GoodsDto> searchSubmitted(HttpServletRequest request) {
         return appSearchService.searchSubmitted(request);
     }
+    @GetMapping("/api/member/basket/count")
+    public int basketCount(HttpServletRequest request){
+        return appBasketService.basketCount(request);
+    }
 }
