@@ -3,6 +3,7 @@ package com.study.springboot.member.controller;
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.dto.GoodsJoinLikes;
 import com.study.springboot.goods.dto.ReviewDto;
+import com.study.springboot.member.dto.DeliveryInfoDto;
 import com.study.springboot.member.dto.GoodsJoinBasketJoinGoodDetailDto;
 import com.study.springboot.member.dto.Like;
 import com.study.springboot.member.dto.MemberJoinOrderHistoryDto;
@@ -129,5 +130,9 @@ public class MemberRestController
     @GetMapping("/api/member/review/list")
     public ArrayList<ReviewDto> reviewList(HttpServletRequest request){
         return appReviewService.reviewList(request);
+    }
+    @GetMapping("/api/member/lastDeliveryDeDeliveryDestination")
+    public ArrayList<DeliveryInfoDto> lastDeliveryDeDeliveryDestination(HttpServletRequest request){
+        return utilService.appLastDeliveryDestination(request);
     }
 }
