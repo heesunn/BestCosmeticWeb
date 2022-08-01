@@ -104,6 +104,7 @@ div .menuTop {
 		         	</c:if>
 	         	</div>
 	         	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}" onsubmit="return false;">
+
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
          		<div class="badge2" id="badge2${dto.bcg_key }">
@@ -111,16 +112,16 @@ div .menuTop {
                     <c:when test="${sessionScope.num == null}">
                     </c:when>
                     <c:otherwise>
-                    	<div class="badge3" id="badge3${dto.bcg_key }">
-                        <c:choose>
-                            <c:when test="${dto.item == null}">
-                                <input type="image" src="/image/heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="image" src="/image/red-heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
-                            </c:otherwise>
-                        </c:choose>
-                        </div>
+							<div class="badge3" id="badge3${dto.bcg_key }">
+							<c:choose>
+								<c:when test="${dto.item == null}">
+									<input type="image" src="/image/heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
+								</c:when>
+								<c:otherwise>
+									<input type="image" src="/image/red-heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
+								</c:otherwise>
+							</c:choose>
+							</div>
                     </c:otherwise>
                 </c:choose>
                 </div>
@@ -166,7 +167,7 @@ div .menuTop {
 				        success: function(json) {  				        	
 	        				$('#badge3${dto.bcg_key}').load(location.href + ' #badge3${dto.bcg_key}');
 				        }
-				    });	  			  
+				    });
 		  		}   
 			}
 </script>
