@@ -103,7 +103,7 @@ div .menuTop {
 		         		<img src="/image/sale.png" width="30" height="30">
 		         	</c:if>
 	         	</div>
-	         	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
+	         	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}" onsubmit="return false;">
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
          		<div class="badge2" id="badge2${dto.bcg_key }">
@@ -156,17 +156,17 @@ div .menuTop {
 		  			return;
 		  		} else {
 		  			if(${dto.item==null}) { alert("찜목록에 추가되었습니다"); } 
-		        	else { alert("찜목록에서 삭제되었습니다"); }
+		        	else { alert("찜목록에서 삭제되었습니다"); }		  			
 		    	    var queryString=$("#list${dto.bcg_key}").serialize();
 				    $.ajax({
 				      	url: '/member/glike',  
 				        type: 'POST',
 				        data: queryString,
 				        dataType: 'text',
-				        success: function(json) {  
-				        	$("#list${dto.bcg_key}").load("/guest/categoryAll #badge2${dto.bcg_key}");
+				        success: function(json) {  				        	
+	        				$('#badge3${dto.bcg_key}').load(location.href + ' #badge3${dto.bcg_key}');
 				        }
-				    });
+				    });	  			  
 		  		}   
 			}
 </script>
