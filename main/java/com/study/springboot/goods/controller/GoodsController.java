@@ -310,7 +310,7 @@ public class GoodsController
 	@RequestMapping("/member/glike")   
 	public String like(HttpServletRequest request, Model model) {
 		likeService.likeTableUpdate(request, model);
-        return "guest/goods/categoryPoint"; 
+        return "guest/goods/categoryAll"; 
 	}
 	
 	//상세페이지 뷰

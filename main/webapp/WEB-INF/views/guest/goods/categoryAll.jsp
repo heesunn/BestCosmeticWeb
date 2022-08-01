@@ -16,6 +16,11 @@
 <head>
 <meta charset="UTF-8">
 <title>카테고리 - 전체보기</title>
+<script type="text/javascript">
+	function noReload() {
+		console.log($("#badge2").load(location.href + " #badge2"));
+	}
+</script>
 <style>
 @font-face {
     font-family: 'tway_air';
@@ -101,11 +106,12 @@ div .menuTop {
 	         	<form id="list${dto.bcg_key}" name="list${dto.bcg_key}">
          		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=num %>">
          		<input type="hidden" id="key${dto.bcg_key }" name="BCG_KEY" value="${dto.bcg_key }">
-         		<div class="badge2" id="badge2">
+         		<div class="badge2" id="badge2${dto.bcg_key }">
                 <c:choose>
                     <c:when test="${sessionScope.num == null}">
                     </c:when>
                     <c:otherwise>
+                    	<div class="badge3" id="badge3${dto.bcg_key }">
                         <c:choose>
                             <c:when test="${dto.item == null}">
                                 <input type="image" src="/image/heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
@@ -114,6 +120,7 @@ div .menuTop {
                                 <input type="image" src="/image/red-heart.png" height="30" width="30" onclick ="likeUpdate${dto.bcg_key }()">
                             </c:otherwise>
                         </c:choose>
+                        </div>
                     </c:otherwise>
                 </c:choose>
                 </div>
@@ -157,9 +164,8 @@ div .menuTop {
 				        data: queryString,
 				        dataType: 'text',
 				        success: function(json) {  
-				        	window.location.reload();
-				        	$("#badge2").load(location.href + " #badge2");
-				        }       	
+				        	$("#list${dto.bcg_key}").load("/guest/categoryAll #badge2${dto.bcg_key}");
+				        }
 				    });
 		  		}   
 			}
