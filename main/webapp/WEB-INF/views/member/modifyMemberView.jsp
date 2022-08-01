@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
     int sNum = 0;
     String sName = "";
@@ -111,7 +112,9 @@
     			<tr><td>아이디 : ${user.bcm_id}<br></td></tr>
        		    <tr><td>이름 : <%= sName %><br></td></tr>
         		<tr><td>이메일</td></tr>
-            	<tr><td><input type="text" id="firstEmail" name="firstEmail" value="<%=firstEmail%>"
+            	<tr><td><c:set var="id" value="${user.bcm_id}" />
+            			<c:if  test="${fn:length(id) != 0}">
+            			<input type="text" id="firstEmail" name="firstEmail" value="<%=firstEmail%>"
             					style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;"> @
                 		<input type="text" id="secondEmail" name="secondEmail" disabled value="<%=secondEmail%>"
                 				style="width: 30%; height: 30px; border: 2; border-radius: 10px; font-size: 15px;">
@@ -133,7 +136,15 @@
 		                    <option value="hanmir.com">hanmir.com</option>
 		                    <option value="paran.com">paran.com</option>
 		                </select><br>
-		         </td></tr>
+		         </c:if>
+		         <c:if  test="${fn:length(id) == 0}">
+		         <input type="text" id="firstEmail" name="firstEmail" disabled value="<%=firstEmail%>"
+            					style="width: 30%; height: 30px; border: none; border-radius: 10px; font-size: 15px;"> @
+           		<input type="text" id="secondEmail" name="secondEmail" disabled value="<%=secondEmail%>"
+           				style="width: 30%; height: 30px; border: 2; border-radius: 10px; font-size: 15px;">
+		         </c:if>
+		         </td>
+		         </tr>
 	         </table>       
 <script type="text/javascript">
     //이메일 입력방식 선택
