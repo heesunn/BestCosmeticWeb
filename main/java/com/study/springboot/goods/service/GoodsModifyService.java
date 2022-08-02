@@ -9,4 +9,5 @@ import com.study.springboot.goods.dto.GoodsDto;
 public interface GoodsModifyService {
 
 	public GoodsDto mdPickCheck(HttpServletRequest request, Model model);
+	
 }
