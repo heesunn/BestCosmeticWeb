@@ -91,17 +91,12 @@ public class UtilServiceImpl implements UtilService{
         System.out.println("message = " + message);
 
         try {
-            //디바이스 아이디
-            //String deviceId1 = "djW_rZ3bQGyFhZbZccj0Cb:APA91bFcwgkemNzOoCywB6q3b0JoxZOqk115br0v2qi1Z59QVN83x_eOxVpyp-YqwTQBADmPCrpXqMXLqUmB5k5MCRg-o8DiaRNaiow3B09tNqt_lBOi3r_YMcYII5QNR09jpxa4hw5P";
-            //String deviceId2 = "flyHQjeHSJqPAJWYEDzFrX:APA91bEkn3kCqtEsu3JWGCOaVkXQm1TtoG69R6-Kwzspc8S_XQKVzEUAlLPcC5BhlL-cxai8ex563Rb9ZxGQyhTreQWU2N3DEXy--MAbl6Rlc-x7wiuWV__VAA12CWMY52MKZcg34WHW";
             //디바이스 아이디 담기
             ArrayList deviceList = new ArrayList();
             String[] deviceId = memberDao.getAllFcmToken();
             for (int i = 0; i < deviceId.length; i++) {
                 deviceList.add(deviceId[i]);
             }
-            //deviceList.add(deviceId1);
-            //deviceList.add(deviceId2);
 
             URL url = new URL(fcmURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -123,7 +118,7 @@ public class UtilServiceImpl implements UtilService{
             JSONObject data = new JSONObject();
             data.put("message",message);
 
-            //data.put("to",deviceId1);//한명한테 보낼때
+
             json.put("registration_ids",deviceList);//여러명한테 보낼때..
 
             json.put("notification",noti);

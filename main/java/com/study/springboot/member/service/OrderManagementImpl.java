@@ -1,10 +1,17 @@
 package com.study.springboot.member.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.study.springboot.member.dao.MemberDao;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -19,7 +26,9 @@ public class OrderManagementImpl implements OrderManagement {
 	@Autowired
 	KMemberDao dao;
 	@Autowired
-	OrderDetailService orderDetail; 
+	OrderDetailService orderDetail;
+	@Autowired
+	MemberDao memberDao;
 	
 	int listCount = 20;		// 한 페이지당 보여줄 게시물의 갯수
 	int pageCount = 10;		// 하단에 보여줄 페이지 리스트의 갯수
@@ -457,24 +466,99 @@ public class OrderManagementImpl implements OrderManagement {
 		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
 		for(int i=0; i<bco_ordernumList.length; i++) {
 			updateCount += dao.stateDeliveryCompletedChange(bco_ordernumList[i]);
+
 		}
 		if(updateCount == bco_ordernumList.length) {
 			result = "success";
 		}
+
+
 		return result;
-		
 	}
 	@Override
 	public String stateInTransit(HttpServletRequest request, Model model) {
 		String result = "";
 		int updateCount = 0;
 		String[] bco_ordernumList = request.getParameterValues("bco_ordernum");
+		ArrayList FcmTokenList = new ArrayList();
 		for(int i=0; i<bco_ordernumList.length; i++) {
 			updateCount += dao.stateInTransitChange(bco_ordernumList[i]);
+			FcmTokenList.add(memberDao.getFcmToken(bco_ordernumList[i]));
+			System.out.println("11111111111");
 		}
 		if(updateCount == bco_ordernumList.length) {
 			result = "success";
 		}
+
+		String Apikey = "AAAAj07M2yI:APA91bEo4mpDxoDwLqu15vOeEPxt2v5b0fCmkwOBcDG61Ae10bFxCkGtzuFyazCfeEpdGzyXmTeHZlQ6eZjcoowehFNOV-PXNfScKABlqkpR5ftClhby5Zqp9bLKJ8ksNEcpPzeZqz_U";
+		String fcmURL = "https://fcm.googleapis.com/fcm/send";
+
+		String notiTitle = "배송시작";
+		String notiBody = "배송이 시작되었습니다.";
+		String message = "배송이 시작되었습니다.";
+
+		try {
+			//디바이스 아이디 담기
+			ArrayList deviceList = FcmTokenList;
+
+
+			URL url = new URL(fcmURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			conn.setUseCaches(false);
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization","key="+Apikey);
+			conn.setRequestProperty("Content-Type","application/json");
+
+			JSONObject json = new JSONObject();
+
+			JSONObject noti = new JSONObject();
+			noti.put("title", notiTitle);
+			noti.put("body",notiBody);
+
+			JSONObject data = new JSONObject();
+			data.put("message",message);
+
+
+			json.put("registration_ids",deviceList);//여러명한테 보낼때..
+
+			json.put("notification",noti);
+			json.put("data", data);
+
+			try {
+
+				OutputStreamWriter wr = new OutputStreamWriter(
+						conn.getOutputStream());
+				System.out.println("json.toString() = " + json.toString());
+				wr.write(json.toString());
+				wr.flush();
+
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+				String output;
+				System.out.println("Output from Server .... \n");
+				while ((output = br.readLine()) != null){
+					System.out.println(output);
+				}
+
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
+			model.addAttribute("notiTitle",notiTitle);
+			model.addAttribute("notiBody",notiBody);
+			model.addAttribute("message",message);
+			model.addAttribute("result", "FCM 발송됨");
+
+
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return result;
 	}
 	@Override
