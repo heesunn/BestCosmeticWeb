@@ -26,7 +26,7 @@
 	
 	#myList {
 		text-align: center;
-		width: 1000px;
+		width: 1200px;
 	}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
