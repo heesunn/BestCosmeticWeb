@@ -11,6 +11,12 @@
         	values ((select bcg_key from bc_goods where bcg_name =  #{param1}), #{param2}, #{param3}, #{param4})
     </insert>
     
+    <!-- 옵션 중복체크 -->
+	<select id="detailKeyCheck" resultType="com.study.springboot.goods.dto.GoodsDetailDto">
+    	select * from bc_detailgoods where bcg_key = 
+		(select bcg_key from bc_goods where bcg_name = #{param1}) and bcd_detailkey=#{param2}
+    </select>
+    
     <!-- 옵션삭제 -->
     <delete id="deleteDetail">
 		delete from BC_DETAILGOODS where bcg_key = #{param1}

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 
 import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dao.GoodsDetailDao;
+import com.study.springboot.goods.dto.GoodsDetailDto;
 
 @Service
 public class DetailAddServiceImpl implements DetailAddService{
@@ -38,4 +39,14 @@ public class DetailAddServiceImpl implements DetailAddService{
         goodsDetailDao.AddStock(totalCount, bcg_name[0]);
         return insertCount;      
     }
+	
+	@Override
+	public GoodsDetailDto detailKeyCheck(HttpServletRequest request, Model model) {
+		String bcg_name = request.getParameter("BCG_NAME");
+		String bcd_detailKey = request.getParameter("BCD_DETAILKEY");
+		GoodsDetailDto goodsDetailDto = goodsDetailDao.detailKeyCheck(bcg_name, bcd_detailKey);
+        System.out.println(goodsDetailDto);
+        model.addAttribute("detailKey",goodsDetailDto);
+        return goodsDetailDto;
+	}
 }

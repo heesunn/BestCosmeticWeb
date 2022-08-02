@@ -3,11 +3,8 @@ package com.study.springboot.goods.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Base64.Decoder;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +21,7 @@ import com.study.springboot.goods.dao.GoodsDao;
 import com.study.springboot.goods.dao.InBagDao;
 import com.study.springboot.goods.dao.QuestionDao;
 import com.study.springboot.goods.dao.ReviewDao;
+import com.study.springboot.goods.dto.GoodsDetailDto;
 import com.study.springboot.goods.dto.GoodsDto;
 import com.study.springboot.goods.service.DeleteService;
 import com.study.springboot.goods.service.DetailAddService;
@@ -35,7 +33,6 @@ import com.study.springboot.goods.service.PageDetailService;
 import com.study.springboot.goods.service.QuestionListAdminViewService;
 import com.study.springboot.goods.service.QuestionListViewService;
 import com.study.springboot.goods.service.ReviewListViewService;
-import com.study.springboot.member.dto.MemberDto;
 import com.study.springboot.member.service.BasketService;
 
 @Controller
@@ -118,6 +115,16 @@ public class GoodsController
         obj.put("desc", insertCount);
         return obj;
     }
+	
+	//관리자 : 상세품번 중복체크
+	@RequestMapping("/admin/detailKeyCheck")
+	public @ResponseBody JSONObject detailkeyCheck(HttpServletRequest request, Model model) {
+		JSONObject obj = new JSONObject();
+		GoodsDetailDto goodsDetailDto = detailAddService.detailKeyCheck(request, model);
+		obj.put("detailKey", goodsDetailDto);
+		System.out.println("obj : " + obj);
+		return obj;
+	}
 	
 	//관리자 : 기존상품 옵션추가
 	@RequestMapping("/admin/opSelect")

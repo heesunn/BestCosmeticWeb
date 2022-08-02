@@ -85,8 +85,25 @@
                 $('#BCD_STOCK').focus();
                 return;
             }
+			
+			var queryString=$("#AddDetailForm").serialize();
+	        $.ajax({
+	            url : '/admin/detailKeyCheck',
+	            type : 'POST',
+	            data : queryString,
+	            dataType: 'json',
+	            success : function(json) {
+	                console.log(json.detailKey);
+	                if(json.detailKey == null){
+	                	submit_ajax();
+	                } else {
+	                	alert("상세품번 중복불가");
+						return;
+	                }
+	            }
+	        });
 
-			submit_ajax();
+			
 			
 		}
           
