@@ -89,6 +89,13 @@
                     	<a href='/admin/goodsQuestionList'>상품문의</a></li>	
                 </ul>
             </li>
+            <li class="title">
+                &nbsp;&nbsp;- 푸쉬메세지
+                <ul>
+                    <li class="nav-item active">
+                        <a href='/admin/push'>푸쉬알림</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     </div>

@@ -61,4 +61,7 @@
         WHERE BCG_KEY = #{param1}
         ORDER BY BCR_DATE DESC
     </select>
+    <update id="updateFcmToken">
+        update BC_MEMBER set BCM_FCM_TOKEN = #{param1} where BCM_NUM = #{param2}
+    </update>
 </mapper>

@@ -2,6 +2,7 @@ package com.study.springboot.member.service.wjapp;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.study.springboot.member.dao.wjapp.AppGoodsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ public class AppMemberInfoServiceImpl implements AppMemberInfoService
 {
 	@Autowired
 	MemberDao memberDao;
+	@Autowired
+	AppGoodsDao appGoodsDao;
 
 	@Override
 	public MemberDto appGetMemberInfo(HttpServletRequest request)
@@ -40,5 +43,10 @@ public class AppMemberInfoServiceImpl implements AppMemberInfoService
         memberDao.modifyMember(bcm_email,bcm_phonenum1,bcm_phonenum2,bcm_phonenum3,
                                bcm_zipcode,bcm_address1,bcm_address2,bcm_address3,
                                Integer.parseInt(bcm_num));
+	}
+
+	@Override
+	public int updateFcmToken(HttpServletRequest request) {
+		return appGoodsDao.updateFcmToken(request.getParameter("fcmToken"),request.getParameter("bcmNum"));
 	}
 }
