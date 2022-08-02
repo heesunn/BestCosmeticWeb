@@ -44,15 +44,21 @@
         ORDER BY C.BCL_DATE DESC
     </select>
     <select id="seaching" resultType="com.study.springboot.goods.dto.GoodsDto">
-        select BCG_NAME
-        from bc_goods
-        where BCG_NAME like #{param1}
-        order by bcg_date desc
+        SELECT BCG_NAME
+        FROM BC_GOODS
+        WHERE BCG_NAME LIKE #{param1}
+        ORDER BY BCG_DATE DESC
     </select>
     <select id="seachSubmitted" resultType="com.study.springboot.goods.dto.GoodsDto">
         SELECT *
         FROM BC_GOODS
         WHERE BCG_NAME LIKE #{param1}
         ORDER BY BCG_KEY DESC
+    </select>
+    <select id="reviewList" resultType="com.study.springboot.goods.dto.ReviewDto">
+        SELECT *
+        FROM BC_REVIEW
+        WHERE BCG_KEY = #{param1}
+        ORDER BY BCR_DATE DESC
     </select>
 </mapper>

@@ -307,10 +307,9 @@ public class GoodsController
 	}
 	
 	//카테고리 & 상세페이지 - 찜
-	@RequestMapping("/member/glike")   
-	public String like(HttpServletRequest request, Model model) {
-		likeService.likeTableUpdate(request, model);
-        return "guest/goods/categoryPoint"; 
+	@RequestMapping("/member/glike")
+	public @ResponseBody int like(HttpServletRequest request, Model model) {
+		return likeService.likeTableUpdate(request, model);
 	}
 	
 	//상세페이지 뷰

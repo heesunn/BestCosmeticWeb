@@ -19,7 +19,7 @@ public class GoodsUpdateServiceImpl implements GoodsUpdateService{
         if (count.equals("up")){
             appGoodsDao.goodsFavoriteUp(bcgKey);
             appGoodsDao.memberFavoriteUp(bcmNum,bcgKey);
-        }else {
+        }else if(count.equals("down")){
             appGoodsDao.goodsFavoriteDown(bcgKey);
             appGoodsDao.memberFavoriteDown(bcmNum,bcgKey);
         }

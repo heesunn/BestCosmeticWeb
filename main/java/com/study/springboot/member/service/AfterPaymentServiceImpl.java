@@ -58,7 +58,6 @@ public class AfterPaymentServiceImpl implements AfterPaymentService {
                         memberDao.updateDetailGoodsStock(bcg_key, bcg_detailkey);
                         memberDao.deleteBasketAfterPayment(bcm_num,bcg_key,bcg_detailkey);
                     }
-
                 }
             });
             System.out.println("커밋");

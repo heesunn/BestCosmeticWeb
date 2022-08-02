@@ -58,4 +58,9 @@ public class UtilServiceImpl implements UtilService{
         object.put("lastDelivery", dtos);
         return object;
     }
+
+    @Override
+    public ArrayList<DeliveryInfoDto> appLastDeliveryDestination(HttpServletRequest request) {
+        return memberDao.lastDeliveryDestination(Integer.parseInt(request.getParameter("bcmNum")));
+    }
 }

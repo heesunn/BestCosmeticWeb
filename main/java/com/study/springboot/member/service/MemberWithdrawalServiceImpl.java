@@ -14,7 +14,7 @@ public class MemberWithdrawalServiceImpl implements MemberWithdrawalService{
 	@Autowired
 	KMemberDao dao;
 	@Override
-	public String withdrawal(HttpServletRequest request, Model model) {
+	public String withdrawal(HttpServletRequest request) {
 		String result = "";
 		String bcm_num = request.getParameter("bcm_num");
 		
