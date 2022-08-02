@@ -50,6 +50,7 @@ public interface MemberDao {
     public int updatePurchaseConfirmation();
     public int basketCount(int bcm_num);
     public ArrayList<DeliveryInfoDto> lastDeliveryDestination(int bcm_num);
+    public String[] getAllFcmToken();
 
 
 

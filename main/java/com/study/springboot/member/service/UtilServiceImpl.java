@@ -1,9 +1,16 @@
 package com.study.springboot.member.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -62,5 +69,95 @@ public class UtilServiceImpl implements UtilService{
     @Override
     public ArrayList<DeliveryInfoDto> appLastDeliveryDestination(HttpServletRequest request) {
         return memberDao.lastDeliveryDestination(Integer.parseInt(request.getParameter("bcmNum")));
+    }
+
+    @Override
+    public void fcmAllmember(Model model, HttpServletRequest request, HttpServletResponse response) {
+        String Apikey = "AAAAj07M2yI:APA91bEo4mpDxoDwLqu15vOeEPxt2v5b0fCmkwOBcDG61Ae10bFxCkGtzuFyazCfeEpdGzyXmTeHZlQ6eZjcoowehFNOV-PXNfScKABlqkpR5ftClhby5Zqp9bLKJ8ksNEcpPzeZqz_U";
+        String fcmURL = "https://fcm.googleapis.com/fcm/send";
+
+        response.setCharacterEncoding("UTF-8");
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        String notiTitle = request.getParameter("notiTitle");
+        String notiBody = request.getParameter("notiBody");
+        String message = request.getParameter("message");
+        System.out.println("notiTitle = " + notiTitle);
+        System.out.println("notiBody = " + notiBody);
+        System.out.println("message = " + message);
+
+        try {
+            //디바이스 아이디
+            //String deviceId1 = "djW_rZ3bQGyFhZbZccj0Cb:APA91bFcwgkemNzOoCywB6q3b0JoxZOqk115br0v2qi1Z59QVN83x_eOxVpyp-YqwTQBADmPCrpXqMXLqUmB5k5MCRg-o8DiaRNaiow3B09tNqt_lBOi3r_YMcYII5QNR09jpxa4hw5P";
+            //String deviceId2 = "flyHQjeHSJqPAJWYEDzFrX:APA91bEkn3kCqtEsu3JWGCOaVkXQm1TtoG69R6-Kwzspc8S_XQKVzEUAlLPcC5BhlL-cxai8ex563Rb9ZxGQyhTreQWU2N3DEXy--MAbl6Rlc-x7wiuWV__VAA12CWMY52MKZcg34WHW";
+            //디바이스 아이디 담기
+            ArrayList deviceList = new ArrayList();
+            String[] deviceId = memberDao.getAllFcmToken();
+            for (int i = 0; i < deviceId.length; i++) {
+                deviceList.add(deviceId[i]);
+            }
+            //deviceList.add(deviceId1);
+            //deviceList.add(deviceId2);
+
+            URL url = new URL(fcmURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setUseCaches(false);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization","key="+Apikey);
+            conn.setRequestProperty("Content-Type","application/json");
+
+            JSONObject json = new JSONObject();
+
+            JSONObject noti = new JSONObject();
+            noti.put("title", notiTitle);
+            noti.put("body",notiBody);
+
+            JSONObject data = new JSONObject();
+            data.put("message",message);
+
+            //data.put("to",deviceId1);//한명한테 보낼때
+            json.put("registration_ids",deviceList);//여러명한테 보낼때..
+
+            json.put("notification",noti);
+            json.put("data", data);
+
+            try {
+
+                OutputStreamWriter wr = new OutputStreamWriter(
+                        conn.getOutputStream());
+                System.out.println("json.toString() = " + json.toString());
+                wr.write(json.toString());
+                wr.flush();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                String output;
+                System.out.println("Output from Server .... \n");
+                while ((output = br.readLine()) != null){
+                    System.out.println(output);
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            model.addAttribute("notiTitle",notiTitle);
+            model.addAttribute("notiBody",notiBody);
+            model.addAttribute("message",message);
+            model.addAttribute("result", "FCM 발송됨");
+
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
