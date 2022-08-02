@@ -35,7 +35,6 @@
 	div #navbarSupportedContent {
 		font-size: 20px;
 		margin-left: 70%;
-		
 	}
 	
 	#logout {
@@ -48,16 +47,18 @@
 </head>
 <body>
 <div class="adminTop">
-		<nav class="logoNav navbar-expand-sm navbar-light">
-			<div class="container-fluid" >
-				<a class="navbar-brand" href="/" id="logo"> 
-				<img src="/image/logo.PNG" width="80" height="80" alt="">
-					BestCosmetic
-				</a>
-			</div>
-			<div class="container-fluid" id="navbarSupportedContent" >
-				<p>관리자 <%=name %>님<a class="nav-link" href="/logout" id="logout">로그아웃</a></p>
-			</div>
+		<nav class="logoNav navbar-light">
+			<form>
+				<div>
+					<a class="navbar-brand" href="/" id="logo"> 
+					<img src="/image/logo.PNG" width="80" height="80">
+						BestCosmetic
+					</a>
+				</div>
+				<div id="navbarSupportedContent" >
+					<span>관리자 <%=name %>님<a class="nav-link" href="/logout" id="logout">로그아웃</a></span>
+				</div>
+			</form>
 		</nav>
 </div>
 </body>
