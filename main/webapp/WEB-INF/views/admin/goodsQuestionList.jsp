@@ -102,63 +102,6 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
 			</tr>
 			</c:forEach>	
 		</form>	
-		<c:if test="${page.totalCount>0}"> 
-		<tr>
-			<td colspan="11">
-				<!-- 처음 -->
-				<c:choose>
-				<c:when test="${(page.curPage - 1) < 1}">
-					 &lt;&lt; 
-				</c:when>
-				<c:otherwise>
-					<a href="goodsList?page=1">[ &lt;&lt; ]</a>
-				</c:otherwise>
-				</c:choose>
-				
-				<!-- 이전 -->
-				<c:choose>
-				<c:when test="${(page.curPage - 1) < 1}">
-					 &lt; 
-				</c:when>
-				<c:otherwise>
-					<a href="goodsList?page=${page.curPage - 1}"> &lt; </a>
-				</c:otherwise>
-				</c:choose>
-				
-				<!-- 개별 페이지 -->
-				<c:forEach var="fEach" begin="${page.startPage}" end="${page.endPage}" step="1">
-					<c:choose>
-					<c:when test="${page.curPage == fEach}">
-						 ${fEach}  &nbsp;
-					</c:when>
-					<c:otherwise>
-						<a href="goodsList?page=${fEach}"> ${fEach} </a> &nbsp;
-					</c:otherwise>
-					</c:choose>
-				</c:forEach>	
-				
-				<!-- 다음 -->
-				<c:choose>
-				<c:when test="${(page.curPage + 1) > questionPage.totalPage}">
-					[ &gt; ]
-				</c:when>
-				<c:otherwise>
-					<a href="goodsList?page=${page.curPage + 1}"> &gt; </a>
-				</c:otherwise>
-				</c:choose>
-				
-				<!-- 끝 -->
-				<c:choose>
-				<c:when test="${page.curPage == page.totalPage}">
-					 &gt;&gt; 
-				</c:when>
-				<c:otherwise>
-					<a href="goodsList?page=${page.totalPage}"> &gt;&gt; </a>
-				</c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-		</c:if>
 	</table>
 </section>
 </body>
