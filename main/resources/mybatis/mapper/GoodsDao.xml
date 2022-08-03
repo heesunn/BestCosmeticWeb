@@ -105,7 +105,6 @@
 				<when test="param4.equals('bcg_name')"> C.bcg_name like '%${param5}%' </when>
 			</choose>
 				and C.BCG_key = D.bcg_key (+)
-				and (D.bcm_num= #{param1} or d.bcm_num is null)
 			order by C.bcg_date desc, C.bcg_key desc ) A
 			where rownum &lt;= #{param3} ) B
 		where B.num &gt;= #{param2}
@@ -131,7 +130,6 @@
 				<when test="param4.equals('bcg_name')"> C.bcg_name like '%${param5}%' </when>
 			</choose>
 				and C.BCG_key = D.bcg_key (+)
-				and (D.bcm_num= #{param1} or d.bcm_num is null)
 			order by C.bcg_date desc, C.bcg_key desc ) A
 			where rownum &lt;= #{param3} ) B
 		where B.num &gt;= #{param2}
@@ -158,7 +156,6 @@
 						   group by bcg_key) D
 		where C.bcg_category = 'point'
 		and C.BCG_key = D.bcg_key (+)
-		and (D.bcm_num= #{param1} or d.bcm_num is null)
 		order by C.bcg_date desc, C.bcg_key desc ) A
 		where rownum &lt;= #{param2} ) B
 		where B.num &gt;= #{param3}

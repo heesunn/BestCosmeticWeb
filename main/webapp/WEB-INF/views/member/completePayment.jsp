@@ -78,17 +78,14 @@
     <table style="width:100%; font-size: 20px; border-spacing: 5px;">
         <thead style="height: 50px; background-color: #d2d2fc;">
         <tr>
-            <td>주문번호</td>
             <td>주문자</td>
             <td>이메일</td>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>${orderNum}
-                <input type="hidden" id="sId" name="sId" value="<%= sName %>">
-                <input type="hidden" id="orderNum" name="orderNum" value="${orderNum}">
-            </td>
+    	    <input type="hidden" id="sId" name="sId" value="<%= sName %>">
+    	    <input type="hidden" id="orderNum" name="orderNum" value="${orderNum}">
             <td id="sName"><%=sName %></td>
             <td id="sEmail"><%=sEmail %></td>
         </tr>
