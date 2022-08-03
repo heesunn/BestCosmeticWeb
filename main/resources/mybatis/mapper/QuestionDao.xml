@@ -22,7 +22,7 @@
 	</insert>
 	
 	<select id="questionListAdminView" resultType="com.study.springboot.goods.dto.QuestionDto">
-		select * from bc_question
+		select * from bc_question order by bcq_date
 	</select>
 	
 	<select id="selectCountQuestion" resultType="_int">

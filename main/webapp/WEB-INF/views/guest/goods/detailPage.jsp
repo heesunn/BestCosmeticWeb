@@ -166,19 +166,18 @@
 </script>
 <script>
 	function uploadQnA() {                 //문의하기
-		alert("dddddd");
 		if(<%=bcm_num%> == 0) {
 			window.location='/guest/loginView';
 		} else {  		
 			var queryString=$('#uploadQ').serialize();
-			alert(queryString);
+			//alert(queryString);
 			$.ajax({
 	           	url: '/member/uploadQnA',  
 	               type: 'POST',
 	               data: queryString,
 	               dataType: 'text',
 	               complete: function(json) {	   
-	               	alert("등록완료");
+	               	alert("문의가 등록되었습니다.");
 	               	$('#qnaView').load(location.href + ' #qqna');
 	               	//$('#qnaView').append(json.responseText);
 	            },				
@@ -683,7 +682,7 @@
 			</c:forEach>
 			<c:set var = "average" value ="${sum/fn:length(reviewList)}"/>
 			<tr style="font-size:50px; text-align: center;">
-				<td>${average}</td>
+				<td><fmt:formatNumber value="${average}" pattern="#.##" /></td>
 				<td> 
 					<div class="star-ratings">
 						<div class="star-ratings-fill space-x-2 text-lg" style="width: ${average/5*100}%" >
