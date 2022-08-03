@@ -16,11 +16,6 @@
 <head>
 <meta charset="UTF-8">
 <title>카테고리 - 전체보기</title>
-<script type="text/javascript">
-	function noReload() {
-		console.log($("#badge2").load(location.href + " #badge2"));
-	}
-</script>
 <style>
 @font-face {
     font-family: 'tway_air';
@@ -155,9 +150,7 @@ div .menuTop {
 		    	if(<%=num%> == 0) {
 		  			alert("로그인후 이용가능합니다.");
 		  			return;
-		  		} else {
-		  			if(${dto.item==null}) { alert("찜목록에 추가되었습니다"); } 
-		        	else { alert("찜목록에서 삭제되었습니다"); }		  			
+		  		} else {	  			
 		    	    var queryString=$("#list${dto.bcg_key}").serialize();
 				    $.ajax({
 				      	url: '/member/glike',  
@@ -170,7 +163,7 @@ div .menuTop {
 				    });
 		  		}   
 			}
-</script>
+		</script>
 	</c:forEach>
 		<tr>
 			<td colspan="4">&nbsp;</td>

@@ -377,7 +377,7 @@ public class GoodsController
 	
 	//문의 작성
 	@RequestMapping("/member/uploadQnA")
-	public String uploadQnA(HttpServletRequest request, Model model) throws IOException {
+	public @ResponseBody String uploadQnA(HttpServletRequest request, Model model) throws IOException {
 		String BCQ_SECRET = request.getParameter("BCQ_SECRET");
 		if(request.getParameter("BCQ_SECRET")==null) { BCQ_SECRET = "off"; }
 		questionDao.uploadQnA(Integer.parseInt(request.getParameter("BCG_KEY")),

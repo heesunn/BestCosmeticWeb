@@ -131,33 +131,9 @@
 		        type: 'POST',
 		        data: queryString,
 		        success: function(json) {
-		        	window.location.reload="/guest/datailPage";
+		        	$('#badge3').load(location.href + ' #badge3');
 		        }       	
 		    });
-		}
-	}
-	
-	function uploadQnA() {                 //문의하기
-		if(<%=bcm_num%> == 0) {
-			window.location='/guest/loginView';
-		} else {
-			if($('#BCQ_CONTENT').val().length > 150) {
-	   			alert("문의란 글자수가 너무 많습니다.");
-	   			$('#BCQ_CONTENT').focus();
-	   			return;
-	   		} else {
-				var queryString=$("#uploadQ").serialize();
-				$.ajax({
-	            	url: '/member/uploadQnA',  
-	                type: 'POST',
-	                data: queryString,
-	                dataType: 'text',
-	                complete: function(json) {	           
-	                	alert("상품문의를 등록했습니다.");
-	                	window.location.reload();
-	                },				
-	            });
-	   		}
 		}
 	}
 	
@@ -187,13 +163,35 @@
 	        lastScroll = st;
 	    });
 	});
+</script>
+<script>
+	function uploadQnA() {                 //문의하기
+		alert("dddddd");
+		if(<%=bcm_num%> == 0) {
+			window.location='/guest/loginView';
+		} else {  		
+			var queryString=$('#uploadQ').serialize();
+			alert(queryString);
+			$.ajax({
+	           	url: '/member/uploadQnA',  
+	               type: 'POST',
+	               data: queryString,
+	               dataType: 'text',
+	               complete: function(json) {	   
+	               	alert("등록완료");
+	               	$('#qnaView').load(location.href + ' #qqna');
+	               	//$('#qnaView').append(json.responseText);
+	            },				
+	        }); 		
+		}
+	}
 	
 	$(function(){
 		$('textarea').keyup(function(){
 			bytesHandler(this);
 		});
 	});
-
+	
 	function getTextLength(str) {
 		var len = 0;
 	
@@ -213,8 +211,7 @@
 			$('p.bytes').text("(150 / 150자)");  
 		}
 	}			
-</script>
-
+</script>	
 <style type="text/css">
 	.gg-lock {
 		top: 12px;
@@ -482,16 +479,18 @@
 		         		<img src="/image/sale.png" width="50" height="50">
 		         	</c:if>
 	         	</div>
-				<form id="list${BCG_KEY}" name="list${BCG_KEY}">
+				<form id="list${BCG_KEY}" name="list${BCG_KEY}" onsubmit="return false;">
 	         		<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num %>">
 	         		<input type="hidden" id="key" name="BCG_KEY" value="${BCG_KEY}">
 	         		<div class="badge2" id="badge2">
+	         			<div class="badge3" id="badge3">
                         <c:if test="${like==1}">
                             <input type="image" src="/image/red-heart.png" height="70" width="70" onclick ="likeUpdate${BCG_KEY}()">
                         </c:if>
                         <c:if test="${like==0}">
                             <input type="image" src="/image/heart.png" height="70" width="70" onclick ="likeUpdate${BCG_KEY}()">
                         </c:if>
+                        </div>
                     </div>
 	         	</form>
 			</td>
@@ -783,131 +782,135 @@
 		</table>
 	</div>
 	<div id="qnaView" class="qnaView">
-		<table class="activePage" id="activePage">
-			<form id="uploadQ" name="uploadQ">
-			    <tr>
-			    	<td colspan="2">
-			    		<textarea id="BCQ_CONTENT" name="BCQ_CONTENT" cols="100%" rows="5" 
-			    				  placeholder="문의내용을 150자 이내로 기재해주세요."
-			    				  style="border: 3px solid grey; border-radius: 5px;"></textarea>
-			    		<br /><p class="bytes">(0 / 150자)</p>
-			    		<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">
-						<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">
-						<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">
-						<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">
-					</td>
-				</tr>
-				<tr>	
-					<td>
-						<i class="gg-lock"></i> &nbsp;&nbsp;&nbsp;&nbsp;비밀글설정 <input type="checkbox" name="BCQ_SECRET" id="BCQ_SECRET">
-					</td>
-					<td style="text-align: right">
-						<input type="button" value="등록" onclick="uploadQnA()"
-							   style="border: 3px solid black; border-radius: 5px; background-color: #d2d2fc; margin-left:0;">
-	    			</td>
-	    		</tr>
-    		</form>
-    		<c:if test="${questionPage.totalCount==0}"> 
-    			<tr><td colspan="2"><hr></td></tr>
-				<tr><td colspan="2" style="height: 500px; text-align:center; font-size: 25px;">문의가 없습니다.</td></tr>
-			</c:if> 
-			<c:forEach items="${questionList}" var="dto">
-				<tr><td colspan="2"><hr></td></tr>
-				<c:if test="${dto.bcq_secret eq 'off'}">
-				<tr><td> ${dto.bcm_name} <fmt:formatDate value="${dto.bcq_date}" pattern="yyyy-MM-dd" var="bcq_date" />${bcq_date}</td>
-					<c:if test="${dto.bca_content==null}"><td style="text-align:right">답변대기중</td></c:if>
-					<c:if test="${dto.bca_content!=null}"><td style="text-align:right">답변완료</td></c:if>
-				</tr>
-				<tr><td colspan="2" class="qnaContent">${dto.bcq_content}</td></tr>
-					<c:if test="${dto.bca_content!=null}">
-						<tr><td colspan="2"> ▶RE: 관리자 <fmt:formatDate value="${dto.bca_date}" pattern="yyyy-MM-dd" var="bca_date" />${bca_date}</td></tr>
-						<tr><td colspan="2" class="qnaContent">${dto.bca_content}</td></tr>
-					</c:if>
-				</c:if>	
-				<c:if test="${dto.bcq_secret eq 'on'}">
-					<c:if test="${dto.bcm_name eq (sessionScope.name)}"> 
-						<tr><td> <i class="gg-lock"></i> &nbsp;&nbsp;&nbsp;&nbsp;${dto.bcm_name} <fmt:formatDate value="${dto.bcq_date}" pattern="yyyy-MM-dd" var="bcq_date" />${bcq_date}</td>
-							<c:if test="${dto.bca_content==null}"><td style="text-align:right">답변대기중</td></c:if>
-							<c:if test="${dto.bca_content!=null}"><td style="text-align:right">답변완료</td></c:if>
-						</tr>
-						<tr><td colspan="2" class="qnaContent">${dto.bcq_content}</td></tr>
+		<div id="qqna" class="qqna">
+			<table class="activePage" id="activePage">			
+				<form id="uploadQ" name="uploadQ">
+				    <tr>
+				    	<td colspan="2">
+				    		<textarea id="BCQ_CONTENT" name="BCQ_CONTENT" cols="100%" rows="5" 
+				    				  placeholder="문의내용을 150자 이내로 기재해주세요."
+				    				  style="border: 3px solid grey; border-radius: 5px;"></textarea>
+				    		<br /><p class="bytes">(0 / 150자)</p>
+				    		<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">
+							<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">
+							<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="<%=bcm_num%>">
+							<input type="hidden" id="BCM_NAME" name="BCM_NAME" value="<%=bcm_name%>">
+						</td>
+					</tr>
+					<tr>	
+						<td>
+							<i class="gg-lock"></i> &nbsp;&nbsp;&nbsp;&nbsp;비밀글설정 <input type="checkbox" name="BCQ_SECRET" id="BCQ_SECRET">
+						</td>
+						<td style="text-align: right">
+							<input type="button" value="등록" onclick="uploadQnA()"
+								   style="border: 3px solid black; border-radius: 5px; background-color: #d2d2fc; margin-left:0;">
+		    			</td>
+		    		</tr>
+	    		</form>
+    		
+	    		<c:if test="${questionPage.totalCount==0}"> 
+	    			<tr><td colspan="2"><hr></td></tr>
+					<tr><td colspan="2" style="height: 500px; text-align:center; font-size: 25px;">문의가 없습니다.</td></tr>
+				</c:if> 
+				<c:forEach items="${questionList}" var="dto">
+					<tr><td colspan="2"><hr></td></tr>
+					<c:if test="${dto.bcq_secret eq 'off'}">
+					<tr><td> ${dto.bcm_name} <fmt:formatDate value="${dto.bcq_date}" pattern="yyyy-MM-dd" var="bcq_date" />${bcq_date}</td>
+						<c:if test="${dto.bca_content==null}"><td style="text-align:right">답변대기중</td></c:if>
+						<c:if test="${dto.bca_content!=null}"><td style="text-align:right">답변완료</td></c:if>
+					</tr>
+					<tr><td colspan="2" class="qnaContent">${dto.bcq_content}</td></tr>
 						<c:if test="${dto.bca_content!=null}">
 							<tr><td colspan="2"> ▶RE: 관리자 <fmt:formatDate value="${dto.bca_date}" pattern="yyyy-MM-dd" var="bca_date" />${bca_date}</td></tr>
 							<tr><td colspan="2" class="qnaContent">${dto.bca_content}</td></tr>
-						</c:if> 
-					</c:if>
-					<c:if test="${dto.bcm_name ne (sessionScope.name)}"> 
-						<tr><td> <i class="gg-lock"></i> &nbsp;&nbsp;&nbsp;&nbsp;Secret <fmt:formatDate value="${dto.bcq_date}" pattern="yyyy-MM-dd" var="bcq_date" />${bcq_date}</td>
-							<c:if test="${dto.bca_content==null}"><td style="text-align:right">답변대기중</td></c:if>
-							<c:if test="${dto.bca_content!=null}"><td style="text-align:right">답변완료</td></c:if>
-						</tr>
-						<tr><td colspan="2" class="qnaContent"> '비밀글입니다' </td></tr> 
-						<c:if test="${dto.bca_content!=null}">
-							<tr><td colspan="2" class="qnaContent">▶RE: '비밀글답변입니다'</td></tr>
-						</c:if> 
-					</c:if>
-				</c:if>	
-			</c:forEach>
-			<c:if test="${questionPage.totalCount>0}"> 
-			<tr style="text-align: center">
-				<td colspan="2">
-					<!-- 처음 -->
-					<c:choose>
-					<c:when test="${(questionPage.curPage - 1) < 1}">
-						 &lt;&lt; 
-					</c:when>
-					<c:otherwise>
-						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=1"> &lt;&lt; </a>
-					</c:otherwise>
-					</c:choose>
-					
-					<!-- 이전 -->
-					<c:choose>
-					<c:when test="${(questionPage.curPage - 1) < 1}">
-						 &lt; &nbsp; 
-					</c:when>
-					<c:otherwise>
-						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.curPage - 1}"> &lt; </a> &nbsp;
-					</c:otherwise>
-					</c:choose>
-					
-					<!-- 개별 페이지 -->
-					<c:forEach var="fEach" begin="${questionPage.startPage}" end="${questionPage.endPage}" step="1">
+						</c:if>
+					</c:if>	
+					<c:if test="${dto.bcq_secret eq 'on'}">
+						<c:if test="${dto.bcm_name eq (sessionScope.name)}"> 
+							<tr><td> <i class="gg-lock"></i> &nbsp;&nbsp;&nbsp;&nbsp;${dto.bcm_name} <fmt:formatDate value="${dto.bcq_date}" pattern="yyyy-MM-dd" var="bcq_date" />${bcq_date}</td>
+								<c:if test="${dto.bca_content==null}"><td style="text-align:right">답변대기중</td></c:if>
+								<c:if test="${dto.bca_content!=null}"><td style="text-align:right">답변완료</td></c:if>
+							</tr>
+							<tr><td colspan="2" class="qnaContent">${dto.bcq_content}</td></tr>
+							<c:if test="${dto.bca_content!=null}">
+								<tr><td colspan="2"> ▶RE: 관리자 <fmt:formatDate value="${dto.bca_date}" pattern="yyyy-MM-dd" var="bca_date" />${bca_date}</td></tr>
+								<tr><td colspan="2" class="qnaContent">${dto.bca_content}</td></tr>
+							</c:if> 
+						</c:if>
+						<c:if test="${dto.bcm_name ne (sessionScope.name)}"> 
+							<tr><td> <i class="gg-lock"></i> &nbsp;&nbsp;&nbsp;&nbsp;Secret <fmt:formatDate value="${dto.bcq_date}" pattern="yyyy-MM-dd" var="bcq_date" />${bcq_date}</td>
+								<c:if test="${dto.bca_content==null}"><td style="text-align:right">답변대기중</td></c:if>
+								<c:if test="${dto.bca_content!=null}"><td style="text-align:right">답변완료</td></c:if>
+							</tr>
+							<tr><td colspan="2" class="qnaContent"> '비밀글입니다' </td></tr> 
+							<c:if test="${dto.bca_content!=null}">
+								<tr><td colspan="2" class="qnaContent">▶RE: '비밀글답변입니다'</td></tr>
+							</c:if> 
+						</c:if>
+					</c:if>	
+				</c:forEach>
+				<c:if test="${questionPage.totalCount>0}"> 
+				<tr style="text-align: center">
+					<td colspan="2">
+						<!-- 처음 -->
 						<c:choose>
-						<c:when test="${questionPage.curPage == fEach}">
-							 ${fEach}  &nbsp;
+						<c:when test="${(questionPage.curPage - 1) < 1}">
+							 &lt;&lt; 
 						</c:when>
 						<c:otherwise>
-							<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${fEach}"> ${fEach} </a> &nbsp;
+							<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=1"> &lt;&lt; </a>
 						</c:otherwise>
 						</c:choose>
-					</c:forEach>	
-					
-					<!-- 다음 -->
-					<c:choose>
-					<c:when test="${(questionPage.curPage + 1) > questionPage.totalPage}">
-						 &gt; 
-					</c:when>
-					<c:otherwise>
-						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.curPage + 1}"> &gt; </a>
-					</c:otherwise>
-					</c:choose>
-					
-					<!-- 끝 -->
-					<c:choose>
-					<c:when test="${questionPage.curPage == questionPage.totalPage}">
-						 &gt;&gt; 
-					</c:when>
-					<c:otherwise>
-						<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.totalPage}"> &gt;&gt; </a>
-					</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			</c:if>
-		</table>
+						
+						<!-- 이전 -->
+						<c:choose>
+						<c:when test="${(questionPage.curPage - 1) < 1}">
+							 &lt; &nbsp; 
+						</c:when>
+						<c:otherwise>
+							<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.curPage - 1}"> &lt; </a> &nbsp;
+						</c:otherwise>
+						</c:choose>
+						
+						<!-- 개별 페이지 -->
+						<c:forEach var="fEach" begin="${questionPage.startPage}" end="${questionPage.endPage}" step="1">
+							<c:choose>
+							<c:when test="${questionPage.curPage == fEach}">
+								 ${fEach}  &nbsp;
+							</c:when>
+							<c:otherwise>
+								<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${fEach}"> ${fEach} </a> &nbsp;
+							</c:otherwise>
+							</c:choose>
+						</c:forEach>	
+						
+						<!-- 다음 -->
+						<c:choose>
+						<c:when test="${(questionPage.curPage + 1) > questionPage.totalPage}">
+							 &gt; 
+						</c:when>
+						<c:otherwise>
+							<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.curPage + 1}"> &gt; </a>
+						</c:otherwise>
+						</c:choose>
+						
+						<!-- 끝 -->
+						<c:choose>
+						<c:when test="${questionPage.curPage == questionPage.totalPage}">
+							 &gt;&gt; 
+						</c:when>
+						<c:otherwise>
+							<a href="detailPage?BCG_KEY=${BCG_KEY}&questionPage=${questionPage.totalPage}"> &gt;&gt; </a>
+						</c:otherwise>
+						</c:choose>
+					</td>
+				</tr>
+				</c:if>
+			</table>		
+		</div>
 	</div>
 <script>
+
 	function review() {
 		$("#reViewView").css({ 'display' : 'block' });
 		$("#qnaView").css({ 'display' : 'none' });
