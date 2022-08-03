@@ -34,6 +34,32 @@
             }
         });
 	}
+	
+	$(function(){
+		$('textarea').keyup(function(){
+			bytesHandler(this);
+		});
+	});
+	
+	function getTextLength(str) {
+		var len = 0;
+	
+		for (var i = 0; i < str.length; i++) {
+			if (escape(str.charAt(i)).length == 6) { len++; }
+			len++;
+		}
+		return len;
+	}
+	
+	function bytesHandler(obj){
+		var context = $(obj).val();
+		$('p.bytes').text("("+context.length+" / 150자)");
+		if (context.length > 150){        
+			alert("최대 150자까지 입력 가능합니다.");  
+			$(obj).val($(obj).val().substring(0, 150));
+			$('p.bytes').text("(150 / 150자)");  
+		}
+	}	
 </script>
 <style type="text/css">
 	@font-face {
@@ -52,7 +78,9 @@
 				<input type="hidden" id="BCM_NUM" name="BCM_NUM" value="${BCM_NUM }">
 				<input type="hidden" id="BCQ_CONTENT" name="BCQ_CONTENT" value="${BCQ_CONTENT }">
 				<input type="hidden" id="BCQ_DATE" name="BCQ_DATE" value="${BCQ_DATE }">
-				<textarea id="BCA_CONTENT" id="BCA_CONTENT" name="BCA_CONTENT" cols="50" rows="15"></textarea><br>
+				<textarea id="BCA_CONTENT" id="BCA_CONTENT" name="BCA_CONTENT" cols="50" rows="15"
+						  placeholder="답변 내용을 150자 이내로 기재해주세요."></textarea>
+				<br /><p class="bytes">(0 / 150자)</p>
 				</form>
 			</td>
 		</tr>

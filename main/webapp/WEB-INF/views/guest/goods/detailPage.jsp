@@ -172,15 +172,15 @@
 			var queryString=$('#uploadQ').serialize();
 			//alert(queryString);
 			$.ajax({
-	           	url: '/member/uploadQnA',  
-	               type: 'POST',
-	               data: queryString,
-	               dataType: 'text',
-	               complete: function(json) {	   
-	               	alert("문의가 등록되었습니다.");
-	               	$('#qnaView').load(location.href + ' #qqna');
-	               	//$('#qnaView').append(json.responseText);
-	            },				
+	            url: '/member/uploadQnA',  
+                type: 'POST',
+                data: queryString,
+                dataType: 'text',
+                complete: function(json) {	   
+               	    alert("문의가 등록되었습니다.");
+               	    $('#qnaView').load(location.href + ' #qqna');
+               	    //$('#qnaView').append(json.responseText);
+                },				
 	        }); 		
 		}
 	}
@@ -782,7 +782,7 @@
 	</div>
 	<div id="qnaView" class="qnaView">
 		<div id="qqna" class="qqna">
-			<table class="activePage" id="activePage">			
+			<table class="activePage" id="activePage">	
 				<form id="uploadQ" name="uploadQ">
 				    <tr>
 				    	<td colspan="2">
