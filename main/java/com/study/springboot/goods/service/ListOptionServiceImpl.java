@@ -54,7 +54,7 @@ public class ListOptionServiceImpl implements ListOptionService{
 			insertCount = goodsDetailDao.deleteOption(bcd_detailkey[i], bcg_key[i]);
 		} 
 		System.out.println(totalCount);
-		goodsDetailDao.ModifyStock(totalCount, bcg_key[0]);
+		goodsDetailDao.ModifyStockDelete(totalCount, bcg_key[0]);
 		return insertCount;  
 	}
 }

@@ -15,6 +15,7 @@ public interface GoodsDetailDao {
     public ArrayList<GoodsDetailDto> optionList(int BCG_KEY);
     public int stockUpdate(String BCD_STOCK, String BCD_DETAILKEY, String BCG_KEY);
     public int ModifyStock(int totalCount, String bcg_key);
+    public int ModifyStockDelete(int totalCount, String bcg_key);
     public int deleteOption(String BCD_DETAILKEY, String BCG_KEY);
     public GoodsDetailDto detailKeyCheck(String bcg_name, String bcd_detailKey);
 }

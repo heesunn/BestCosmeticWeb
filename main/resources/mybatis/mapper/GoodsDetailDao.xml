@@ -47,5 +47,8 @@
 	<delete id="deleteOption">
 		delete from BC_DETAILGOODS where bcd_detailkey = #{param1} and bcg_key = #{param2}
 	</delete>
-   
+	<!-- 옵션 삭제 시 총 재고 업데이트-->
+    <update id="ModifyStockDelete">
+		update bc_goods set bcg_stock = bcg_stock - #{param1} where bcg_key = #{param2}
+	</update>
 </mapper>
