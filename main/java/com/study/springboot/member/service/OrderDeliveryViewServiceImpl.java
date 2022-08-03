@@ -28,7 +28,7 @@ public class OrderDeliveryViewServiceImpl implements OrderDeliveryViewService{
         }catch(Exception e) {
         }
 
-        int totalCount = memberDao.articlePage();
+        int totalCount = memberDao.articlePage(bcm_num);
 
         int listCount = 5; //한 페이지당 보여줄 게시물의 갯수
         int pageCount = 5; //하단에 보여줄 페이지 리스트의 갯수.

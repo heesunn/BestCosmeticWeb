@@ -12,13 +12,13 @@ public interface MemberDao {
     public int join(String bcm_id,String bcm_pw,String bcm_name,String bcm_email);
     public MemberDto userCheck(String bcm_id);
     public ArrayList<OrderDeliveryDto> orderDeliveryView(int bcm_num,int nEnd, int nStart);
-    public int articlePage();
+    public int articlePage(int bcm_num);
     public int cancellationRequest(int bcm_num, String bco_ordernum);
     public int exchangeRequest(int bcm_num, String bco_ordernum);
     public int refundRequest(int bcm_num, String bco_ordernum);
     public int purchaseConfirmation(int bcm_num, String bco_ordernum);
     public ArrayList<OrderDeliveryDto> cancelExchangeRefund(int bcm_num, int nEnd, int nStart);
-    public int articlePage2();
+    public int articlePage2(int bcm_num);
     public MemberDto selectUser(int bcm_num);
     public int modifyMember(String bcm_email,String bcm_phonenum1,String bcm_phonenum2,String bcm_phonenum3,
                             String bcm_zipcode,String bcm_address1,String bcm_address2,String bcm_address3,

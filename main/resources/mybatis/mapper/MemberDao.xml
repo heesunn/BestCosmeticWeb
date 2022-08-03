@@ -30,10 +30,11 @@
                                 WHERE ROWNUM &lt;= #{param2} ) B WHERE B.NUM &gt;= #{param3}
     </select>
     <select id="articlePage" resultType="_int">
-        SELECT COUNT(*) AS TOTAL FROM BC_ORDER_HISTORY WHERE BCO_ORDER_STATUS = '배송준비중'
+        SELECT COUNT(*) AS TOTAL FROM BC_ORDER_HISTORY WHERE BCM_NUM = #{param1}
+                                                       AND (BCO_ORDER_STATUS = '배송준비중'
                                                        OR BCO_ORDER_STATUS = '배송중'
                                                        OR BCO_ORDER_STATUS = '배송완료'
-                                                       OR BCO_ORDER_STATUS = '구매확정'
+                                                       OR BCO_ORDER_STATUS = '구매확정')
     </select>
     <update id="cancellationRequest">
         UPDATE BC_ORDER_HISTORY SET BCO_ORDER_STATUS = '취소신청', BCO_STATUSDATE = SYSDATE
@@ -72,14 +73,14 @@
     <select id="articlePage2" resultType="_int">
         SELECT COUNT(*) AS TOTAL
         FROM BC_ORDER_HISTORY
-        WHERE BCO_ORDER_STATUS = '취소신청'
+        WHERE BCM_NUM = #{param1} and (BCO_ORDER_STATUS = '취소신청'
           OR BCO_ORDER_STATUS = '취소완료'
           OR BCO_ORDER_STATUS = '교환신청'
           OR BCO_ORDER_STATUS = '교환상품회수중'
           OR BCO_ORDER_STATUS = '교환완료'
           OR BCO_ORDER_STATUS = '반품신청'
           OR BCO_ORDER_STATUS = '반품회수중'
-          OR BCO_ORDER_STATUS = '반품완료'
+          OR BCO_ORDER_STATUS = '반품완료')
     </select>
     <update id="modifyMember">
         UPDATE BC_MEMBER
