@@ -172,7 +172,7 @@ body {
 	        <img src="/banner/0.jpg" height="auto" width="100%" > 
 	     </div> 
 	     <div class="mySlideDiv fade">
-	        <img src="/banner/1.jpg" height="auto" width="100%" > 
+	        <img src="/banner/1.jpg" height="auto" width="100%" style="cursor:pointer;" onclick="javascript:window.location='/guest/detailPage?BCG_KEY=64'"> 
 	     </div>          
 	     <div class="mySlideDiv fade">
 	         <img src="/banner/2.jpg" height="auto" width="100%" > 
