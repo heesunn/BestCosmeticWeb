@@ -42,7 +42,7 @@ function AnswerAdd(BCG_KEY,BCM_NUM,BCQ_CONTENT,BCQ_DATE) {
         type : 'POST',
         data : url2,
         success : function(json) {
-            window.open(url, "", "width=600, height=400");
+            window.open(url, "", "width=500, height=500");
         }
     });
  }
