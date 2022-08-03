@@ -45,6 +45,8 @@ public class MemberRestController
     AppSearchService appSearchService;
     @Autowired
     AppReviewService appReviewService;
+    @Autowired
+    AppMemberInfoService appMemberInfoService;
     @GetMapping("/api/info")
     public ArrayList<MemberJoinOrderHistoryDto> memberManagement(HttpServletRequest request, Model model) {
         ArrayList<MemberJoinOrderHistoryDto> dtos = memberManagementViewService.memberManagementView(request,model);
@@ -134,5 +136,9 @@ public class MemberRestController
     @GetMapping("/api/member/lastDeliveryDeDeliveryDestination")
     public ArrayList<DeliveryInfoDto> lastDeliveryDeDeliveryDestination(HttpServletRequest request){
         return utilService.appLastDeliveryDestination(request);
+    }
+    @PostMapping("/api/member/fcmToken")
+    public void fcmToken(HttpServletRequest request){
+        appMemberInfoService.updateFcmToken(request);
     }
 }

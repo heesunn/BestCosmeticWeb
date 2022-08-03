@@ -27,4 +27,5 @@ public interface AppGoodsDao {
     public ArrayList<GoodsDto> seaching(String searchStr);
     public ArrayList<GoodsDto> seachSubmitted(String searchStr);
     public ArrayList<ReviewDto> reviewList(String bcgKey);
+    public int updateFcmToken(String fcmToken, String bcmNum);
 }

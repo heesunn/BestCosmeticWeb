@@ -120,7 +120,7 @@
 <section id="all">
 <h3>재고관리</h3><br>
 	<form id="adminSch" name="adminSch">              
-	  <input class="form-control mr-sm-2" type="text" id="BCG_KEY" name="BCG_KEY">&nbsp;
+	  <input class="form-control mr-sm-2" type="text" id="BCG_KEY" name="BCG_KEY" style="width: 200px; float:left;">&nbsp;
 	  <input type="button" class="btn btn-outline-secondary my-2 my-sm-0" value="품번검색" onclick="form_check()">
 	</form>   <br> 
 	<table border="1" id="myList">

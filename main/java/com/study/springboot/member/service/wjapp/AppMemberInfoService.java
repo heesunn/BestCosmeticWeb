@@ -8,5 +8,6 @@ public interface AppMemberInfoService
 {
 	public MemberDto appGetMemberInfo(HttpServletRequest request);
 	public void appUpdateMemberInfo(HttpServletRequest request);
+	public int updateFcmToken(HttpServletRequest request);
 
 }

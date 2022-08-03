@@ -311,6 +311,14 @@
               WHERE ROWNUM &lt;= 3 ) B
         WHERE B.NUM &gt;= 1
     </select>
+    <select id="getAllFcmToken" resultType="String">
+        select BCM_FCM_TOKEN from BC_MEMBER where BCM_FCM_TOKEN is not null
+    </select>
+    <select id="getFcmToken" resultType="String">
+        SELECT BCM_FCM_TOKEN
+        FROM BC_MEMBER
+        WHERE BCM_NUM = (SELECT BCM_NUM FROM BC_ORDER_HISTORY WHERE BCO_ORDERNUM = #{param1})
+    </select>
 </mapper>
 
 <!--

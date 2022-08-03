@@ -21,6 +21,7 @@
    		font-size: 50px;
    		font-weight: bold;
    		margin-left: 10%;
+   		margin-top: 25px;
    	}
 	.logoNav {
 		position: fixed;
@@ -34,12 +35,13 @@
 	}
 	div #navbarSupportedContent {
 		font-size: 20px;
-		margin-left: 70%;
-		
+		margin-left: 80%;
+		display: inline;
 	}
 	
 	#logout {
 		font-size: 15px;
+		display: inline;
 	}
 
 
@@ -47,16 +49,14 @@
 	
 </head>
 <body>
-<div class="adminTop">
-		<nav class="logoNav navbar-expand-sm navbar-light">
-			<div class="container-fluid" >
+<div class="adminTop" style="display: inline-block;">
+		<nav class="logoNav navbar-light" >
+			<div>
 				<a class="navbar-brand" href="/" id="logo"> 
-				<img src="/image/logo.PNG" width="80" height="80" alt="">
+				<img src="/image/logo.PNG" width="80" height="80">
 					BestCosmetic
 				</a>
-			</div>
-			<div class="container-fluid" id="navbarSupportedContent" >
-				<p>관리자 <%=name %>님<a class="nav-link" href="/logout" id="logout">로그아웃</a></p>
+				<span id="navbarSupportedContent">관리자 <%=name %>님<a class="nav-link" href="/logout" id="logout">로그아웃</a></span>
 			</div>
 		</nav>
 </div>

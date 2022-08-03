@@ -11,7 +11,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 
 @Controller
@@ -225,6 +233,15 @@ public class MemberController
 	public @ResponseBody JSONObject lastDeliveryDestination(HttpServletRequest request){
 		JSONObject obj = utilService.lastDeliveryDestination(request);
 		return obj;
+	}
+	@RequestMapping("/admin/push")
+	public String push() {
+		return "admin/pushMessage";
+	}
+	@RequestMapping("/admin/FCMSender")
+	public String fcmSender(Model model, HttpServletRequest request, HttpServletResponse response){
+		utilService.fcmAllmember(model,request,response);
+		return "admin/sendResult";
 	}
 
 }
