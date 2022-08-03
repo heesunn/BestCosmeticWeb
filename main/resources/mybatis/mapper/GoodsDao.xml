@@ -54,11 +54,13 @@
 	<select id="listSessionO" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
 		select *
 			from ( select rownum num, A.*
-				from (select c.*, d.bcg_key item
-		                from bc_goods C , bc_like D
-		                    where C.BCG_key = D.bcg_key (+)
-		            and (D.bcm_num= #{param1} or d.bcm_num is null)
-				order by C.bcg_date desc, C.bcg_key desc ) A
+				from (select c.*, d.BCG_KEY item
+					  from bc_goods C , (select BCG_KEY
+										 from bc_like
+										 where BCM_NUM = #{param1}
+										 group by bcg_key) D
+					  where C.BCG_key = D.bcg_key (+)
+					  order by C.bcg_date desc, C.bcg_key desc) A
 		    where rownum &lt;= #{param2} ) B
 		where B.num &gt;= #{param3}
 	</select>
@@ -94,7 +96,10 @@
 	</select>
 	<select id="searchListSessionO" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
 		select * from ( select rownum num, A.* from (
-			select c.*, d.bcg_key item from bc_goods C , bc_like D where 
+			select c.*, d.bcg_key item from bc_goods C , (select BCG_KEY
+															from bc_like
+															where BCM_NUM = #{param1}
+															group by bcg_key) D where
 			<choose>
 				<when test="param4.equals('bcg_key')"> C.bcg_key = #{param5} </when>
 				<when test="param4.equals('bcg_name')"> C.bcg_name like '%${param5}%' </when>
@@ -117,7 +122,10 @@
 	</select>
 	<select id="searchCListSessionO" resultType="com.study.springboot.goods.dto.GoodsJoinLikes">
 		select * from ( select rownum num, A.* from (
-			select c.*, d.bcg_key item from bc_goods C , bc_like D where C.bcg_category = 'point' and 
+			select c.*, d.bcg_key item from bc_goods C , (select BCG_KEY
+															from bc_like
+															where BCM_NUM = #{param1}
+															group by bcg_key) D where C.bcg_category = 'point' and
 			<choose>
 				<when test="param4.equals('bcg_key')"> C.bcg_key = #{param5} </when>
 				<when test="param4.equals('bcg_name')"> C.bcg_name like '%${param5}%' </when>
@@ -144,7 +152,10 @@
 		select *
 		from ( select rownum num, A.*
 		from (select c.*, d.bcg_key item
-		from bc_goods C , bc_like D
+		from bc_goods C , (select BCG_KEY
+						   from bc_like
+						   where BCM_NUM = #{param1}
+						   group by bcg_key) D
 		where C.bcg_category = 'point'
 		and C.BCG_key = D.bcg_key (+)
 		and (D.bcm_num= #{param1} or d.bcm_num is null)
