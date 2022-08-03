@@ -77,6 +77,32 @@
                 }
             });
         }
+        
+        $(function(){
+    		$('textarea').keyup(function(){
+    			bytesHandler(this);
+    		});
+    	});
+    	
+    	function getTextLength(str) {
+    		var len = 0;
+    	
+    		for (var i = 0; i < str.length; i++) {
+    			if (escape(str.charAt(i)).length == 6) { len++; }
+    			len++;
+    		}
+    		return len;
+    	}
+    	
+    	function bytesHandler(obj){
+    		var context = $(obj).val();
+    		$('p.bytes').text("("+context.length+" / 150자)");
+    		if (context.length > 150){        
+    			alert("최대 150자까지 입력 가능합니다.");  
+    			$(obj).val($(obj).val().substring(0, 150));
+    			$('p.bytes').text("(150 / 150자)");  
+    		}
+    	}			
     </script>
 	<style type="text/css">
 		.fset fieldset{
@@ -184,7 +210,8 @@
 			</td></tr>
 			<tr><td>	
 				<textarea class="col-auto form-control" type="text" id="BCR_CONTENT" name="BCR_CONTENT"
-						  placeholder="리뷰 내용을 입력해주세요"></textarea><br/>
+						  placeholder="리뷰 내용을 150자 이내로 기재해주세요."></textarea>
+				<br /><p class="bytes">(0 / 150자)</p>
 				<input type="hidden" id="BCG_KEY" name="BCG_KEY" value="${BCG_KEY}">   
 				<input type="hidden" id="BCO_ORDERNUM" name="BCO_ORDERNUM" value="${BCO_ORDERNUM}">   
 	       		<input type="hidden" id="BCG_NAME" name="BCG_NAME" value="${BCG_NAME}">           

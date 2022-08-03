@@ -136,7 +136,7 @@
         <td>주문변경</td>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="tableDD">
     <c:if test="${fn:length(list)==0}">
     	<tr><td colspan="5" style="text-align:center">주문 / 배송조회할 내역이 없습니다</td></tr>
     </c:if>
@@ -247,6 +247,7 @@
                 console.log(json);
                 if(json.desc == 1){
                 	alert("구매확정되었습니다");
+                	window.location.reload();
                 }else if (json.desc == 0) {
                     alert("데이터베이스입력오류입니다.")
                 }
