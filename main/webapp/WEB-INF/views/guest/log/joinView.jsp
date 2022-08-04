@@ -268,10 +268,11 @@
 	        			   style="width: 100%; height: 40px; border: none; border-radius: 10px; font-size: 15px;"></td></tr>
 	        <tr><td>이메일</td>
 	        	<td colspan="2"><input type="text" id="firstEmail" name="firstEmail"
-	        			   style="width: 47%; height: 40px; border: none; border-radius: 10px; font-size: 15px;">
-	        		@<input type="hidden" id="secondEmail" name="secondEmail" disabled value="naver.com">
+	        			   style="width: 30%; height: 40px; border: none; border-radius: 10px; font-size: 15px;">
+	        		@<input style="width: 30%;height: 40px; border: none; border-radius: 10px; font-size: 15px;
+	        					   font-family: 'tway_air';" type="text" id="secondEmail" name="secondEmail" disabled value="naver.com">
 	        		<select id="selectEmail" name="selectEmail"
-	        				style="width: 45%; height: 40px; border: none; border-radius: 10px; font-size: 15px;
+	        				style="width: 33%; height: 40px; border: none; border-radius: 10px; font-size: 15px;
 	        					   float: right; font-family: 'tway_air';">
 			            <option value="1">직접입력</option>
 			            <option value="naver.com" selected>naver.com</option>

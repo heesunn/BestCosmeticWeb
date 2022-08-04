@@ -123,8 +123,8 @@
 			alert("로그인후 이용가능합니다.");
 			return;
 		} else {
-			if(${like}==0) { alert("찜목록에 추가 완료"); } 
-        	else { alert("찜목록에서 삭제 완료"); }
+			<%--if(${like}==0) { alert("찜목록에 추가 완료"); } --%>
+        	<%--else { alert("찜목록에서 삭제 완료"); }--%>
 			var queryString=$("#list${BCG_KEY}").serialize();
 		    $.ajax({
 		    	url: '/member/glike',  

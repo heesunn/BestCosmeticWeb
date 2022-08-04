@@ -34,11 +34,11 @@
 			return;
 		}
 
-		if (!num_check.test($('#BCG_PRICE').val())) {
-            alert("가격은 숫자만 입력 가능합니다.");
-            $('#BCG_PRICE').focus();
-            return;
-        }
+		// if (!num_check.test($('#BCG_PRICE').val())) {
+        //     alert("가격은 숫자만 입력 가능합니다.");
+        //     $('#BCG_PRICE').focus();
+        //     return;
+        // }
 		
 		if($('#BCG_DISCOUNT').val().length == 0) {
    			alert("할인율은 필수사항입니다.");
