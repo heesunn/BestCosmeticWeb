@@ -107,6 +107,14 @@
 
     }
 	
+	function sch_check() {
+  		if($('#srchText').val().length == 0) {
+  			alert("검색어를 입력해주세요");
+  			$('#srchText').focus();
+  			return;
+  		} else { sch(); }
+  	}
+	
 	function sch() {     //검색기능
         var queryString=$("#adminSch").serialize();
         $.ajax({
@@ -115,7 +123,7 @@
             data: queryString,
             dataType: 'text',
             success: function(json) {  
-            	window.location.replace("/admin/searchRs");
+            	window.location="/admin/searchRs";
             }       	
         });
     }
@@ -141,7 +149,7 @@
 				<option value="bcg_name">품명</option>						
 			</select>
 			<input class="form-control mr-sm-2" type="text" id="srchText" name="srchText" style="width: 200px; float:left;">
-			<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sch()" style="float:left;">검색</button>&nbsp;
+			<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="sch_check()" style="float:left;">검색</button>&nbsp;
 		</form>
 		<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="location.href='/admin/goodsList'">전체보기</button>	
 		<br>
@@ -208,7 +216,14 @@
 					 &lt;&lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=1"> &lt;&lt; </a>
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="goodsList?page=1"> &lt;&lt; </a>
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchRs?page=1&type=${page.type}&srchText=${page.searchText}"> &lt;&lt; </a>
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 				
@@ -218,7 +233,14 @@
 					 &lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.curPage - 1}"> &lt; </a>
+					<c:choose>
+						<c:when test="${page.searchText == null}">
+	                        <a href="goodsList?page=${page.curPage - 1}"> &lt; </a> &nbsp;
+	                    </c:when>
+	                    <c:otherwise>
+	                        <a href="searchRs?page=${page.curPage - 1}&type=${page.type}&srchText=${page.searchText}">  &lt; </a> &nbsp;
+	                    </c:otherwise>
+                    </c:choose>
 				</c:otherwise>
 				</c:choose>
 				
@@ -229,7 +251,14 @@
 						 ${fEach}  &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="goodsList?page=${fEach}"> ${fEach} </a> &nbsp;
+						<c:choose>
+	                         <c:when test="${page.searchText == null}">
+	                             <a href="goodsList?page=${fEach}"> ${fEach} </a> &nbsp;
+	                         </c:when>
+	                         <c:otherwise>
+	                             <a href="searchRs?page=${fEach}&type=${page.type}&srchText=${page.searchText}"> ${fEach} </a>&nbsp;
+	                         </c:otherwise>
+	                     </c:choose>
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -240,7 +269,14 @@
 					 &gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.curPage + 1}"> &gt; </a>
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="goodsList?page=${page.curPage + 1}"> &gt; </a>
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchRs?page=${page.curPage + 1}&type=${page.type}&srchText=${page.searchText}"> &gt; </a>
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 				
@@ -250,7 +286,14 @@
 					 &gt;&gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="goodsList?page=${page.totalPage}"> &gt;&gt; </a>
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="goodsList?page=${page.totalPage}"> &gt;&gt; </a>
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchRs?page=${page.totalPage}&type=${page.type}&srchText=${page.searchText}"> &gt;&gt; </a>
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 			</td>

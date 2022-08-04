@@ -10,5 +10,7 @@ public class LPageInfo {
 	int curPage;              
 	int pageCount;          
 	int startPage;           
-	int endPage;       
+	int endPage;
+	String searchText;
+	String type;
 }
