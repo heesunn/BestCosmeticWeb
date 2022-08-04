@@ -45,6 +45,7 @@ body {
 	font-family: 'tway_air';
 	position: relative;
     left: 210px; 
+    width: 1200px;
     border-spacing: 5px;
     border-collapse: separate;
 }
@@ -122,7 +123,7 @@ div .menuTop {
                 </div>
          		</form>	
 				<a href="/guest/detailPage?BCG_KEY=${dto.bcg_key}">
-					<img src="${dto.bcg_img}" width="100%" style="border-radius:15%">
+					<img src="${dto.bcg_img}" width="300px;" style="border-radius:15%">
 					<input type="hidden" name="BCG_KEY" value="${dto.bcg_key}">
 				</a><br/>
 				${dto.bcg_name}<br/>
@@ -169,15 +170,22 @@ div .menuTop {
 			<td colspan="4">&nbsp;</td>
 		</tr>	
 		<c:if test="${page.totalCount > 0 }">   		
-		<tr style="text-align: center">
-			<td colspan="4">
+		<tr style="text-align: center;">
+			<td class="tdsize" colspan="4">
 				<!-- 처음 -->
 				<c:choose>
 				<c:when test="${(page.curPage - 1) < 1}">
 					 &lt;&lt; 
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=1"> &lt;&lt; </a>
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="categoryAll?page=1"> &lt;&lt; </a>
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchARs?page=1&type=${page.type}&srchText=${page.searchText}"> &lt;&lt; </a>
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 				
@@ -187,7 +195,14 @@ div .menuTop {
 					 &lt; &nbsp;
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=${page.curPage - 1}"> &lt; </a> &nbsp;
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="categoryAll?page=${page.curPage - 1}"> &lt; </a> &nbsp;
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchARs?page=${page.curPage - 1}&type=${page.type}&srchText=${page.searchText}">  &lt; </a>&nbsp;
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 				
@@ -198,7 +213,14 @@ div .menuTop {
 						 ${fEach}  &nbsp;
 					</c:when>
 					<c:otherwise>
-						<a href="categoryAll?page=${fEach}"> ${fEach} </a> &nbsp;
+						<c:choose>
+	                         <c:when test="${page.searchText == null}">
+	                             <a href="categoryAll?page=${fEach}"> ${fEach} </a> &nbsp;
+	                         </c:when>
+	                         <c:otherwise>
+	                             <a href="searchARs?page=${fEach}&type=${page.type}&srchText=${page.searchText}"> ${fEach} </a>&nbsp;
+	                         </c:otherwise>
+	                     </c:choose>
 					</c:otherwise>
 					</c:choose>
 				</c:forEach>	
@@ -209,7 +231,14 @@ div .menuTop {
 					 &gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=${page.curPage + 1}"> &gt; </a>
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="categoryAll?page=${page.curPage + 1}"> &gt; </a>
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchARs?page=${page.curPage + 1}&type=${page.type}&srchText=${page.searchText}"> &gt; </a>
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 				
@@ -219,7 +248,14 @@ div .menuTop {
 					 &gt;&gt; 
 				</c:when>
 				<c:otherwise>
-					<a href="categoryAll?page=${page.totalPage}"> &gt;&gt; </a>
+					<c:choose>
+                         <c:when test="${page.searchText == null}">
+                             <a href="categoryAll?page=${page.totalPage}"> &gt;&gt; </a>
+                         </c:when>
+                         <c:otherwise>
+                             <a href="searchARs?page=${page.totalPage}&type=${page.type}&srchText=${page.searchText}"> &gt;&gt; </a>
+                         </c:otherwise>
+                     </c:choose>
 				</c:otherwise>
 				</c:choose>
 			</td>

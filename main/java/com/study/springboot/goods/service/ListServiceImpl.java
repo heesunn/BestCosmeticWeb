@@ -314,6 +314,8 @@ public class ListServiceImpl implements ListService {
 		pinfo.setPageCount(pageCount);
 		pinfo.setStartPage(startPage);
 		pinfo.setEndPage(endPage);
+		pinfo.setSearchText(srchText);
+		pinfo.setType(type);
 		
 		return pinfo;
 	}
@@ -391,6 +393,8 @@ public class ListServiceImpl implements ListService {
 		pinfo.setPageCount(pageCount);
 		pinfo.setStartPage(startPage);
 		pinfo.setEndPage(endPage);
+		pinfo.setSearchText(srchText);
+		pinfo.setType(type);
 		
 		return pinfo;
 	}

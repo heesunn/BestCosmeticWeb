@@ -30,7 +30,7 @@
            data: queryString,
            dataType: 'text',
            success: function(json) {  
-           	window.location.replace("/guest/searchARs");
+           	   window.location="/guest/searchARs";
            }       	
        });
    }

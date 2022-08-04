@@ -247,10 +247,10 @@ public class GoodsController
 
 	//관리자 : 상품검색
 	@RequestMapping("/admin/adminSearch")
-	public String adminSearch(HttpServletRequest request, Model model) {    
+	public @ResponseBody String adminSearch(HttpServletRequest request, Model model) {    
 		type = request.getParameter("type");
 		srchText = request.getParameter("srchText");
-		return "admin/goodsList"; 
+		return ""; 
 	}
 	
 	//관리자 : 상품검색결과
@@ -262,10 +262,10 @@ public class GoodsController
 	
 	//게스트 : 전체 상품검색
 	@RequestMapping("/guest/guestSearch")
-	public String guestSearch(HttpServletRequest request, Model model) {  
+	public @ResponseBody String guestSearch(HttpServletRequest request, Model model) {  
 		type = request.getParameter("type");
 		srchText = request.getParameter("srchText");
-		return "guest/goods/categoryAll"; 
+		return ""; 
 	}
 	
 	//게스트 : 전체 상품검색결과
