@@ -108,8 +108,13 @@
     }
 	
 	function sch_check() {
+		var num_check = /^[0-9]*$/;
   		if($('#srchText').val().length == 0) {
   			alert("검색어를 입력해주세요");
+  			$('#srchText').focus();
+  			return;
+  		} else if (($('#type').val() == 'bcg_key')&&(!num_check.test($('#srchText').val()))) {
+  			alert("품번은 숫자만 입력 가능합니다.");
   			$('#srchText').focus();
   			return;
   		} else { sch(); }
