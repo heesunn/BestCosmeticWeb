@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
     <title>Title</title>
@@ -122,7 +124,8 @@
         			<option value="${BCG_CATEGORY}">${BCG_CATEGORY}</option>
         			</select> <br/>
         현재 판매가 : ${BCG_PRICE}원 (할인율 반영된 가격)	<br/>  
-        상품 원매가 : <input type="text" id="BCG_PRICE" name="BCG_PRICE" value="${BCG_PRICE*100/(100-BCG_DISCOUNT)}">원<br>  
+        상품 원매가 : <input type="text" id="BCG_PRICE" name="BCG_PRICE" 
+        value=<fmt:formatNumber type="number" pattern="####" value="${BCG_PRICE*100/(100-BCG_DISCOUNT)}" />>원<br>  
         전성분 : <br/>
         <textarea id="BCG_INFO" name="BCG_INFO" cols="50" rows="15">${BCG_INFO}</textarea><br>   
         할인율 : <input type="text" id="BCG_DISCOUNT" name="BCG_DISCOUNT" value="${BCG_DISCOUNT}">%<br>
