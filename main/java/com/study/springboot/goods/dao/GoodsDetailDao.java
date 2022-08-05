@@ -13,6 +13,7 @@ public interface GoodsDetailDao {
     public int deleteDetail(int BCG_KEY);
     public int AddStock(int totalCount, String bcg_name);
     public ArrayList<GoodsDetailDto> optionList(int BCG_KEY);
+    public ArrayList<GoodsDetailDto> optionListName(String BCG_NAME);
     public int stockUpdate(String BCD_STOCK, String BCD_DETAILKEY, String BCG_KEY);
     public int ModifyStock(int totalCount, String bcg_key);
     public int ModifyStockDelete(int totalCount, String bcg_key);

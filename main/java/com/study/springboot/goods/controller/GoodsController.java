@@ -104,6 +104,7 @@ public class GoodsController
 	@RequestMapping("/admin/goodsAddDetail")
 	public String goodsAddDetail(HttpServletRequest request, Model model) {		
 		model.addAttribute("BCG_NAME", BCG_NAME);
+		listOptionService.optionList(request, model, BCG_KEY);
 		return "admin/goodsAddDetail";	
 	}
 	

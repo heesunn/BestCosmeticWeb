@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <html>
 <head>
     <title>Title</title>
@@ -138,10 +140,18 @@
 	<section id="all">
     <h3>상품옵션추가</h3><br/>
 
-	상품명 : ${BCG_NAME}
+	상품명 : ${BCG_NAME} 
 	<form id="AddDetailForm">	      
 		<table id="myList">		
 			<thead id="BCD_option" class="BCD_option">	
+				<c:forEach items="${list}" var="dto">
+				<tr>
+				    <td style="text-align:left; padding-left:20px;"> 기존제품 </td>   
+			        <td style="text-align:left; padding-left:15px;"> 상세품번 : ${dto.bcd_detailkey} </td>   
+			        <td style="text-align:left; padding-left:15px;"> 옵션 : ${dto.bcd_option} </td>            
+			        <td style="text-align:left; padding-left:15px;"> 재고수량 : ${dto.bcd_stock} </td>   
+				</tr>
+				</c:forEach>	
 			   	<tr class="count">
 				   	<td>1</td>
 				   	<td>

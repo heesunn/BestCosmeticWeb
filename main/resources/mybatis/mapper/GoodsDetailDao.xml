@@ -32,7 +32,7 @@
 	<select id="optionList" resultType="com.study.springboot.goods.dto.GoodsDetailDto">
 		select * from bc_detailgoods where bcg_key = #{param1}
 	</select>
-   
+
 	<!-- 재고수정 -->
 	<update id="stockUpdate">
 		update bc_detailgoods set bcd_stock = #{param1} where bcd_detailkey = #{param2} and bcg_key = #{param3}
