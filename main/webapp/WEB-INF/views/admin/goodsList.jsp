@@ -159,7 +159,7 @@
 		<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="location.href='/admin/goodsList'">전체보기</button>	
 		<br>
 		<form id="ModifyDelete" method="post">
-			<p>
+			<p style="text-align: left;">
 				총 ${page.totalCount}개
 			</p>
 			<c:if test="${page.totalCount>0}"> 

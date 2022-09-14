@@ -143,7 +143,7 @@
         async function payment(){
             try {
                 const response = await Bootpay.requestPayment({
-                    "application_id": "62c95b83e38c3000235af573",
+                    "application_id": "",
                     "price": totalPrice2,
                     "order_name": orderName,
                     "order_id": orderId,

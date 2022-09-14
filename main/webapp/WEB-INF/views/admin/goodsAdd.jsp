@@ -34,7 +34,7 @@
     	// 대표사진 스토리지Url 만들어서 value 넣기
 	 	function getRealPath(obj){  
 			document.getElementById('BCG_IMG').value = 
-				'https://firebasestorage.googleapis.com/v0/b/bestcosmetic-624a1.appspot.com/o/image%2F' 
+				'https://firebasestorage.googleapis.com/v0/b/F' 
 				+ $(obj).val().split('/').pop().split('\\').pop() 
 				+ '?alt=media';
 		}
@@ -42,7 +42,7 @@
 		// 상세사진 스토리지Url 만들어서 value 넣기
 	 	function getRealPath2(obj){  
 			document.getElementById('BCG_IMGDETAIL').value = 
-				'https://firebasestorage.googleapis.com/v0/b/bestcosmetic-624a1.appspot.com/o/image%2F' 
+				'https://firebasestorage.googleapis.com/v0/b/' 
 				+ $(obj).val().split('/').pop().split('\\').pop() 
 				+ '?alt=media';
 		}
