@@ -73,8 +73,8 @@ public class UtilServiceImpl implements UtilService{
 
     @Override
     public void fcmAllmember(Model model, HttpServletRequest request, HttpServletResponse response) {
-        String Apikey = "AAAAj07M2yI:APA91bEo4mpDxoDwLqu15vOeEPxt2v5b0fCmkwOBcDG61Ae10bFxCkGtzuFyazCfeEpdGzyXmTeHZlQ6eZjcoowehFNOV-PXNfScKABlqkpR5ftClhby5Zqp9bLKJ8ksNEcpPzeZqz_U";
-        String fcmURL = "https://fcm.googleapis.com/fcm/send";
+        String Apikey = "";
+        String fcmURL = "";
 
         response.setCharacterEncoding("UTF-8");
         try {
